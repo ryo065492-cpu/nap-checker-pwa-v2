@@ -36,6 +36,15 @@
   --radius-sm: 10px;
   --tap: 52px;
   --max: 1180px;
+  --review-font-scale: 1;
+  --review-row-height: 48px;
+  --review-cell-width: 58px;
+  --review-red-alpha: 1;
+  --review-yellow-alpha: 1;
+  --review-red-start: rgba(201, 60, 45, 0.18);
+  --review-red-end: rgba(255, 240, 236, 0.98);
+  --review-yellow-start: rgba(190, 122, 8, 0.18);
+  --review-yellow-end: rgba(255, 247, 225, 0.98);
 }
 
 * {
@@ -304,6 +313,59 @@ body {
   margin-bottom: 10px;
 }
 
+.field-adjustment-panel {
+  margin: 14px 0;
+  padding: 14px;
+  border: 1px solid rgba(0, 108, 103, 0.16);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.field-adjustment-panel__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: var(--tap);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.field-adjustment-panel__summary span {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.field-adjustment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.field-adjustment-toggle {
+  min-height: var(--tap);
+  align-self: end;
+}
+
+.field-adjustment-rule-box {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(95, 77, 54, 0.12);
+}
+
+.field-adjustment-rule-box h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.field-settings-text {
+  min-height: 140px;
+  margin-top: 10px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
 .control-grid,
 .filter-grid {
   display: grid;
@@ -522,8 +584,9 @@ body {
 }
 
 .summary-card__value {
-  font-size: 2.1rem;
+  font-size: clamp(1.35rem, 3vw, 2.1rem);
   font-weight: 900;
+  line-height: 1.18;
 }
 
 .summary-card__label {
@@ -1295,8 +1358,9 @@ body {
   position: relative;
   display: grid;
   place-items: center;
-  width: 58px;
-  min-height: 48px;
+  width: var(--review-cell-width);
+  min-width: var(--review-cell-width);
+  min-height: var(--review-row-height);
   padding: 6px;
   border: 0;
   background: transparent;
@@ -1306,7 +1370,7 @@ body {
 }
 
 .review-cell--reviewer {
-  min-height: 44px;
+  min-height: calc(var(--review-row-height) - 4px);
 }
 
 .review-cell--plain {
@@ -1314,13 +1378,13 @@ body {
 }
 
 .review-cell--red {
-  background: linear-gradient(180deg, rgba(201, 60, 45, 0.18), rgba(255, 240, 236, 0.98));
+  background: linear-gradient(180deg, var(--review-red-start), var(--review-red-end));
   color: #85291f;
   font-weight: 900;
 }
 
 .review-cell--yellow {
-  background: linear-gradient(180deg, rgba(190, 122, 8, 0.18), rgba(255, 247, 225, 0.98));
+  background: linear-gradient(180deg, var(--review-yellow-start), var(--review-yellow-end));
   color: #7b5600;
   font-weight: 900;
 }
@@ -1342,7 +1406,7 @@ body {
 }
 
 .review-cell__text {
-  font-size: 1rem;
+  font-size: calc(1rem * var(--review-font-scale));
   font-weight: 900;
   line-height: 1;
 }
@@ -1370,6 +1434,29 @@ body {
   border-radius: var(--radius-lg);
   border: 1px solid rgba(95, 77, 54, 0.12);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 250, 244, 0.98));
+}
+
+body[data-detail-panel-position="fixed"] .cell-detail-panel {
+  position: sticky;
+  bottom: 10px;
+  z-index: 20;
+  max-height: min(54vh, 520px);
+  overflow: auto;
+  box-shadow: 0 18px 34px rgba(47, 38, 30, 0.18);
+}
+
+.cell-detail-panel__collapse {
+  display: block;
+}
+
+.cell-detail-panel__collapse summary {
+  min-height: var(--tap);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.cell-detail-panel__collapse-body {
+  margin-top: 10px;
 }
 
 .cell-detail-panel__empty,
@@ -1542,8 +1629,8 @@ body {
       <header class="hero">
         <div class="hero__topline">
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-04-24-2318</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-04-24 23:18</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-04-26-0855</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-04-26 08:55</div>
           </div>
         </div>
         <div id="debug-banner" class="debug-banner" hidden></div>
@@ -1721,6 +1808,104 @@ body {
             </div>
             <div id="support-copy-status" class="diagnostic-copy-status" hidden></div>
             <textarea id="support-copy-fallback" class="diagnostic-copy-fallback" hidden readonly></textarea>
+            <details id="field-adjustment-panel" class="field-adjustment-panel">
+              <summary class="field-adjustment-panel__summary">
+                <strong>現場調整モード / 表示設定</strong>
+                <span>公開更新なしで、見え方と一部判定を調整します</span>
+              </summary>
+              <p class="diagnostic-note">
+                この設定だけをiPad内に保存します。xlsx、園児名、記録者名、ファイル名は保存しません。
+              </p>
+              <div id="field-adjustment-status" class="diagnostic-copy-status">標準設定を使用中です。</div>
+
+              <div class="field-adjustment-grid">
+                <label class="field">
+                  <span class="field__label">文字サイズ</span>
+                  <input id="field-text-size" class="field__input" type="range" min="0.85" max="1.35" step="0.05" />
+                </label>
+                <label class="field">
+                  <span class="field__label">行の高さ</span>
+                  <input id="field-row-height" class="field__input" type="range" min="40" max="76" step="2" />
+                </label>
+                <label class="field">
+                  <span class="field__label">セル幅</span>
+                  <input id="field-cell-width" class="field__input" type="range" min="44" max="84" step="2" />
+                </label>
+                <label class="field">
+                  <span class="field__label">赤色の濃さ</span>
+                  <input id="field-red-intensity" class="field__input" type="range" min="0.45" max="1" step="0.05" />
+                </label>
+                <label class="field">
+                  <span class="field__label">黄色の濃さ</span>
+                  <input id="field-yellow-intensity" class="field__input" type="range" min="0.45" max="1" step="0.05" />
+                </label>
+                <label class="field">
+                  <span class="field__label">記録者表示</span>
+                  <select id="field-reviewer-display" class="field__input">
+                    <option value="one">1文字</option>
+                    <option value="two">2文字</option>
+                    <option value="full">そのまま</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span class="field__label">詳細パネル</span>
+                  <select id="field-detail-position" class="field__input">
+                    <option value="below">表の下</option>
+                    <option value="fixed">画面下に固定</option>
+                    <option value="collapsed">折りたたみ</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span class="field__label">件数表示の文言</span>
+                  <input id="field-count-template" class="field__input" type="text" placeholder="{prefix}{incidents}件 / 該当{slots}コマ" />
+                </label>
+                <label class="field">
+                  <span class="field__label">強調する数</span>
+                  <select id="field-count-emphasis" class="field__input">
+                    <option value="incidents">件数を優先</option>
+                    <option value="slots">コマ数を優先</option>
+                  </select>
+                </label>
+                <label class="toggle-chip field-adjustment-toggle">
+                  <input id="field-show-auxiliary-list" type="checkbox" />
+                  <span>補助一覧を表示する</span>
+                </label>
+              </div>
+
+              <div class="field-adjustment-rule-box">
+                <h3>判定設定</h3>
+                <div class="field-adjustment-grid">
+                  <label class="field">
+                    <span class="field__label">横向き連続で赤にする回数</span>
+                    <input id="field-lateral-threshold" class="field__input" type="number" min="2" max="6" step="1" />
+                  </label>
+                  <label class="toggle-chip field-adjustment-toggle">
+                    <input id="field-prone-red-enabled" type="checkbox" />
+                    <span>↓を1回でも赤にする</span>
+                  </label>
+                  <label class="toggle-chip field-adjustment-toggle">
+                    <input id="field-state-after-wake-enabled" type="checkbox" />
+                    <span>起床後記録を赤にする</span>
+                  </label>
+                  <label class="toggle-chip field-adjustment-toggle">
+                    <input id="field-single-reviewer-enabled" type="checkbox" />
+                    <span>記録者1人だけを赤にする</span>
+                  </label>
+                  <label class="toggle-chip field-adjustment-toggle">
+                    <input id="field-prone-return-separate" type="checkbox" />
+                    <span>↑↓を単独の↓として扱わない</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="action-row action-row--compact">
+                <button id="field-save-button" class="button button--primary" type="button">保存して反映</button>
+                <button id="field-reset-button" class="button button--ghost" type="button">標準設定に戻す</button>
+                <button id="field-copy-button" class="button button--ghost" type="button">設定をコピー</button>
+                <button id="field-import-button" class="button button--secondary" type="button">貼り付けた設定を反映</button>
+              </div>
+              <textarea id="field-settings-text" class="diagnostic-copy-fallback field-settings-text" placeholder="ここに設定テキストを貼り付けます"></textarea>
+            </details>
             <div class="diagnostic-list">
               <div id="support-version" class="diagnostic-item diagnostic-item--pending">アプリ版: 確認中</div>
               <div id="support-build" class="diagnostic-item diagnostic-item--pending">ビルド日時: 確認中</div>
@@ -1781,7 +1966,7 @@ body {
         <section class="panel panel--review">
           <div class="panel__title-row">
             <h2>表レビュー</h2>
-            <div id="review-count" class="meta-pill">要確認 0コマ</div>
+            <div id="review-count" class="meta-pill">要確認 0件 / 該当0コマ</div>
           </div>
           <p id="review-guide" class="results-guide">
             元の表に近い並びで、赤と黄のコマを確認できます。
@@ -1797,7 +1982,7 @@ body {
           </section>
         </section>
 
-        <section class="panel panel--filters">
+        <section id="filters-panel" class="panel panel--filters">
           <div class="panel__title-row">
             <h2>補助表示の切り替え</h2>
           </div>
@@ -1844,10 +2029,10 @@ body {
           </div>
         </section>
 
-        <section class="panel panel--results">
+        <section id="results-panel" class="panel panel--results">
           <div class="panel__title-row">
             <h2>補助一覧</h2>
-            <div id="results-count" class="meta-pill">表示中 0件</div>
+            <div id="results-count" class="meta-pill">表示中 0件 / 該当0コマ</div>
           </div>
           <p id="results-guide" class="results-guide">
             園児ごとに確認内容をまとめて表示します。
@@ -1886,7 +2071,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-04-24-2318","buildLabel":"2026-04-24 23:18","buildId":"2026-04-24-231846","builtAtIso":"2026-04-24T14:18:46.669Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-04-26-0855","buildLabel":"2026-04-26 08:55","buildId":"2026-04-26-085516","builtAtIso":"2026-04-25T23:55:16.968Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -2229,7 +2414,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function isRuleEnabled(config, ruleKey) {
-    return Boolean(config.rules?.[ruleKey]);
+    const rule = config.rules?.[ruleKey];
+    return Boolean(rule) && rule.enabled !== false;
   }
 
   function getRuleMeta(config, ruleKey) {
@@ -4110,6 +4296,187 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     info: 2,
   };
 
+  const FIELD_ADJUSTMENT_STORAGE_KEY = "nap-checker-field-adjustments-v1";
+  const FIELD_ADJUSTMENT_EXPORT_SCHEMA = "nap-checker-field-adjustments/v1";
+  const DEFAULT_COUNT_FORMAT_TEMPLATE = "{prefix}{incidents}件 / 該当{slots}コマ";
+  const DEFAULT_FIELD_ADJUSTMENTS = {
+    reviewFontScale: 1,
+    reviewRowHeight: 48,
+    reviewCellWidth: 58,
+    redIntensity: 1,
+    yellowIntensity: 1,
+    reviewerDisplay: "one",
+    detailPanelPosition: "below",
+    countFormatTemplate: DEFAULT_COUNT_FORMAT_TEMPLATE,
+    countEmphasis: "incidents",
+    showAuxiliaryList: true,
+    lateralConsecutiveThreshold: 3,
+    proneRedEnabled: true,
+    stateAfterWakeRedEnabled: true,
+    singleReviewerRedEnabled: true,
+    proneReturnSeparateEnabled: true,
+  };
+
+  function clampNumber(value, min, max, fallback) {
+    const number = Number(value);
+    if (!Number.isFinite(number)) {
+      return fallback;
+    }
+
+    return Math.min(max, Math.max(min, number));
+  }
+
+  function pickFieldOption(value, allowed, fallback) {
+    return allowed.includes(value) ? value : fallback;
+  }
+
+  function normalizeFieldBoolean(value, fallback) {
+    if (typeof value === "boolean") {
+      return value;
+    }
+
+    if (value === "true") {
+      return true;
+    }
+
+    if (value === "false") {
+      return false;
+    }
+
+    return fallback;
+  }
+
+  function sanitizeCountTemplate(value) {
+    const text = String(value ?? "").trim();
+    if (!text) {
+      return DEFAULT_COUNT_FORMAT_TEMPLATE;
+    }
+
+    return text.slice(0, 80);
+  }
+
+  function sanitizeFieldAdjustments(value = {}) {
+    const raw = value?.settings && typeof value.settings === "object" ? value.settings : value;
+    const source = raw && typeof raw === "object" ? raw : {};
+    return {
+      reviewFontScale: clampNumber(source.reviewFontScale, 0.85, 1.35, DEFAULT_FIELD_ADJUSTMENTS.reviewFontScale),
+      reviewRowHeight: Math.round(clampNumber(source.reviewRowHeight, 40, 76, DEFAULT_FIELD_ADJUSTMENTS.reviewRowHeight)),
+      reviewCellWidth: Math.round(clampNumber(source.reviewCellWidth, 44, 84, DEFAULT_FIELD_ADJUSTMENTS.reviewCellWidth)),
+      redIntensity: clampNumber(source.redIntensity, 0.45, 1, DEFAULT_FIELD_ADJUSTMENTS.redIntensity),
+      yellowIntensity: clampNumber(source.yellowIntensity, 0.45, 1, DEFAULT_FIELD_ADJUSTMENTS.yellowIntensity),
+      reviewerDisplay: pickFieldOption(source.reviewerDisplay, ["one", "two", "full"], DEFAULT_FIELD_ADJUSTMENTS.reviewerDisplay),
+      detailPanelPosition: pickFieldOption(
+        source.detailPanelPosition,
+        ["below", "fixed", "collapsed"],
+        DEFAULT_FIELD_ADJUSTMENTS.detailPanelPosition,
+      ),
+      countFormatTemplate: sanitizeCountTemplate(source.countFormatTemplate),
+      countEmphasis: pickFieldOption(source.countEmphasis, ["incidents", "slots"], DEFAULT_FIELD_ADJUSTMENTS.countEmphasis),
+      showAuxiliaryList: normalizeFieldBoolean(source.showAuxiliaryList, DEFAULT_FIELD_ADJUSTMENTS.showAuxiliaryList),
+      lateralConsecutiveThreshold: Math.round(
+        clampNumber(
+          source.lateralConsecutiveThreshold,
+          2,
+          6,
+          DEFAULT_FIELD_ADJUSTMENTS.lateralConsecutiveThreshold,
+        ),
+      ),
+      proneRedEnabled: normalizeFieldBoolean(source.proneRedEnabled, DEFAULT_FIELD_ADJUSTMENTS.proneRedEnabled),
+      stateAfterWakeRedEnabled: normalizeFieldBoolean(
+        source.stateAfterWakeRedEnabled,
+        DEFAULT_FIELD_ADJUSTMENTS.stateAfterWakeRedEnabled,
+      ),
+      singleReviewerRedEnabled: normalizeFieldBoolean(
+        source.singleReviewerRedEnabled,
+        DEFAULT_FIELD_ADJUSTMENTS.singleReviewerRedEnabled,
+      ),
+      proneReturnSeparateEnabled: normalizeFieldBoolean(
+        source.proneReturnSeparateEnabled,
+        DEFAULT_FIELD_ADJUSTMENTS.proneReturnSeparateEnabled,
+      ),
+    };
+  }
+
+  function loadStoredFieldAdjustments() {
+    try {
+      const text = globalThis.localStorage?.getItem(FIELD_ADJUSTMENT_STORAGE_KEY);
+      if (!text) {
+        return sanitizeFieldAdjustments(DEFAULT_FIELD_ADJUSTMENTS);
+      }
+
+      return sanitizeFieldAdjustments(JSON.parse(text));
+    } catch (error) {
+      return sanitizeFieldAdjustments(DEFAULT_FIELD_ADJUSTMENTS);
+    }
+  }
+
+  function saveStoredFieldAdjustments(settings) {
+    try {
+      globalThis.localStorage?.setItem(
+        FIELD_ADJUSTMENT_STORAGE_KEY,
+        JSON.stringify({
+          schema: FIELD_ADJUSTMENT_EXPORT_SCHEMA,
+          savedAt: new Date().toISOString(),
+          settings: sanitizeFieldAdjustments(settings),
+        }),
+      );
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function hasCustomFieldAdjustments() {
+    return JSON.stringify(sanitizeFieldAdjustments(state.fieldAdjustments)) !== JSON.stringify(DEFAULT_FIELD_ADJUSTMENTS);
+  }
+
+  function createEffectiveConfig(baseConfig, adjustments) {
+    const next = cloneJson(baseConfig ?? DEFAULT_CONFIG);
+    const settings = sanitizeFieldAdjustments(adjustments);
+
+    next.ruleOptions = {
+      ...(next.ruleOptions ?? {}),
+      lateralConsecutiveThreshold: settings.lateralConsecutiveThreshold,
+    };
+    next.rules = { ...(next.rules ?? {}) };
+
+    const setRuleEnabled = (ruleKey, enabled) => {
+      next.rules[ruleKey] = {
+        ...(next.rules[ruleKey] ?? {}),
+        enabled: Boolean(enabled),
+      };
+    };
+
+    setRuleEnabled("proneOccurred", settings.proneRedEnabled);
+    setRuleEnabled("stateAfterWake", settings.stateAfterWakeRedEnabled);
+    setRuleEnabled("singleReviewerSheet", settings.singleReviewerRedEnabled);
+
+    next.symbols = { ...(next.symbols ?? {}) };
+    if (!settings.proneReturnSeparateEnabled) {
+      const proneTokens = next.symbols.prone ?? [];
+      const returnTokens = next.symbols.proneReturn ?? [];
+      next.symbols.prone = Array.from(new Set([...proneTokens, ...returnTokens]));
+      next.symbols.proneReturn = [];
+    }
+
+    return next;
+  }
+
+  function refreshEffectiveConfig() {
+    state.config = createEffectiveConfig(state.configBase ?? state.defaultConfig, state.fieldAdjustments);
+  }
+
+  function setConfigBase(config, label) {
+    state.configBase = cloneJson(config);
+    state.configUsingDefault = config === state.defaultConfig || label === "既定設定";
+    state.configLabel = label;
+    refreshEffectiveConfig();
+  }
+
+  function getConfigDisplayLabel() {
+    return state.configUsingDefault ? "既定設定" : state.configLabel;
+  }
+
   function getUiSettings() {
     const ui = state.config?.ui ?? {};
     return {
@@ -4161,7 +4528,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   const state = {
     config: cloneJson(DEFAULT_CONFIG),
+    configBase: cloneJson(DEFAULT_CONFIG),
     defaultConfig: cloneJson(DEFAULT_CONFIG),
+    configUsingDefault: true,
     configLabel: "既定設定",
     workbook: null,
     selectedSheetName: "",
@@ -4193,6 +4562,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     lastErrorMessage: "",
     lastAnalysisAt: "",
     supportIncludeSensitive: false,
+    fieldAdjustments: sanitizeFieldAdjustments(DEFAULT_FIELD_ADJUSTMENTS),
+    fieldAdjustmentStatus: "",
+    fieldAdjustmentListenersBound: false,
     updateInfo: {
       status: "idle",
       message: "まだ確認していません",
@@ -4273,6 +4645,30 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       supportSelectedCell: document.querySelector("#support-selected-cell"),
       supportLastError: document.querySelector("#support-last-error"),
       supportLastAnalysis: document.querySelector("#support-last-analysis"),
+      fieldAdjustmentPanel: document.querySelector("#field-adjustment-panel"),
+      fieldAdjustmentStatus: document.querySelector("#field-adjustment-status"),
+      fieldTextSize: document.querySelector("#field-text-size"),
+      fieldRowHeight: document.querySelector("#field-row-height"),
+      fieldCellWidth: document.querySelector("#field-cell-width"),
+      fieldRedIntensity: document.querySelector("#field-red-intensity"),
+      fieldYellowIntensity: document.querySelector("#field-yellow-intensity"),
+      fieldReviewerDisplay: document.querySelector("#field-reviewer-display"),
+      fieldDetailPosition: document.querySelector("#field-detail-position"),
+      fieldCountTemplate: document.querySelector("#field-count-template"),
+      fieldCountEmphasis: document.querySelector("#field-count-emphasis"),
+      fieldShowAuxiliaryList: document.querySelector("#field-show-auxiliary-list"),
+      fieldLateralThreshold: document.querySelector("#field-lateral-threshold"),
+      fieldProneRedEnabled: document.querySelector("#field-prone-red-enabled"),
+      fieldStateAfterWakeEnabled: document.querySelector("#field-state-after-wake-enabled"),
+      fieldSingleReviewerEnabled: document.querySelector("#field-single-reviewer-enabled"),
+      fieldProneReturnSeparate: document.querySelector("#field-prone-return-separate"),
+      fieldSaveButton: document.querySelector("#field-save-button"),
+      fieldResetButton: document.querySelector("#field-reset-button"),
+      fieldCopyButton: document.querySelector("#field-copy-button"),
+      fieldImportButton: document.querySelector("#field-import-button"),
+      fieldSettingsText: document.querySelector("#field-settings-text"),
+      filtersPanel: document.querySelector("#filters-panel"),
+      resultsPanel: document.querySelector("#results-panel"),
       severityInputs: [...document.querySelectorAll('input[name="severity-filter"]')],
       viewModeInputs: [...document.querySelectorAll('input[name="view-mode"]')],
     };
@@ -4293,6 +4689,211 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     elements.errorBox.hidden = false;
     elements.errorBox.textContent = message;
+  }
+
+  function getFieldAdjustments() {
+    return sanitizeFieldAdjustments(state.fieldAdjustments ?? DEFAULT_FIELD_ADJUSTMENTS);
+  }
+
+  function getFieldAdjustmentExportText(settings = state.fieldAdjustments) {
+    return JSON.stringify(
+      {
+        schema: FIELD_ADJUSTMENT_EXPORT_SCHEMA,
+        exportedAt: new Date().toISOString(),
+        settings: sanitizeFieldAdjustments(settings),
+      },
+      null,
+      2,
+    );
+  }
+
+  function applyFieldAdjustmentStyles() {
+    const settings = getFieldAdjustments();
+    const root = document.documentElement;
+    root.style.setProperty("--review-font-scale", String(settings.reviewFontScale));
+    root.style.setProperty("--review-row-height", `${settings.reviewRowHeight}px`);
+    root.style.setProperty("--review-cell-width", `${settings.reviewCellWidth}px`);
+    root.style.setProperty("--review-red-alpha", String(settings.redIntensity));
+    root.style.setProperty("--review-yellow-alpha", String(settings.yellowIntensity));
+    root.style.setProperty("--review-red-start", `rgba(201, 60, 45, ${0.18 * settings.redIntensity})`);
+    root.style.setProperty("--review-red-end", `rgba(255, 240, 236, ${0.98 * settings.redIntensity})`);
+    root.style.setProperty("--review-yellow-start", `rgba(190, 122, 8, ${0.18 * settings.yellowIntensity})`);
+    root.style.setProperty("--review-yellow-end", `rgba(255, 247, 225, ${0.98 * settings.yellowIntensity})`);
+    document.body.dataset.detailPanelPosition = settings.detailPanelPosition;
+    document.body.dataset.countEmphasis = settings.countEmphasis;
+    document.body.dataset.auxiliaryList = settings.showAuxiliaryList ? "shown" : "hidden";
+  }
+
+  function renderFieldAdjustmentControls() {
+    if (!elements?.fieldAdjustmentPanel) {
+      return;
+    }
+
+    const settings = getFieldAdjustments();
+    const setValue = (element, value) => {
+      if (element) {
+        element.value = String(value);
+      }
+    };
+    const setChecked = (element, value) => {
+      if (element) {
+        element.checked = Boolean(value);
+      }
+    };
+
+    setValue(elements.fieldTextSize, settings.reviewFontScale);
+    setValue(elements.fieldRowHeight, settings.reviewRowHeight);
+    setValue(elements.fieldCellWidth, settings.reviewCellWidth);
+    setValue(elements.fieldRedIntensity, settings.redIntensity);
+    setValue(elements.fieldYellowIntensity, settings.yellowIntensity);
+    setValue(elements.fieldReviewerDisplay, settings.reviewerDisplay);
+    setValue(elements.fieldDetailPosition, settings.detailPanelPosition);
+    setValue(elements.fieldCountTemplate, settings.countFormatTemplate);
+    setValue(elements.fieldCountEmphasis, settings.countEmphasis);
+    setChecked(elements.fieldShowAuxiliaryList, settings.showAuxiliaryList);
+    setValue(elements.fieldLateralThreshold, settings.lateralConsecutiveThreshold);
+    setChecked(elements.fieldProneRedEnabled, settings.proneRedEnabled);
+    setChecked(elements.fieldStateAfterWakeEnabled, settings.stateAfterWakeRedEnabled);
+    setChecked(elements.fieldSingleReviewerEnabled, settings.singleReviewerRedEnabled);
+    setChecked(elements.fieldProneReturnSeparate, settings.proneReturnSeparateEnabled);
+
+    if (elements.fieldAdjustmentStatus) {
+      elements.fieldAdjustmentStatus.textContent =
+        state.fieldAdjustmentStatus ||
+        (hasCustomFieldAdjustments()
+          ? "現場調整設定を使用中です。設定だけをこの端末に保存します。"
+          : "標準設定を使用中です。xlsxや個人情報は保存しません。");
+    }
+  }
+
+  function collectFieldAdjustmentFormValues() {
+    return sanitizeFieldAdjustments({
+      reviewFontScale: elements.fieldTextSize?.value,
+      reviewRowHeight: elements.fieldRowHeight?.value,
+      reviewCellWidth: elements.fieldCellWidth?.value,
+      redIntensity: elements.fieldRedIntensity?.value,
+      yellowIntensity: elements.fieldYellowIntensity?.value,
+      reviewerDisplay: elements.fieldReviewerDisplay?.value,
+      detailPanelPosition: elements.fieldDetailPosition?.value,
+      countFormatTemplate: elements.fieldCountTemplate?.value,
+      countEmphasis: elements.fieldCountEmphasis?.value,
+      showAuxiliaryList: elements.fieldShowAuxiliaryList?.checked,
+      lateralConsecutiveThreshold: elements.fieldLateralThreshold?.value,
+      proneRedEnabled: elements.fieldProneRedEnabled?.checked,
+      stateAfterWakeRedEnabled: elements.fieldStateAfterWakeEnabled?.checked,
+      singleReviewerRedEnabled: elements.fieldSingleReviewerEnabled?.checked,
+      proneReturnSeparateEnabled: elements.fieldProneReturnSeparate?.checked,
+    });
+  }
+
+  function reanalyzeWithCurrentConfigIfReady() {
+    const sheet = getSelectedSheet();
+    if (!sheet || !state.config || !state.analysis) {
+      return;
+    }
+
+    try {
+      state.selectedReviewCell = null;
+      state.analysis = analyzeSheet(sheet, state.config);
+      state.debug = state.analysis.debug ?? null;
+      state.lastAnalysisAt = new Date().toISOString();
+      setError("");
+    } catch (error) {
+      state.analysis = null;
+      state.debug = error instanceof AnalysisError ? error.debug ?? null : null;
+      setError(error.message);
+    }
+  }
+
+  function applyFieldAdjustmentChanges(settings, { persist = true, message = "表示設定を反映しました。" } = {}) {
+    state.fieldAdjustments = sanitizeFieldAdjustments(settings);
+    const saved = persist ? saveStoredFieldAdjustments(state.fieldAdjustments) : true;
+    refreshEffectiveConfig();
+    applyFieldAdjustmentStyles();
+    reanalyzeWithCurrentConfigIfReady();
+    state.fieldAdjustmentStatus = saved
+      ? message
+      : "設定の保存に失敗しました。画面には反映していますが、次回起動時に戻る可能性があります。";
+    renderAll();
+  }
+
+  async function copyFieldAdjustmentSettings() {
+    const text = getFieldAdjustmentExportText();
+    if (elements.fieldSettingsText) {
+      elements.fieldSettingsText.hidden = false;
+      elements.fieldSettingsText.value = text;
+    }
+
+    try {
+      if (!navigator.clipboard?.writeText) {
+        throw new Error("clipboard unavailable");
+      }
+      await navigator.clipboard.writeText(text);
+      state.fieldAdjustmentStatus = "設定テキストをコピーしました。";
+    } catch (error) {
+      state.fieldAdjustmentStatus = "自動コピーできませんでした。下の設定テキストを長押ししてコピーしてください。";
+    }
+
+    renderFieldAdjustmentControls();
+  }
+
+  function importFieldAdjustmentSettings() {
+    const text = elements.fieldSettingsText?.value?.trim();
+    if (!text) {
+      state.fieldAdjustmentStatus = "貼り付け欄が空です。設定テキストを貼り付けてください。";
+      renderFieldAdjustmentControls();
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(text);
+      applyFieldAdjustmentChanges(parsed, { message: "貼り付けた設定を反映しました。" });
+    } catch (error) {
+      state.fieldAdjustmentStatus = "設定テキストを読み取れませんでした。全文が貼り付いているか確認してください。";
+      renderFieldAdjustmentControls();
+    }
+  }
+
+  function bindFieldAdjustmentEvents() {
+    if (state.fieldAdjustmentListenersBound) {
+      return;
+    }
+
+    state.fieldAdjustmentListenersBound = true;
+
+    elements.fieldSaveButton?.addEventListener("click", () => {
+      applyFieldAdjustmentChanges(collectFieldAdjustmentFormValues(), { message: "表示設定を保存して反映しました。" });
+    });
+
+    elements.fieldResetButton?.addEventListener("click", () => {
+      applyFieldAdjustmentChanges(DEFAULT_FIELD_ADJUSTMENTS, { message: "標準設定に戻しました。" });
+    });
+
+    elements.fieldCopyButton?.addEventListener("click", async () => {
+      await copyFieldAdjustmentSettings();
+    });
+
+    elements.fieldImportButton?.addEventListener("click", () => {
+      importFieldAdjustmentSettings();
+    });
+  }
+
+  function applyCellDetailDisplayMode() {
+    if (!elements?.cellDetailPanel || getFieldAdjustments().detailPanelPosition !== "collapsed") {
+      return;
+    }
+
+    if (elements.cellDetailPanel.querySelector(".cell-detail-panel__collapse")) {
+      return;
+    }
+
+    const currentHtml = elements.cellDetailPanel.innerHTML;
+    elements.cellDetailPanel.innerHTML = `
+      <details class="cell-detail-panel__collapse">
+        <summary>セル詳細を表示</summary>
+        <div class="cell-detail-panel__collapse-body">${currentHtml}</div>
+      </details>
+    `;
   }
 
   function getSelectedSheet() {
@@ -4914,6 +5515,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     elements.configStatus.textContent = state.config
       ? `${state.configLabel} を使用中`
       : "設定の読み込みに失敗しています";
+    elements.configStatus.textContent = state.config
+      ? `${getConfigDisplayLabel()} を使用中${hasCustomFieldAdjustments() ? " / 現場調整あり" : ""}`
+      : "設定ファイルの読み込みに失敗しています";
     elements.fileMeta.textContent = state.sourceLabel;
   }
 
@@ -5178,8 +5782,20 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function renderResults() {
     const findings = getDisplayFindings();
     const ui = getUiSettings();
-    elements.resultsCount.textContent = `表示中 ${findings.length}件`;
+    const slotCount = sumFindingSlotCounts(findings);
+    const showAuxiliaryList = getFieldAdjustments().showAuxiliaryList;
+    if (elements.filtersPanel) {
+      elements.filtersPanel.hidden = !showAuxiliaryList;
+    }
+    if (elements.resultsPanel) {
+      elements.resultsPanel.hidden = !showAuxiliaryList;
+    }
+
+    elements.resultsCount.textContent = `表示中 ${formatIncidentSlotSummary(findings.length, slotCount)}`;
     elements.downloadCsvButton.disabled = findings.length === 0;
+    if (!showAuxiliaryList) {
+      return;
+    }
 
     if (elements.resultsGuide) {
       elements.resultsGuide.textContent =
@@ -5327,8 +5943,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       }
 
       try {
-        state.config = await readJsonFile(file);
-        state.configLabel = file.name;
+        setConfigBase(await readJsonFile(file), file.name);
         setError("");
         setStatus("設定ファイルを差し替えました。");
         renderAll();
@@ -5339,7 +5954,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     });
 
     elements.resetConfigButton.addEventListener("click", () => {
-      state.config = cloneJson(state.defaultConfig);
+      setConfigBase(state.defaultConfig, "既定設定");
       state.configLabel = "既定設定";
       setError("");
       setStatus("設定を既定値に戻しました。");
@@ -5437,8 +6052,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       }
 
       try {
-        state.config = await readJsonFile(file);
-        state.configLabel = file.name;
+        setConfigBase(await readJsonFile(file), file.name);
         applyUiDefaults();
         setError("");
         setStatus("設定ファイルを読み込みました。");
@@ -5450,7 +6064,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     });
 
     elements.resetConfigButton.addEventListener("click", () => {
-      state.config = cloneJson(state.defaultConfig);
+      setConfigBase(state.defaultConfig, "既定設定");
       state.configLabel = "既定設定";
       applyUiDefaults();
       setError("");
@@ -5635,7 +6249,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     elements.analyzeButton.dataset.state = !hasWorkbook || !state.selectedSheetName || !state.config ? "not-ready" : "ready";
     elements.downloadCsvButton.dataset.state = hasFindings ? "ready" : "not-ready";
     elements.childFilter.disabled = !(state.analysis?.records?.length > 0);
-    elements.configStatus.textContent = state.config ? `${state.configLabel} を使用中` : "設定ファイルの読み込みに失敗しています";
+    elements.configStatus.textContent = state.config
+      ? `${getConfigDisplayLabel()} を使用中${hasCustomFieldAdjustments() ? " / 現場調整あり" : ""}`
+      : "設定ファイルの読み込みに失敗しています";
     elements.fileMeta.textContent = state.sourceLabel;
     renderDiagnostics();
   }
@@ -5851,8 +6467,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       }
 
       try {
-        state.config = await readJsonFile(file);
-        state.configLabel = file.name;
+        setConfigBase(await readJsonFile(file), file.name);
         applyUiDefaults();
         setError("");
         setStatus("設定ファイルを読み込みました。");
@@ -5864,7 +6479,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     });
 
     elements.resetConfigButton.addEventListener("click", () => {
-      state.config = cloneJson(state.defaultConfig);
+      setConfigBase(state.defaultConfig, "既定設定");
       state.configLabel = "既定設定";
       applyUiDefaults();
       setError("");
@@ -5980,7 +6595,17 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   function abbreviateReviewerName(value) {
     const text = String(value ?? "").trim();
-    return text ? Array.from(text)[0] : "";
+    if (!text) {
+      return "";
+    }
+
+    const mode = getFieldAdjustments().reviewerDisplay;
+    if (mode === "full") {
+      return text;
+    }
+
+    const takeCount = mode === "two" ? 2 : 1;
+    return Array.from(text).slice(0, takeCount).join("");
   }
 
   function findRecordForFinding(finding) {
@@ -6277,7 +6902,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     if (!state.analysis) {
       if (elements.reviewCount) {
-        elements.reviewCount.textContent = "要確認 0コマ";
+        elements.reviewCount.textContent = formatIncidentSlotSummary(0, 0, { prefix: "要確認 " });
       }
       if (elements.reviewGuide) {
         elements.reviewGuide.textContent = "元の表に近い並びで、赤と黄のコマを確認できます。";
@@ -6303,7 +6928,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     );
 
     if (elements.reviewCount) {
-      elements.reviewCount.textContent = `要確認 ${reviewMaps.flaggedSlotCount}コマ`;
+      elements.reviewCount.textContent = formatIncidentSlotSummary(getDisplayFindings().length, reviewMaps.flaggedSlotCount, {
+        prefix: "要確認 ",
+      });
     }
 
     if (elements.reviewGuide) {
@@ -6322,6 +6949,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         </article>
       `;
       renderSelectedCellDetail(selected, reviewMaps);
+      applyCellDetailDisplayMode();
       return;
     }
 
@@ -6408,6 +7036,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       .join("");
 
     renderSelectedCellDetail(selected, reviewMaps);
+    applyCellDetailDisplayMode();
   }
 
   function renderSelectedCellDetail(selected, reviewMaps) {
@@ -6508,14 +7137,16 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const cards = [
       {
         label: ui.severityLabels.red,
-        value: totals.red,
-        description: "赤のコマ数です",
+        value: state.analysis ? formatIncidentSlotSummary(state.analysis.summary?.reviewTotals?.red ?? 0, totals.red ?? 0) : totals.red,
+        description: state.analysis ? "件数を優先し、コマ数は補助表示です" : "赤の確認件数です",
         className: "summary-card--red",
       },
       {
         label: ui.severityLabels.yellow,
-        value: totals.yellow,
-        description: "黄のコマ数です",
+        value: state.analysis
+          ? formatIncidentSlotSummary(state.analysis.summary?.reviewTotals?.yellow ?? 0, totals.yellow ?? 0)
+          : totals.yellow,
+        description: state.analysis ? "件数を優先し、コマ数は補助表示です" : "黄の確認件数です",
         className: "summary-card--yellow",
       },
       {
@@ -6558,7 +7189,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     elements.structureSummary.innerHTML = `
       <div class="structure-summary__lead"><strong>${summary.childCount}人分の記録を確認できました。</strong></div>
       <div class="structure-summary__meta">対象時間: ${summary.timeRange} / ブロック数: ${summary.blockCount} / シート全体の記録者: ${escapeHtml(reviewerText)}</div>
-      <div class="structure-summary__meta">赤 ${summary.totals?.red ?? 0}コマ / 黄 ${summary.totals?.yellow ?? 0}コマ を表レビューに色付けします。</div>
+      <div class="structure-summary__meta">赤 ${formatIncidentSlotSummary(summary.reviewTotals?.red ?? 0, summary.totals?.red ?? 0)} / 黄 ${formatIncidentSlotSummary(summary.reviewTotals?.yellow ?? 0, summary.totals?.yellow ?? 0)} を表レビューに色付けします。</div>
       <div class="structure-summary__chips">${blockChips}</div>
     `;
   }
@@ -6566,14 +7197,15 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function renderResults() {
     const findings = getDisplayFindings();
     const ui = getUiSettings();
-    elements.resultsCount.textContent = `表示中 ${findings.length}件`;
+    const slotCount = sumFindingSlotCounts(findings);
+    elements.resultsCount.textContent = `表示中 ${formatIncidentSlotSummary(findings.length, slotCount)}`;
     elements.downloadCsvButton.disabled = findings.length === 0;
 
     if (elements.resultsGuide) {
       elements.resultsGuide.textContent =
         state.viewMode === "timeline"
-          ? "補助一覧です。時刻順に1コマずつ確認できます。"
-          : `補助一覧です。園児ごとに1コマずつ確認できます。${ui.severityLabels.red}は赤、${ui.severityLabels.yellow}は黄として表示します。`;
+        ? "補助一覧です。時刻順に、現場確認のまとまりごとに確認できます。"
+        : `補助一覧です。園児ごとに現場確認のまとまりで表示します。${ui.severityLabels.red}は赤、${ui.severityLabels.yellow}は黄として表示します。`;
     }
 
     elements.resultsList.innerHTML =
@@ -6590,7 +7222,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     elements.analyzeButton.dataset.state = !hasWorkbook || !state.selectedSheetName || !state.config ? "not-ready" : "ready";
     elements.downloadCsvButton.dataset.state = hasFindings ? "ready" : "not-ready";
     elements.childFilter.disabled = !(state.analysis?.records?.length > 0);
-    elements.configStatus.textContent = state.config ? `${state.configLabel} を使用中` : "設定ファイルの読み込みに失敗しています";
+    elements.configStatus.textContent = state.config
+      ? `${getConfigDisplayLabel()} を使用中${hasCustomFieldAdjustments() ? " / 現場調整あり" : ""}`
+      : "設定ファイルの読み込みに失敗しています";
     elements.fileMeta.textContent = state.sourceLabel;
     renderDiagnostics();
   }
@@ -6624,6 +7258,29 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function formatIncidentSlotSummary(incidentCount, slotCount, options = {}) {
     const prefix = options.prefix ?? "";
     return `${prefix}${incidentCount}件 / 該当${slotCount}コマ`;
+  }
+
+  function formatIncidentCount(incidentCount, options = {}) {
+    const prefix = options.prefix ?? "";
+    return `${prefix}${incidentCount}件`;
+  }
+
+  function formatSlotCount(slotCount, options = {}) {
+    const prefix = options.prefix ?? "該当";
+    return `${prefix}${slotCount}コマ`;
+  }
+
+  function formatIncidentSlotSummary(incidentCount, slotCount, options = {}) {
+    const prefix = options.prefix ?? "";
+    const settings = getFieldAdjustments();
+    const template =
+      settings.countEmphasis === "slots" && settings.countFormatTemplate === DEFAULT_COUNT_FORMAT_TEMPLATE
+        ? "{prefix}該当{slots}コマ / 要確認{incidents}件"
+        : settings.countFormatTemplate;
+    return template
+      .replaceAll("{prefix}", prefix)
+      .replaceAll("{incidents}", String(incidentCount))
+      .replaceAll("{slots}", String(slotCount));
   }
 
   function formatIncidentCount(incidentCount, options = {}) {
@@ -6698,7 +7355,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           <div class="result-card__time">${escapeHtml(finding.time)}</div>
           <div class="result-card__meta">
             <span class="badge badge--${finding.severity}">${escapeHtml(severity.label)}</span>
-            <span class="result-card__count">該当${slotCount}コマ</span>
+            <span class="result-card__count">${escapeHtml(formatIncidentCount(1, { prefix: "要確認" }))}</span>
+            <span class="result-card__count">${escapeHtml(formatSlotCount(slotCount))}</span>
           </div>
         </div>
         ${options.showChildName ? `<div class="result-card__name">${escapeHtml(finding.childName)}</div>` : ""}
@@ -6781,7 +7439,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     if (!state.analysis) {
       if (elements.reviewCount) {
-        elements.reviewCount.textContent = formatIncidentCount(0, { prefix: "要確認 " });
+        elements.reviewCount.textContent = formatIncidentSlotSummary(0, 0, { prefix: "要確認 " });
       }
       if (elements.reviewGuide) {
         elements.reviewGuide.textContent = "元の表に近い並びで、赤と黄のコマを確認できます。";
@@ -6808,7 +7466,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     );
 
     if (elements.reviewCount) {
-      elements.reviewCount.textContent = formatIncidentCount(groupedFindings.length, {
+      elements.reviewCount.textContent = formatIncidentSlotSummary(groupedFindings.length, reviewMaps.flaggedSlotCount, {
         prefix: "要確認 ",
       });
     }
@@ -6816,7 +7474,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     if (elements.reviewGuide) {
       elements.reviewGuide.textContent =
         reviewMaps.flaggedSlotCount > 0
-          ? `表では${formatSlotCount(reviewMaps.flaggedSlotCount, { prefix: "" })}をそのまま色付けし、件数は連続した同種の異常を1件として数えています。セルを押すと区間の詳細を確認できます。`
+          ? `表では${formatSlotCount(reviewMaps.flaggedSlotCount, { prefix: "" })}をそのまま色付けし、見出しは${formatIncidentSlotSummary(groupedFindings.length, reviewMaps.flaggedSlotCount, { prefix: "要確認 " })}として分けて表示します。セルを押すと区間の詳細を確認できます。`
           : "要確認のコマはありません。必要に応じて表を見て、前後の状態や記録者を確認してください。";
     }
 
@@ -6829,6 +7487,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         </article>
       `;
       renderSelectedCellDetail(selected, reviewMaps);
+      applyCellDetailDisplayMode();
       return;
     }
 
@@ -6915,6 +7574,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       .join("");
 
     renderSelectedCellDetail(selected, reviewMaps);
+    applyCellDetailDisplayMode();
   }
 
   function renderSelectedCellDetail(selected, reviewMaps) {
@@ -6970,8 +7630,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                     <strong>${escapeHtml(finding.ruleName)}</strong>
                   </div>
                   <div class="cell-detail-panel__finding-reason">時刻範囲: ${escapeHtml(finding.time)}</div>
+                  <div class="cell-detail-panel__finding-reason">要確認件数: 1件</div>
+                  <div class="cell-detail-panel__finding-reason">修正対象コマ数: ${slotCount}コマ</div>
                   <div class="cell-detail-panel__finding-reason">記録者: ${escapeHtml(finding.reviewerText || "未入力")}</div>
-                  <div class="cell-detail-panel__finding-reason">該当コマ数: ${slotCount}コマ</div>
                   <div class="cell-detail-panel__finding-reason">理由: ${escapeHtml(finding.reason)}</div>
                   <div class="cell-detail-panel__finding-action">確認したいこと: ${escapeHtml(finding.action)}</div>
                   <div class="cell-detail-panel__finding-message">${escapeHtml(finding.message)}</div>
@@ -7021,20 +7682,20 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const cards = [
       {
         label: ui.severityLabels.red,
-        value: summary ? formatIncidentCount(reviewTotals.red ?? 0) : "-",
-        description: summary ? `表では${totals.red ?? 0}コマを赤表示` : "件数はまとまりで数えます",
+        value: summary ? formatIncidentSlotSummary(reviewTotals.red ?? 0, totals.red ?? 0) : "-",
+        description: summary ? "赤は件数を優先し、コマ数は補助表示です" : "件数はまとまりで数えます",
         className: "summary-card--red",
       },
       {
         label: ui.severityLabels.yellow,
-        value: summary ? formatIncidentCount(reviewTotals.yellow ?? 0) : "-",
-        description: summary ? `表では${totals.yellow ?? 0}コマを黄表示` : "件数はまとまりで数えます",
+        value: summary ? formatIncidentSlotSummary(reviewTotals.yellow ?? 0, totals.yellow ?? 0) : "-",
+        description: summary ? "黄は件数を優先し、コマ数は補助表示です" : "件数はまとまりで数えます",
         className: "summary-card--yellow",
       },
       {
         label: ui.severityLabels.info,
-        value: summary ? formatIncidentCount(reviewTotals.info ?? 0) : "-",
-        description: summary ? `表では${totals.info ?? 0}コマに情報表示` : ui.severityDescriptions.info,
+        value: summary ? formatIncidentSlotSummary(reviewTotals.info ?? 0, totals.info ?? 0) : "-",
+        description: summary ? "情報も件数とコマ数を分けています" : ui.severityDescriptions.info,
         className: "summary-card--info",
       },
       {
@@ -7070,7 +7731,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     elements.structureSummary.innerHTML = `
       <div class="structure-summary__lead"><strong>${summary.childCount}人分を確認できました。</strong></div>
       <div class="structure-summary__meta">対象時間: ${summary.timeRange} / ブロック数: ${summary.blockCount} / シート全体の記録者: ${escapeHtml(reviewerText)}</div>
-      <div class="structure-summary__meta">赤 ${formatIncidentCount(reviewTotals.red ?? 0)}（表では${totals.red ?? 0}コマを赤表示） / 黄 ${formatIncidentCount(reviewTotals.yellow ?? 0)}（表では${totals.yellow ?? 0}コマを黄表示）</div>
+      <div class="structure-summary__meta">赤 ${formatIncidentSlotSummary(reviewTotals.red ?? 0, totals.red ?? 0)} / 黄 ${formatIncidentSlotSummary(reviewTotals.yellow ?? 0, totals.yellow ?? 0)}</div>
       <div class="structure-summary__chips">${blockChips}</div>
     `;
   }
@@ -7079,7 +7740,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const findings = getDisplayFindings();
     const ui = getUiSettings();
     const slotCount = sumFindingSlotCounts(findings);
-    elements.resultsCount.textContent = `表示中 ${formatIncidentCount(findings.length)}`;
+    elements.resultsCount.textContent = `表示中 ${formatIncidentSlotSummary(findings.length, slotCount)}`;
     elements.downloadCsvButton.disabled = findings.length === 0;
 
     if (elements.resultsGuide) {
@@ -7087,6 +7748,37 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         state.viewMode === "timeline"
           ? `一覧は連続した同種の異常を1件として表示しています。表レビューでは${formatSlotCount(slotCount, { prefix: "" })}をそのまま確認できます。`
           : `園児ごとに要確認のまとまりを表示しています。表レビューでは${formatSlotCount(slotCount, { prefix: "" })}を色付けしています。${ui.severityLabels.red}はすぐ確認、${ui.severityLabels.yellow}は念のため確認してください。`;
+    }
+
+    elements.resultsList.innerHTML =
+      state.viewMode === "timeline" ? renderTimelineResults(findings) : renderGroupedResults(findings);
+  }
+
+  function renderResults() {
+    const findings = getDisplayFindings();
+    const ui = getUiSettings();
+    const slotCount = sumFindingSlotCounts(findings);
+    const showAuxiliaryList = getFieldAdjustments().showAuxiliaryList;
+
+    if (elements.filtersPanel) {
+      elements.filtersPanel.hidden = !showAuxiliaryList;
+    }
+    if (elements.resultsPanel) {
+      elements.resultsPanel.hidden = !showAuxiliaryList;
+    }
+
+    elements.resultsCount.textContent = `表示中 ${formatIncidentSlotSummary(findings.length, slotCount)}`;
+    elements.downloadCsvButton.disabled = findings.length === 0;
+
+    if (!showAuxiliaryList) {
+      return;
+    }
+
+    if (elements.resultsGuide) {
+      elements.resultsGuide.textContent =
+        state.viewMode === "timeline"
+          ? `一覧は連続した同種の異常を1件として表示しています。表レビューでは${formatSlotCount(slotCount, { prefix: "" })}をそのまま確認できます。`
+          : `園児ごとに要確認のまとまりを表示しています。表レビューでは${formatSlotCount(slotCount, { prefix: "" })}を色付けしています。${ui.severityLabels.red}は赤、${ui.severityLabels.yellow}は黄として表示します。`;
     }
 
     elements.resultsList.innerHTML =
@@ -7244,12 +7936,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function renderAll() {
+    applyFieldAdjustmentStyles();
     renderRuntimeChrome();
     renderSummary();
     renderChildFilter();
     renderFilterControls();
     renderReviewBoard();
     renderResults();
+    renderFieldAdjustmentControls();
     renderDebug();
     updateControls();
   }
@@ -7264,7 +7958,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     elements.analyzeButton.dataset.state = !hasWorkbook || !state.selectedSheetName || !state.config ? "not-ready" : "ready";
     elements.downloadCsvButton.dataset.state = hasFindings ? "ready" : "not-ready";
     elements.childFilter.disabled = !(state.analysis?.records?.length > 0);
-    elements.configStatus.textContent = state.config ? `${state.configLabel} を使用中` : "設定ファイルの読み込みに失敗しています";
+    elements.configStatus.textContent = state.config
+      ? `${getConfigDisplayLabel()} を使用中${hasCustomFieldAdjustments() ? " / 現場調整あり" : ""}`
+      : "設定ファイルの読み込みに失敗しています";
     elements.fileMeta.textContent = state.sourceLabel;
     renderRuntimeChrome();
     renderDiagnostics();
@@ -8333,9 +9029,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     state.buildInfo = APP_BUILD_INFO;
     state.debugMode = new URLSearchParams(location.search).get("debug") === "1";
     state.supportIncludeSensitive = false;
+    state.fieldAdjustments = loadStoredFieldAdjustments();
+    setConfigBase(state.defaultConfig, "既定設定");
+    applyFieldAdjustmentStyles();
     applyUiDefaults();
     renderAll();
     bindEvents();
+    bindFieldAdjustmentEvents();
 
     if (!state.supportListenersBound) {
       state.supportListenersBound = true;
