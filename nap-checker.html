@@ -742,6 +742,90 @@ body {
   gap: 16px;
 }
 
+.sheet-overview-list {
+  display: grid;
+  gap: 12px;
+}
+
+.sheet-overview-card {
+  width: 100%;
+  min-height: var(--tap);
+  padding: 16px;
+  border: 1px solid rgba(95, 77, 54, 0.14);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 250, 244, 0.98));
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(87, 63, 26, 0.06);
+}
+
+.sheet-overview-card:hover,
+.sheet-overview-card:focus-visible {
+  border-color: rgba(0, 108, 103, 0.35);
+  box-shadow: 0 14px 28px rgba(87, 63, 26, 0.12);
+  outline: none;
+}
+
+.sheet-overview-card--active {
+  border-color: rgba(0, 108, 103, 0.5);
+  background: linear-gradient(180deg, rgba(236, 250, 248, 0.96), rgba(255, 250, 244, 0.98));
+}
+
+.sheet-overview-card--red {
+  border-left: 8px solid var(--danger);
+}
+
+.sheet-overview-card--yellow {
+  border-left: 8px solid var(--warn);
+}
+
+.sheet-overview-card--error {
+  border-left: 8px solid #6b3f00;
+}
+
+.sheet-overview-card__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sheet-overview-card__date {
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.sheet-overview-card__sheet {
+  margin-top: 3px;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+
+.sheet-overview-card__counts,
+.sheet-overview-card__badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.sheet-overview-card__main {
+  margin-top: 8px;
+  color: var(--text);
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.sheet-overview-card__hint {
+  margin-top: 4px;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
 .result-card {
   padding: 16px;
   border-radius: var(--radius-lg);
@@ -1629,8 +1713,8 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
       <header class="hero">
         <div class="hero__topline">
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-04-26-0855</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-04-26 08:55</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-05-1422</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-05 14:22</div>
           </div>
         </div>
         <div id="debug-banner" class="debug-banner" hidden></div>
@@ -1731,8 +1815,11 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           </div>
 
           <div class="action-row">
+            <button id="analyze-all-button" class="button button--primary" type="button">
+              全日分を再チェックする
+            </button>
             <button id="analyze-button" class="button button--primary" type="button">
-              3. チェックする
+              選択シートだけチェック
             </button>
             <button id="download-csv-button" class="button button--secondary" type="button">
               CSVをダウンロード
@@ -1741,6 +1828,23 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
 
           <div id="status-banner" class="status-banner" role="status" aria-live="polite"></div>
           <div id="error-box" class="error-box" hidden></div>
+        </section>
+
+        <section id="sheet-overview-panel" class="panel panel--sheet-overview">
+          <div class="panel__title-row">
+            <div>
+              <h2>要確認日付一覧</h2>
+              <p id="sheet-overview-guide" class="results-guide">
+                xlsxを読み込むと全日分を自動で確認します。必要なときだけ「全日分を再チェックする」を押してください。
+              </p>
+            </div>
+            <div id="sheet-overview-count" class="meta-pill">未チェック</div>
+          </div>
+          <div id="sheet-overview-list" class="sheet-overview-list" aria-live="polite">
+            <article class="result-card result-card--empty">
+              xlsxを選ぶと、全日分チェックを自動で開始します。
+            </article>
+          </div>
         </section>
 
         <section id="diagnostics-panel" class="panel panel--diagnostics" hidden>
@@ -1761,7 +1865,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
             <div id="diagnostic-home" class="diagnostic-item diagnostic-item--pending">ホーム画面追加: 確認中</div>
             <div id="diagnostic-offline" class="diagnostic-item diagnostic-item--pending">オフライン準備: 確認中</div>
             <div id="diagnostic-file" class="diagnostic-item diagnostic-item--pending">ファイル読込: 未確認</div>
-            <div id="diagnostic-analyze" class="diagnostic-item diagnostic-item--pending">チェックボタン: 未押下</div>
+            <div id="diagnostic-analyze" class="diagnostic-item diagnostic-item--pending">チェック操作: 未実行</div>
             <div id="diagnostic-demo" class="diagnostic-item diagnostic-item--pending">内蔵ダミーxlsx: 未押下</div>
             <div id="diagnostic-download" class="diagnostic-item diagnostic-item--pending">CSV保存: 未確認</div>
           </div>
@@ -2071,7 +2175,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-04-26-0855","buildLabel":"2026-04-26 08:55","buildId":"2026-04-26-085516","builtAtIso":"2026-04-25T23:55:16.968Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-05-1422","buildLabel":"2026-05-05 14:22","buildId":"2026-05-05-142237","builtAtIso":"2026-05-05T05:22:37.099Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -2117,6 +2221,27 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     "groupableRuleKeys": ["proneOccurred", "lateralThreeConsecutive", "stateAfterWake"],
     "maxAdjacentGap": 0
   },
+  "environmentChecks": {
+    "enabled": true,
+    "scanRows": 80,
+    "scanCols": 40,
+    "valueSearch": {
+      "rightCols": 4,
+      "downRows": 1
+    },
+    "fields": {
+      "temperature": {
+        "label": "温度",
+        "keywords": ["温度", "気温", "室温"],
+        "ruleKey": "missingTemperature"
+      },
+      "humidity": {
+        "label": "湿度",
+        "keywords": ["湿度"],
+        "ruleKey": "missingHumidity"
+      }
+    }
+  },
   "ui": {
     "showDebugPanelDefault": false,
     "defaultViewMode": "grouped",
@@ -2147,6 +2272,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       "起床後記録": "起床後も記録が続いています",
       "記録者が1人のみ": "一覧表全体の記録者が1人だけです",
       "確認者未入力": "確認した人の記入が抜けています",
+      "温度未入力": "温度の記録が抜けています",
+      "湿度未入力": "湿度の記録が抜けています",
       "想定外記号": "いつもと違う記号が入っています",
       "2行セット崩れ": "状態と確認者の並びがずれている可能性があります"
     },
@@ -2156,6 +2283,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       "起床後記録": "起床後の記録が続いていないか、再入眠として扱う内容か確認してください。",
       "記録者が1人のみ": "一覧表全体で記録者が1人だけになっていないか確認してください。",
       "確認者未入力": "確認した人の記入漏れがないか確認してください。",
+      "温度未入力": "温度欄に記録漏れがないか確認してください。",
+      "湿度未入力": "湿度欄に記録漏れがないか確認してください。",
       "想定外記号": "いつもと違う記号が入っていないか確認してください。",
       "2行セット崩れ": "状態と確認者の並びがずれていないか確認してください。"
     },
@@ -2165,6 +2294,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       "起床後記録": "「起」の後に、再入眠なしで状態記録が続いています。",
       "記録者が1人のみ": "一覧表全体で登場する記録者が1人だけです。",
       "確認者未入力": "状態が入っているセルに、対応する確認者がありません。",
+      "温度未入力": "温度ラベルは見つかりましたが、近くに数値がありません。",
+      "湿度未入力": "湿度ラベルは見つかりましたが、近くに数値がありません。",
       "想定外記号": "設定にない記号が状態欄に入っています。",
       "2行セット崩れ": "状態行と確認者行の2行セットとして読み取れない行があります。"
     }
@@ -2189,6 +2320,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     "missingReviewerCell": {
       "severity": "yellow",
       "label": "確認者未入力"
+    },
+    "missingTemperature": {
+      "severity": "yellow",
+      "label": "温度未入力"
+    },
+    "missingHumidity": {
+      "severity": "yellow",
+      "label": "湿度未入力"
     },
     "unexpectedSymbol": {
       "severity": "red",
@@ -2436,6 +2575,299 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
 
     return normalizeText(cell.display ?? cell.text ?? cell.raw ?? "");
+  }
+
+  const DEFAULT_ENVIRONMENT_CONFIG = {
+    enabled: true,
+    scanRows: 80,
+    scanCols: 40,
+    valueSearch: {
+      rightCols: 4,
+      downRows: 1,
+    },
+    fields: {
+      temperature: {
+        label: "温度",
+        keywords: ["温度", "気温", "室温"],
+        ruleKey: "missingTemperature",
+      },
+      humidity: {
+        label: "湿度",
+        keywords: ["湿度"],
+        ruleKey: "missingHumidity",
+      },
+    },
+  };
+
+  function toHalfWidthText(value) {
+    return normalizeText(value).normalize("NFKC");
+  }
+
+  function getEnvironmentConfig(config) {
+    const raw = config.environmentChecks ?? {};
+    const defaultFields = DEFAULT_ENVIRONMENT_CONFIG.fields;
+    const rawFields = raw.fields ?? {};
+
+    return {
+      enabled: raw.enabled !== false,
+      scanRows: Number.isInteger(raw.scanRows) ? raw.scanRows : DEFAULT_ENVIRONMENT_CONFIG.scanRows,
+      scanCols: Number.isInteger(raw.scanCols) ? raw.scanCols : DEFAULT_ENVIRONMENT_CONFIG.scanCols,
+      valueSearch: {
+        rightCols: Number.isInteger(raw.valueSearch?.rightCols)
+          ? raw.valueSearch.rightCols
+          : DEFAULT_ENVIRONMENT_CONFIG.valueSearch.rightCols,
+        downRows: Number.isInteger(raw.valueSearch?.downRows)
+          ? raw.valueSearch.downRows
+          : DEFAULT_ENVIRONMENT_CONFIG.valueSearch.downRows,
+      },
+      fields: Object.fromEntries(
+        Object.entries(defaultFields).map(([type, defaults]) => [
+          type,
+          {
+            ...defaults,
+            ...(rawFields[type] ?? {}),
+            keywords: (rawFields[type]?.keywords ?? defaults.keywords).map(toHalfWidthText).filter(Boolean),
+          },
+        ]),
+      ),
+    };
+  }
+
+  function cellAddress(row, col) {
+    return `${indexToColumnLetters(col)}${row}`;
+  }
+
+  function isDuplicateMergedEnvironmentLabelCell(sheet, row, col) {
+    const cell = sheet.cellMap?.get(createCellKey(row, col));
+    return Boolean(cell?.merged && cell.mergeRoot && cell.mergeRoot !== `${row}:${col}`);
+  }
+
+  function containsEnvironmentKeyword(text, keywords) {
+    const normalized = toHalfWidthText(text);
+    return keywords.some((keyword) => normalized.includes(keyword));
+  }
+
+  function stripEnvironmentLabelParts(text, keywords) {
+    let value = toHalfWidthText(text);
+    for (const keyword of keywords) {
+      value = value.replaceAll(keyword, "");
+    }
+    return value.replace(/[：:℃°C%％度湿\s]/g, "").trim();
+  }
+
+  function hasEnvironmentValue(text, keywords) {
+    const normalized = toHalfWidthText(text);
+    if (!normalized) {
+      return false;
+    }
+
+    const valuePortion = stripEnvironmentLabelParts(normalized, keywords);
+    return /\d/.test(valuePortion);
+  }
+
+  function collectEnvironmentValueCandidates(sheet, labelCell, field, environmentConfig) {
+    const candidates = [];
+    const rightCols = Math.max(0, environmentConfig.valueSearch.rightCols);
+    const downRows = Math.max(0, environmentConfig.valueSearch.downRows);
+
+    if (hasEnvironmentValue(labelCell.text, field.keywords)) {
+      candidates.push({
+        row: labelCell.row,
+        col: labelCell.col,
+        address: labelCell.address,
+        text: labelCell.text,
+        source: "sameCell",
+        present: true,
+      });
+    }
+
+    for (let rowOffset = 0; rowOffset <= downRows; rowOffset += 1) {
+      for (let colOffset = 1; colOffset <= rightCols; colOffset += 1) {
+        const row = labelCell.row + rowOffset;
+        const col = labelCell.col + colOffset;
+        if (row > sheet.maxRow || col > sheet.maxCol) {
+          continue;
+        }
+
+        const text = getCellText(sheet, row, col);
+        if (!text) {
+          continue;
+        }
+
+        candidates.push({
+          row,
+          col,
+          address: cellAddress(row, col),
+          text,
+          source: rowOffset === 0 ? "right" : "downRight",
+          present: hasEnvironmentValue(text, []),
+        });
+      }
+    }
+
+    return candidates;
+  }
+
+  function makeEnvironmentFinding(sheet, config, check) {
+    const rule = getRuleMeta(config, check.ruleKey);
+    return {
+      sheetName: sheet.name,
+      blockIndex: null,
+      stateRow: check.labelCell.row,
+      reviewerRow: null,
+      childName: "シート全体",
+      ruleKey: check.ruleKey,
+      time: "-",
+      timeSort: Number.MAX_SAFE_INTEGER,
+      severity: rule.severity,
+      ruleName: rule.label,
+      message: `${check.label}欄が未入力です。シート上部または該当欄の記録を確認してください。`,
+      reviewerNames: [],
+      reviewerText: "",
+      context: null,
+      environment: {
+        type: check.type,
+        label: check.label,
+        labelCell: check.labelCell,
+        valueCandidates: check.valueCandidates,
+      },
+    };
+  }
+
+  function getPreferredEnvironmentChecksForField(checks, field) {
+    const foundChecks = checks.filter((check) => check.found);
+    if (foundChecks.length === 0) {
+      return checks;
+    }
+
+    const primaryLabel = toHalfWidthEnvironmentText(field?.label ?? "");
+    const primaryChecks = primaryLabel
+      ? foundChecks.filter((check) => containsEnvironmentKeyword(check.labelCell?.text ?? "", [primaryLabel]))
+      : [];
+
+    return primaryChecks.length > 0 ? primaryChecks : foundChecks;
+  }
+
+  function summarizeEnvironmentChecks(checks, environmentConfig = null) {
+    const groups = new Map();
+    for (const check of checks) {
+      if (!groups.has(check.type)) {
+        groups.set(check.type, []);
+      }
+      groups.get(check.type).push(check);
+    }
+    const missingChecks = [...groups.entries()]
+      .flatMap(([type, group]) => {
+        const preferredChecks = getPreferredEnvironmentChecksForField(group, environmentConfig?.fields?.[type]);
+        return preferredChecks.filter((check) => check.found && !check.present);
+      })
+      .filter(Boolean);
+    return {
+      checkedCount: checks.length,
+      foundCount: [...groups.values()].filter((group) => group.some((check) => check.found)).length,
+      missingCount: missingChecks.length,
+      missingTypes: [...new Set(missingChecks.map((check) => check.type))],
+      missingLabels: missingChecks.map((check) => check.label),
+      checks,
+    };
+  }
+
+  function evaluateEnvironmentFields(sheet, config) {
+    const environmentConfig = getEnvironmentConfig(config);
+    const debug = {
+      enabled: environmentConfig.enabled,
+      scanRange: {
+        rows: `1-${Math.min(sheet.maxRow, environmentConfig.scanRows)}`,
+        cols: `A:${indexToColumnLetters(Math.min(sheet.maxCol, environmentConfig.scanCols))}`,
+      },
+      checks: [],
+    };
+
+    if (!environmentConfig.enabled) {
+      return {
+        findings: [],
+        summary: summarizeEnvironmentChecks([], environmentConfig),
+        debug,
+      };
+    }
+
+    const checks = [];
+    const maxRow = Math.min(sheet.maxRow, environmentConfig.scanRows);
+    const maxCol = Math.min(sheet.maxCol, environmentConfig.scanCols);
+
+    for (const [type, field] of Object.entries(environmentConfig.fields)) {
+      const fieldChecks = [];
+
+      for (let row = 1; row <= maxRow; row += 1) {
+        for (let col = 1; col <= maxCol; col += 1) {
+          const text = getCellText(sheet, row, col);
+          if (
+            !text ||
+            isDuplicateMergedEnvironmentLabelCell(sheet, row, col) ||
+            !containsEnvironmentKeyword(text, field.keywords)
+          ) {
+            continue;
+          }
+
+          const labelCell = {
+            row,
+            col,
+            address: cellAddress(row, col),
+            text,
+          };
+          const valueCandidates = collectEnvironmentValueCandidates(sheet, labelCell, field, environmentConfig);
+          const present = valueCandidates.some((candidate) => candidate.present);
+          fieldChecks.push({
+            type,
+            label: field.label,
+            ruleKey: field.ruleKey,
+            found: true,
+            present,
+            labelCell,
+            valueCandidates,
+          });
+        }
+      }
+
+      if (fieldChecks.length === 0) {
+        fieldChecks.push({
+          type,
+          label: field.label,
+          ruleKey: field.ruleKey,
+          found: false,
+          present: false,
+          labelCell: null,
+          valueCandidates: [],
+        });
+      }
+
+      checks.push(...fieldChecks);
+    }
+
+    const findings = Object.entries(environmentConfig.fields)
+      .flatMap(([type, field]) =>
+        getPreferredEnvironmentChecksForField(
+          checks.filter((check) => check.type === type),
+          field,
+        ),
+      )
+      .filter((check) => check.found && !check.present)
+      .filter((check) => check && isRuleEnabled(config, check.ruleKey))
+      .map((check) => makeEnvironmentFinding(sheet, config, check));
+
+    debug.checks = checks.map((check) => ({
+      type: check.type,
+      label: check.label,
+      status: !check.found ? "label-not-found" : check.present ? "value-found" : "missing-value",
+      labelCell: check.labelCell,
+      valueCandidates: check.valueCandidates,
+    }));
+
+    return {
+      findings,
+      summary: summarizeEnvironmentChecks(checks, environmentConfig),
+      debug,
+    };
   }
 
   function getRangeTexts(sheet, row, startCol, endCol) {
@@ -3794,7 +4226,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
   }
 
-  function summarizeFindings(findings, reviewItems, records, layouts, reviewerStats) {
+  function summarizeFindings(findings, reviewItems, records, layouts, reviewerStats, environmentSummary) {
     const totals = { red: 0, yellow: 0, info: 0 };
     for (const finding of findings) {
       totals[finding.severity] += 1;
@@ -3824,6 +4256,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       timeRange: [...new Set(blockSummaries.map((block) => block.timeRange))].join(" / "),
       blockSummaries,
       reviewerStats,
+      environment: environmentSummary,
     };
   }
 
@@ -3895,6 +4328,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     const reviewerStats = collectReviewerStats(records);
     collectedFindings.push(...evaluateSheetReviewerStats(reviewerStats, config));
+    const environmentResult = evaluateEnvironmentFields(sheet, config);
+    collectedFindings.push(...environmentResult.findings);
     const findings = sortFindings(collectedFindings);
     const reviewItems = buildReviewItems(findings, records, config);
 
@@ -3904,10 +4339,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       records,
       findings,
       reviewItems,
-      summary: summarizeFindings(findings, reviewItems, records, layouts, reviewerStats),
+      summary: summarizeFindings(findings, reviewItems, records, layouts, reviewerStats, environmentResult.summary),
       debug: {
         timeBlocks: timeDebug,
         blocks: blockDebug,
+        environment: environmentResult.debug,
       },
     };
   }
@@ -4470,6 +4906,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     state.configBase = cloneJson(config);
     state.configUsingDefault = config === state.defaultConfig || label === "既定設定";
     state.configLabel = label;
+    state.sheetAnalyses = new Map();
+    state.sheetOverview = [];
+    state.allSheetLastCheckedAt = "";
+    state.analysis = null;
+    state.debug = null;
     refreshEffectiveConfig();
   }
 
@@ -4536,12 +4977,16 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     selectedSheetName: "",
     analysis: null,
     debug: null,
+    sheetAnalyses: new Map(),
+    sheetOverview: [],
+    allSheetLastCheckedAt: "",
     activeSeverities: new Set(["red", "yellow", "info"]),
     childFilter: "",
     viewMode: "grouped",
     diagnostics: {
       fileReads: 0,
       analyzeClicks: 0,
+      lastAnalyzeLabel: "未実行",
       demoClicks: 0,
       downloadClicks: 0,
     },
@@ -4580,6 +5025,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       configInput: document.querySelector("#config-input"),
       resetConfigButton: document.querySelector("#reset-config-button"),
       sheetSelect: document.querySelector("#sheet-select"),
+      analyzeAllButton: document.querySelector("#analyze-all-button"),
       analyzeButton: document.querySelector("#analyze-button"),
       demoFileButton: document.querySelector("#demo-file-button"),
       downloadCsvButton: document.querySelector("#download-csv-button"),
@@ -4597,6 +5043,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       statusBanner: document.querySelector("#status-banner"),
       errorBox: document.querySelector("#error-box"),
       fileMeta: document.querySelector("#file-meta"),
+      sheetOverviewPanel: document.querySelector("#sheet-overview-panel"),
+      sheetOverviewCount: document.querySelector("#sheet-overview-count"),
+      sheetOverviewGuide: document.querySelector("#sheet-overview-guide"),
+      sheetOverviewList: document.querySelector("#sheet-overview-list"),
       buildVersion: document.querySelector("#build-version"),
       buildDetail: document.querySelector("#build-detail"),
       debugBanner: document.querySelector("#debug-banner"),
@@ -4794,13 +5244,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     try {
       state.selectedReviewCell = null;
-      state.analysis = analyzeSheet(sheet, state.config);
-      state.debug = state.analysis.debug ?? null;
-      state.lastAnalysisAt = new Date().toISOString();
+      const analysis = analyzeSheet(sheet, state.config);
+      cacheSheetAnalysis(sheet.name, analysis);
+      setCurrentSheetAnalysisFromResult(sheet.name, state.sheetAnalyses.get(sheet.name));
       setError("");
     } catch (error) {
       state.analysis = null;
       state.debug = error instanceof AnalysisError ? error.debug ?? null : null;
+      cacheSheetError(sheet.name, error);
       setError(error.message);
     }
   }
@@ -4809,6 +5260,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     state.fieldAdjustments = sanitizeFieldAdjustments(settings);
     const saved = persist ? saveStoredFieldAdjustments(state.fieldAdjustments) : true;
     refreshEffectiveConfig();
+    state.sheetAnalyses = new Map();
+    state.sheetOverview = [];
+    state.allSheetLastCheckedAt = "";
     applyFieldAdjustmentStyles();
     reanalyzeWithCurrentConfigIfReady();
     state.fieldAdjustmentStatus = saved
@@ -4898,6 +5352,172 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   function getSelectedSheet() {
     return state.workbook?.sheets.find((sheet) => sheet.name === state.selectedSheetName) ?? null;
+  }
+
+  function getSheetDisplayDate(sheetName) {
+    const text = String(sheetName ?? "").trim();
+    const isoMatch = /(\d{4})[-_/年](\d{1,2})[-_/月](\d{1,2})/.exec(text);
+    if (isoMatch) {
+      const [, year, month, day] = isoMatch;
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    }
+
+    const shortMatch = /(\d{1,2})\s*[/-]\s*(\d{1,2})/.exec(text);
+    if (shortMatch) {
+      const [, month, day] = shortMatch;
+      return `${Number(month)}/${Number(day)}`;
+    }
+
+    return text || "シート名なし";
+  }
+
+  function getEnvironmentMissingLabels(analysis) {
+    return analysis?.summary?.environment?.missingLabels ?? [];
+  }
+
+  function getEnvironmentLabelNotFoundLabels(analysis) {
+    return (analysis?.debug?.environment?.checks ?? [])
+      .filter((check) => check.status === "label-not-found")
+      .map((check) => check.label)
+      .filter(Boolean);
+  }
+
+  function buildAllSheetEnvironmentDiagnostics() {
+    const diagnostics = [];
+    for (const [sheetName, result] of state.sheetAnalyses ?? []) {
+      if (result?.status !== "ok") {
+        continue;
+      }
+      const missingLabels = getEnvironmentMissingLabels(result.analysis);
+      const labelNotFoundLabels = getEnvironmentLabelNotFoundLabels(result.analysis);
+      if (missingLabels.length === 0 && labelNotFoundLabels.length === 0) {
+        continue;
+      }
+      diagnostics.push({
+        sheetName,
+        missingLabels,
+        labelNotFoundLabels,
+      });
+    }
+    return diagnostics;
+  }
+
+  function summarizeMainIssueLabels(analysis, error = null) {
+    if (error) {
+      return ["シートを解析できませんでした"];
+    }
+
+    const items = analysis?.reviewItems ?? [];
+    const labels = [];
+    for (const item of items) {
+      if (!labels.includes(item.ruleName)) {
+        labels.push(item.ruleName);
+      }
+      if (labels.length >= 3) {
+        break;
+      }
+    }
+    return labels;
+  }
+
+  function countTableCellFindings(analysis, severity) {
+    return (analysis?.findings ?? []).filter(
+      (finding) =>
+        finding.severity === severity &&
+        Number.isInteger(finding.stateRow) &&
+        Number.isInteger(finding.reviewerRow) &&
+        Number.isInteger(finding.context?.startIndex),
+    ).length;
+  }
+
+  function buildSheetOverviewItem(sheetName, result) {
+    if (!result || result.status === "error") {
+      return {
+        sheetName,
+        dateLabel: getSheetDisplayDate(sheetName),
+        status: "error",
+        redIncidents: 1,
+        redCells: 0,
+        yellowIncidents: 0,
+        yellowCells: 0,
+        hasEnvironmentMissing: false,
+        environmentMissingLabels: [],
+        mainIssueLabels: summarizeMainIssueLabels(null, result?.error),
+        errorMessage: result?.error?.message ?? "解析できませんでした",
+      };
+    }
+
+    const analysis = result.analysis;
+    const summary = analysis?.summary ?? {};
+    const totals = summary.totals ?? { red: 0, yellow: 0, info: 0 };
+    const reviewTotals = summary.reviewTotals ?? { red: 0, yellow: 0, info: 0 };
+    const environmentMissingLabels = getEnvironmentMissingLabels(analysis);
+
+    return {
+      sheetName,
+      dateLabel: getSheetDisplayDate(sheetName),
+      status: "ok",
+      redIncidents: reviewTotals.red ?? 0,
+      redCells: countTableCellFindings(analysis, "red"),
+      yellowIncidents: reviewTotals.yellow ?? 0,
+      yellowCells: countTableCellFindings(analysis, "yellow"),
+      hasEnvironmentMissing: environmentMissingLabels.length > 0,
+      environmentMissingLabels,
+      mainIssueLabels: summarizeMainIssueLabels(analysis),
+      errorMessage: "",
+    };
+  }
+
+  function buildSheetOverviewFromAnalyses() {
+    const sheets = state.workbook?.sheets ?? [];
+    return sheets
+      .map((sheet) => buildSheetOverviewItem(sheet.name, state.sheetAnalyses.get(sheet.name)))
+      .filter(
+        (item) =>
+          item.status === "error" ||
+          item.redIncidents > 0 ||
+          item.yellowIncidents > 0 ||
+          item.hasEnvironmentMissing,
+      );
+  }
+
+  function setCurrentSheetAnalysisFromResult(sheetName, result) {
+    state.selectedSheetName = sheetName;
+    if (elements?.sheetSelect) {
+      elements.sheetSelect.value = sheetName;
+    }
+
+    if (result?.status === "ok") {
+      state.analysis = result.analysis;
+      state.debug = result.analysis.debug ?? null;
+      state.lastAnalysisAt = result.analyzedAt ?? new Date().toISOString();
+      state.currentErrorMessage = "";
+      setError("");
+      return;
+    }
+
+    state.analysis = null;
+    state.debug = result?.error instanceof AnalysisError ? result.error.debug ?? null : null;
+    state.currentErrorMessage = result?.error?.message ?? "シートを解析できませんでした";
+    setError(state.currentErrorMessage);
+  }
+
+  function cacheSheetAnalysis(sheetName, analysis) {
+    state.sheetAnalyses.set(sheetName, {
+      status: "ok",
+      analysis,
+      analyzedAt: new Date().toISOString(),
+    });
+    state.sheetOverview = buildSheetOverviewFromAnalyses();
+  }
+
+  function cacheSheetError(sheetName, error) {
+    state.sheetAnalyses.set(sheetName, {
+      status: "error",
+      error,
+      analyzedAt: new Date().toISOString(),
+    });
+    state.sheetOverview = buildSheetOverviewFromAnalyses();
   }
 
   function getFilteredFindings() {
@@ -5333,6 +5953,44 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       }
       for (const rejected of block.pairDebug?.rejected ?? []) {
         lines.push(`  不採用: 行 ${rejected.row} / ${rejected.reason}`);
+      }
+    }
+
+    lines.push("");
+    lines.push("[温度・湿度欄]");
+    const environmentDebug = debug.environment ?? {};
+    lines.push(`- チェック: ${environmentDebug.enabled === false ? "無効" : "有効"}`);
+    if (environmentDebug.scanRange) {
+      lines.push(`- 探索範囲: 行 ${environmentDebug.scanRange.rows ?? "-"} / 列 ${environmentDebug.scanRange.cols ?? "-"}`);
+    }
+    for (const check of environmentDebug.checks ?? []) {
+      const statusLabel =
+        check.status === "value-found"
+          ? "入力あり"
+          : check.status === "missing-value"
+            ? "未入力"
+            : "ラベル未検出";
+      const labelCell = check.labelCell
+        ? `${check.labelCell.address}「${check.labelCell.text}」`
+        : "未検出";
+      const valueCells = (check.valueCandidates ?? [])
+        .map((candidate) => `${candidate.address}「${candidate.text}」${candidate.present ? "" : "(数値なし)"}`)
+        .join(" / ");
+      lines.push(`- ${check.label}: ${statusLabel} / ラベル ${labelCell}`);
+      if (valueCells) {
+        lines.push(`  候補: ${valueCells}`);
+      }
+    }
+
+    const allSheetEnvironmentDiagnostics = buildAllSheetEnvironmentDiagnostics();
+    if (allSheetEnvironmentDiagnostics.length > 0) {
+      lines.push("");
+      lines.push("[全シート 温度・湿度欄]");
+      for (const item of allSheetEnvironmentDiagnostics) {
+        const missingText = item.missingLabels.length > 0 ? `未入力: ${item.missingLabels.join("・")}` : "";
+        const labelNotFoundText =
+          item.labelNotFoundLabels.length > 0 ? `ラベル未検出: ${item.labelNotFoundLabels.join("・")}` : "";
+        lines.push(`- ${item.sheetName}: ${[missingText, labelNotFoundText].filter(Boolean).join(" / ")}`);
       }
     }
 
@@ -5779,6 +6437,87 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     `;
   }
 
+  function renderSheetOverviewCard(item) {
+    const severityClass =
+      item.status === "error" ? "sheet-overview-card--error" : item.redIncidents > 0 ? "sheet-overview-card--red" : "sheet-overview-card--yellow";
+    const activeClass = item.sheetName === state.selectedSheetName ? " sheet-overview-card--active" : "";
+    const environmentText = item.hasEnvironmentMissing
+      ? `温湿度: ${item.environmentMissingLabels.join("・")}未入力`
+      : "温湿度: 入力漏れなし";
+    const mainText = item.mainIssueLabels.length > 0 ? item.mainIssueLabels.join(" / ") : "要確認内容あり";
+
+    return `
+      <button class="sheet-overview-card ${severityClass}${activeClass}" type="button" data-sheet-name="${escapeHtml(item.sheetName)}">
+        <div class="sheet-overview-card__top">
+          <div>
+            <div class="sheet-overview-card__date">${escapeHtml(item.dateLabel)}</div>
+            <div class="sheet-overview-card__sheet">シート名: ${escapeHtml(item.sheetName)}</div>
+          </div>
+          <div class="sheet-overview-card__counts">
+            <span class="meta-pill">赤 ${formatIncidentSlotSummary(item.redIncidents, item.redCells)}</span>
+            <span class="meta-pill">黄 ${item.yellowIncidents}件</span>
+          </div>
+        </div>
+        <div class="sheet-overview-card__badges">
+          <span class="meta-pill">${escapeHtml(environmentText)}</span>
+        </div>
+        <div class="sheet-overview-card__main">${escapeHtml(mainText)}</div>
+        <div class="sheet-overview-card__hint">押すと、この日の表レビューを表示します。</div>
+      </button>
+    `;
+  }
+
+  function renderSheetOverview() {
+    if (!elements?.sheetOverviewList) {
+      return;
+    }
+
+    const totalSheets = state.workbook?.sheets?.length ?? 0;
+    const overview = state.sheetOverview ?? [];
+    const checkedCount = state.sheetAnalyses?.size ?? 0;
+
+    if (elements.sheetOverviewCount) {
+      elements.sheetOverviewCount.textContent =
+        checkedCount > 0 ? `要確認 ${overview.length}日 / 確認済み${checkedCount}シート` : "未チェック";
+    }
+
+    if (elements.sheetOverviewGuide) {
+      elements.sheetOverviewGuide.textContent =
+        checkedCount > 0
+          ? "要確認がある日付だけ表示しています。日付を押すと、その日の表レビューへ切り替わります。"
+          : "xlsxを読み込むと、全日分を自動でチェックして直す必要がありそうな日付だけ表示します。";
+    }
+
+    if (!totalSheets) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="result-card result-card--empty">
+          先にxlsxを選んでください。
+        </article>
+      `;
+      return;
+    }
+
+    if (checkedCount === 0) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="result-card result-card--empty">
+          xlsxを選ぶと、全日分チェックを自動で開始します。必要なときだけ「全日分を再チェックする」を押してください。
+        </article>
+      `;
+      return;
+    }
+
+    if (overview.length === 0) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="result-card result-card--empty">
+          要確認がある日付は見つかりませんでした。必要に応じてシートを選んで表レビューを確認してください。
+        </article>
+      `;
+      return;
+    }
+
+    elements.sheetOverviewList.innerHTML = overview.map(renderSheetOverviewCard).join("");
+  }
+
   function renderResults() {
     const findings = getDisplayFindings();
     const ui = getUiSettings();
@@ -6190,7 +6929,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     setDiagnostic(
       elements.diagnosticAnalyze,
       state.diagnostics.analyzeClicks > 0,
-      `チェックボタン: ${state.diagnostics.analyzeClicks}回押下を検知`,
+      `チェック操作: ${state.diagnostics.lastAnalyzeLabel} / ${state.diagnostics.analyzeClicks}回実行を検知`,
     );
     setDiagnostic(
       elements.diagnosticDemo,
@@ -6244,6 +6983,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const hasFindings = getDisplayFindings().length > 0;
 
     elements.sheetSelect.disabled = !hasWorkbook;
+    if (elements.analyzeAllButton) {
+      elements.analyzeAllButton.disabled = false;
+      elements.analyzeAllButton.dataset.state = !hasWorkbook || !state.config ? "not-ready" : "ready";
+    }
     elements.analyzeButton.disabled = false;
     elements.downloadCsvButton.disabled = false;
     elements.analyzeButton.dataset.state = !hasWorkbook || !state.selectedSheetName || !state.config ? "not-ready" : "ready";
@@ -6272,13 +7015,19 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       state.selectedSheetName = workbook.sheets[0].name;
       state.analysis = null;
       state.debug = null;
+      state.sheetAnalyses = new Map();
+      state.sheetOverview = [];
+      state.allSheetLastCheckedAt = "";
       state.childFilter = "";
       state.selectedReviewCell = null;
       state.sourceLabel = sourceLabel;
       populateSheetSelect();
       renderAll();
-      setStatus("xlsx の読み込みが完了しました。シートを選んで「チェックする」を押してください。");
+      setStatus("xlsx の読み込みが完了しました。続けて全日分を自動チェックします。");
       setDiagnostic(elements.diagnosticFile, true, `ファイル読込: 成功しました（読込 ${state.diagnostics.fileReads}回）`);
+      if (state.config && workbook.sheets.length > 0) {
+        await handleAnalyzeAllSheets({ automatic: true });
+      }
     } catch (error) {
       setDiagnostic(elements.diagnosticFile, false, "ファイル読込: 失敗しました。Safariまたはホーム画面アプリで開いているか確認してください");
       throw error;
@@ -6287,24 +7036,25 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   async function handleAnalyze() {
     state.diagnostics.analyzeClicks += 1;
-    setDiagnostic(elements.diagnosticAnalyze, true, `チェックボタン: ${state.diagnostics.analyzeClicks}回押下を検知`);
+    state.diagnostics.lastAnalyzeLabel = "選択シートチェック";
+    setDiagnostic(elements.diagnosticAnalyze, true, `選択シートチェック: ${state.diagnostics.analyzeClicks}回実行を検知`);
 
     if (!state.workbook?.sheets?.length) {
-      setStatus("チェックボタンは押せています。先にxlsxファイルを選んでください。");
+      setStatus("チェック操作は動いています。先にxlsxファイルを選んでください。");
       setError("ファイル未選択です。iPadではFilesのプレビュー直開きではなく、Safariまたはホーム画面アプリから開いてください。");
       updateControls();
       return;
     }
 
     if (!state.selectedSheetName) {
-      setStatus("チェックボタンは押せています。チェックするシートを選んでください。");
+      setStatus("チェック操作は動いています。チェックするシートを選んでください。");
       setError("シート未選択です。シート一覧から対象日を選んでください。");
       updateControls();
       return;
     }
 
     if (!state.config) {
-      setStatus("チェックボタンは押せていますが、設定が読み込めていません。");
+      setStatus("チェック操作は動いていますが、設定が読み込めていません。");
       setError("設定ファイルが未読込です。既定設定に戻すか、設定JSONを読み込んでください。");
       updateControls();
       return;
@@ -6325,14 +7075,15 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     try {
       state.selectedReviewCell = null;
-      state.analysis = analyzeSheet(sheet, state.config);
-      state.debug = state.analysis.debug ?? null;
-      state.lastAnalysisAt = new Date().toISOString();
+      const analysis = analyzeSheet(sheet, state.config);
+      cacheSheetAnalysis(sheet.name, analysis);
+      setCurrentSheetAnalysisFromResult(sheet.name, state.sheetAnalyses.get(sheet.name));
       renderAll();
       setStatus("解析が完了しました。要確認箇所を一覧で確認できます。");
     } catch (error) {
       state.analysis = null;
       state.debug = error instanceof AnalysisError ? error.debug ?? null : null;
+      cacheSheetError(sheet.name, error);
       renderAll();
       if (error instanceof AnalysisError) {
         setError(error.message);
@@ -6347,6 +7098,75 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
   }
 
+  async function handleAnalyzeAllSheets({ automatic = false } = {}) {
+    state.diagnostics.analyzeClicks += 1;
+    state.diagnostics.lastAnalyzeLabel = `全日分チェック（${automatic ? "自動" : "手動"}）`;
+    setDiagnostic(
+      elements.diagnosticAnalyze,
+      true,
+      `全日分チェック: ${state.diagnostics.analyzeClicks}回実行（${automatic ? "自動" : "手動"}）`,
+    );
+
+    if (!state.workbook?.sheets?.length) {
+      setStatus("全日分チェック操作は動いています。先にxlsxファイルを選んでください。");
+      setError("ファイル未選択です。ホーム画面アプリまたはSafariから開いて、xlsxを選んでください。");
+      updateControls();
+      return;
+    }
+
+    if (!state.config) {
+      setStatus("全日分チェック操作は動いていますが、設定が読み込めていません。");
+      setError("設定ファイルが未読込です。既定設定に戻すか、設定JSONを読み込んでください。");
+      updateControls();
+      return;
+    }
+
+    const sheets = state.workbook.sheets;
+    const restoreButton = setButtonBusy(
+      elements.analyzeAllButton,
+      true,
+      automatic ? "読み込み後に全日分確認中..." : "全日分を再確認中...",
+    );
+    setError("");
+    state.sheetAnalyses = new Map();
+    state.sheetOverview = [];
+    state.analysis = null;
+    state.debug = null;
+    state.selectedReviewCell = null;
+    renderAll();
+
+    try {
+      for (let index = 0; index < sheets.length; index += 1) {
+        const sheet = sheets[index];
+        setStatus(`全日分をチェック中です... ${index + 1}/${sheets.length}「${sheet.name}」`);
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        try {
+          const analysis = analyzeSheet(sheet, state.config);
+          cacheSheetAnalysis(sheet.name, analysis);
+        } catch (error) {
+          cacheSheetError(sheet.name, error);
+        }
+      }
+
+      state.allSheetLastCheckedAt = new Date().toISOString();
+      const firstIssue = state.sheetOverview[0];
+      const firstSheetName = firstIssue?.sheetName ?? sheets[0]?.name ?? "";
+      if (firstSheetName) {
+        setCurrentSheetAnalysisFromResult(firstSheetName, state.sheetAnalyses.get(firstSheetName));
+      }
+      renderAll();
+      setStatus(
+        state.sheetOverview.length > 0
+          ? `全日分チェックが完了しました。要確認がある日付は ${state.sheetOverview.length}日です。`
+          : "全日分チェックが完了しました。要確認がある日付は見つかりませんでした。",
+      );
+    } finally {
+      restoreButton?.();
+      updateControls();
+    }
+  }
+
   async function handleDemoFile() {
     state.diagnostics.demoClicks += 1;
     setDiagnostic(elements.diagnosticDemo, true, `内蔵ダミーxlsx: ${state.diagnostics.demoClicks}回押下を検知`);
@@ -6357,7 +7177,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     try {
       const buffer = base64ToArrayBuffer(DEMO_XLSX_BASE64);
       await readWorkbookFile(buffer, "内蔵ダミーxlsx");
-      setStatus("内蔵ダミーxlsxを読み込めました。続けて「チェックする」を押してください。");
+      setStatus("内蔵ダミーxlsxを読み込み、全日分チェックまで完了しました。");
     } finally {
       restoreButton();
       updateControls();
@@ -6489,8 +7309,24 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     elements.sheetSelect.addEventListener("change", (event) => {
       state.selectedSheetName = event.target.value;
+      const cachedResult = state.sheetAnalyses.get(state.selectedSheetName);
+      if (cachedResult) {
+        setCurrentSheetAnalysisFromResult(state.selectedSheetName, cachedResult);
+        state.selectedReviewCell = null;
+        renderAll();
+      }
       setStatus(`シート「${state.selectedSheetName || "未選択"}」を選びました。`);
       updateControls();
+    });
+
+    elements.analyzeAllButton?.addEventListener("click", async () => {
+      try {
+        await handleAnalyzeAllSheets();
+      } catch (error) {
+        setError(error.message);
+        setStatus("全シートチェック中にエラーが発生しました。");
+        updateControls();
+      }
     });
 
     elements.analyzeButton.addEventListener("click", async () => {
@@ -6541,6 +7377,25 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       };
 
       renderReviewBoard();
+    });
+
+    elements.sheetOverviewList?.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-sheet-name]");
+      if (!(button instanceof HTMLElement)) {
+        return;
+      }
+
+      const sheetName = button.dataset.sheetName ?? "";
+      const result = state.sheetAnalyses.get(sheetName);
+      if (!result) {
+        setStatus("この日付はまだ解析結果がありません。全シートチェックをやり直してください。");
+        return;
+      }
+
+      state.selectedReviewCell = null;
+      setCurrentSheetAnalysisFromResult(sheetName, result);
+      renderAll();
+      setStatus(`「${sheetName}」の表レビューを表示しました。`);
     });
 
     for (const checkbox of elements.severityInputs ?? []) {
@@ -7475,6 +8330,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       elements.reviewGuide.textContent =
         reviewMaps.flaggedSlotCount > 0
           ? `表では${formatSlotCount(reviewMaps.flaggedSlotCount, { prefix: "" })}をそのまま色付けし、見出しは${formatIncidentSlotSummary(groupedFindings.length, reviewMaps.flaggedSlotCount, { prefix: "要確認 " })}として分けて表示します。セルを押すと区間の詳細を確認できます。`
+          : groupedFindings.length > 0
+            ? "温度・湿度など、表のコマ以外の要確認があります。要確認日付一覧または補助一覧を確認してください。"
           : "要確認のコマはありません。必要に応じて表を見て、前後の状態や記録者を確認してください。";
     }
 
@@ -7724,6 +8581,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     const reviewerNames = summary.reviewerStats?.names ?? [];
     const reviewerText = reviewerNames.length > 0 ? reviewerNames.join("、") : "記録者欄を空欄として読み取りました";
+    const environmentMissingLabels = summary.environment?.missingLabels ?? [];
+    const environmentText =
+      environmentMissingLabels.length > 0
+        ? `温湿度: ${environmentMissingLabels.join("・")}未入力`
+        : "温湿度: 入力漏れなし、または欄未検出";
     const blockChips = (summary.blockSummaries ?? [])
       .map((block) => `<span class="structure-summary__chip">ブロック${block.blockIndex}: ${block.pairCount}人</span>`)
       .join("");
@@ -7732,6 +8594,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       <div class="structure-summary__lead"><strong>${summary.childCount}人分を確認できました。</strong></div>
       <div class="structure-summary__meta">対象時間: ${summary.timeRange} / ブロック数: ${summary.blockCount} / シート全体の記録者: ${escapeHtml(reviewerText)}</div>
       <div class="structure-summary__meta">赤 ${formatIncidentSlotSummary(reviewTotals.red ?? 0, totals.red ?? 0)} / 黄 ${formatIncidentSlotSummary(reviewTotals.yellow ?? 0, totals.yellow ?? 0)}</div>
+      <div class="structure-summary__meta">${escapeHtml(environmentText)}</div>
       <div class="structure-summary__chips">${blockChips}</div>
     `;
   }
@@ -7938,6 +8801,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function renderAll() {
     applyFieldAdjustmentStyles();
     renderRuntimeChrome();
+    renderSheetOverview();
     renderSummary();
     renderChildFilter();
     renderFilterControls();
@@ -8044,7 +8908,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     setDiagnosticState(
       elements.diagnosticAnalyze,
       state.diagnostics.analyzeClicks > 0 ? "ok" : "pending",
-      `チェックボタン: ${state.diagnostics.analyzeClicks}回押下を検知`,
+      `チェック操作: ${state.diagnostics.lastAnalyzeLabel} / ${state.diagnostics.analyzeClicks}回実行を検知`,
     );
     setDiagnosticState(
       elements.diagnosticDemo,
@@ -8228,7 +9092,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     setDiagnostic(
       elements.diagnosticAnalyze,
       state.diagnostics.analyzeClicks > 0,
-      `チェックボタン: ${state.diagnostics.analyzeClicks}回押下を検知`,
+      `チェック操作: ${state.diagnostics.lastAnalyzeLabel} / ${state.diagnostics.analyzeClicks}回実行を検知`,
     );
     setDiagnostic(
       elements.diagnosticDemo,
@@ -8387,7 +9251,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     setDiagnosticState(
       elements.diagnosticAnalyze,
       state.diagnostics.analyzeClicks > 0 ? "ok" : "pending",
-      `チェックボタン: ${state.diagnostics.analyzeClicks}回押下を検知`,
+      `チェック操作: ${state.diagnostics.lastAnalyzeLabel} / ${state.diagnostics.analyzeClicks}回実行を検知`,
     );
     setDiagnosticState(
       elements.diagnosticDemo,
@@ -8576,6 +9440,23 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         : isSafariBrowser()
           ? "Safari"
           : "ブラウザ";
+    const environmentDiagnostics = buildAllSheetEnvironmentDiagnostics();
+    const labelNotFoundSheets = environmentDiagnostics.filter((item) => item.labelNotFoundLabels.length > 0);
+    const missingValueSheets = environmentDiagnostics.filter((item) => item.missingLabels.length > 0);
+    const labelNotFoundSummary =
+      labelNotFoundSheets.length === 0
+        ? "なし"
+        : includeSensitive
+          ? labelNotFoundSheets
+              .map((item) => `${item.sheetName}:${item.labelNotFoundLabels.join("・")}`)
+              .join(" / ")
+          : `${labelNotFoundSheets.length}日（詳細診断ONでシート名表示）`;
+    const missingValueSummary =
+      missingValueSheets.length === 0
+        ? "なし"
+        : includeSensitive
+          ? missingValueSheets.map((item) => `${item.sheetName}:${item.missingLabels.join("・")}`).join(" / ")
+          : `${missingValueSheets.length}日`;
 
     return {
       versionLabel: buildInfo.versionLabel ?? "-",
@@ -8598,6 +9479,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       selectedCellLabel: getSelectedCellSupportSummary(includeSensitive),
       lastErrorLabel: state.lastErrorMessage || "ありません",
       lastAnalysisLabel: state.lastAnalysisAt ? formatSupportDateTime(state.lastAnalysisAt) : "未実行",
+      environmentLabelNotFoundSummary: labelNotFoundSummary,
+      environmentMissingValueSummary: missingValueSummary,
     };
   }
 
@@ -8621,6 +9504,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       `赤件数: ${payload.redIncidentCount}`,
       `赤コマ数: ${payload.redCellCount}`,
       `黄件数: ${payload.yellowIncidentCount}`,
+      `温度・湿度未入力: ${payload.environmentMissingValueSummary}`,
+      `温度・湿度欄未検出: ${payload.environmentLabelNotFoundSummary}`,
       `最後に選択したセル: ${payload.selectedCellLabel}`,
       `最後のエラー: ${payload.lastErrorLabel}`,
       `最終解析時刻: ${payload.lastAnalysisLabel}`,
@@ -8984,7 +9869,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     setDiagnosticState(
       elements?.diagnosticAnalyze,
       state.diagnostics.analyzeClicks > 0 ? "ok" : "pending",
-      `チェックボタン: ${state.diagnostics.analyzeClicks}回押下を検知`,
+      `チェック操作: ${state.diagnostics.lastAnalyzeLabel} / ${state.diagnostics.analyzeClicks}回実行を検知`,
     );
     setDiagnosticState(
       elements?.diagnosticDemo,
