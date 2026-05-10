@@ -2202,6 +2202,365 @@ body {
   }
 }
 
+/* Dashboard redesign pass: make the app feel like a compact iPad dashboard. */
+.app-topbar.hero {
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 92px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(232, 247, 244, 0.92)),
+    radial-gradient(circle at 8% 18%, rgba(0, 108, 103, 0.1), transparent 28%);
+}
+
+.app-topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.app-topbar__mark,
+.app-nav__logo {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--brand), #12a39b);
+  color: white;
+  font-weight: 900;
+  box-shadow: 0 10px 24px rgba(0, 108, 103, 0.22);
+}
+
+.app-topbar__mark {
+  width: 54px;
+  height: 54px;
+  font-size: 1.45rem;
+}
+
+.app-topbar__side {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.app-topbar .hero__eyebrow {
+  display: inline-flex;
+  margin-bottom: 4px;
+  padding: 4px 9px;
+  font-size: 0.72rem;
+}
+
+.app-topbar .hero__lead {
+  display: block;
+  max-width: 46ch;
+  margin-top: 4px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.app-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(47, 38, 30, 0.07);
+  color: var(--text-soft);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.app-status-pill[data-status-tone="busy"] {
+  background: var(--warn-soft);
+  color: #7b4d05;
+}
+
+.app-status-pill[data-status-tone="done"] {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.app-status-pill[data-status-tone="warn"] {
+  background: var(--danger-soft);
+  color: #8a2419;
+}
+
+.app-help-button {
+  min-height: 40px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.app-help-button.is-active {
+  color: white;
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+}
+
+.app-nav {
+  grid-template-rows: auto repeat(3, auto) 1fr;
+  align-content: start;
+}
+
+.app-nav__brand {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 10px 14px;
+  border-bottom: 1px solid rgba(95, 77, 54, 0.12);
+}
+
+.app-nav__logo {
+  width: 42px;
+  height: 42px;
+}
+
+.app-nav__brand strong,
+.app-nav__brand span {
+  display: block;
+}
+
+.app-nav__brand strong {
+  font-size: 1.05rem;
+}
+
+.app-nav__brand span {
+  margin-top: 2px;
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.app-nav__link {
+  min-height: 78px;
+  font-size: 1.13rem;
+  box-shadow: 0 8px 18px rgba(87, 63, 26, 0.05);
+}
+
+.app-nav__icon {
+  width: 46px;
+  height: 46px;
+  flex-basis: 46px;
+  font-size: 1.25rem;
+}
+
+.panel__lead {
+  margin: 6px 0 0;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+.app-screen-home .panel--control {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(233, 249, 246, 0.94)),
+    var(--surface);
+}
+
+.app-screen-home .panel--control .field__input[type="file"] {
+  min-height: 68px;
+  padding: 18px;
+  border: 2px dashed rgba(0, 108, 103, 0.32);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.86);
+  font-size: 1.02rem;
+  font-weight: 800;
+}
+
+.app-screen-home .summary-card {
+  min-height: 128px;
+  padding: 20px;
+}
+
+.app-screen-home .summary-card__value {
+  font-size: clamp(1.45rem, 2.8vw, 2.35rem);
+}
+
+.sheet-overview-card {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  min-height: 224px;
+  padding: 20px;
+  border-width: 1px 1px 1px 0;
+}
+
+.sheet-overview-card__weekday {
+  font-size: 0.9em;
+}
+
+.sheet-overview-card__counts .meta-pill {
+  min-height: 34px;
+  font-size: 0.9rem;
+}
+
+.sheet-overview-card__reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sheet-overview-card__reason {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(201, 60, 45, 0.1);
+  color: #8a2419;
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.sheet-overview-card__reason--ok {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.sheet-overview-card__hint {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(0, 108, 103, 0.09);
+  color: var(--brand-strong);
+  font-weight: 900;
+}
+
+.review-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.app-screen-review .panel--review {
+  background:
+    linear-gradient(180deg, rgba(255, 252, 247, 0.98), rgba(250, 244, 235, 0.96)),
+    var(--surface);
+}
+
+.app-screen-review .review-board {
+  border-radius: 20px;
+}
+
+.support-quick-steps {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 16px 0;
+}
+
+.support-quick-steps article {
+  min-height: 110px;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0, 108, 103, 0.12);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.support-quick-steps strong,
+.support-quick-steps span {
+  display: block;
+}
+
+.support-quick-steps span {
+  margin-top: 8px;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+.support-diagnostics-details {
+  margin: 14px 0;
+  border: 1px solid rgba(95, 77, 54, 0.14);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.72);
+  overflow: hidden;
+}
+
+.support-diagnostics-details > summary {
+  min-height: var(--tap);
+  padding: 14px 16px;
+  cursor: pointer;
+  font-weight: 900;
+  list-style: none;
+}
+
+.support-diagnostics-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.support-diagnostics-details .diagnostic-list {
+  padding: 0 16px 16px;
+}
+
+@media (max-width: 1020px) {
+  .app-topbar__side {
+    flex-wrap: wrap;
+  }
+
+  .support-quick-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-nav__brand {
+    display: none;
+  }
+
+  .app-topbar.hero {
+    min-height: auto;
+  }
+
+  .app-topbar__brand {
+    align-items: flex-start;
+  }
+
+  .app-topbar__mark {
+    width: 46px;
+    height: 46px;
+    border-radius: 16px;
+  }
+
+  .app-topbar__side {
+    justify-content: flex-start;
+  }
+
+  .app-help-button {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-topbar .hero__lead {
+    display: none;
+  }
+
+  .app-status-pill,
+  .hero__build-detail {
+    font-size: 0.78rem;
+  }
+
+  .review-toolbar {
+    justify-content: stretch;
+  }
+
+  .review-toolbar .button,
+  .review-toolbar .meta-pill {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sheet-overview-card {
+    min-height: 206px;
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home">
@@ -2212,24 +2571,36 @@ body {
     </noscript>
     <div class="app-shell">
       <header class="hero app-topbar">
-        <div class="hero__topline">
-          <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-10-1743</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-10 17:43</div>
+        <div class="app-topbar__brand">
+          <div class="app-topbar__mark" aria-hidden="true">午</div>
+          <div>
+            <div class="hero__eyebrow">iPadホーム画面アプリ</div>
+            <h1>午睡チェック</h1>
+            <p class="hero__lead">xlsxを選ぶと全日分を確認し、直す必要がありそうな日付をカードで表示します。</p>
           </div>
         </div>
+        <div class="app-topbar__side">
+          <div id="app-status-pill" class="app-status-pill">未読込</div>
+          <div class="hero__build">
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-10-1829</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-10 18:29</div>
+          </div>
+          <button class="button button--ghost app-help-button" type="button" data-screen-link="support">
+            困ったとき
+          </button>
+        </div>
         <div id="debug-banner" class="debug-banner" hidden></div>
-        <div class="hero__eyebrow">完全オフライン / 外部送信なし / iPadホーム画面対応</div>
-        <h1>午睡記録確認支援ツール</h1>
-        <p class="hero__lead">
-          はいチーズ！の睡眠チェック表を読み込み、目視確認したい箇所を
-          <strong>赤・黄・情報</strong>で一覧表示します。元ファイルは変更せず、
-          ブラウザ内だけで処理します。
-        </p>
       </header>
 
       <div class="app-frame">
         <nav class="app-nav" aria-label="通常メニュー">
+          <div class="app-nav__brand">
+            <div class="app-nav__logo" aria-hidden="true">午</div>
+            <div>
+              <strong>午睡チェック</strong>
+              <span>要確認の日付を先に見る</span>
+            </div>
+          </div>
           <a class="app-nav__link app-nav__link--primary" href="#home-dashboard" data-screen-link="home">
             <span class="app-nav__icon" aria-hidden="true">家</span>
             <span class="app-nav__text">ホーム</span>
@@ -2292,7 +2663,11 @@ body {
 
         <section id="home-dashboard" class="panel panel--control screen-section screen-home" tabindex="-1">
           <div class="panel__title-row">
-            <h2>1. ファイルを選ぶ</h2>
+            <div>
+              <h2>午睡記録ファイルを選ぶ</h2>
+              <p class="panel__lead">ファイルを選ぶと、全日分チェックを自動で始めます。</p>
+            </div>
+            <div class="meta-pill">外部送信なし</div>
             <button id="demo-file-button" class="button button--subtle" type="button">
               ダミーxlsxで試す
             </button>
@@ -2333,7 +2708,7 @@ body {
 
           <div class="action-row">
             <button id="analyze-all-button" class="button button--primary" type="button">
-              全日分を再チェックする
+              全日分をチェックする
             </button>
             <button id="analyze-button" class="button button--primary" type="button">
               選択シートだけチェック
@@ -2350,7 +2725,7 @@ body {
         <section id="sheet-overview-panel" class="panel panel--sheet-overview screen-section screen-home" tabindex="-1">
           <div class="panel__title-row">
             <div>
-              <h2>要確認日付一覧</h2>
+              <h2>要確認の日付</h2>
               <p id="sheet-overview-guide" class="results-guide">
                 xlsxを読み込むと全日分を自動で確認します。必要なときだけ「全日分を再チェックする」を押してください。
               </p>
@@ -2418,10 +2793,20 @@ body {
               妻のiPadで違和感や不具合が出たときは、この欄を開いて
               <strong>診断情報をコピー</strong> を押すか、そのままスクショしてください。初期設定では、園児名や記録者名を含めずに共有できます。
             </p>
-            <label class="toggle-chip support-panel__toggle">
-              <input id="support-sensitive-toggle" type="checkbox" />
-              <span>詳細診断を含める（ファイル名・最後に見た園児名を含む可能性があります）</span>
-            </label>
+            <div class="support-quick-steps">
+              <article>
+                <strong>1. 画面をスクショ</strong>
+                <span>赤や黄の位置が分かる状態で撮ります。</span>
+              </article>
+              <article>
+                <strong>2. 診断情報をコピー</strong>
+                <span>標準では個人名を伏せます。</span>
+              </article>
+              <article>
+                <strong>3. 一言添えて共有</strong>
+                <span>「赤が多い」「開かない」などで十分です。</span>
+              </article>
+            </div>
             <div class="action-row action-row--compact">
               <button id="support-copy-button" class="button button--ghost" type="button">
                 診断情報をコピー
@@ -2429,11 +2814,38 @@ body {
             </div>
             <div id="support-copy-status" class="diagnostic-copy-status" hidden></div>
             <textarea id="support-copy-fallback" class="diagnostic-copy-fallback" hidden readonly></textarea>
+            <details class="support-diagnostics-details">
+              <summary>診断情報の表示</summary>
+              <div class="diagnostic-list">
+                <div id="support-version" class="diagnostic-item diagnostic-item--pending">アプリ版: 確認中</div>
+                <div id="support-build" class="diagnostic-item diagnostic-item--pending">ビルド日時: 確認中</div>
+                <div id="support-runtime" class="diagnostic-item diagnostic-item--pending">実行環境: 確認中</div>
+                <div id="support-url" class="diagnostic-item diagnostic-item--pending">現在のURL: 確認中</div>
+                <div id="support-pwa" class="diagnostic-item diagnostic-item--pending">PWA起動: 確認中</div>
+                <div id="support-offline" class="diagnostic-item diagnostic-item--pending">オフライン状態: 確認中</div>
+                <div id="support-service-worker" class="diagnostic-item diagnostic-item--pending">Service Worker: 確認中</div>
+                <div id="support-update" class="diagnostic-item diagnostic-item--pending">更新状況: まだ確認していません</div>
+                <div id="support-file" class="diagnostic-item diagnostic-item--pending">選択ファイル: 未選択</div>
+                <div id="support-sheet" class="diagnostic-item diagnostic-item--pending">選択シート: 未選択</div>
+                <div id="support-blocks" class="diagnostic-item diagnostic-item--pending">ブロック数: 未解析</div>
+                <div id="support-children" class="diagnostic-item diagnostic-item--pending">園児数: 未解析</div>
+                <div id="support-red-incidents" class="diagnostic-item diagnostic-item--pending">赤件数: 未解析</div>
+                <div id="support-red-cells" class="diagnostic-item diagnostic-item--pending">赤コマ数: 未解析</div>
+                <div id="support-yellow-incidents" class="diagnostic-item diagnostic-item--pending">黄件数: 未解析</div>
+                <div id="support-selected-cell" class="diagnostic-item diagnostic-item--pending">最後に選択したセル: まだありません</div>
+                <div id="support-last-error" class="diagnostic-item diagnostic-item--pending">最後のエラー: ありません</div>
+                <div id="support-last-analysis" class="diagnostic-item diagnostic-item--pending">最終解析時刻: 未実行</div>
+              </div>
+            </details>
             <details id="admin-panel" class="admin-panel">
               <summary class="admin-panel__summary">
                 <strong>管理モード</strong>
                 <span>設定・詳細ログ・現場調整は普段はここに隠します。</span>
               </summary>
+            <label class="toggle-chip support-panel__toggle">
+              <input id="support-sensitive-toggle" type="checkbox" />
+              <span>詳細診断を含める（ファイル名・最後に見た園児名を含む可能性があります）</span>
+            </label>
             <details id="field-adjustment-panel" class="field-adjustment-panel">
               <summary class="field-adjustment-panel__summary">
                 <strong>現場調整モード / 表示設定</strong>
@@ -2533,26 +2945,6 @@ body {
               <textarea id="field-settings-text" class="diagnostic-copy-fallback field-settings-text" placeholder="ここに設定テキストを貼り付けます"></textarea>
             </details>
             </details>
-            <div class="diagnostic-list">
-              <div id="support-version" class="diagnostic-item diagnostic-item--pending">アプリ版: 確認中</div>
-              <div id="support-build" class="diagnostic-item diagnostic-item--pending">ビルド日時: 確認中</div>
-              <div id="support-runtime" class="diagnostic-item diagnostic-item--pending">実行環境: 確認中</div>
-              <div id="support-url" class="diagnostic-item diagnostic-item--pending">現在のURL: 確認中</div>
-              <div id="support-pwa" class="diagnostic-item diagnostic-item--pending">PWA起動: 確認中</div>
-              <div id="support-offline" class="diagnostic-item diagnostic-item--pending">オフライン状態: 確認中</div>
-              <div id="support-service-worker" class="diagnostic-item diagnostic-item--pending">Service Worker: 確認中</div>
-              <div id="support-update" class="diagnostic-item diagnostic-item--pending">更新状況: まだ確認していません</div>
-              <div id="support-file" class="diagnostic-item diagnostic-item--pending">選択ファイル: 未選択</div>
-              <div id="support-sheet" class="diagnostic-item diagnostic-item--pending">選択シート: 未選択</div>
-              <div id="support-blocks" class="diagnostic-item diagnostic-item--pending">ブロック数: 未解析</div>
-              <div id="support-children" class="diagnostic-item diagnostic-item--pending">園児数: 未解析</div>
-              <div id="support-red-incidents" class="diagnostic-item diagnostic-item--pending">赤件数: 未解析</div>
-              <div id="support-red-cells" class="diagnostic-item diagnostic-item--pending">赤コマ数: 未解析</div>
-              <div id="support-yellow-incidents" class="diagnostic-item diagnostic-item--pending">黄件数: 未解析</div>
-              <div id="support-selected-cell" class="diagnostic-item diagnostic-item--pending">最後に選択したセル: まだありません</div>
-              <div id="support-last-error" class="diagnostic-item diagnostic-item--pending">最後のエラー: ありません</div>
-              <div id="support-last-analysis" class="diagnostic-item diagnostic-item--pending">最終解析時刻: 未実行</div>
-            </div>
           </div>
         </details>
 
@@ -2592,8 +2984,14 @@ body {
 
         <section id="review-section" class="panel panel--review screen-section screen-review" tabindex="-1">
           <div class="panel__title-row">
-            <h2>表レビュー</h2>
-            <div id="review-count" class="meta-pill">要確認 0件 / 該当0コマ</div>
+            <div>
+              <h2 id="review-title">表レビュー</h2>
+              <p class="panel__lead">赤・黄のセルをタップすると、記録者と前後状態を確認できます。</p>
+            </div>
+            <div class="review-toolbar">
+              <button id="review-back-button" class="button button--ghost" type="button">ホームへ戻る</button>
+              <div id="review-count" class="meta-pill">要確認 0件 / 該当0コマ</div>
+            </div>
           </div>
           <p id="review-guide" class="results-guide">
             元の表に近い並びで、赤と黄のコマを確認できます。
@@ -2699,7 +3097,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-10-1743","buildLabel":"2026-05-10 17:43","buildId":"2026-05-10-174331","builtAtIso":"2026-05-10T08:43:31.610Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-10-1829","buildLabel":"2026-05-10 18:29","buildId":"2026-05-10-182937","builtAtIso":"2026-05-10T09:29:37.011Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -5556,8 +5954,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       downloadCsvButton: document.querySelector("#download-csv-button"),
       summaryCards: document.querySelector("#summary-cards"),
       structureSummary: document.querySelector("#structure-summary"),
+      appStatusPill: document.querySelector("#app-status-pill"),
+      reviewTitle: document.querySelector("#review-title"),
       reviewCount: document.querySelector("#review-count"),
       reviewGuide: document.querySelector("#review-guide"),
+      reviewBackButton: document.querySelector("#review-back-button"),
       sheetAlertBanner: document.querySelector("#sheet-alert-banner"),
       reviewBoard: document.querySelector("#review-board"),
       cellDetailPanel: document.querySelector("#cell-detail-panel"),
@@ -5895,6 +6296,19 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
 
     return text || "シート名なし";
+  }
+
+  function getWeekdayLabel(dateLabel) {
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(dateLabel ?? ""));
+    if (!match) {
+      return "";
+    }
+    const [, year, month, day] = match;
+    const date = new Date(Number(year), Number(month) - 1, Number(day));
+    if (Number.isNaN(date.getTime())) {
+      return "";
+    }
+    return ["日", "月", "火", "水", "木", "金", "土"][date.getDay()] ?? "";
   }
 
   function getEnvironmentMissingLabels(analysis) {
@@ -7186,6 +7600,19 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       ? `温度・湿度: ${item.environmentMissingLabels.join("・")}未入力`
       : "温度・湿度: 入力漏れなし";
     const mainText = item.mainIssueLabels.length > 0 ? item.mainIssueLabels.join(" / ") : "問題は見つかりませんでした";
+    const weekdayLabel = getWeekdayLabel(item.dateLabel);
+    const reasonLabels = [
+      ...item.mainIssueLabels,
+      ...(item.hasEnvironmentMissing ? ["温度・湿度未入力"] : []),
+      ...(item.status === "error" ? ["解析できませんでした"] : []),
+    ]
+      .filter(Boolean)
+      .filter((label, index, labels) => labels.indexOf(label) === index)
+      .slice(0, 2);
+    const reasonHtml =
+      reasonLabels.length > 0
+        ? reasonLabels.map((label) => `<span class="sheet-overview-card__reason">${escapeHtml(label)}</span>`).join("")
+        : `<span class="sheet-overview-card__reason sheet-overview-card__reason--ok">目立つ要確認なし</span>`;
     const yellowText =
       item.yellowIncidents > 0 || item.hasEnvironmentMissing
         ? `黄 ${item.yellowIncidents}件${item.hasEnvironmentMissing ? " / 温湿度確認" : ""}`
@@ -7195,7 +7622,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       <button class="sheet-overview-card ${severityClass}${activeClass}" type="button" data-sheet-name="${escapeHtml(item.sheetName)}">
         <div class="sheet-overview-card__top">
           <div>
-            <div class="sheet-overview-card__date">${escapeHtml(item.dateLabel)}</div>
+            <div class="sheet-overview-card__date">
+              ${escapeHtml(item.dateLabel)}${weekdayLabel ? `<span class="sheet-overview-card__weekday">（${escapeHtml(weekdayLabel)}）</span>` : ""}
+            </div>
             <div class="sheet-overview-card__sheet">シート名: ${escapeHtml(item.sheetName)}</div>
           </div>
           <span class="sheet-overview-card__status">${escapeHtml(statusLabel)}</span>
@@ -7208,7 +7637,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           <span class="meta-pill">${escapeHtml(environmentText)}</span>
         </div>
         <div class="sheet-overview-card__main">${escapeHtml(mainText)}</div>
-        <div class="sheet-overview-card__hint">タップすると、この日の表レビューへ移動します。</div>
+        <div class="sheet-overview-card__reasons">${reasonHtml}</div>
+        <div class="sheet-overview-card__hint">表レビューを見る</div>
       </button>
     `;
   }
@@ -7480,6 +7910,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       downloadFindingsCsv(getDisplayFindings());
     });
 
+    elements.reviewBackButton?.addEventListener("click", () => {
+      setActiveScreen("home", { focus: true });
+      setStatus("ホームに戻りました。要確認の日付カードを確認できます。");
+    });
+
     elements.childFilter.addEventListener("change", (event) => {
       state.childFilter = event.target.value;
       renderResults();
@@ -7589,6 +8024,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     elements.downloadCsvButton.addEventListener("click", () => {
       downloadFindingsCsv(getDisplayFindings());
+    });
+
+    elements.reviewBackButton?.addEventListener("click", () => {
+      setActiveScreen("home", { focus: true });
+      setStatus("ホームに戻りました。要確認の日付カードを確認できます。");
     });
 
     elements.childFilter.addEventListener("change", (event) => {
@@ -8519,6 +8959,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
 
     if (!state.analysis) {
+      if (elements.reviewTitle) {
+        elements.reviewTitle.textContent = "表レビュー";
+      }
       if (elements.reviewCount) {
         elements.reviewCount.textContent = formatIncidentSlotSummary(0, 0, { prefix: "要確認 " });
       }
@@ -8544,6 +8987,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const layouts = (state.analysis.layouts ?? []).filter((layout) =>
       visibleRecords.some((record) => record.blockIndex === layout.blockIndex),
     );
+    if (elements.reviewTitle) {
+      const dateLabel = state.selectedSheetName ? getSheetDisplayDate(state.selectedSheetName) : "選択中の日付";
+      elements.reviewTitle.textContent = `${dateLabel} の表レビュー`;
+    }
 
     if (elements.reviewCount) {
       elements.reviewCount.textContent = formatIncidentSlotSummary(getDisplayFindings().length, reviewMaps.flaggedSlotCount, {
@@ -9056,6 +9503,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
 
     if (!state.analysis) {
+      if (elements.reviewTitle) {
+        elements.reviewTitle.textContent = "表レビュー";
+      }
       if (elements.reviewCount) {
         elements.reviewCount.textContent = formatIncidentSlotSummary(0, 0, { prefix: "要確認 " });
       }
@@ -9082,6 +9532,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const layouts = (state.analysis.layouts ?? []).filter((layout) =>
       visibleRecords.some((record) => record.blockIndex === layout.blockIndex),
     );
+    if (elements.reviewTitle) {
+      const dateLabel = state.selectedSheetName ? getSheetDisplayDate(state.selectedSheetName) : "選択中の日付";
+      elements.reviewTitle.textContent = `${dateLabel} の表レビュー`;
+    }
 
     if (elements.reviewCount) {
       elements.reviewCount.textContent = formatIncidentSlotSummary(groupedFindings.length, reviewMaps.flaggedSlotCount, {
@@ -10352,6 +10806,27 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     if (elements?.statusBanner) {
       elements.statusBanner.textContent = message;
     }
+    if (elements?.appStatusPill) {
+      const statusText = String(message ?? "");
+      let label = "未読込";
+      let tone = "idle";
+      if (/チェック中|解析中|読み込み中|確認中/.test(statusText)) {
+        label = "チェック中";
+        tone = "busy";
+      } else if (/失敗|エラー|できません/.test(statusText)) {
+        label = "確認が必要";
+        tone = "warn";
+      } else if (/完了|作成しました|表示しました/.test(statusText)) {
+        label = "チェック完了";
+        tone = "done";
+      } else if (/読み込|読込|選んで|未選択|先にxlsx/.test(statusText)) {
+        label = "未読込";
+        tone = "idle";
+      }
+      elements.appStatusPill.textContent = label;
+      elements.appStatusPill.dataset.statusTone = tone;
+      elements.appStatusPill.title = statusText;
+    }
     if (elements) {
       renderDiagnostics();
     }
@@ -10410,7 +10885,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     for (const link of elements?.appNavLinks ?? []) {
       const isActive = link.dataset.screenLink === activeScreen;
       link.classList.toggle("is-active", isActive);
-      link.classList.toggle("app-nav__link--primary", isActive);
+      if (link.classList.contains("app-nav__link")) {
+        link.classList.toggle("app-nav__link--primary", isActive);
+      }
       if (isActive) {
         link.setAttribute("aria-current", "page");
       } else {
@@ -10731,6 +11208,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     renderAll();
     bindEvents();
     bindFieldAdjustmentEvents();
+    elements?.reviewBackButton?.addEventListener("click", () => {
+      setActiveScreen("home", { focus: true });
+      setStatus("ホームに戻りました。要確認の日付カードを確認できます。");
+    });
 
     if (!state.supportListenersBound) {
       state.supportListenersBound = true;
