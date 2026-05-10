@@ -2769,8 +2769,8 @@ body[data-home-state="checking"].app-screen-home .home-progress-card {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-10-1911</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-10 19:11</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-10-1957</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-10 19:57</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support">
             困ったとき
@@ -3296,7 +3296,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-10-1911","buildLabel":"2026-05-10 19:11","buildId":"2026-05-10-191110","builtAtIso":"2026-05-10T10:11:10.494Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-10-1957","buildLabel":"2026-05-10 19:57","buildId":"2026-05-10-195700","builtAtIso":"2026-05-10T10:57:00.587Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -3861,7 +3861,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       return checks;
     }
 
-    const primaryLabel = toHalfWidthEnvironmentText(field?.label ?? "");
+    const primaryLabel = toHalfWidthText(field?.label ?? "");
     const primaryChecks = primaryLabel
       ? foundChecks.filter((check) => containsEnvironmentKeyword(check.labelCell?.text ?? "", [primaryLabel]))
       : [];
@@ -3989,6 +3989,37 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       summary: summarizeEnvironmentChecks(checks, environmentConfig),
       debug,
     };
+  }
+
+  function buildEnvironmentFailureResult(error) {
+    return {
+      findings: [],
+      summary: {
+        checkedCount: 0,
+        foundCount: 0,
+        missingCount: 0,
+        missingTypes: [],
+        missingLabels: [],
+        checks: [],
+        error: error instanceof Error ? error.message : String(error),
+      },
+      debug: {
+        enabled: true,
+        error: {
+          name: error instanceof Error ? error.name : "Error",
+          message: error instanceof Error ? error.message : String(error),
+        },
+        checks: [],
+      },
+    };
+  }
+
+  function safeEvaluateEnvironmentFields(sheet, config) {
+    try {
+      return evaluateEnvironmentFields(sheet, config);
+    } catch (error) {
+      return buildEnvironmentFailureResult(error);
+    }
   }
 
   function getRangeTexts(sheet, row, startCol, endCol) {
@@ -5449,7 +5480,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     const reviewerStats = collectReviewerStats(records);
     collectedFindings.push(...evaluateSheetReviewerStats(reviewerStats, config));
-    const environmentResult = evaluateEnvironmentFields(sheet, config);
+    const environmentResult = safeEvaluateEnvironmentFields(sheet, config);
     collectedFindings.push(...environmentResult.findings);
     const findings = sortFindings(collectedFindings);
     const reviewItems = buildReviewItems(findings, records, config);
@@ -7106,6 +7137,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     lines.push(`- チェック: ${environmentDebug.enabled === false ? "無効" : "有効"}`);
     if (environmentDebug.scanRange) {
       lines.push(`- 探索範囲: 行 ${environmentDebug.scanRange.rows ?? "-"} / 列 ${environmentDebug.scanRange.cols ?? "-"}`);
+    }
+    if (environmentDebug.error) {
+      lines.push(`- 温度・湿度チェック失敗: ${environmentDebug.error.message ?? environmentDebug.error}`);
+      lines.push("  シート全体の解析は続行しました。");
     }
     for (const check of environmentDebug.checks ?? []) {
       const statusLabel =
