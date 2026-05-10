@@ -2561,9 +2561,196 @@ body {
   }
 }
 
+/* Home states: empty -> upload only, checking -> progress only, complete -> dashboard. */
+.home-progress-card {
+  display: none;
+}
+
+body[data-home-state="empty"].app-screen-home .layout,
+body[data-home-state="checking"].app-screen-home .layout {
+  grid-template-columns: minmax(320px, 720px);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "picker";
+  justify-content: center;
+  align-content: center;
+  overflow: auto;
+}
+
+body[data-home-state="empty"].app-screen-home .panel--summary,
+body[data-home-state="empty"].app-screen-home .panel--sheet-overview,
+body[data-home-state="checking"].app-screen-home .panel--summary,
+body[data-home-state="checking"].app-screen-home .panel--sheet-overview {
+  display: none !important;
+}
+
+body[data-home-state="empty"].app-screen-home .panel--control,
+body[data-home-state="checking"].app-screen-home .panel--control {
+  grid-area: picker;
+  align-self: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+body[data-home-state="empty"].app-screen-home .panel--control {
+  min-height: min(560px, calc(100dvh - 160px));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(24px, 5vw, 52px);
+}
+
+body[data-home-state="empty"].app-screen-home .panel--control .panel__title-row {
+  justify-content: center;
+  text-align: center;
+}
+
+body[data-home-state="empty"].app-screen-home .panel--control h2 {
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+body[data-home-state="empty"].app-screen-home .panel--control .panel__lead {
+  font-size: 1rem;
+}
+
+body[data-home-state="empty"].app-screen-home #home-dashboard .control-grid {
+  grid-template-columns: 1fr;
+  max-width: 520px;
+  width: 100%;
+  margin: 12px auto 0;
+}
+
+body[data-home-state="empty"].app-screen-home #home-dashboard .field:first-child {
+  padding: 18px;
+  border: 2px dashed rgba(0, 108, 103, 0.28);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 18px 38px rgba(0, 108, 103, 0.1);
+}
+
+body[data-home-state="empty"].app-screen-home #home-dashboard .field:first-child .field__label {
+  color: var(--brand-strong);
+  font-size: 1.08rem;
+  text-align: center;
+}
+
+body[data-home-state="empty"].app-screen-home #home-dashboard .field__input[type="file"] {
+  cursor: pointer;
+  text-align: center;
+}
+
+body[data-home-state="empty"].app-screen-home #home-dashboard .action-row {
+  display: none;
+}
+
+body[data-home-state="checking"].app-screen-home .panel--control {
+  min-height: min(480px, calc(100dvh - 170px));
+  display: grid;
+  place-items: center;
+  padding: clamp(24px, 5vw, 52px);
+}
+
+body[data-home-state="checking"].app-screen-home #home-dashboard > .panel__title-row,
+body[data-home-state="checking"].app-screen-home #home-dashboard > .control-grid,
+body[data-home-state="checking"].app-screen-home #home-dashboard > .action-row,
+body[data-home-state="checking"].app-screen-home #home-dashboard > .status-banner,
+body[data-home-state="checking"].app-screen-home #home-dashboard > .error-box {
+  display: none !important;
+}
+
+body[data-home-state="checking"].app-screen-home .home-progress-card {
+  display: grid;
+}
+
+.home-progress-card {
+  width: min(100%, 540px);
+  gap: 18px;
+  justify-items: center;
+  text-align: center;
+  padding: clamp(22px, 4vw, 42px);
+  border-radius: 32px;
+  border: 1px solid rgba(0, 108, 103, 0.16);
+  background:
+    radial-gradient(circle at 50% 10%, rgba(0, 108, 103, 0.12), transparent 42%),
+    rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 44px rgba(87, 63, 26, 0.12);
+}
+
+.home-progress-card__spinner {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 6px solid rgba(0, 108, 103, 0.16);
+  border-top-color: var(--brand);
+  animation: home-progress-spin 0.9s linear infinite;
+}
+
+@keyframes home-progress-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.home-progress-card strong {
+  display: block;
+  font-size: clamp(1.25rem, 3vw, 1.8rem);
+}
+
+.home-progress-card p {
+  margin: 8px 0 0;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+.home-progress-card__track {
+  width: 100%;
+  height: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(0, 108, 103, 0.1);
+}
+
+.home-progress-card__bar {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--brand), #12a39b);
+  transition: width 160ms ease;
+}
+
+.home-progress-card__meta {
+  color: var(--text-soft);
+  font-weight: 900;
+}
+
+@media (max-width: 900px) {
+  body[data-home-state="empty"].app-screen-home .layout,
+  body[data-home-state="checking"].app-screen-home .layout {
+    min-height: 100%;
+    align-content: start;
+  }
+
+  body[data-home-state="empty"].app-screen-home .panel--control,
+  body[data-home-state="checking"].app-screen-home .panel--control {
+    min-height: 420px;
+  }
+}
+
+@media (max-width: 560px) {
+  body[data-home-state="empty"].app-screen-home .layout,
+  body[data-home-state="checking"].app-screen-home .layout {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-home-state="empty"].app-screen-home .panel--control,
+  body[data-home-state="checking"].app-screen-home .panel--control {
+    min-height: 360px;
+    padding: 20px;
+  }
+}
+
     </style>
   </head>
-  <body class="app-screen-home">
+  <body class="app-screen-home" data-home-state="empty">
     <noscript>
       <div class="noscript-alert">
         このツールはJavaScriptが必要です。iPadではFilesからHTMLを直接開かず、Safariで配布URLを開いてホーム画面に追加してください。
@@ -2582,8 +2769,8 @@ body {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-10-1829</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-10 18:29</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-10-1911</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-10 19:11</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support">
             困ったとき
@@ -2685,6 +2872,18 @@ body {
                 <option value="">先にxlsxを読み込んでください</option>
               </select>
             </label>
+          </div>
+
+          <div id="home-progress-card" class="home-progress-card" aria-live="polite">
+            <div class="home-progress-card__spinner" aria-hidden="true"></div>
+            <div>
+              <strong>全日分をチェック中です</strong>
+              <p id="home-progress-text">xlsxを読み込み、各シートを順番に確認しています。</p>
+            </div>
+            <div class="home-progress-card__track" aria-hidden="true">
+              <div id="home-progress-bar" class="home-progress-card__bar"></div>
+            </div>
+            <div id="home-progress-meta" class="home-progress-card__meta">しばらくお待ちください</div>
           </div>
 
           <div class="panel__title-row panel__title-row--spaced admin-only">
@@ -3097,7 +3296,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-10-1829","buildLabel":"2026-05-10 18:29","buildId":"2026-05-10-182937","builtAtIso":"2026-05-10T09:29:37.011Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-10-1911","buildLabel":"2026-05-10 19:11","buildId":"2026-05-10-191110","builtAtIso":"2026-05-10T10:11:10.494Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -5902,6 +6101,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     sheetAnalyses: new Map(),
     sheetOverview: [],
     allSheetLastCheckedAt: "",
+    allSheetChecking: false,
+    allSheetProgress: { current: 0, total: 0, label: "" },
     activeSeverities: new Set(["red", "yellow", "info"]),
     childFilter: "",
     viewMode: "grouped",
@@ -5952,6 +6153,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       analyzeButton: document.querySelector("#analyze-button"),
       demoFileButton: document.querySelector("#demo-file-button"),
       downloadCsvButton: document.querySelector("#download-csv-button"),
+      homeProgressText: document.querySelector("#home-progress-text"),
+      homeProgressBar: document.querySelector("#home-progress-bar"),
+      homeProgressMeta: document.querySelector("#home-progress-meta"),
       summaryCards: document.querySelector("#summary-cards"),
       structureSummary: document.querySelector("#structure-summary"),
       appStatusPill: document.querySelector("#app-status-pill"),
@@ -7040,6 +7244,40 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     };
   }
 
+  function getHomeState() {
+    if (state.allSheetChecking) {
+      return "checking";
+    }
+    if (state.sheetAnalyses?.size > 0) {
+      return "complete";
+    }
+    return "empty";
+  }
+
+  function renderHomeStateChrome() {
+    const homeState = getHomeState();
+    document.body?.setAttribute("data-home-state", homeState);
+
+    const progress = state.allSheetProgress ?? { current: 0, total: 0, label: "" };
+    const total = Math.max(0, Number(progress.total) || 0);
+    const current = Math.max(0, Math.min(total, Number(progress.current) || 0));
+    const ratio = total > 0 ? Math.round((current / total) * 100) : 0;
+
+    if (elements?.homeProgressText) {
+      elements.homeProgressText.textContent =
+        total > 0
+          ? `全${total}シート中 ${current}シート目を確認しています。`
+          : "xlsxを読み込み、各シートを順番に確認しています。";
+    }
+    if (elements?.homeProgressBar) {
+      elements.homeProgressBar.style.width = `${ratio}%`;
+    }
+    if (elements?.homeProgressMeta) {
+      elements.homeProgressMeta.textContent =
+        total > 0 ? `${ratio}% 完了${progress.label ? ` / ${progress.label}` : ""}` : "しばらくお待ちください";
+    }
+  }
+
   function renderSummary() {
     const stats = getDashboardStats();
     const hasWorkbook = stats.totalSheets > 0;
@@ -7735,12 +7973,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function renderAll() {
+    renderHomeStateChrome();
     renderSummary();
     renderChildFilter();
     renderFilterControls();
     renderResults();
     renderDebug();
     updateControls();
+    renderHomeStateChrome();
   }
 
   function populateSheetSelect() {
@@ -8326,12 +8566,15 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     state.sheetOverview = [];
     state.analysis = null;
     state.debug = null;
+    state.allSheetChecking = true;
+    state.allSheetProgress = { current: 0, total: sheets.length, label: "" };
     state.selectedReviewCell = null;
     renderAll();
 
     try {
       for (let index = 0; index < sheets.length; index += 1) {
         const sheet = sheets[index];
+        state.allSheetProgress = { current: index + 1, total: sheets.length, label: sheet.name };
         setStatus(`全日分をチェック中です... ${index + 1}/${sheets.length}「${sheet.name}」`);
         await new Promise((resolve) => requestAnimationFrame(resolve));
 
@@ -8357,6 +8600,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           : "全日分チェックが完了しました。要確認がある日付は見つかりませんでした。",
       );
     } finally {
+      state.allSheetChecking = false;
+      state.allSheetProgress = { current: sheets.length, total: sheets.length, label: "" };
+      renderHomeStateChrome();
       restoreButton?.();
       updateControls();
     }
@@ -8971,7 +9217,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       renderSheetAlertBanner();
       elements.reviewBoard.innerHTML = `
         <article class="result-card result-card--empty">
-          xlsx を読み込んで「チェックする」を押すと、ここに表レビューが表示されます。
+          表レビューを見るには、ホームでxlsxを選んでください。チェック完了後、日付カードからこの画面に入れます。
         </article>
       `;
       if (elements.cellDetailPanel) {
@@ -9515,7 +9761,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       renderSheetAlertBanner();
       elements.reviewBoard.innerHTML = `
         <article class="result-card result-card--empty">
-          xlsx を読み込んで「チェックする」を押すと、ここに表レビューを表示します。
+          表レビューを見るには、ホームでxlsxを選んでください。チェック完了後、日付カードからこの画面に入れます。
         </article>
       `;
       if (elements.cellDetailPanel) {
@@ -10827,6 +11073,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       elements.appStatusPill.dataset.statusTone = tone;
       elements.appStatusPill.title = statusText;
     }
+    renderHomeStateChrome();
     if (elements) {
       renderDiagnostics();
     }
@@ -10903,6 +11150,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function setActiveScreen(screen, options = {}) {
     state.activeScreen = normalizeAppScreen(screen);
     renderScreenChrome();
+    if (state.activeScreen === "review" && !state.analysis) {
+      setStatus("表レビューを見るには、先にホームでxlsxを選んでください。");
+    }
 
     if (options.focus) {
       requestAnimationFrame(() => {
