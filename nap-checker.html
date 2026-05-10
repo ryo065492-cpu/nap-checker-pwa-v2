@@ -29,6 +29,8 @@
   --warn-soft: #fff0ce;
   --info: #2a5db0;
   --info-soft: #dde9ff;
+  --ok: #178443;
+  --ok-soft: #e3f7ea;
   --shadow: 0 18px 40px rgba(87, 63, 26, 0.12);
   --radius-xl: 28px;
   --radius-lg: 20px;
@@ -86,6 +88,69 @@ body {
 .app-shell {
   max-width: var(--max);
   margin: 0 auto;
+}
+
+.app-frame {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.app-nav {
+  position: sticky;
+  top: 16px;
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 252, 247, 0.95);
+  box-shadow: var(--shadow);
+  z-index: 20;
+}
+
+.app-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 70px;
+  padding: 14px;
+  border-radius: 18px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.08rem;
+  font-weight: 900;
+  border: 1px solid rgba(95, 77, 54, 0.1);
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.app-nav__link--primary,
+.app-nav__link:hover,
+.app-nav__link:focus-visible {
+  color: white;
+  background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+  outline: none;
+}
+
+.app-nav__icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: rgba(0, 108, 103, 0.1);
+  color: var(--brand-strong);
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.app-nav__link--primary .app-nav__icon,
+.app-nav__link:hover .app-nav__icon,
+.app-nav__link:focus-visible .app-nav__icon {
+  background: rgba(255, 255, 255, 0.18);
+  color: white;
 }
 
 .hero {
@@ -234,6 +299,56 @@ body {
   gap: 18px;
 }
 
+.panel--control {
+  order: 1;
+}
+
+.panel--summary {
+  order: 2;
+}
+
+.panel--sheet-overview {
+  order: 3;
+}
+
+.panel--review {
+  order: 4;
+}
+
+.support-panel {
+  order: 5;
+}
+
+.panel--guide {
+  order: 6;
+}
+
+.panel--filters {
+  order: 7;
+}
+
+.panel--results {
+  order: 8;
+}
+
+.debug-panel {
+  order: 9;
+}
+
+.admin-only,
+.admin-only + .control-grid {
+  display: none;
+}
+
+.is-debug-mode .admin-only,
+.is-debug-mode .admin-only + .control-grid {
+  display: flex;
+}
+
+.is-debug-mode .admin-only + .control-grid {
+  display: grid;
+}
+
 .panel {
   padding: 22px;
   border: 1px solid var(--line);
@@ -311,6 +426,37 @@ body {
 .support-panel__toggle {
   display: inline-flex;
   margin-bottom: 10px;
+}
+
+.admin-panel {
+  margin: 14px 0;
+  padding: 0;
+  border: 1px dashed rgba(95, 77, 54, 0.24);
+  border-radius: var(--radius-lg);
+  background: rgba(47, 38, 30, 0.035);
+  overflow: hidden;
+}
+
+.admin-panel__summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: var(--tap);
+  padding: 14px 16px;
+  list-style: none;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.admin-panel__summary::-webkit-details-marker {
+  display: none;
+}
+
+.admin-panel__summary span {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.5;
 }
 
 .field-adjustment-panel {
@@ -606,6 +752,10 @@ body {
   color: var(--info);
 }
 
+.summary-card--ok .summary-card__value {
+  color: var(--ok);
+}
+
 .summary-card--neutral .summary-card__value,
 .summary-card--empty .summary-card__value {
   color: var(--brand-strong);
@@ -744,13 +894,14 @@ body {
 
 .sheet-overview-list {
   display: grid;
-  gap: 12px;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
 .sheet-overview-card {
   width: 100%;
-  min-height: var(--tap);
-  padding: 16px;
+  min-height: 178px;
+  padding: 18px;
   border: 1px solid rgba(95, 77, 54, 0.14);
   border-radius: var(--radius-lg);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 250, 244, 0.98));
@@ -758,6 +909,10 @@ body {
   text-align: left;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(87, 63, 26, 0.06);
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    border-color 140ms ease;
 }
 
 .sheet-overview-card:hover,
@@ -765,6 +920,7 @@ body {
   border-color: rgba(0, 108, 103, 0.35);
   box-shadow: 0 14px 28px rgba(87, 63, 26, 0.12);
   outline: none;
+  transform: translateY(-1px);
 }
 
 .sheet-overview-card--active {
@@ -774,10 +930,17 @@ body {
 
 .sheet-overview-card--red {
   border-left: 8px solid var(--danger);
+  background: linear-gradient(180deg, rgba(255, 246, 244, 0.98), rgba(255, 250, 246, 0.98));
 }
 
 .sheet-overview-card--yellow {
   border-left: 8px solid var(--warn);
+  background: linear-gradient(180deg, rgba(255, 249, 236, 0.98), rgba(255, 252, 246, 0.98));
+}
+
+.sheet-overview-card--ok {
+  border-left: 8px solid var(--ok);
+  background: linear-gradient(180deg, rgba(242, 253, 246, 0.98), rgba(255, 252, 246, 0.98));
 }
 
 .sheet-overview-card--error {
@@ -794,7 +957,7 @@ body {
 }
 
 .sheet-overview-card__date {
-  font-size: 1.1rem;
+  font-size: clamp(1.12rem, 2.5vw, 1.42rem);
   font-weight: 900;
 }
 
@@ -817,6 +980,30 @@ body {
   color: var(--text);
   font-weight: 800;
   line-height: 1.6;
+}
+
+.sheet-overview-card__status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  color: white;
+  background: var(--brand);
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.sheet-overview-card--red .sheet-overview-card__status {
+  background: var(--danger);
+}
+
+.sheet-overview-card--yellow .sheet-overview-card__status {
+  background: var(--warn);
+}
+
+.sheet-overview-card--ok .sheet-overview-card__status {
+  background: var(--ok);
 }
 
 .sheet-overview-card__hint {
@@ -1023,9 +1210,53 @@ body {
   background: var(--info-soft);
 }
 
+@media (max-width: 900px) {
+  body {
+    padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .app-frame {
+    display: block;
+  }
+
+  .app-nav {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    top: auto;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 10px;
+    border-radius: 24px;
+  }
+
+  .app-nav__link {
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    min-height: 64px;
+    padding: 8px 6px;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .app-nav__icon {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+    border-radius: 12px;
+    font-size: 1rem;
+  }
+
+  .sheet-overview-list {
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  }
+}
+
 @media (max-width: 720px) {
   body {
-    padding: 12px 10px 32px;
+    padding: 12px 10px calc(108px + env(safe-area-inset-bottom, 0px));
   }
 
   .hero,
@@ -1713,8 +1944,8 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
       <header class="hero">
         <div class="hero__topline">
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-05-1422</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-05 14:22</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-10-1611</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-10 16:11</div>
           </div>
         </div>
         <div id="debug-banner" class="debug-banner" hidden></div>
@@ -1726,6 +1957,22 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           ブラウザ内だけで処理します。
         </p>
       </header>
+
+      <div class="app-frame">
+        <nav class="app-nav" aria-label="通常メニュー">
+          <a class="app-nav__link app-nav__link--primary" href="#home-dashboard">
+            <span class="app-nav__icon" aria-hidden="true">家</span>
+            <span class="app-nav__text">ホーム</span>
+          </a>
+          <a class="app-nav__link" href="#review-section">
+            <span class="app-nav__icon" aria-hidden="true">表</span>
+            <span class="app-nav__text">表レビュー</span>
+          </a>
+          <a class="app-nav__link" href="#support-panel">
+            <span class="app-nav__icon" aria-hidden="true">?</span>
+            <span class="app-nav__text">困ったとき</span>
+          </a>
+        </nav>
 
       <main class="layout">
         <section class="panel panel--guide">
@@ -1773,7 +2020,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           </div>
         </section>
 
-        <section class="panel panel--control">
+        <section id="home-dashboard" class="panel panel--control">
           <div class="panel__title-row">
             <h2>1. ファイルを選ぶ</h2>
             <button id="demo-file-button" class="button button--subtle" type="button">
@@ -1795,7 +2042,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
             </label>
           </div>
 
-          <div class="panel__title-row panel__title-row--spaced">
+          <div class="panel__title-row panel__title-row--spaced admin-only">
             <h2>2. 設定ファイル</h2>
             <button id="reset-config-button" class="button button--ghost" type="button">
               既定設定に戻す
@@ -1912,6 +2159,11 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
             </div>
             <div id="support-copy-status" class="diagnostic-copy-status" hidden></div>
             <textarea id="support-copy-fallback" class="diagnostic-copy-fallback" hidden readonly></textarea>
+            <details id="admin-panel" class="admin-panel">
+              <summary class="admin-panel__summary">
+                <strong>管理モード</strong>
+                <span>設定・詳細ログ・現場調整は普段はここに隠します。</span>
+              </summary>
             <details id="field-adjustment-panel" class="field-adjustment-panel">
               <summary class="field-adjustment-panel__summary">
                 <strong>現場調整モード / 表示設定</strong>
@@ -2010,6 +2262,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
               </div>
               <textarea id="field-settings-text" class="diagnostic-copy-fallback field-settings-text" placeholder="ここに設定テキストを貼り付けます"></textarea>
             </details>
+            </details>
             <div class="diagnostic-list">
               <div id="support-version" class="diagnostic-item diagnostic-item--pending">アプリ版: 確認中</div>
               <div id="support-build" class="diagnostic-item diagnostic-item--pending">ビルド日時: 確認中</div>
@@ -2067,7 +2320,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           </div>
         </section>
 
-        <section class="panel panel--review">
+        <section id="review-section" class="panel panel--review">
           <div class="panel__title-row">
             <h2>表レビュー</h2>
             <div id="review-count" class="meta-pill">要確認 0件 / 該当0コマ</div>
@@ -2148,7 +2401,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           </div>
         </section>
 
-        <details id="debug-panel" class="panel panel--debug debug-panel">
+        <details id="debug-panel" class="panel panel--debug debug-panel" hidden>
           <summary class="debug-panel__summary">
             <span id="debug-panel-label">詳細ログ</span>
             <span id="debug-panel-hint" class="debug-panel__hint">必要なときだけ開く</span>
@@ -2156,6 +2409,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           <pre id="debug-output" class="debug-output">まだ詳細ログはありません。xlsx を読み込んでチェックすると、解析ヘッダとブロック判定がここに表示されます。</pre>
         </details>
       </main>
+      </div>
     </div>
 
     <script>
@@ -2175,7 +2429,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-05-1422","buildLabel":"2026-05-05 14:22","buildId":"2026-05-05-142237","builtAtIso":"2026-05-05T05:22:37.099Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-10-1611","buildLabel":"2026-05-10 16:11","buildId":"2026-05-10-161138","builtAtIso":"2026-05-10T07:11:38.086Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -6074,6 +6328,182 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       .replaceAll('"', "&quot;");
   }
 
+  function getDashboardStats() {
+    const totalSheets = state.workbook?.sheets?.length ?? 0;
+    const checkedCount = state.sheetAnalyses?.size ?? 0;
+    const issueItems = state.sheetOverview ?? [];
+    const redIncidents = issueItems.reduce((sum, item) => sum + (item.redIncidents ?? 0), 0);
+    const redCells = issueItems.reduce((sum, item) => sum + (item.redCells ?? 0), 0);
+    const yellowIncidents = issueItems.reduce((sum, item) => sum + (item.yellowIncidents ?? 0), 0);
+    const yellowCells = issueItems.reduce((sum, item) => sum + (item.yellowCells ?? 0), 0);
+    const environmentMissingDays = issueItems.filter((item) => item.hasEnvironmentMissing).length;
+    const errorDays = issueItems.filter((item) => item.status === "error").length;
+    const okDays = Math.max(0, checkedCount - issueItems.length);
+
+    return {
+      totalSheets,
+      checkedCount,
+      issueDays: issueItems.length,
+      okDays,
+      errorDays,
+      redIncidents,
+      redCells,
+      yellowIncidents,
+      yellowCells,
+      environmentMissingDays,
+    };
+  }
+
+  function renderSummary() {
+    const stats = getDashboardStats();
+    const hasWorkbook = stats.totalSheets > 0;
+    const hasCheckedSheets = stats.checkedCount > 0;
+    const cards = hasCheckedSheets
+      ? [
+          {
+            label: "チェックした日数",
+            value: `${stats.checkedCount}日`,
+            description: `${stats.totalSheets}シート中、確認済みの日数です。`,
+            className: "summary-card--neutral",
+          },
+          {
+            label: "要確認の日数",
+            value: `${stats.issueDays}日`,
+            description: "日付カードを押すと、その日の表レビューへ移動します。",
+            className: stats.issueDays > 0 ? "summary-card--red" : "summary-card--ok",
+          },
+          {
+            label: "赤（要注意）",
+            value: formatIncidentSlotSummary(stats.redIncidents, stats.redCells),
+            description: "表では該当コマを赤く残し、件数は現場確認単位で数えます。",
+            className: "summary-card--red",
+          },
+          {
+            label: "黄（要確認）",
+            value: formatIncidentSlotSummary(stats.yellowIncidents, stats.yellowCells),
+            description: stats.environmentMissingDays > 0 ? `温度・湿度の確認が必要な日: ${stats.environmentMissingDays}日` : "確認者未入力などの確認件数です。",
+            className: "summary-card--yellow",
+          },
+          {
+            label: "OKの日数",
+            value: `${stats.okDays}日`,
+            description: "現時点で要確認が見つからなかった日です。",
+            className: "summary-card--ok",
+          },
+        ]
+      : [
+          {
+            label: "チェックした日数",
+            value: hasWorkbook ? "待機中" : "-",
+            description: hasWorkbook ? "xlsx選択後に全日分チェックを開始します。" : "まずxlsxを選んでください。",
+            className: "summary-card--neutral",
+          },
+          {
+            label: "要確認の日数",
+            value: "-",
+            description: "要確認がある日付だけカードで表示します。",
+            className: "summary-card--empty",
+          },
+          {
+            label: "赤（要注意）",
+            value: "-",
+            description: "危険姿勢や起床後記録などを確認します。",
+            className: "summary-card--red",
+          },
+          {
+            label: "黄（要確認）",
+            value: "-",
+            description: "確認者未入力や温度・湿度の入力漏れを確認します。",
+            className: "summary-card--yellow",
+          },
+        ];
+
+    elements.summaryCards.innerHTML = cards.map(renderSummaryCard).join("");
+
+    if (!hasCheckedSheets) {
+      elements.structureSummary.innerHTML = `
+        <div class="structure-summary__lead"><strong>ホームは、要確認の日付を先に見る画面です。</strong></div>
+        <div class="structure-summary__meta">xlsxを選ぶと全日分チェックが始まり、直す必要がありそうな日付だけカードで表示します。</div>
+      `;
+      return;
+    }
+
+    const selectedSummary = state.analysis?.summary ?? null;
+    const selectedText = state.selectedSheetName
+      ? `選択中: ${escapeHtml(getSheetDisplayDate(state.selectedSheetName))} / ${escapeHtml(state.selectedSheetName)}`
+      : "日付カードを押すと、その日の表レビューを表示します。";
+    const selectedMeta = selectedSummary
+      ? `園児 ${selectedSummary.childCount}人 / ブロック ${selectedSummary.blockCount} / 時間 ${escapeHtml(selectedSummary.timeRange)}`
+      : "表レビューは日付カードを選ぶと表示されます。";
+
+    elements.structureSummary.innerHTML = `
+      <div class="structure-summary__lead"><strong>${selectedText}</strong></div>
+      <div class="structure-summary__meta">${selectedMeta}</div>
+      <div class="structure-summary__meta">赤 ${formatIncidentSlotSummary(stats.redIncidents, stats.redCells)} / 黄 ${formatIncidentSlotSummary(stats.yellowIncidents, stats.yellowCells)} / OK ${stats.okDays}日</div>
+      ${stats.errorDays > 0 ? `<div class="structure-summary__meta">解析できなかった日: ${stats.errorDays}日</div>` : ""}
+    `;
+  }
+
+  function renderSheetOverview() {
+    if (!elements?.sheetOverviewList) {
+      return;
+    }
+
+    const totalSheets = state.workbook?.sheets?.length ?? 0;
+    const overview = state.sheetOverview ?? [];
+    const checkedCount = state.sheetAnalyses?.size ?? 0;
+    const stats = getDashboardStats();
+
+    if (elements.sheetOverviewCount) {
+      elements.sheetOverviewCount.textContent =
+        checkedCount > 0 ? `要確認 ${overview.length}日 / 確認済み ${checkedCount}日` : "未チェック";
+    }
+
+    if (elements.sheetOverviewGuide) {
+      elements.sheetOverviewGuide.textContent =
+        checkedCount > 0
+          ? "要確認がある日付だけを表示しています。日付カードをタップすると、その日の表レビューへ移動します。"
+          : "xlsxを選ぶと、全日分チェックを自動で開始します。";
+    }
+
+    if (!totalSheets) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="result-card result-card--empty">
+          まずxlsxを選んでください。
+        </article>
+      `;
+      return;
+    }
+
+    if (checkedCount === 0) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="result-card result-card--empty">
+          xlsxを選ぶと、全日分チェックを自動で開始します。必要なときだけ「全日分を再チェックする」を押してください。
+        </article>
+      `;
+      return;
+    }
+
+    if (overview.length === 0) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="sheet-overview-card sheet-overview-card--ok">
+          <div class="sheet-overview-card__top">
+            <div>
+              <div class="sheet-overview-card__date">要確認なし</div>
+              <div class="sheet-overview-card__sheet">確認済み: ${stats.checkedCount}日</div>
+            </div>
+            <span class="sheet-overview-card__status">OK</span>
+          </div>
+          <div class="sheet-overview-card__main">赤・黄の要確認は見つかりませんでした。</div>
+          <div class="sheet-overview-card__hint">必要に応じてシートを選び、表レビューで目視確認できます。</div>
+        </article>
+      `;
+      return;
+    }
+
+    elements.sheetOverviewList.innerHTML = overview.map(renderSheetOverviewCard).join("");
+  }
+
   function renderResults() {
     const findings = getDisplayFindings();
     elements.resultsCount.textContent = `${findings.length}件`;
@@ -6463,6 +6893,50 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         </div>
         <div class="sheet-overview-card__main">${escapeHtml(mainText)}</div>
         <div class="sheet-overview-card__hint">押すと、この日の表レビューを表示します。</div>
+      </button>
+    `;
+  }
+
+  function renderSheetOverviewCard(item) {
+    const hasRed = item.redIncidents > 0 || item.status === "error";
+    const hasYellow = item.yellowIncidents > 0 || item.hasEnvironmentMissing;
+    const severityClass =
+      item.status === "error"
+        ? "sheet-overview-card--error"
+        : hasRed
+          ? "sheet-overview-card--red"
+          : hasYellow
+            ? "sheet-overview-card--yellow"
+            : "sheet-overview-card--ok";
+    const statusLabel = item.status === "error" ? "確認できません" : hasRed ? "要注意" : hasYellow ? "要確認" : "OK";
+    const activeClass = item.sheetName === state.selectedSheetName ? " sheet-overview-card--active" : "";
+    const environmentText = item.hasEnvironmentMissing
+      ? `温度・湿度: ${item.environmentMissingLabels.join("・")}未入力`
+      : "温度・湿度: 入力漏れなし";
+    const mainText = item.mainIssueLabels.length > 0 ? item.mainIssueLabels.join(" / ") : "問題は見つかりませんでした";
+    const yellowText =
+      item.yellowIncidents > 0 || item.hasEnvironmentMissing
+        ? `黄 ${item.yellowIncidents}件${item.hasEnvironmentMissing ? " / 温湿度確認" : ""}`
+        : "黄 0件";
+
+    return `
+      <button class="sheet-overview-card ${severityClass}${activeClass}" type="button" data-sheet-name="${escapeHtml(item.sheetName)}">
+        <div class="sheet-overview-card__top">
+          <div>
+            <div class="sheet-overview-card__date">${escapeHtml(item.dateLabel)}</div>
+            <div class="sheet-overview-card__sheet">シート名: ${escapeHtml(item.sheetName)}</div>
+          </div>
+          <span class="sheet-overview-card__status">${escapeHtml(statusLabel)}</span>
+        </div>
+        <div class="sheet-overview-card__counts">
+          <span class="meta-pill">赤 ${formatIncidentSlotSummary(item.redIncidents, item.redCells)}</span>
+          <span class="meta-pill">${escapeHtml(yellowText)}</span>
+        </div>
+        <div class="sheet-overview-card__badges">
+          <span class="meta-pill">${escapeHtml(environmentText)}</span>
+        </div>
+        <div class="sheet-overview-card__main">${escapeHtml(mainText)}</div>
+        <div class="sheet-overview-card__hint">タップすると、この日の表レビューへ移動します。</div>
       </button>
     `;
   }
@@ -7395,6 +7869,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       state.selectedReviewCell = null;
       setCurrentSheetAnalysisFromResult(sheetName, result);
       renderAll();
+      document.querySelector("#review-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
       setStatus(`「${sheetName}」の表レビューを表示しました。`);
     });
 
@@ -8792,7 +9267,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         : ui.debugPanelHint;
     }
     if (elements.debugPanel) {
-      elements.debugPanel.open = Boolean(state.debugMode || ui.showDebugPanelDefault);
+      elements.debugPanel.hidden = !state.debugMode;
+      elements.debugPanel.open = Boolean(state.debugMode || (!elements.debugPanel.hidden && ui.showDebugPanelDefault));
     }
 
     elements.debugOutput.textContent = formatDebugReport(state.debug);
@@ -9688,6 +10164,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const isStandalone =
       globalThis.matchMedia?.("(display-mode: standalone)")?.matches ||
       Boolean(navigator.standalone);
+
+    document.documentElement.classList.toggle("is-debug-mode", Boolean(state.debugMode));
 
     if (elements?.buildVersion) {
       elements.buildVersion.textContent = buildInfo.versionLabel ?? "確認版 -";
