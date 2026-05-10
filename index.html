@@ -1932,20 +1932,290 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
   }
 }
 
+/* App-like dashboard shell. The older panels still exist for reuse, but normal
+   operation now switches between compact app screens instead of one long page. */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  padding: 12px;
+}
+
+.app-shell {
+  max-width: none;
+  height: calc(100dvh - 24px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
+}
+
+.app-topbar.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 14px 18px;
+  border-radius: 24px;
+}
+
+.app-topbar .hero__eyebrow,
+.app-topbar .hero__lead {
+  display: none;
+}
+
+.app-topbar h1 {
+  margin: 0;
+  font-size: clamp(1.15rem, 2.2vw, 1.65rem);
+}
+
+.app-topbar .hero__topline {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+}
+
+.app-frame {
+  min-height: 0;
+  height: 100%;
+}
+
+.layout {
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.screen-section {
+  display: none;
+}
+
+.app-screen-home .screen-home,
+.app-screen-review .screen-review,
+.app-screen-support .screen-support {
+  display: block;
+}
+
+.app-screen-support #diagnostics-panel[hidden],
+.app-screen-support #debug-panel[hidden] {
+  display: none;
+}
+
+.app-screen-home .layout {
+  grid-template-columns: minmax(290px, 0.78fr) minmax(0, 1.55fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    "picker dates"
+    "summary dates";
+  align-items: stretch;
+}
+
+.app-screen-home .panel--control {
+  grid-area: picker;
+}
+
+.app-screen-home .panel--summary {
+  grid-area: summary;
+}
+
+.app-screen-home .panel--sheet-overview {
+  grid-area: dates;
+}
+
+.app-screen-home .panel {
+  min-height: 0;
+}
+
+.app-screen-home .panel--sheet-overview {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-screen-home .panel--sheet-overview .panel__title-row {
+  flex: 0 0 auto;
+}
+
+.app-screen-home .sheet-overview-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 4px 4px 10px;
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+  align-content: start;
+}
+
+.app-screen-home .summary-cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.app-screen-home #home-dashboard .control-grid .field:nth-child(2),
+.app-screen-home #demo-file-button,
+.app-screen-home #analyze-button,
+.app-screen-home #download-csv-button {
+  display: none;
+}
+
+.app-screen-home #analyze-all-button {
+  min-height: 58px;
+  font-size: 1.02rem;
+}
+
+.app-screen-home .action-row {
+  grid-template-columns: 1fr;
+}
+
+.app-screen-home .status-banner,
+.app-screen-home .error-box {
+  margin-top: 12px;
+}
+
+.app-screen-review .layout,
+.app-screen-support .layout {
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.app-screen-review .panel--review,
+.app-screen-support .support-panel {
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+}
+
+.app-screen-review .panel--review {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-screen-review .review-board {
+  min-height: 0;
+  overflow: auto;
+}
+
+.app-screen-review .cell-detail-panel {
+  flex: 0 0 auto;
+}
+
+.app-screen-support .support-panel {
+  max-width: 960px;
+  width: 100%;
+  justify-self: center;
+}
+
+.panel--guide {
+  display: none !important;
+}
+
+.app-nav__link.is-active {
+  color: white;
+  background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+}
+
+.app-nav__link.is-active .app-nav__icon {
+  background: rgba(255, 255, 255, 0.18);
+  color: white;
+}
+
+.sheet-overview-card {
+  min-height: 188px;
+}
+
+.sheet-overview-card__status {
+  font-size: 0.92rem;
+}
+
+.sheet-overview-card--red {
+  border-color: rgba(201, 60, 45, 0.42);
+  border-left-width: 10px;
+  box-shadow: 0 14px 26px rgba(201, 60, 45, 0.12);
+}
+
+.sheet-overview-card--yellow {
+  border-color: rgba(190, 122, 8, 0.42);
+  border-left-width: 10px;
+  box-shadow: 0 14px 26px rgba(190, 122, 8, 0.1);
+}
+
+.sheet-overview-card--ok {
+  border-color: rgba(23, 132, 67, 0.34);
+  border-left-width: 10px;
+}
+
+@media (max-width: 1020px) {
+  .app-screen-home .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-areas:
+      "picker"
+      "summary"
+      "dates";
+    overflow: auto;
+    padding-bottom: 4px;
+  }
+
+  .app-screen-home .panel--sheet-overview {
+    min-height: 420px;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    padding: 10px 10px calc(92px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .app-shell {
+    height: calc(100dvh - 10px - 92px - env(safe-area-inset-bottom, 0px));
+  }
+
+  .app-topbar.hero {
+    grid-template-columns: 1fr;
+    padding: 12px 14px;
+  }
+
+  .app-topbar .hero__topline {
+    grid-column: 1;
+    grid-row: auto;
+    justify-content: start;
+  }
+
+  .app-nav__link {
+    min-height: 62px;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-screen-home .summary-cards,
+  .app-screen-home .sheet-overview-list {
+    grid-template-columns: 1fr;
+  }
+
+  .app-topbar h1 {
+    font-size: 1.08rem;
+  }
+
+  .app-screen-home .panel--sheet-overview {
+    min-height: 360px;
+  }
+}
+
     </style>
   </head>
-  <body>
+  <body class="app-screen-home">
     <noscript>
       <div class="noscript-alert">
         このツールはJavaScriptが必要です。iPadではFilesからHTMLを直接開かず、Safariで配布URLを開いてホーム画面に追加してください。
       </div>
     </noscript>
     <div class="app-shell">
-      <header class="hero">
+      <header class="hero app-topbar">
         <div class="hero__topline">
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-10-1611</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-10 16:11</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-10-1743</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-10 17:43</div>
           </div>
         </div>
         <div id="debug-banner" class="debug-banner" hidden></div>
@@ -1960,22 +2230,22 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
 
       <div class="app-frame">
         <nav class="app-nav" aria-label="通常メニュー">
-          <a class="app-nav__link app-nav__link--primary" href="#home-dashboard">
+          <a class="app-nav__link app-nav__link--primary" href="#home-dashboard" data-screen-link="home">
             <span class="app-nav__icon" aria-hidden="true">家</span>
             <span class="app-nav__text">ホーム</span>
           </a>
-          <a class="app-nav__link" href="#review-section">
+          <a class="app-nav__link" href="#review-section" data-screen-link="review">
             <span class="app-nav__icon" aria-hidden="true">表</span>
             <span class="app-nav__text">表レビュー</span>
           </a>
-          <a class="app-nav__link" href="#support-panel">
+          <a class="app-nav__link" href="#support-panel" data-screen-link="support">
             <span class="app-nav__icon" aria-hidden="true">?</span>
             <span class="app-nav__text">困ったとき</span>
           </a>
         </nav>
 
       <main class="layout">
-        <section class="panel panel--guide">
+        <section class="panel panel--guide admin-only">
           <div class="panel__title-row">
             <h2>iPadでの使い方</h2>
             <div class="meta-pill">本番運用: Safariでホーム画面に追加</div>
@@ -2020,7 +2290,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           </div>
         </section>
 
-        <section id="home-dashboard" class="panel panel--control">
+        <section id="home-dashboard" class="panel panel--control screen-section screen-home" tabindex="-1">
           <div class="panel__title-row">
             <h2>1. ファイルを選ぶ</h2>
             <button id="demo-file-button" class="button button--subtle" type="button">
@@ -2077,7 +2347,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           <div id="error-box" class="error-box" hidden></div>
         </section>
 
-        <section id="sheet-overview-panel" class="panel panel--sheet-overview">
+        <section id="sheet-overview-panel" class="panel panel--sheet-overview screen-section screen-home" tabindex="-1">
           <div class="panel__title-row">
             <div>
               <h2>要確認日付一覧</h2>
@@ -2094,7 +2364,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           </div>
         </section>
 
-        <section id="diagnostics-panel" class="panel panel--diagnostics" hidden>
+        <section id="diagnostics-panel" class="panel panel--diagnostics screen-section screen-support" hidden>
           <div class="panel__title-row">
             <h2>iPadデバッグ診断</h2>
             <div id="diagnostic-mode-pill" class="meta-pill">debug=1</div>
@@ -2122,7 +2392,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           </p>
         </section>
 
-        <details id="support-panel" class="panel panel--diagnostics support-panel">
+        <details id="support-panel" class="panel panel--diagnostics support-panel screen-section screen-support">
           <summary class="support-panel__summary">
             <div>
               <strong>困ったとき / 診断・サポート</strong>
@@ -2286,7 +2556,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           </div>
         </details>
 
-        <section class="panel panel--summary">
+        <section class="panel panel--summary screen-section screen-home" tabindex="-1">
           <div class="panel__title-row">
             <h2>結果サマリー</h2>
             <div id="file-meta" class="meta-pill">未読込</div>
@@ -2320,7 +2590,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           </div>
         </section>
 
-        <section id="review-section" class="panel panel--review">
+        <section id="review-section" class="panel panel--review screen-section screen-review" tabindex="-1">
           <div class="panel__title-row">
             <h2>表レビュー</h2>
             <div id="review-count" class="meta-pill">要確認 0件 / 該当0コマ</div>
@@ -2339,7 +2609,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           </section>
         </section>
 
-        <section id="filters-panel" class="panel panel--filters">
+        <section id="filters-panel" class="panel panel--filters screen-section screen-review admin-only">
           <div class="panel__title-row">
             <h2>補助表示の切り替え</h2>
           </div>
@@ -2386,7 +2656,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           </div>
         </section>
 
-        <section id="results-panel" class="panel panel--results">
+        <section id="results-panel" class="panel panel--results screen-section screen-review admin-only">
           <div class="panel__title-row">
             <h2>補助一覧</h2>
             <div id="results-count" class="meta-pill">表示中 0件 / 該当0コマ</div>
@@ -2401,7 +2671,7 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
           </div>
         </section>
 
-        <details id="debug-panel" class="panel panel--debug debug-panel" hidden>
+        <details id="debug-panel" class="panel panel--debug debug-panel screen-section screen-support" hidden>
           <summary class="debug-panel__summary">
             <span id="debug-panel-label">詳細ログ</span>
             <span id="debug-panel-hint" class="debug-panel__hint">必要なときだけ開く</span>
@@ -2429,7 +2699,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-10-1611","buildLabel":"2026-05-10 16:11","buildId":"2026-05-10-161138","builtAtIso":"2026-05-10T07:11:38.086Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-10-1743","buildLabel":"2026-05-10 17:43","buildId":"2026-05-10-174331","builtAtIso":"2026-05-10T08:43:31.610Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -5237,6 +5507,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     activeSeverities: new Set(["red", "yellow", "info"]),
     childFilter: "",
     viewMode: "grouped",
+    activeScreen: "home",
     diagnostics: {
       fileReads: 0,
       analyzeClicks: 0,
@@ -5303,6 +5574,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       sheetOverviewList: document.querySelector("#sheet-overview-list"),
       buildVersion: document.querySelector("#build-version"),
       buildDetail: document.querySelector("#build-detail"),
+      appNavLinks: Array.from(document.querySelectorAll("[data-screen-link]")),
       debugBanner: document.querySelector("#debug-banner"),
       resultsGuide: document.querySelector("#results-guide"),
       diagnosticsPanel: document.querySelector("#diagnostics-panel"),
@@ -7135,6 +7407,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function bindEvents() {
+    for (const link of elements.appNavLinks ?? []) {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        setActiveScreen(link.dataset.screenLink, { focus: true });
+      });
+    }
+
     elements.fileInput.addEventListener("change", async (event) => {
       const file = event.target.files?.[0];
       if (!file) {
@@ -7495,6 +7774,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       state.childFilter = "";
       state.selectedReviewCell = null;
       state.sourceLabel = sourceLabel;
+      state.activeScreen = "home";
       populateSheetSelect();
       renderAll();
       setStatus("xlsx の読み込みが完了しました。続けて全日分を自動チェックします。");
@@ -7629,6 +7909,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       if (firstSheetName) {
         setCurrentSheetAnalysisFromResult(firstSheetName, state.sheetAnalyses.get(firstSheetName));
       }
+      state.activeScreen = "home";
       renderAll();
       setStatus(
         state.sheetOverview.length > 0
@@ -7732,6 +8013,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function bindEvents() {
+    for (const link of elements.appNavLinks ?? []) {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        setActiveScreen(link.dataset.screenLink, { focus: true });
+      });
+    }
+
     elements.fileInput.addEventListener("click", () => {
       setStatus("ファイル選択欄を押しました。xlsxを選んでください。");
       setDiagnostic(elements.diagnosticFile, true, "ファイル読込: ファイル選択欄の押下を検知");
@@ -7869,7 +8157,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       state.selectedReviewCell = null;
       setCurrentSheetAnalysisFromResult(sheetName, result);
       renderAll();
-      document.querySelector("#review-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActiveScreen("review", { focus: true });
       setStatus(`「${sheetName}」の表レビューを表示しました。`);
     });
 
@@ -10106,6 +10394,49 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     updateSupportUpdateActionState();
   }
 
+  function normalizeAppScreen(screen) {
+    return ["home", "review", "support"].includes(screen) ? screen : "home";
+  }
+
+  function renderScreenChrome() {
+    const activeScreen = normalizeAppScreen(state.activeScreen);
+    state.activeScreen = activeScreen;
+
+    document.body?.classList.toggle("app-screen-home", activeScreen === "home");
+    document.body?.classList.toggle("app-screen-review", activeScreen === "review");
+    document.body?.classList.toggle("app-screen-support", activeScreen === "support");
+    document.documentElement.dataset.activeScreen = activeScreen;
+
+    for (const link of elements?.appNavLinks ?? []) {
+      const isActive = link.dataset.screenLink === activeScreen;
+      link.classList.toggle("is-active", isActive);
+      link.classList.toggle("app-nav__link--primary", isActive);
+      if (isActive) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    }
+
+    if (elements?.supportPanel && activeScreen === "support") {
+      elements.supportPanel.open = true;
+    }
+  }
+
+  function setActiveScreen(screen, options = {}) {
+    state.activeScreen = normalizeAppScreen(screen);
+    renderScreenChrome();
+
+    if (options.focus) {
+      requestAnimationFrame(() => {
+        const target = document.querySelector(`.screen-${state.activeScreen}:not([hidden])`);
+        if (target instanceof HTMLElement) {
+          target.focus({ preventScroll: true });
+        }
+      });
+    }
+  }
+
   async function applyWaitingUpdate() {
     if (!("serviceWorker" in navigator)) {
       setUpdateInfo("unsupported", "この環境では更新ボタンを使えません", false);
@@ -10166,6 +10497,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       Boolean(navigator.standalone);
 
     document.documentElement.classList.toggle("is-debug-mode", Boolean(state.debugMode));
+    renderScreenChrome();
 
     if (elements?.buildVersion) {
       elements.buildVersion.textContent = buildInfo.versionLabel ?? "確認版 -";
