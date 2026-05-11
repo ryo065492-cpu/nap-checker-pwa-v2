@@ -3324,6 +3324,508 @@ body[data-auxiliary-list="hidden"].app-screen-review .layout {
   }
 }
 
+/* Deep Build UI pass: make the app feel compact, task-focused, and dashboard-first. */
+body {
+  padding: 8px;
+}
+
+.app-shell {
+  height: calc(100dvh - 16px);
+  gap: 8px;
+}
+
+.app-topbar.hero {
+  min-height: 64px;
+  padding: 8px 12px;
+  border-radius: 18px;
+  gap: 10px;
+}
+
+.app-topbar__brand {
+  gap: 10px;
+  min-width: 0;
+}
+
+.app-topbar__mark,
+.app-topbar__logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 13px;
+  font-size: 1.05rem;
+  box-shadow: none;
+}
+
+.app-topbar h1 {
+  font-size: clamp(1.06rem, 1.7vw, 1.28rem);
+  letter-spacing: 0.01em;
+}
+
+.app-topbar .hero__eyebrow,
+.app-topbar .hero__lead,
+.app-topbar .hero__build-detail {
+  display: none !important;
+}
+
+.app-topbar__side {
+  gap: 8px;
+}
+
+.app-status-pill,
+.meta-pill--build,
+.app-help-button {
+  min-height: 34px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  line-height: 1;
+}
+
+.app-frame {
+  grid-template-columns: 184px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.app-nav {
+  padding: 10px;
+  gap: 8px;
+  border-radius: 20px;
+}
+
+.app-nav__brand {
+  gap: 8px;
+  padding: 6px 6px 10px;
+}
+
+.app-nav__logo {
+  width: 34px;
+  height: 34px;
+}
+
+.app-nav__brand strong {
+  font-size: 0.96rem;
+}
+
+.app-nav__brand span {
+  font-size: 0.74rem;
+}
+
+.app-nav__link {
+  min-height: 58px;
+  padding: 9px 10px;
+  border-radius: 16px;
+  font-size: 1rem;
+  box-shadow: none;
+}
+
+.app-nav__icon {
+  width: 34px;
+  height: 34px;
+  flex-basis: 34px;
+  font-size: 1rem;
+}
+
+.panel {
+  padding: 16px;
+  border-radius: 20px;
+}
+
+.panel__title-row {
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.panel h2 {
+  font-size: 1.08rem;
+}
+
+.panel__lead {
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.home-file-status-bar {
+  display: none;
+}
+
+body[data-home-state="complete"].app-screen-home .layout {
+  grid-template-columns: minmax(250px, 0.54fr) minmax(0, 1.46fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    "picker picker"
+    "summary dates";
+  gap: 10px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control {
+  grid-area: picker;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 260px) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control > .panel__title-row {
+  display: none;
+}
+
+body[data-home-state="complete"].app-screen-home .home-file-status-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 1px solid rgba(0, 108, 103, 0.16);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.home-file-status-bar__item {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.home-file-status-bar__item--file strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-file-status-bar__label {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.home-file-status-bar strong {
+  color: var(--text);
+  font-size: 0.94rem;
+  line-height: 1.2;
+}
+
+.home-file-status-bar__status {
+  min-height: 32px;
+  display: inline-grid;
+  place-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--line-soft);
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.home-file-status-bar__status[data-status-tone="checking"] {
+  background: var(--warn-soft);
+  color: #7b4d05;
+}
+
+.home-file-status-bar__status[data-status-tone="complete"] {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+body[data-home-state="complete"].app-screen-home #home-dashboard > .control-grid {
+  grid-template-columns: 1fr;
+  margin: 0;
+}
+
+body[data-home-state="complete"].app-screen-home #home-dashboard > .control-grid:first-of-type .field:first-child {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body[data-home-state="complete"].app-screen-home #home-dashboard .field__label {
+  display: none;
+}
+
+body[data-home-state="complete"].app-screen-home #home-dashboard .field__input[type="file"] {
+  min-height: 42px;
+  padding: 9px 10px;
+  border-radius: 14px;
+  font-size: 0.86rem;
+}
+
+body[data-home-state="complete"].app-screen-home #home-dashboard .action-row {
+  width: auto;
+}
+
+body[data-home-state="complete"].app-screen-home #analyze-all-button {
+  min-height: 42px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+body[data-home-state="complete"].app-screen-home .status-banner,
+body[data-home-state="complete"].app-screen-home .error-box {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--summary,
+body[data-home-state="complete"].app-screen-home .panel--sheet-overview {
+  overflow: hidden;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-cards {
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 10px;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card {
+  min-height: 92px;
+  padding: 12px;
+  border-radius: 18px;
+}
+
+.summary-card__value {
+  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+}
+
+.summary-card__description {
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.app-screen-home .sheet-overview-list {
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.sheet-overview-card {
+  min-height: 168px;
+  padding: 14px;
+  border-radius: 20px;
+}
+
+.sheet-overview-card__head {
+  gap: 8px;
+}
+
+.sheet-overview-card__date {
+  font-size: 1.08rem;
+}
+
+.sheet-overview-card__meta,
+.sheet-overview-card__main,
+.sheet-overview-card__hint {
+  font-size: 0.86rem;
+}
+
+.sheet-overview-card__counts,
+.sheet-overview-card__badges {
+  gap: 6px;
+}
+
+.sheet-overview-card__count,
+.sheet-overview-card__badge {
+  padding: 5px 8px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+}
+
+.sheet-ok-summary > summary {
+  min-height: 42px;
+  padding: 10px 12px;
+}
+
+.sheet-ok-summary__grid {
+  padding: 0 12px 12px;
+}
+
+.app-screen-review .layout {
+  grid-template-columns: minmax(320px, 36%) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    "options options"
+    "defects review";
+  gap: 10px;
+  overflow: hidden;
+}
+
+body[data-auxiliary-list="hidden"].app-screen-review .layout {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "review";
+}
+
+.app-screen-review #filters-panel {
+  padding: 10px 12px;
+}
+
+.app-screen-review #results-panel {
+  padding: 12px;
+}
+
+.app-screen-review .review-options-panel .panel__title-row {
+  display: none;
+}
+
+.app-screen-review .review-options-panel .filter-grid {
+  grid-template-columns: auto auto minmax(180px, 240px);
+  gap: 8px;
+  align-items: end;
+}
+
+.app-screen-review .review-options-panel .field__label {
+  font-size: 0.76rem;
+}
+
+.app-screen-review .review-options-panel .field__input,
+.app-screen-review .review-options-panel .toggle-chip span {
+  min-height: 36px;
+}
+
+.app-screen-review .review-options-panel .toggle-chip span {
+  padding: 0 10px;
+  font-size: 0.82rem;
+}
+
+.app-screen-review .defect-list-panel .panel__title-row,
+.app-screen-review .panel--review .panel__title-row {
+  margin-bottom: 8px;
+}
+
+.app-screen-review .panel--results .result-card {
+  padding: 10px;
+}
+
+.app-screen-review .results-list {
+  gap: 8px;
+}
+
+.app-screen-review .panel--review {
+  padding: 12px;
+}
+
+.app-screen-review .panel--review .panel__lead {
+  display: none;
+}
+
+.app-screen-review .review-toolbar {
+  gap: 8px;
+  padding-bottom: 8px;
+}
+
+.app-screen-review .review-board {
+  padding-right: 2px;
+}
+
+.app-screen-review .cell-detail-panel {
+  max-height: min(30vh, 270px);
+  margin-top: 8px;
+}
+
+@media (max-width: 1180px) {
+  .app-frame {
+    grid-template-columns: 168px minmax(0, 1fr);
+  }
+
+  body[data-home-state="complete"].app-screen-home .layout {
+    grid-template-columns: minmax(220px, 0.48fr) minmax(0, 1.52fr);
+  }
+
+  .app-screen-review .layout {
+    grid-template-columns: minmax(300px, 38%) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 1020px) {
+  body {
+    padding: 6px;
+  }
+
+  .app-shell {
+    height: calc(100dvh - 12px);
+  }
+
+  .app-topbar.hero {
+    min-height: 56px;
+  }
+
+  .app-frame {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body[data-home-state="complete"].app-screen-home .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-areas:
+      "picker"
+      "summary"
+      "dates";
+    overflow: hidden;
+  }
+
+  body[data-home-state="complete"].app-screen-home .panel--control {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-home-state="complete"].app-screen-home .home-file-status-bar {
+    grid-template-columns: 1fr auto;
+  }
+
+  body[data-home-state="complete"].app-screen-home .home-file-status-bar__item:nth-child(2) {
+    display: none;
+  }
+
+  body[data-home-state="complete"].app-screen-home .panel--summary {
+    flex: 0 0 auto;
+  }
+
+  body[data-home-state="complete"].app-screen-home .panel--sheet-overview {
+    min-height: 0;
+  }
+
+  .app-screen-review .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(150px, 28vh) minmax(0, 1fr);
+    grid-template-areas:
+      "options"
+      "defects"
+      "review";
+  }
+}
+
+@media (max-width: 720px) {
+  .app-topbar__mark,
+  .app-topbar__logo {
+    display: none;
+  }
+
+  .app-status-pill {
+    display: none;
+  }
+
+  .app-topbar__side {
+    justify-content: end;
+  }
+
+  .app-screen-home .sheet-overview-list {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-home-state="complete"].app-screen-home .summary-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-screen-review .layout {
+    grid-template-rows: auto minmax(170px, 32vh) minmax(520px, 1fr);
+    overflow: auto;
+  }
+
+  .app-screen-review .review-options-panel .filter-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home" data-home-state="empty">
@@ -3345,8 +3847,8 @@ body[data-auxiliary-list="hidden"].app-screen-review .layout {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-11-2047</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-11 20:47</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-11-2127</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-11 21:27</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support">
             困ったとき
@@ -3434,6 +3936,18 @@ body[data-auxiliary-list="hidden"].app-screen-review .layout {
             <button id="demo-file-button" class="button button--subtle" type="button">
               ダミーxlsxで試す
             </button>
+          </div>
+
+          <div id="home-file-status-bar" class="home-file-status-bar" aria-live="polite">
+            <div class="home-file-status-bar__item home-file-status-bar__item--file">
+              <span class="home-file-status-bar__label">ファイル</span>
+              <strong id="home-file-name">未選択</strong>
+            </div>
+            <div class="home-file-status-bar__item">
+              <span class="home-file-status-bar__label">最終チェック</span>
+              <strong id="home-last-checked">未実行</strong>
+            </div>
+            <div id="home-check-status" class="home-file-status-bar__status">未読込</div>
           </div>
 
           <div class="control-grid">
@@ -3872,7 +4386,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-11-2047","buildLabel":"2026-05-11 20:47","buildId":"2026-05-11-204707","builtAtIso":"2026-05-11T11:47:07.116Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-11-2127","buildLabel":"2026-05-11 21:27","buildId":"2026-05-11-212730","builtAtIso":"2026-05-11T12:27:30.802Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -6763,6 +7277,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       homeProgressText: document.querySelector("#home-progress-text"),
       homeProgressBar: document.querySelector("#home-progress-bar"),
       homeProgressMeta: document.querySelector("#home-progress-meta"),
+      homeFileStatusBar: document.querySelector("#home-file-status-bar"),
+      homeFileName: document.querySelector("#home-file-name"),
+      homeLastChecked: document.querySelector("#home-last-checked"),
+      homeCheckStatus: document.querySelector("#home-check-status"),
       summaryCards: document.querySelector("#summary-cards"),
       structureSummary: document.querySelector("#structure-summary"),
       appStatusPill: document.querySelector("#app-status-pill"),
@@ -7886,6 +8404,24 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     if (elements?.homeProgressMeta) {
       elements.homeProgressMeta.textContent =
         total > 0 ? `${ratio}% 完了${progress.label ? ` / ${progress.label}` : ""}` : "しばらくお待ちください";
+    }
+
+    const checkedAt = state.allSheetLastCheckedAt ? formatDateTimeForDisplay(state.allSheetLastCheckedAt) : "未実行";
+    const statusLabel =
+      homeState === "checking" ? "チェック中" : homeState === "complete" ? "チェック完了" : "未読込";
+    const statusTone = homeState === "checking" ? "checking" : homeState === "complete" ? "complete" : "empty";
+    if (elements?.homeFileName) {
+      elements.homeFileName.textContent = state.sourceLabel || "未選択";
+    }
+    if (elements?.homeLastChecked) {
+      elements.homeLastChecked.textContent = checkedAt;
+    }
+    if (elements?.homeCheckStatus) {
+      elements.homeCheckStatus.textContent = statusLabel;
+      elements.homeCheckStatus.dataset.statusTone = statusTone;
+    }
+    if (elements?.homeFileStatusBar) {
+      elements.homeFileStatusBar.dataset.statusTone = statusTone;
     }
   }
 
