@@ -3879,6 +3879,201 @@ body[data-review-mode="table"].app-screen-review #filters-panel {
   grid-area: options;
 }
 
+/* A-plan dashboard alignment: keep the checked-home screen app-like and card-first. */
+body[data-home-state="complete"].app-screen-home .layout {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-areas:
+    "picker"
+    "summary"
+    "dates";
+  gap: 12px;
+  overflow: hidden;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control,
+body[data-home-state="complete"].app-screen-home .panel--summary,
+body[data-home-state="complete"].app-screen-home .panel--sheet-overview {
+  border-radius: 22px;
+  box-shadow: 0 16px 34px rgba(63, 54, 37, 0.08);
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control {
+  grid-template-columns: minmax(0, 1.05fr) minmax(220px, 320px) minmax(190px, auto);
+  gap: 12px;
+  padding: 12px 14px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(235, 249, 246, 0.92)),
+    var(--surface);
+}
+
+body[data-home-state="complete"].app-screen-home .home-file-status-bar {
+  min-height: 58px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+body[data-home-state="complete"].app-screen-home .panel--summary {
+  padding: 14px 16px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--summary .panel__title-row {
+  margin-bottom: 10px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--summary .panel__lead,
+body[data-home-state="complete"].app-screen-home #structure-summary {
+  display: none;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-cards {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card {
+  min-height: 94px;
+  padding: 13px 12px;
+  border-radius: 18px;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card__label {
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card__value {
+  font-size: clamp(1.18rem, 1.9vw, 1.58rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  word-break: keep-all;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card__description {
+  margin-top: 4px;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--sheet-overview {
+  padding: 16px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--sheet-overview .panel__title-row {
+  margin-bottom: 10px;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-list {
+  grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+  gap: 12px;
+  padding: 2px 2px 8px;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card {
+  min-height: 176px;
+  padding: 14px;
+  border-width: 2px;
+  border-left-width: 2px;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 252, 247, 0.94)),
+    var(--surface);
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card--red {
+  box-shadow: 0 16px 30px rgba(201, 60, 45, 0.11);
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card--yellow {
+  box-shadow: 0 16px 30px rgba(190, 122, 8, 0.11);
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card--ok {
+  box-shadow: 0 16px 30px rgba(34, 146, 83, 0.09);
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card__head {
+  align-items: flex-start;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card__date {
+  font-size: clamp(1.04rem, 1.8vw, 1.22rem);
+  line-height: 1.18;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card__status {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card__counts,
+body[data-home-state="complete"].app-screen-home .sheet-overview-card__badges {
+  gap: 6px;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card__count,
+body[data-home-state="complete"].app-screen-home .sheet-overview-card__badge {
+  padding: 6px 8px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card__main {
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 950;
+  line-height: 1.45;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card__hint {
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.app-nav__link {
+  white-space: nowrap;
+}
+
+@media (min-width: 1021px) {
+  .app-frame {
+    grid-template-columns: 190px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 1021px) {
+  body[data-home-state="complete"].app-screen-home .summary-cards {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  body[data-home-state="complete"].app-screen-home .sheet-overview-list {
+    grid-template-columns: repeat(auto-fit, minmax(188px, 1fr));
+  }
+}
+
+@media (max-width: 1020px) {
+  body[data-home-state="complete"].app-screen-home .summary-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  body[data-home-state="complete"].app-screen-home .summary-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-home-state="complete"].app-screen-home .sheet-overview-list {
+    grid-template-columns: 1fr;
+  }
+}
+
 .selected-defect-detail-panel .panel__title-row {
   align-items: flex-start;
   margin-bottom: 12px;
@@ -4094,8 +4289,8 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-11-2155</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-11 21:55</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-11-2223</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-11 22:23</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support">
             困ったとき
@@ -4119,7 +4314,7 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
           </a>
           <a class="app-nav__link" href="#review-section" data-screen-link="review">
             <span class="app-nav__icon" aria-hidden="true">表</span>
-            <span class="app-nav__text">要確認レビュー</span>
+            <span class="app-nav__text">表レビュー</span>
           </a>
           <a class="app-nav__link" href="#support-panel" data-screen-link="support">
             <span class="app-nav__icon" aria-hidden="true">?</span>
@@ -4646,7 +4841,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-11-2155","buildLabel":"2026-05-11 21:55","buildId":"2026-05-11-215547","builtAtIso":"2026-05-11T12:55:47.859Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-11-2223","buildLabel":"2026-05-11 22:23","buildId":"2026-05-11-222351","builtAtIso":"2026-05-11T13:23:51.604Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -11538,7 +11733,6 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     const severity = getSeverityMeta(finding.severity);
     const defectKey = createDefectKey(finding);
-    const selectedClass = defectKey === state.selectedDefectKey ? " result-card--selected" : "";
     const slotCount = getFindingSlotCount(finding);
     const reviewerText = finding.reviewerText || formatReviewerDisplay(finding.reviewerNames ?? [], "未入力または対象なし");
     const contextRows = Array.isArray(finding.contextRows) ? finding.contextRows : [];
@@ -11578,6 +11772,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function renderResultCard(finding, options = {}) {
     const severity = getSeverityMeta(finding.severity);
     const defectKey = createDefectKey(finding);
+    const selectedClass = defectKey === state.selectedDefectKey ? " result-card--selected" : "";
     const detailMessages = (finding.details ?? []).filter((detail) => detail && detail !== finding.message);
     const detailText = finding.message && finding.message !== finding.shortText ? finding.message : "";
     const slotCount = getFindingSlotCount(finding);
