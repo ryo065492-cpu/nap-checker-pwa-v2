@@ -3826,6 +3826,253 @@ body[data-auxiliary-list="hidden"].app-screen-review .layout {
   }
 }
 
+/* Deep Build: 不備レビューを主画面にし、表は必要時だけ開く */
+body[data-review-mode="defects"].app-screen-review .layout {
+  grid-template-columns: minmax(340px, 0.92fr) minmax(360px, 1.08fr);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "defects detail";
+  gap: 14px;
+  overflow: hidden;
+}
+
+body[data-review-mode="defects"].app-screen-review #filters-panel,
+body[data-review-mode="defects"].app-screen-review #review-section {
+  display: none !important;
+}
+
+body[data-review-mode="defects"].app-screen-review #results-panel {
+  grid-area: defects;
+  display: flex !important;
+  min-height: 0;
+  overflow: hidden;
+}
+
+body[data-review-mode="defects"].app-screen-review #defect-detail-panel {
+  grid-area: detail;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+body[data-review-mode="table"].app-screen-review .layout {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    "options"
+    "review";
+  gap: 10px;
+  overflow: hidden;
+}
+
+body[data-review-mode="table"].app-screen-review #results-panel,
+body[data-review-mode="table"].app-screen-review #defect-detail-panel {
+  display: none !important;
+}
+
+body[data-review-mode="table"].app-screen-review #review-section {
+  display: flex !important;
+  grid-area: review;
+}
+
+body[data-review-mode="table"].app-screen-review #filters-panel {
+  grid-area: options;
+}
+
+.selected-defect-detail-panel .panel__title-row {
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.selected-defect-detail {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  overflow: auto;
+  border: 1px solid rgba(13, 43, 79, 0.08);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 250, 255, 0.96)),
+    var(--surface);
+  box-shadow: 0 18px 44px rgba(18, 38, 70, 0.08);
+  -webkit-overflow-scrolling: touch;
+}
+
+.selected-defect-detail--red {
+  border-color: rgba(214, 45, 45, 0.28);
+  box-shadow: inset 5px 0 0 rgba(214, 45, 45, 0.72), 0 18px 44px rgba(18, 38, 70, 0.08);
+}
+
+.selected-defect-detail--yellow {
+  border-color: rgba(221, 146, 0, 0.32);
+  box-shadow: inset 5px 0 0 rgba(221, 146, 0, 0.72), 0 18px 44px rgba(18, 38, 70, 0.08);
+}
+
+.selected-defect-detail--info {
+  border-color: rgba(61, 112, 185, 0.24);
+  box-shadow: inset 5px 0 0 rgba(61, 112, 185, 0.62), 0 18px 44px rgba(18, 38, 70, 0.08);
+}
+
+.selected-defect-detail--empty {
+  justify-content: center;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.selected-defect-detail__top {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.selected-defect-detail__child {
+  font-size: clamp(1.28rem, 2.6vw, 1.8rem);
+  font-weight: 950;
+  letter-spacing: 0.02em;
+}
+
+.selected-defect-detail__time {
+  margin-top: 4px;
+  color: var(--brand-strong);
+  font-size: clamp(1rem, 1.8vw, 1.22rem);
+  font-weight: 900;
+}
+
+.selected-defect-detail__count {
+  min-width: 150px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--ink);
+  font-weight: 950;
+  text-align: center;
+}
+
+.selected-defect-detail__rule {
+  font-size: 1.12rem;
+  font-weight: 950;
+}
+
+.selected-defect-detail__reason,
+.selected-defect-detail__reviewer,
+.selected-defect-detail__empty-note {
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.selected-defect-detail__section-title {
+  margin: 6px 0 8px;
+  color: var(--ink);
+  font-weight: 950;
+}
+
+.selected-defect-detail__context {
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(248, 251, 255, 0.92);
+}
+
+.selected-defect-detail__context-row {
+  display: grid;
+  grid-template-columns: 52px 74px minmax(90px, 1fr) minmax(100px, 1fr);
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid rgba(18, 38, 70, 0.08);
+  font-size: 0.94rem;
+}
+
+.selected-defect-detail__context-row:first-of-type {
+  border-top: 0;
+}
+
+.selected-defect-detail__context-row--target {
+  margin-inline: -6px;
+  padding-inline: 6px;
+  border-radius: 12px;
+  background: rgba(255, 235, 235, 0.86);
+  font-weight: 900;
+}
+
+.selected-defect-detail__actions,
+.result-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.result-card[data-defect-key] {
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.result-card[data-defect-key]:hover,
+.result-card[data-defect-key]:focus-visible,
+.result-card--selected {
+  border-color: rgba(0, 108, 103, 0.34);
+  box-shadow: 0 14px 32px rgba(0, 108, 103, 0.12);
+  transform: translateY(-1px);
+}
+
+.result-card--selected {
+  outline: 3px solid rgba(0, 108, 103, 0.18);
+}
+
+body[data-review-mode="defects"].app-screen-review .panel--results .result-card__context {
+  display: none;
+}
+
+body[data-review-mode="defects"].app-screen-review .results-guide {
+  margin-bottom: 12px;
+}
+
+@media (max-width: 1020px) {
+  body[data-review-mode="defects"].app-screen-review .layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(210px, 46vh) minmax(0, 1fr);
+    grid-template-areas:
+      "defects"
+      "detail";
+    overflow: hidden;
+  }
+
+  body[data-review-mode="table"].app-screen-review .layout {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  body[data-review-mode="defects"].app-screen-review .layout {
+    grid-template-rows: minmax(260px, 48vh) minmax(420px, 1fr);
+    overflow: auto;
+  }
+
+  .selected-defect-detail__top {
+    flex-direction: column;
+  }
+
+  .selected-defect-detail__count {
+    width: 100%;
+    text-align: left;
+  }
+
+  .selected-defect-detail__context-row {
+    grid-template-columns: 42px 64px minmax(0, 1fr);
+  }
+
+  .selected-defect-detail__context-row span:last-child {
+    grid-column: 3 / -1;
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home" data-home-state="empty">
@@ -3847,8 +4094,8 @@ body[data-auxiliary-list="hidden"].app-screen-review .layout {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-11-2127</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-11 21:27</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-11-2155</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-11 21:55</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support">
             困ったとき
@@ -3872,7 +4119,7 @@ body[data-auxiliary-list="hidden"].app-screen-review .layout {
           </a>
           <a class="app-nav__link" href="#review-section" data-screen-link="review">
             <span class="app-nav__icon" aria-hidden="true">表</span>
-            <span class="app-nav__text">表レビュー</span>
+            <span class="app-nav__text">要確認レビュー</span>
           </a>
           <a class="app-nav__link" href="#support-panel" data-screen-link="support">
             <span class="app-nav__icon" aria-hidden="true">?</span>
@@ -4274,10 +4521,11 @@ body[data-auxiliary-list="hidden"].app-screen-review .layout {
         <section id="review-section" class="panel panel--review screen-section screen-review" tabindex="-1">
           <div class="panel__title-row">
             <div>
-              <h2 id="review-title">表レビュー</h2>
+              <h2 id="review-title">表確認モード</h2>
               <p class="panel__lead">赤・黄のセルをタップすると、記録者と前後状態を確認できます。</p>
             </div>
             <div class="review-toolbar">
+              <button id="review-defects-button" class="button button--ghost" type="button">不備一覧へ戻る</button>
               <button id="review-back-button" class="button button--ghost" type="button">ホームへ戻る</button>
               <div id="review-count" class="meta-pill">要確認 0件 / 該当0コマ</div>
             </div>
@@ -4358,6 +4606,18 @@ body[data-auxiliary-list="hidden"].app-screen-review .layout {
           </div>
         </section>
 
+        <section id="defect-detail-panel" class="panel panel--defect-detail selected-defect-detail-panel screen-section screen-review">
+          <div class="panel__title-row">
+            <div>
+              <h2>選択中の不備</h2>
+              <p class="panel__lead">不備カードを選ぶと、理由・記録者・前後状態をここで確認できます。</p>
+            </div>
+          </div>
+          <div class="selected-defect-detail selected-defect-detail--empty">
+            要確認日付を選んで、不備カードを押してください。
+          </div>
+        </section>
+
         <details id="debug-panel" class="panel panel--debug debug-panel screen-section screen-support" hidden>
           <summary class="debug-panel__summary">
             <span id="debug-panel-label">詳細ログ</span>
@@ -4386,7 +4646,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-11-2127","buildLabel":"2026-05-11 21:27","buildId":"2026-05-11-212730","builtAtIso":"2026-05-11T12:27:30.802Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-11-2155","buildLabel":"2026-05-11 21:55","buildId":"2026-05-11-215547","builtAtIso":"2026-05-11T12:55:47.859Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -7228,6 +7488,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     childFilter: "",
     viewMode: "grouped",
     activeScreen: "home",
+    reviewMode: "defects",
+    selectedDefectKey: "",
     diagnostics: {
       fileReads: 0,
       analyzeClicks: 0,
@@ -7288,9 +7550,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       reviewCount: document.querySelector("#review-count"),
       reviewGuide: document.querySelector("#review-guide"),
       reviewBackButton: document.querySelector("#review-back-button"),
+      reviewDefectsButton: document.querySelector("#review-defects-button"),
       sheetAlertBanner: document.querySelector("#sheet-alert-banner"),
       reviewBoard: document.querySelector("#review-board"),
       cellDetailPanel: document.querySelector("#cell-detail-panel"),
+      defectDetailPanel: document.querySelector("#defect-detail-panel"),
       resultsList: document.querySelector("#results-list"),
       resultsCount: document.querySelector("#results-count"),
       childFilter: document.querySelector("#child-filter"),
@@ -7752,6 +8016,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   function setCurrentSheetAnalysisFromResult(sheetName, result) {
     state.selectedSheetName = sheetName;
+    state.selectedDefectKey = "";
+    state.reviewMode = "defects";
     if (elements?.sheetSelect) {
       elements.sheetSelect.value = sheetName;
     }
@@ -9505,6 +9771,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       });
     }
 
+    elements.reviewDefectsButton?.addEventListener("click", () => {
+      setReviewMode("defects");
+      setActiveScreen("review", { focus: true });
+      renderAll();
+      setStatus("不備一覧に戻りました。");
+    });
+
     elements.fileInput.addEventListener("change", async (event) => {
       const file = event.target.files?.[0];
       if (!file) {
@@ -10249,22 +10522,42 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     });
 
     elements.resultsList?.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-result-review-target]");
-      if (!(button instanceof HTMLElement)) {
+      const reviewButton = event.target.closest("[data-result-review-target]");
+      const selectButton = event.target.closest("[data-result-select-defect]");
+      const card = event.target.closest("[data-defect-key]");
+      if (!(reviewButton instanceof HTMLElement) && !(selectButton instanceof HTMLElement) && !(card instanceof HTMLElement)) {
         return;
       }
 
-      state.selectedReviewCell = {
-        blockIndex: Number(button.dataset.blockIndex),
-        stateRow: Number(button.dataset.stateRow),
-        reviewerRow: Number(button.dataset.reviewerRow),
-        intervalIndex: Number(button.dataset.intervalIndex),
-        part: button.dataset.part === "reviewer" ? "reviewer" : "status",
-      };
+      const defectKey = (selectButton instanceof HTMLElement ? selectButton.dataset.defectKey : card?.dataset.defectKey) ?? "";
+      const finding = selectDefectByKey(defectKey);
 
-      renderReviewBoard();
-      focusSelectedReviewCell();
-      setStatus("不備一覧から、表の該当コマを選択しました。");
+      if (reviewButton instanceof HTMLElement) {
+        const targetFinding = finding ?? getSelectedDefectFinding();
+        if (targetFinding) {
+          openTableFocusForFinding(targetFinding);
+          setStatus("不備カードから表確認モードを開きました。");
+        }
+        return;
+      }
+
+      if (finding) {
+        renderResults();
+        setStatus("不備カードの詳細を表示しました。");
+      }
+    });
+
+    elements.defectDetailPanel?.addEventListener("click", (event) => {
+      const tableButton = event.target.closest("[data-defect-detail-table]");
+      if (!(tableButton instanceof HTMLElement)) {
+        return;
+      }
+
+      const finding = selectDefectByKey(tableButton.dataset.defectKey ?? "") ?? getSelectedDefectFinding();
+      if (finding) {
+        openTableFocusForFinding(finding);
+        setStatus("選択中の不備を表で確認します。");
+      }
     });
 
     elements.sheetOverviewList?.addEventListener("click", (event) => {
@@ -10646,7 +10939,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     if (!state.analysis) {
       if (elements.reviewTitle) {
-        elements.reviewTitle.textContent = "表レビュー";
+        elements.reviewTitle.textContent = "要確認レビュー";
       }
       if (elements.reviewCount) {
         elements.reviewCount.textContent = formatIncidentSlotSummary(0, 0, { prefix: "要確認 " });
@@ -10675,7 +10968,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     );
     if (elements.reviewTitle) {
       const dateLabel = state.selectedSheetName ? getSheetDisplayDate(state.selectedSheetName) : "選択中の日付";
-      elements.reviewTitle.textContent = `${dateLabel} の表レビュー`;
+      elements.reviewTitle.textContent =
+        state.reviewMode === "table" ? `${dateLabel} の表確認モード` : `${dateLabel} の要確認レビュー`;
     }
 
     if (elements.reviewCount) {
@@ -11105,8 +11399,185 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     });
   }
 
+  function createDefectKey(finding) {
+    const startIndex = Number.isInteger(finding?.context?.startIndex) ? finding.context.startIndex : "";
+    const endIndex = Number.isInteger(finding?.context?.endIndex) ? finding.context.endIndex : "";
+    return [
+      finding?.childName ?? "",
+      finding?.severity ?? "",
+      finding?.ruleKey ?? finding?.ruleName ?? "",
+      finding?.blockIndex ?? "",
+      finding?.stateRow ?? "",
+      finding?.reviewerRow ?? "",
+      startIndex,
+      endIndex,
+      finding?.time ?? "",
+    ].join("|");
+  }
+
+  function getCurrentDefectFindings() {
+    return getDisplayFindings();
+  }
+
+  function getSelectedDefectFinding(findings = getCurrentDefectFindings()) {
+    if (findings.length === 0) {
+      state.selectedDefectKey = "";
+      return null;
+    }
+
+    const selected = findings.find((finding) => createDefectKey(finding) === state.selectedDefectKey);
+    if (selected) {
+      return selected;
+    }
+
+    const fallback = findings[0];
+    state.selectedDefectKey = createDefectKey(fallback);
+    return fallback;
+  }
+
+  function setReviewMode(mode) {
+    state.reviewMode = mode === "table" ? "table" : "defects";
+    renderScreenChrome();
+  }
+
+  function selectDefectByKey(defectKey) {
+    if (!defectKey) {
+      return null;
+    }
+
+    const finding = getCurrentDefectFindings().find((item) => createDefectKey(item) === defectKey);
+    if (!finding) {
+      return null;
+    }
+
+    state.selectedDefectKey = defectKey;
+    renderSelectedDefectDetail();
+    return finding;
+  }
+
+  function openTableFocusForFinding(finding) {
+    if (!finding) {
+      return;
+    }
+
+    state.selectedDefectKey = createDefectKey(finding);
+    const reviewTarget = getReviewTargetForFinding(finding);
+    if (reviewTarget) {
+      state.selectedReviewCell = {
+        blockIndex: reviewTarget.blockIndex,
+        stateRow: reviewTarget.stateRow,
+        reviewerRow: reviewTarget.reviewerRow,
+        intervalIndex: reviewTarget.intervalIndex,
+        part: reviewTarget.part === "reviewer" ? "reviewer" : "status",
+      };
+    }
+
+    setReviewMode("table");
+    setActiveScreen("review", { focus: true, keepReviewMode: true });
+    renderAll();
+    focusSelectedReviewCell();
+  }
+
+  function renderDefectContextRows(rows, options = {}) {
+    const title = options.title ?? "前後の状態";
+    if (!Array.isArray(rows) || rows.length === 0) {
+      return `<div class="selected-defect-detail__empty-note">${escapeHtml(title)}は取得できませんでした。</div>`;
+    }
+
+    return `
+      <div class="selected-defect-detail__context">
+        <div class="selected-defect-detail__section-title">${escapeHtml(title)}</div>
+        ${rows
+          .map(
+            (row) => `
+              <div class="selected-defect-detail__context-row ${row.marker === "対象" ? "selected-defect-detail__context-row--target" : ""}">
+                <span>${escapeHtml(row.marker ?? "")}</span>
+                <strong>${escapeHtml(row.time ?? "-")}</strong>
+                <span>状態: ${escapeHtml(row.status || "(空欄)")}</span>
+                <span>記録者: ${escapeHtml(row.reviewer || "未入力")}</span>
+              </div>
+            `,
+          )
+          .join("")}
+      </div>
+    `;
+  }
+
+  function renderSelectedDefectDetail() {
+    if (!elements?.defectDetailPanel) {
+      return;
+    }
+
+    if (!state.analysis) {
+      elements.defectDetailPanel.innerHTML = `
+        <div class="panel__title-row">
+          <div>
+            <h2>選択中の不備</h2>
+            <p class="panel__lead">xlsxを選ぶと、この日の確認内容を表示します。</p>
+          </div>
+        </div>
+        <div class="selected-defect-detail selected-defect-detail--empty">まだ確認する日付が選ばれていません。</div>
+      `;
+      return;
+    }
+
+    const findings = getCurrentDefectFindings();
+    const finding = getSelectedDefectFinding(findings);
+    if (!finding) {
+      elements.defectDetailPanel.innerHTML = `
+        <div class="panel__title-row">
+          <div>
+            <h2>選択中の不備</h2>
+            <p class="panel__lead">この日に表示中の赤・黄はありません。</p>
+          </div>
+        </div>
+        <div class="selected-defect-detail selected-defect-detail--empty">必要に応じて表で全体を確認してください。</div>
+      `;
+      return;
+    }
+
+    const severity = getSeverityMeta(finding.severity);
+    const defectKey = createDefectKey(finding);
+    const selectedClass = defectKey === state.selectedDefectKey ? " result-card--selected" : "";
+    const slotCount = getFindingSlotCount(finding);
+    const reviewerText = finding.reviewerText || formatReviewerDisplay(finding.reviewerNames ?? [], "未入力または対象なし");
+    const contextRows = Array.isArray(finding.contextRows) ? finding.contextRows : [];
+    const targetRows = contextRows.filter((row) => row.marker === "対象");
+    const tableButton = getReviewTargetForFinding(finding)
+      ? `<button type="button" class="button button--primary selected-defect-detail__table-button" data-defect-detail-table="1" data-defect-key="${escapeHtml(defectKey)}">表で確認</button>`
+      : "";
+
+    elements.defectDetailPanel.innerHTML = `
+      <div class="panel__title-row">
+        <div>
+          <h2>選択中の不備</h2>
+          <p class="panel__lead">内容を確認し、必要なら「表で確認」で元表の位置を見ます。</p>
+        </div>
+        <span class="badge badge--${finding.severity}">${escapeHtml(severity.label)}</span>
+      </div>
+      <article class="selected-defect-detail selected-defect-detail--${finding.severity}">
+        <div class="selected-defect-detail__top">
+          <div>
+            <div class="selected-defect-detail__child">${escapeHtml(finding.childName ?? "対象なし")}</div>
+            <div class="selected-defect-detail__time">${escapeHtml(finding.time ?? "-")}</div>
+          </div>
+          <div class="selected-defect-detail__count">${escapeHtml(formatIncidentSlotSummary(1, slotCount, { prefix: "要確認" }))}</div>
+        </div>
+        <div class="selected-defect-detail__rule">${escapeHtml(finding.ruleName ?? finding.shortText ?? "確認が必要です")}</div>
+        <div class="selected-defect-detail__reason">${escapeHtml(finding.reason ?? finding.message ?? "記録内容を確認してください。")}</div>
+        <div class="selected-defect-detail__reviewer">記録者: ${escapeHtml(reviewerText)}</div>
+        ${renderDefectContextRows(contextRows, { title: "前後の状態" })}
+        ${targetRows.length > 1 ? renderDefectContextRows(targetRows, { title: "該当コマの並び" }) : ""}
+        <div class="selected-defect-detail__actions">
+          ${tableButton}
+        </div>
+      </article>
+    `;
+  }
+
   function renderResultCard(finding, options = {}) {
     const severity = getSeverityMeta(finding.severity);
+    const defectKey = createDefectKey(finding);
     const detailMessages = (finding.details ?? []).filter((detail) => detail && detail !== finding.message);
     const detailText = finding.message && finding.message !== finding.shortText ? finding.message : "";
     const slotCount = getFindingSlotCount(finding);
@@ -11157,7 +11628,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       : "";
 
     return `
-      <article class="result-card result-card--${finding.severity}">
+      <article class="result-card result-card--${finding.severity}${selectedClass}" data-defect-key="${escapeHtml(defectKey)}" tabindex="0">
         <div class="result-card__top">
           <div class="result-card__time">${escapeHtml(finding.time)}</div>
           <div class="result-card__meta">
@@ -11172,7 +11643,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         <div class="result-card__reason">理由: ${escapeHtml(finding.reason ?? "設定ルールに当てはまりました。")}</div>
         <div class="result-card__action-label">確認したいこと</div>
         <div class="result-card__action">${escapeHtml(finding.action)}</div>
-        ${reviewTargetHtml}
+        <div class="result-card__actions">
+          <button type="button" class="button button--primary result-card__select" data-result-select-defect="1" data-defect-key="${escapeHtml(defectKey)}">詳細を見る</button>
+          ${reviewTargetHtml}
+        </div>
         ${contextHtml}
         ${detailText ? `<div class="result-card__message">${escapeHtml(detailText)}</div>` : ""}
         ${
@@ -11247,7 +11721,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     if (!state.analysis) {
       if (elements.reviewTitle) {
-        elements.reviewTitle.textContent = "表レビュー";
+        elements.reviewTitle.textContent = "要確認レビュー";
       }
       if (elements.reviewCount) {
         elements.reviewCount.textContent = formatIncidentSlotSummary(0, 0, { prefix: "要確認 " });
@@ -11277,7 +11751,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     );
     if (elements.reviewTitle) {
       const dateLabel = state.selectedSheetName ? getSheetDisplayDate(state.selectedSheetName) : "選択中の日付";
-      elements.reviewTitle.textContent = `${dateLabel} の表レビュー`;
+      elements.reviewTitle.textContent =
+        state.reviewMode === "table" ? `${dateLabel} の表確認モード` : `${dateLabel} の要確認レビュー`;
     }
 
     if (elements.reviewCount) {
@@ -11605,18 +12080,20 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const ui = getUiSettings();
     const slotCount = sumFindingSlotCounts(findings);
     const showAuxiliaryList = getFieldAdjustments().showAuxiliaryList;
+    const isTableMode = state.reviewMode === "table";
 
     if (elements.filtersPanel) {
-      elements.filtersPanel.hidden = !showAuxiliaryList;
+      elements.filtersPanel.hidden = isTableMode ? !showAuxiliaryList : true;
     }
     if (elements.resultsPanel) {
-      elements.resultsPanel.hidden = !showAuxiliaryList;
+      elements.resultsPanel.hidden = isTableMode ? true : false;
     }
 
     elements.resultsCount.textContent = `表示中 ${formatIncidentSlotSummary(findings.length, slotCount)}`;
     elements.downloadCsvButton.disabled = findings.length === 0;
 
-    if (!showAuxiliaryList) {
+    if (isTableMode) {
+      renderSelectedDefectDetail();
       return;
     }
 
@@ -11629,6 +12106,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     elements.resultsList.innerHTML =
       state.viewMode === "timeline" ? renderTimelineResults(findings) : renderGroupedResults(findings);
+    renderSelectedDefectDetail();
   }
 
   function isSafariBrowser() {
@@ -12648,6 +13126,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     document.body?.classList.toggle("app-screen-review", activeScreen === "review");
     document.body?.classList.toggle("app-screen-support", activeScreen === "support");
     document.documentElement.dataset.activeScreen = activeScreen;
+    document.body.dataset.reviewMode = state.reviewMode === "table" ? "table" : "defects";
 
     for (const link of elements?.appNavLinks ?? []) {
       const isActive = link.dataset.screenLink === activeScreen;
@@ -12665,10 +13144,17 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     if (elements?.supportPanel && activeScreen === "support") {
       elements.supportPanel.open = true;
     }
+
+    if (elements?.reviewDefectsButton) {
+      elements.reviewDefectsButton.hidden = state.reviewMode !== "table";
+    }
   }
 
   function setActiveScreen(screen, options = {}) {
     state.activeScreen = normalizeAppScreen(screen);
+    if (state.activeScreen === "review" && !options.keepReviewMode) {
+      state.reviewMode = "defects";
+    }
     renderScreenChrome();
     if (state.activeScreen === "review" && !state.analysis) {
       setStatus("表レビューを見るには、先にホームでxlsxを選んでください。");
