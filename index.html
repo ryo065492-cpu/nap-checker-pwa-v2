@@ -1868,6 +1868,43 @@ body[data-detail-panel-position="fixed"] .cell-detail-panel {
   line-height: 1.65;
 }
 
+.cell-detail-panel__sequence {
+  margin-top: 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.cell-detail-panel__sequence-title {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.cell-detail-panel__sequence-row {
+  display: grid;
+  grid-template-columns: minmax(64px, 0.7fr) minmax(48px, 0.6fr) minmax(96px, 1fr);
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  border: 1px solid rgba(11, 31, 51, 0.09);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.cell-detail-panel__sequence-row span {
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.cell-detail-panel__sequence-row strong {
+  font-size: 1.05rem;
+}
+
+.cell-detail-panel__sequence-row small {
+  color: var(--muted);
+  font-weight: 700;
+}
+
 .cell-detail-panel__nearby {
   display: grid;
   gap: 8px;
@@ -1991,6 +2028,10 @@ body {
 
 .screen-section {
   display: none;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 .app-screen-home .screen-home,
@@ -2748,6 +2789,541 @@ body[data-home-state="checking"].app-screen-home .home-progress-card {
   }
 }
 
+/* State-based app UI pass: keep each home state visually separate. */
+body[data-home-state="complete"].app-screen-home .layout {
+  grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.6fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    "picker picker"
+    "summary dates";
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px 18px;
+  align-items: center;
+  padding: 16px 18px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control .panel__title-row {
+  margin: 0;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control .panel__lead,
+body[data-home-state="complete"].app-screen-home .panel--control .meta-pill {
+  display: none;
+}
+
+body[data-home-state="complete"].app-screen-home #home-dashboard .control-grid {
+  grid-template-columns: minmax(280px, 1fr);
+  margin: 0;
+}
+
+body[data-home-state="complete"].app-screen-home #home-dashboard .field:first-child {
+  margin: 0;
+}
+
+body[data-home-state="complete"].app-screen-home #home-dashboard .field__label {
+  font-size: 0.86rem;
+}
+
+body[data-home-state="complete"].app-screen-home #home-dashboard .field__input[type="file"] {
+  min-height: 54px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  font-size: 0.95rem;
+}
+
+body[data-home-state="complete"].app-screen-home #home-dashboard .action-row {
+  align-self: stretch;
+  width: min(100%, 260px);
+  margin: 0;
+}
+
+body[data-home-state="complete"].app-screen-home #analyze-all-button {
+  min-height: 54px;
+  border-radius: 16px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--summary {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-cards {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card {
+  min-height: 118px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--sheet-overview {
+  min-height: 0;
+}
+
+body[data-home-state="empty"].app-screen-home .app-topbar .hero__lead,
+body[data-home-state="checking"].app-screen-home .app-topbar .hero__lead {
+  display: none;
+}
+
+body[data-home-state="empty"].app-screen-home .panel--control {
+  max-width: 720px;
+}
+
+body[data-home-state="empty"].app-screen-home #home-dashboard .field:first-child {
+  position: relative;
+  min-height: 210px;
+  display: grid;
+  place-items: center;
+}
+
+body[data-home-state="empty"].app-screen-home #home-dashboard .field:first-child::before {
+  content: "午睡記録ファイルを選ぶ";
+  display: grid;
+  place-items: center;
+  width: min(100%, 360px);
+  min-height: 64px;
+  margin-bottom: 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+  color: white;
+  font-size: clamp(1.05rem, 2.4vw, 1.24rem);
+  font-weight: 900;
+  box-shadow: 0 14px 28px rgba(0, 108, 103, 0.22);
+}
+
+body[data-home-state="empty"].app-screen-home #home-dashboard .field:first-child::after {
+  content: "選ぶと全日分を自動チェックします";
+  color: var(--text-soft);
+  font-weight: 900;
+}
+
+body[data-home-state="empty"].app-screen-home #home-dashboard .field:first-child .field__label {
+  display: none;
+}
+
+body[data-home-state="empty"].app-screen-home #home-dashboard .field__input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.02;
+}
+
+.meta-pill--red {
+  background: var(--danger-soft);
+  color: #8a2419;
+}
+
+.meta-pill--yellow {
+  background: var(--warn-soft);
+  color: #7b4d05;
+}
+
+.sheet-overview-card__main {
+  font-size: 0.94rem;
+}
+
+.sheet-overview-card--complete-ok {
+  grid-column: 1 / -1;
+  min-height: 180px;
+}
+
+.sheet-ok-summary {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  border: 1px solid rgba(23, 132, 67, 0.22);
+  border-radius: var(--radius-lg);
+  background: rgba(243, 253, 246, 0.88);
+}
+
+.sheet-ok-summary > summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 12px;
+  align-items: center;
+  min-height: var(--tap);
+  padding: 14px 16px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.sheet-ok-summary > summary::-webkit-details-marker {
+  display: none;
+}
+
+.sheet-ok-summary > summary span,
+.sheet-ok-summary > summary strong {
+  font-weight: 900;
+}
+
+.sheet-ok-summary > summary small {
+  grid-column: 1 / -1;
+  color: var(--text-soft);
+  font-weight: 800;
+}
+
+.sheet-ok-summary__grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  padding: 0 14px 14px;
+}
+
+.sheet-ok-summary__chip {
+  display: grid;
+  gap: 4px;
+  min-height: 56px;
+  padding: 10px 12px;
+  border: 1px solid rgba(23, 132, 67, 0.18);
+  border-radius: 14px;
+  background: white;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.sheet-ok-summary__chip small {
+  color: var(--ok);
+}
+
+.sheet-ok-summary__chip:hover,
+.sheet-ok-summary__chip:focus-visible {
+  border-color: rgba(23, 132, 67, 0.45);
+  outline: none;
+}
+
+.sheet-ok-summary__more {
+  display: grid;
+  place-items: center;
+  min-height: 56px;
+  border-radius: 14px;
+  color: var(--text-soft);
+  background: rgba(255, 255, 255, 0.62);
+  font-weight: 900;
+}
+
+@media (max-width: 1020px) {
+  body[data-home-state="complete"].app-screen-home .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-areas:
+      "picker"
+      "summary"
+      "dates";
+    overflow: auto;
+  }
+
+  body[data-home-state="complete"].app-screen-home .panel--control {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-home-state="complete"].app-screen-home #home-dashboard .action-row {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  body[data-home-state="complete"].app-screen-home .summary-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-home-state="complete"].app-screen-home .panel--sheet-overview {
+    min-height: 440px;
+  }
+}
+
+@media (max-width: 560px) {
+  body[data-home-state="complete"].app-screen-home .summary-cards,
+  .sheet-ok-summary__grid {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-home-state="empty"].app-screen-home #home-dashboard .field:first-child {
+    min-height: 180px;
+  }
+}
+
+/* Table review workspace: 不備一覧と表を同じ画面内で追えるようにする。 */
+.app-screen-review .layout {
+  grid-template-columns: minmax(310px, 0.54fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    "options review"
+    "defects review";
+  gap: 14px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+body[data-auxiliary-list="hidden"].app-screen-review .layout {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "review";
+}
+
+.app-screen-review #filters-panel {
+  grid-area: options;
+  min-height: 0;
+  padding: 14px;
+}
+
+.app-screen-review #results-panel {
+  grid-area: defects;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.app-screen-review #review-section {
+  grid-area: review;
+  min-height: 0;
+}
+
+.app-screen-review .review-options-panel .panel__title-row,
+.app-screen-review .defect-list-panel .panel__title-row,
+.app-screen-review .panel--review .panel__title-row {
+  margin-bottom: 10px;
+}
+
+.app-screen-review .review-options-panel h2,
+.app-screen-review .defect-list-panel h2 {
+  font-size: 1.02rem;
+}
+
+.app-screen-review .review-options-panel .filter-grid {
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.app-screen-review .review-options-panel .field {
+  gap: 6px;
+}
+
+.app-screen-review .review-options-panel .field__label {
+  font-size: 0.82rem;
+}
+
+.app-screen-review .review-options-panel .toggle-chip span {
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 0.88rem;
+}
+
+.app-screen-review .review-options-panel .field__input {
+  min-height: 42px;
+}
+
+.app-screen-review .results-guide {
+  margin: 0 0 10px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.app-screen-review .results-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 10px;
+  overflow: auto;
+  padding: 2px 4px 8px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-screen-review .grouped-results,
+.app-screen-review .timeline-results,
+.app-screen-review .child-group__findings {
+  gap: 10px;
+}
+
+.app-screen-review .child-group {
+  padding: 12px;
+  border-radius: 18px;
+}
+
+.app-screen-review .child-group__header {
+  gap: 8px;
+}
+
+.app-screen-review .child-group__name {
+  font-size: 1rem;
+}
+
+.app-screen-review .child-group__subtitle,
+.app-screen-review .child-group__reviewers {
+  font-size: 0.84rem;
+}
+
+.app-screen-review .panel--results .result-card {
+  gap: 8px;
+  padding: 12px;
+  border-radius: 16px;
+}
+
+.app-screen-review .panel--results .result-card__top,
+.app-screen-review .panel--results .result-card__meta {
+  gap: 6px;
+}
+
+.app-screen-review .panel--results .result-card__time {
+  font-size: 0.96rem;
+}
+
+.app-screen-review .panel--results .result-card__reviewer,
+.app-screen-review .panel--results .result-card__reason,
+.app-screen-review .panel--results .result-card__action,
+.app-screen-review .panel--results .result-card__message {
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.app-screen-review .panel--results .result-card__context {
+  display: none;
+}
+
+.result-card__review-target {
+  justify-self: start;
+  min-height: 38px;
+  padding: 8px 12px;
+  border-color: rgba(0, 108, 103, 0.24);
+  background: rgba(0, 108, 103, 0.08);
+  color: var(--brand-strong);
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.result-card__review-target:hover,
+.result-card__review-target:focus-visible {
+  background: var(--brand-soft);
+  outline: 2px solid rgba(0, 108, 103, 0.22);
+}
+
+.app-screen-review .panel--review {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.app-screen-review .panel--review .panel__lead {
+  margin-top: 3px;
+  font-size: 0.88rem;
+}
+
+.app-screen-review .review-toolbar {
+  flex: 0 0 auto;
+}
+
+.app-screen-review .review-board {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding-right: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-screen-review .review-block {
+  min-height: 0;
+}
+
+.app-screen-review .review-block__header {
+  padding: 10px 12px;
+}
+
+.app-screen-review .review-block__scroll {
+  max-width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-screen-review .cell-detail-panel {
+  flex: 0 0 auto;
+  max-height: min(34vh, 310px);
+  margin-top: 10px;
+  overflow: auto;
+  padding: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-screen-review .cell-detail-panel__summary {
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+}
+
+@media (min-width: 1180px) {
+  .app-screen-review .layout {
+    grid-template-columns: minmax(340px, 0.48fr) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 1120px) {
+  .app-screen-review .layout {
+    grid-template-columns: minmax(286px, 0.46fr) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 1020px) {
+  .app-screen-review .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(150px, 27vh) minmax(0, 1fr);
+    grid-template-areas:
+      "options"
+      "defects"
+      "review";
+    overflow: hidden;
+  }
+
+  body[data-auxiliary-list="hidden"].app-screen-review .layout {
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-areas: "review";
+  }
+
+  .app-screen-review #results-panel {
+    min-height: 0;
+  }
+
+  .app-screen-review .review-options-panel .filter-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: end;
+  }
+
+  .app-screen-review .panel--results .result-card__context {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-screen-review .layout {
+    grid-template-rows: auto minmax(170px, 34vh) minmax(520px, 1fr);
+    overflow: auto;
+    padding-bottom: 6px;
+  }
+
+  .app-screen-review .review-options-panel .filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-screen-review .panel--review {
+    min-height: 520px;
+  }
+
+  .app-screen-review .review-toolbar {
+    justify-content: stretch;
+  }
+
+  .app-screen-review .review-toolbar .button,
+  .app-screen-review .review-toolbar .meta-pill {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home" data-home-state="empty">
@@ -2769,8 +3345,8 @@ body[data-home-state="checking"].app-screen-home .home-progress-card {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-10-2004</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-10 20:04</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-11-2047</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-11 20:47</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support">
             困ったとき
@@ -3105,7 +3681,7 @@ body[data-home-state="checking"].app-screen-home .home-progress-card {
                 </label>
                 <label class="toggle-chip field-adjustment-toggle">
                   <input id="field-show-auxiliary-list" type="checkbox" />
-                  <span>補助一覧を表示する</span>
+                <span>不備一覧を表示する</span>
                 </label>
               </div>
 
@@ -3206,9 +3782,9 @@ body[data-home-state="checking"].app-screen-home .home-progress-card {
           </section>
         </section>
 
-        <section id="filters-panel" class="panel panel--filters screen-section screen-review admin-only">
+        <section id="filters-panel" class="panel panel--filters review-options-panel screen-section screen-review">
           <div class="panel__title-row">
-            <h2>補助表示の切り替え</h2>
+            <h2>表示オプション</h2>
           </div>
 
           <div class="filter-grid">
@@ -3253,13 +3829,13 @@ body[data-home-state="checking"].app-screen-home .home-progress-card {
           </div>
         </section>
 
-        <section id="results-panel" class="panel panel--results screen-section screen-review admin-only">
+        <section id="results-panel" class="panel panel--results defect-list-panel screen-section screen-review">
           <div class="panel__title-row">
-            <h2>補助一覧</h2>
+            <h2>不備一覧</h2>
             <div id="results-count" class="meta-pill">表示中 0件 / 該当0コマ</div>
           </div>
           <p id="results-guide" class="results-guide">
-            園児ごとに確認内容をまとめて表示します。
+            表で色が付いたコマの理由を、現場確認のまとまりごとに表示します。
           </p>
           <div id="results-list" class="results-list" aria-live="polite">
             <article class="result-card result-card--empty">
@@ -3296,7 +3872,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-10-2004","buildLabel":"2026-05-10 20:04","buildId":"2026-05-10-200455","builtAtIso":"2026-05-10T11:04:55.841Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-11-2047","buildLabel":"2026-05-11 20:47","buildId":"2026-05-11-204707","builtAtIso":"2026-05-11T11:47:07.116Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -7568,6 +8144,280 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     elements.fileMeta.textContent = state.sourceLabel;
   }
 
+  function isIssueOverviewItem(item) {
+    return (
+      item?.status === "error" ||
+      (item?.redIncidents ?? 0) > 0 ||
+      (item?.yellowIncidents ?? 0) > 0 ||
+      Boolean(item?.hasEnvironmentMissing)
+    );
+  }
+
+  function getCheckedOverviewItems() {
+    const sheets = state.workbook?.sheets ?? [];
+    return sheets
+      .filter((sheet) => state.sheetAnalyses?.has(sheet.name))
+      .map((sheet) => buildSheetOverviewItem(sheet.name, state.sheetAnalyses.get(sheet.name)));
+  }
+
+  function renderOkSheetOverviewSummary(okItems) {
+    if (!okItems.length) {
+      return "";
+    }
+
+    const previewItems = okItems.slice(0, 24);
+    const remainingCount = Math.max(0, okItems.length - previewItems.length);
+    const buttons = previewItems
+      .map((item) => {
+        const weekdayLabel = getWeekdayLabel(item.dateLabel);
+        return `
+          <button class="sheet-ok-summary__chip" type="button" data-sheet-name="${escapeHtml(item.sheetName)}">
+            <span>${escapeHtml(item.dateLabel)}${weekdayLabel ? `（${escapeHtml(weekdayLabel)}）` : ""}</span>
+            <small>OK</small>
+          </button>
+        `;
+      })
+      .join("");
+
+    return `
+      <details class="sheet-ok-summary">
+        <summary>
+          <span>OKの日付</span>
+          <strong>${okItems.length}日</strong>
+          <small>必要なときだけ開いて確認できます</small>
+        </summary>
+        <div class="sheet-ok-summary__grid">
+          ${buttons}
+          ${remainingCount > 0 ? `<div class="sheet-ok-summary__more">ほか ${remainingCount}日</div>` : ""}
+        </div>
+      </details>
+    `;
+  }
+
+  function renderSheetOverviewCard(item) {
+    const hasRed = item.redIncidents > 0 || item.status === "error";
+    const hasYellow = item.yellowIncidents > 0 || item.hasEnvironmentMissing;
+    const severityClass =
+      item.status === "error"
+        ? "sheet-overview-card--error"
+        : hasRed
+          ? "sheet-overview-card--red"
+          : hasYellow
+            ? "sheet-overview-card--yellow"
+            : "sheet-overview-card--ok";
+    const statusLabel = item.status === "error" ? "確認不可" : hasRed ? "要注意" : hasYellow ? "要確認" : "OK";
+    const activeClass = item.sheetName === state.selectedSheetName ? " sheet-overview-card--active" : "";
+    const weekdayLabel = getWeekdayLabel(item.dateLabel);
+    const reasonLabels = [
+      ...item.mainIssueLabels,
+      ...(item.hasEnvironmentMissing ? ["温度・湿度未入力"] : []),
+      ...(item.status === "error" ? ["シートを解析できませんでした"] : []),
+    ]
+      .filter(Boolean)
+      .filter((label, index, labels) => labels.indexOf(label) === index)
+      .slice(0, 2);
+    const reasonHtml =
+      reasonLabels.length > 0
+        ? reasonLabels.map((label) => `<span class="sheet-overview-card__reason">${escapeHtml(label)}</span>`).join("")
+        : `<span class="sheet-overview-card__reason sheet-overview-card__reason--ok">問題なし</span>`;
+    const environmentText = item.hasEnvironmentMissing
+      ? `温度・湿度: ${item.environmentMissingLabels.join("・")}未入力`
+      : "温度・湿度: 入力漏れなし";
+
+    return `
+      <button class="sheet-overview-card ${severityClass}${activeClass}" type="button" data-sheet-name="${escapeHtml(item.sheetName)}">
+        <div class="sheet-overview-card__top">
+          <div>
+            <div class="sheet-overview-card__date">
+              ${escapeHtml(item.dateLabel)}${weekdayLabel ? `<span class="sheet-overview-card__weekday">（${escapeHtml(weekdayLabel)}）</span>` : ""}
+            </div>
+            <div class="sheet-overview-card__sheet">シート: ${escapeHtml(item.sheetName)}</div>
+          </div>
+          <span class="sheet-overview-card__status">${escapeHtml(statusLabel)}</span>
+        </div>
+        <div class="sheet-overview-card__counts">
+          <span class="meta-pill meta-pill--red">赤 ${formatIncidentSlotSummary(item.redIncidents, item.redCells)}</span>
+          <span class="meta-pill meta-pill--yellow">黄 ${formatIncidentSlotSummary(item.yellowIncidents, item.yellowCells)}</span>
+        </div>
+        <div class="sheet-overview-card__reasons">${reasonHtml}</div>
+        <div class="sheet-overview-card__main">${escapeHtml(environmentText)}</div>
+        <div class="sheet-overview-card__hint">表レビューを見る</div>
+      </button>
+    `;
+  }
+
+  function renderSheetOverview() {
+    if (!elements?.sheetOverviewList) {
+      return;
+    }
+
+    const totalSheets = state.workbook?.sheets?.length ?? 0;
+    const checkedItems = getCheckedOverviewItems();
+    const issueItems = checkedItems.filter(isIssueOverviewItem);
+    const okItems = checkedItems.filter((item) => !isIssueOverviewItem(item));
+    const checkedCount = checkedItems.length;
+    const stats = getDashboardStats();
+
+    if (elements.sheetOverviewCount) {
+      elements.sheetOverviewCount.textContent =
+        checkedCount > 0
+          ? `要確認 ${issueItems.length}日 / OK ${okItems.length}日`
+          : totalSheets > 0
+            ? "チェック待ち"
+            : "未選択";
+    }
+
+    if (elements.sheetOverviewGuide) {
+      elements.sheetOverviewGuide.textContent =
+        checkedCount > 0
+          ? "直す可能性がある日付だけを大きく表示しています。カードを押すと、その日の表レビューへ切り替わります。"
+          : "xlsxを選ぶと全日分を自動チェックし、要確認の日付だけをここに表示します。";
+    }
+
+    if (!totalSheets) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="result-card result-card--empty">
+          まだxlsxが選ばれていません。
+        </article>
+      `;
+      return;
+    }
+
+    if (checkedCount === 0) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="result-card result-card--empty">
+          全日分チェックの開始を待っています。
+        </article>
+      `;
+      return;
+    }
+
+    if (issueItems.length === 0) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="sheet-overview-card sheet-overview-card--ok sheet-overview-card--complete-ok">
+          <div class="sheet-overview-card__top">
+            <div>
+              <div class="sheet-overview-card__date">要確認の日付はありません</div>
+              <div class="sheet-overview-card__sheet">確認済み: ${stats.checkedCount}日</div>
+            </div>
+            <span class="sheet-overview-card__status">OK</span>
+          </div>
+          <div class="sheet-overview-card__main">赤・黄の要確認は見つかりませんでした。</div>
+          <div class="sheet-overview-card__hint">必要な場合はOKの日付を開いて表レビューできます</div>
+        </article>
+        ${renderOkSheetOverviewSummary(okItems)}
+      `;
+      return;
+    }
+
+    elements.sheetOverviewList.innerHTML = `
+      ${issueItems.map(renderSheetOverviewCard).join("")}
+      ${renderOkSheetOverviewSummary(okItems)}
+    `;
+  }
+
+  function formatDateTimeForDisplay(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return String(value ?? "");
+    }
+
+    const pad = (number) => String(number).padStart(2, "0");
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  }
+
+  function renderSummary() {
+    if (!elements?.summaryCards || !elements?.structureSummary) {
+      return;
+    }
+
+    const stats = getDashboardStats();
+    const hasCheckedSheets = stats.checkedCount > 0;
+    const cards = hasCheckedSheets
+      ? [
+          {
+            label: "チェック済み日数",
+            value: `${stats.checkedCount}日`,
+            description: `${stats.totalSheets}シート中、確認できた日数です。`,
+            className: "summary-card--neutral",
+          },
+          {
+            label: "要確認日数",
+            value: `${stats.issueDays}日`,
+            description: "直す可能性がある日付をカードで表示します。",
+            className: stats.issueDays > 0 ? "summary-card--red" : "summary-card--ok",
+          },
+          {
+            label: "赤（要注意）",
+            value: formatIncidentSlotSummary(stats.redIncidents, stats.redCells),
+            description: "件数は現場確認単位、コマ数は表で色が付いた数です。",
+            className: "summary-card--red",
+          },
+          {
+            label: "黄（要確認）",
+            value: formatIncidentSlotSummary(stats.yellowIncidents, stats.yellowCells),
+            description: stats.environmentMissingDays > 0 ? `温度・湿度の確認が必要な日: ${stats.environmentMissingDays}日` : "確認者未入力などの確認件数です。",
+            className: "summary-card--yellow",
+          },
+          {
+            label: "OK日数",
+            value: `${stats.okDays}日`,
+            description: "現時点で赤・黄が見つからなかった日です。",
+            className: "summary-card--ok",
+          },
+        ]
+      : [
+          {
+            label: "チェック済み日数",
+            value: "-",
+            description: "xlsxを選ぶと全日分を自動チェックします。",
+            className: "summary-card--neutral",
+          },
+          {
+            label: "要確認日数",
+            value: "-",
+            description: "要確認の日付がここに集まります。",
+            className: "summary-card--empty",
+          },
+          {
+            label: "赤（要注意）",
+            value: "-",
+            description: "危険姿勢や起床後記録などを確認します。",
+            className: "summary-card--red",
+          },
+          {
+            label: "黄（要確認）",
+            value: "-",
+            description: "確認者未入力や温度・湿度未入力を確認します。",
+            className: "summary-card--yellow",
+          },
+          {
+            label: "OK日数",
+            value: "-",
+            description: "問題が見つからなかった日数です。",
+            className: "summary-card--ok",
+          },
+        ];
+
+    elements.summaryCards.innerHTML = cards.map(renderSummaryCard).join("");
+
+    if (!hasCheckedSheets) {
+      elements.structureSummary.innerHTML = `
+        <div class="structure-summary__lead"><strong>ファイルを選ぶと、全日分チェックが自動で始まります。</strong></div>
+        <div class="structure-summary__meta">空の表レビューや詳細ログは通常画面には表示しません。</div>
+      `;
+      return;
+    }
+
+    const checkedAt = state.allSheetLastCheckedAt ? formatDateTimeForDisplay(state.allSheetLastCheckedAt) : "今回の読み込み";
+    elements.structureSummary.innerHTML = `
+      <div class="structure-summary__lead"><strong>要確認の日付カードから、表レビューへ入ります。</strong></div>
+      <div class="structure-summary__meta">最終チェック: ${escapeHtml(checkedAt)} / 選択中ファイル: ${escapeHtml(state.sourceLabel || "未選択")}</div>
+      <div class="structure-summary__meta">赤 ${formatIncidentSlotSummary(stats.redIncidents, stats.redCells)} / 黄 ${formatIncidentSlotSummary(stats.yellowIncidents, stats.yellowCells)} / OK ${stats.okDays}日</div>
+      ${stats.errorDays > 0 ? `<div class="structure-summary__meta">解析できなかった日: ${stats.errorDays}日</div>` : ""}
+    `;
+  }
+
   function renderAll() {
     renderSummary();
     renderChildFilter();
@@ -8862,6 +9712,25 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       renderReviewBoard();
     });
 
+    elements.resultsList?.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-result-review-target]");
+      if (!(button instanceof HTMLElement)) {
+        return;
+      }
+
+      state.selectedReviewCell = {
+        blockIndex: Number(button.dataset.blockIndex),
+        stateRow: Number(button.dataset.stateRow),
+        reviewerRow: Number(button.dataset.reviewerRow),
+        intervalIndex: Number(button.dataset.intervalIndex),
+        part: button.dataset.part === "reviewer" ? "reviewer" : "status",
+      };
+
+      renderReviewBoard();
+      focusSelectedReviewCell();
+      setStatus("不備一覧から、表の該当コマを選択しました。");
+    });
+
     elements.sheetOverviewList?.addEventListener("click", (event) => {
       const button = event.target.closest("[data-sheet-name]");
       if (!(button instanceof HTMLElement)) {
@@ -9484,7 +10353,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       {
         label: ui.severityLabels.red,
         value: state.analysis ? formatIncidentSlotSummary(state.analysis.summary?.reviewTotals?.red ?? 0, totals.red ?? 0) : totals.red,
-        description: state.analysis ? "件数を優先し、コマ数は補助表示です" : "赤の確認件数です",
+        description: state.analysis ? "件数を優先し、コマ数は参考情報です" : "赤の確認件数です",
         className: "summary-card--red",
       },
       {
@@ -9492,7 +10361,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         value: state.analysis
           ? formatIncidentSlotSummary(state.analysis.summary?.reviewTotals?.yellow ?? 0, totals.yellow ?? 0)
           : totals.yellow,
-        description: state.analysis ? "件数を優先し、コマ数は補助表示です" : "黄の確認件数です",
+        description: state.analysis ? "件数を優先し、コマ数は参考情報です" : "黄の確認件数です",
         className: "summary-card--yellow",
       },
       {
@@ -9550,8 +10419,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     if (elements.resultsGuide) {
       elements.resultsGuide.textContent =
         state.viewMode === "timeline"
-        ? "補助一覧です。時刻順に、現場確認のまとまりごとに確認できます。"
-        : `補助一覧です。園児ごとに現場確認のまとまりで表示します。${ui.severityLabels.red}は赤、${ui.severityLabels.yellow}は黄として表示します。`;
+        ? "不備一覧です。時刻順に、現場確認のまとまりごとに確認できます。"
+        : `不備一覧です。園児ごとに現場確認のまとまりで表示します。${ui.severityLabels.red}は赤、${ui.severityLabels.yellow}は黄として表示します。`;
     }
 
     elements.resultsList.innerHTML =
@@ -9661,11 +10530,67 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     });
   }
 
+  function getReviewTargetForFinding(finding) {
+    const record = findRecordForFinding(finding);
+    if (!record) {
+      return null;
+    }
+
+    const contextIndex = Number.isInteger(finding.context?.startIndex) ? finding.context.startIndex : null;
+    const intervalIndex = contextIndex ?? findIntervalIndexForFinding(record, finding);
+    if (!Number.isInteger(intervalIndex) || intervalIndex < 0 || intervalIndex >= record.intervals.length) {
+      return null;
+    }
+
+    return {
+      blockIndex: record.blockIndex,
+      stateRow: record.stateRow,
+      reviewerRow: record.reviewerRow,
+      intervalIndex,
+      part: finding.ruleKey === "missingReviewerCell" ? "reviewer" : "status",
+    };
+  }
+
+  function focusSelectedReviewCell() {
+    const selected = state.selectedReviewCell;
+    if (!selected || !elements.reviewBoard) {
+      return;
+    }
+
+    const slotKey = createReviewSlotKey(selected.blockIndex, selected.stateRow, selected.reviewerRow, selected.intervalIndex);
+    requestAnimationFrame(() => {
+      const cell = [...elements.reviewBoard.querySelectorAll("[data-review-slot]")].find(
+        (item) => item.dataset.reviewSlot === slotKey && item.dataset.part === selected.part,
+      );
+      if (cell instanceof HTMLElement) {
+        cell.focus({ preventScroll: true });
+        cell.scrollIntoView({ block: "center", inline: "center", behavior: "smooth" });
+      }
+    });
+  }
+
   function renderResultCard(finding, options = {}) {
     const severity = getSeverityMeta(finding.severity);
     const detailMessages = (finding.details ?? []).filter((detail) => detail && detail !== finding.message);
     const detailText = finding.message && finding.message !== finding.shortText ? finding.message : "";
     const slotCount = getFindingSlotCount(finding);
+    const reviewTarget = getReviewTargetForFinding(finding);
+    const reviewTargetHtml = reviewTarget
+      ? `
+        <button
+          type="button"
+          class="button button--ghost result-card__review-target"
+          data-result-review-target="1"
+          data-block-index="${reviewTarget.blockIndex}"
+          data-state-row="${reviewTarget.stateRow}"
+          data-reviewer-row="${reviewTarget.reviewerRow}"
+          data-interval-index="${reviewTarget.intervalIndex}"
+          data-part="${escapeHtml(reviewTarget.part)}"
+        >
+          表で確認
+        </button>
+      `
+      : "";
     const reviewerLabel =
       finding.ruleKey === "singleReviewerSheet"
         ? "記録者（シート全体）"
@@ -9711,6 +10636,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         <div class="result-card__reason">理由: ${escapeHtml(finding.reason ?? "設定ルールに当てはまりました。")}</div>
         <div class="result-card__action-label">確認したいこと</div>
         <div class="result-card__action">${escapeHtml(finding.action)}</div>
+        ${reviewTargetHtml}
         ${contextHtml}
         ${detailText ? `<div class="result-card__message">${escapeHtml(detailText)}</div>` : ""}
         ${
@@ -9829,7 +10755,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         reviewMaps.flaggedSlotCount > 0
           ? `表では${formatSlotCount(reviewMaps.flaggedSlotCount, { prefix: "" })}をそのまま色付けし、見出しは${formatIncidentSlotSummary(groupedFindings.length, reviewMaps.flaggedSlotCount, { prefix: "要確認 " })}として分けて表示します。セルを押すと区間の詳細を確認できます。`
           : groupedFindings.length > 0
-            ? "温度・湿度など、表のコマ以外の要確認があります。要確認日付一覧または補助一覧を確認してください。"
+          ? "温度・湿度など、表のコマ以外の要確認があります。要確認日付一覧または不備一覧を確認してください。"
           : "要確認のコマはありません。必要に応じて表を見て、前後の状態や記録者を確認してください。";
     }
 
@@ -9978,6 +10904,28 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             .map((finding) => {
               const slotCount = getFindingSlotCount(finding);
               const severity = getSeverityMeta(finding.severity);
+              const targetRows = (Array.isArray(finding.contextRows) ? finding.contextRows : []).filter(
+                (row) => row.marker === "対象",
+              );
+              const targetSequenceHtml =
+                targetRows.length > 1
+                  ? `
+                    <div class="cell-detail-panel__sequence">
+                      <div class="cell-detail-panel__sequence-title">対象時刻の並び</div>
+                      ${targetRows
+                        .map(
+                          (row) => `
+                            <div class="cell-detail-panel__sequence-row">
+                              <span>${escapeHtml(row.time)}</span>
+                              <strong>${escapeHtml(row.status || "(空欄)")}</strong>
+                              <small>記録者: ${escapeHtml(row.reviewer || "未入力")}</small>
+                            </div>
+                          `,
+                        )
+                        .join("")}
+                    </div>
+                  `
+                  : "";
               return `
                 <article class="cell-detail-panel__finding cell-detail-panel__finding--${finding.severity}">
                   <div class="cell-detail-panel__finding-top">
@@ -9991,6 +10939,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                   <div class="cell-detail-panel__finding-reason">理由: ${escapeHtml(finding.reason)}</div>
                   <div class="cell-detail-panel__finding-action">確認したいこと: ${escapeHtml(finding.action)}</div>
                   <div class="cell-detail-panel__finding-message">${escapeHtml(finding.message)}</div>
+                  ${targetSequenceHtml}
                 </article>
               `;
             })
@@ -10038,13 +10987,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       {
         label: ui.severityLabels.red,
         value: summary ? formatIncidentSlotSummary(reviewTotals.red ?? 0, totals.red ?? 0) : "-",
-        description: summary ? "赤は件数を優先し、コマ数は補助表示です" : "件数はまとまりで数えます",
+        description: summary ? "赤は件数を優先し、コマ数は参考情報です" : "件数はまとまりで数えます",
         className: "summary-card--red",
       },
       {
         label: ui.severityLabels.yellow,
         value: summary ? formatIncidentSlotSummary(reviewTotals.yellow ?? 0, totals.yellow ?? 0) : "-",
-        description: summary ? "黄は件数を優先し、コマ数は補助表示です" : "件数はまとまりで数えます",
+        description: summary ? "黄は件数を優先し、コマ数は参考情報です" : "件数はまとまりで数えます",
         className: "summary-card--yellow",
       },
       {
@@ -10139,7 +11088,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       elements.resultsGuide.textContent =
         state.viewMode === "timeline"
           ? `一覧は連続した同種の異常を1件として表示しています。表レビューでは${formatSlotCount(slotCount, { prefix: "" })}をそのまま確認できます。`
-          : `園児ごとに要確認のまとまりを表示しています。表レビューでは${formatSlotCount(slotCount, { prefix: "" })}を色付けしています。${ui.severityLabels.red}は赤、${ui.severityLabels.yellow}は黄として表示します。`;
+          : `園児ごとに不備のまとまりを表示しています。表レビューでは${formatSlotCount(slotCount, { prefix: "" })}を色付けしています。${ui.severityLabels.red}は赤、${ui.severityLabels.yellow}は黄として表示します。`;
     }
 
     elements.resultsList.innerHTML =
@@ -11473,7 +12422,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           "この画面からホーム画面に追加しておくと、次回から迷わず使えます。";
       } else {
         elements.environmentHint.innerHTML =
-          "<strong>開発者向けの補助表示です</strong> " +
+          "<strong>開発者向けの診断表示です</strong> " +
           "本番は妻のiPadでホーム画面追加したPWAを使う前提です。";
       }
     }
