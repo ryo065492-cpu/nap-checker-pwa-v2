@@ -3262,7 +3262,7 @@ body[data-auxiliary-list="hidden"].app-screen-review .layout {
   }
 }
 
-@media (max-width: 1120px) {
+@media (max-width: 940px) {
   .app-screen-review .layout {
     grid-template-columns: minmax(286px, 0.46fr) minmax(0, 1fr);
   }
@@ -4268,6 +4268,517 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
   }
 }
 
+/* Deep build dashboard pass: keep the home screen compact, app-like, and
+   split from the table-focused review mode. */
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100svh;
+  min-height: 100dvh;
+  overflow: hidden;
+  padding: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right))
+    max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+}
+
+.app-shell {
+  height: calc(100svh - 20px);
+  height: calc(100dvh - 20px);
+  min-height: 0;
+  gap: 10px;
+}
+
+.app-topbar.hero {
+  min-height: 64px;
+  padding: 10px 14px;
+  border-radius: 22px;
+}
+
+.app-topbar__mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  font-size: 1.25rem;
+}
+
+.app-topbar h1 {
+  font-size: clamp(1.25rem, 2.1vw, 1.72rem);
+}
+
+.app-topbar__side {
+  gap: 8px;
+}
+
+.app-status-pill,
+.meta-pill,
+.button {
+  min-height: 40px;
+}
+
+.app-frame,
+.layout,
+.panel {
+  min-height: 0;
+}
+
+.app-nav {
+  padding: 12px;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.app-nav__brand {
+  padding: 10px 8px 12px;
+}
+
+.app-nav__logo,
+.app-nav__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 15px;
+  font-size: 1.18rem;
+}
+
+.app-nav__link {
+  min-height: 62px;
+  padding: 10px 12px;
+  border-radius: 18px;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+}
+
+body[data-home-state="empty"].app-screen-home .layout,
+body[data-home-state="checking"].app-screen-home .layout {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "picker";
+  overflow: hidden;
+}
+
+body[data-home-state="empty"].app-screen-home .panel--control,
+body[data-home-state="checking"].app-screen-home .panel--control {
+  display: grid;
+  align-content: center;
+  max-width: min(760px, 100%);
+  width: 100%;
+  margin: auto;
+  padding: clamp(20px, 4vw, 42px);
+}
+
+body[data-home-state="empty"].app-screen-home .panel--summary,
+body[data-home-state="empty"].app-screen-home .panel--sheet-overview,
+body[data-home-state="empty"].app-screen-home .panel--home-preview,
+body[data-home-state="checking"].app-screen-home .panel--summary,
+body[data-home-state="checking"].app-screen-home .panel--sheet-overview,
+body[data-home-state="checking"].app-screen-home .panel--home-preview {
+  display: none;
+}
+
+body[data-home-state="empty"].app-screen-home .home-file-status-bar,
+body[data-home-state="checking"].app-screen-home .home-file-status-bar {
+  margin-block: 16px;
+}
+
+body[data-home-state="empty"].app-screen-home .control-grid,
+body[data-home-state="checking"].app-screen-home .control-grid {
+  grid-template-columns: 1fr;
+}
+
+body[data-home-state="complete"].app-screen-home .layout {
+  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.65fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-areas:
+    "picker preview"
+    "summary preview"
+    "dates preview";
+  gap: 12px;
+  overflow: hidden;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--home-preview {
+  grid-area: preview;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 14px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control .panel__title-row,
+body[data-home-state="complete"].app-screen-home .panel--control .control-grid,
+body[data-home-state="complete"].app-screen-home .panel--control .status-banner,
+body[data-home-state="complete"].app-screen-home .panel--control .error-box {
+  grid-column: 1 / -1;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control .panel__title-row {
+  display: none;
+}
+
+body[data-home-state="complete"].app-screen-home .home-file-status-bar {
+  margin: 0;
+  min-height: 56px;
+  padding: 8px 10px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control .control-grid {
+  display: none;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control .action-row {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  justify-content: flex-end;
+}
+
+body[data-home-state="complete"].app-screen-home #analyze-button,
+body[data-home-state="complete"].app-screen-home #download-csv-button {
+  display: none;
+}
+
+body[data-home-state="complete"].app-screen-home #analyze-all-button {
+  min-width: 190px;
+  min-height: 56px;
+  border-radius: 18px;
+  box-shadow: 0 16px 28px rgba(0, 108, 103, 0.18);
+}
+
+body[data-home-state="complete"].app-screen-home .panel--summary {
+  padding: 12px 14px;
+  overflow: hidden;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--summary .panel__title-row {
+  display: none;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-cards {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card {
+  min-height: 96px;
+  padding: 12px;
+  border-radius: 18px;
+  overflow: visible;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card__value {
+  font-size: clamp(1.08rem, 1.55vw, 1.36rem);
+  line-height: 1.16;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card__description {
+  display: block;
+  max-height: 2.85em;
+  overflow: hidden;
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--sheet-overview {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 14px;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+  gap: 12px;
+  padding: 2px 2px 8px;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card {
+  min-height: 0;
+  padding: 14px;
+  gap: 10px;
+  overflow: visible;
+}
+
+.sheet-overview-card__top {
+  gap: 8px;
+}
+
+.sheet-overview-card__date,
+.sheet-overview-card__main {
+  overflow-wrap: anywhere;
+}
+
+.sheet-overview-card__sheet,
+.sheet-overview-card__main {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sheet-overview-card__sheet {
+  -webkit-line-clamp: 1;
+}
+
+.sheet-overview-card__main {
+  -webkit-line-clamp: 2;
+}
+
+.home-preview-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.home-preview-empty,
+.home-preview-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 108, 103, 0.14);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 253, 251, 0.92));
+}
+
+.home-preview-empty {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.home-preview-empty strong,
+.home-preview-empty span {
+  display: block;
+}
+
+.home-preview-card--error {
+  border-color: rgba(201, 60, 45, 0.24);
+  background: rgba(255, 245, 243, 0.95);
+}
+
+.home-preview-card__top,
+.home-preview-card__counts,
+.home-preview-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-preview-card__date {
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 950;
+}
+
+.home-preview-card__sheet {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 240px;
+}
+
+.home-preview-table-wrap {
+  overflow: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(18, 38, 70, 0.1);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.home-preview-table {
+  width: 100%;
+  min-width: 360px;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.home-preview-table th,
+.home-preview-table td {
+  padding: 9px 8px;
+  border-bottom: 1px solid rgba(18, 38, 70, 0.08);
+  text-align: left;
+  vertical-align: top;
+}
+
+.home-preview-table thead th {
+  position: sticky;
+  top: 0;
+  background: rgba(239, 247, 253, 0.96);
+  color: var(--ink);
+  font-weight: 950;
+  z-index: 1;
+}
+
+.home-preview-table__empty {
+  color: var(--muted);
+  text-align: center;
+}
+
+body[data-review-mode="defects"].app-screen-review .layout {
+  grid-template-columns: minmax(340px, 0.95fr) minmax(330px, 0.85fr);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "defects detail";
+  overflow: hidden;
+}
+
+body[data-review-mode="defects"].app-screen-review #results-panel,
+body[data-review-mode="defects"].app-screen-review #defect-detail-panel {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+body[data-review-mode="defects"].app-screen-review .results-list,
+body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
+  min-height: 0;
+  overflow: auto;
+}
+
+body[data-review-mode="table"].app-screen-review .layout {
+  overflow: hidden;
+}
+
+body[data-review-mode="table"].app-screen-review #review-section {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+body[data-review-mode="table"].app-screen-review .review-board {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.result-card,
+.selected-defect-detail,
+.cell-detail-panel {
+  overflow: visible;
+}
+
+@media (min-width: 980px) {
+  .app-frame {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 1120px) {
+  body[data-home-state="complete"].app-screen-home .layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-areas:
+      "picker"
+      "summary"
+      "dates";
+  }
+
+  body[data-home-state="complete"].app-screen-home .panel--home-preview {
+    display: none;
+  }
+
+  body[data-home-state="complete"].app-screen-home .summary-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    padding: 8px max(8px, env(safe-area-inset-right)) max(72px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+  }
+
+  .app-shell {
+    height: calc(100svh - 80px);
+    height: calc(100dvh - 80px);
+  }
+
+  .app-frame {
+    grid-template-columns: 1fr;
+  }
+
+  .app-nav {
+    position: fixed;
+    left: max(8px, env(safe-area-inset-left));
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    z-index: 80;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 8px;
+    border-radius: 22px;
+    box-shadow: 0 18px 38px rgba(47, 38, 30, 0.18);
+  }
+
+  .app-nav__brand {
+    display: none;
+  }
+
+  .app-nav__link {
+    min-height: 52px;
+    justify-content: center;
+    padding: 8px;
+    font-size: 0.88rem;
+  }
+
+  .app-nav__icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  body[data-home-state="complete"].app-screen-home .panel--control .action-row {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    justify-content: stretch;
+  }
+
+  body[data-home-state="complete"].app-screen-home #analyze-all-button {
+    width: 100%;
+  }
+
+  body[data-review-mode="defects"].app-screen-review .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(260px, 48vh) minmax(0, 1fr);
+    grid-template-areas:
+      "defects"
+      "detail";
+  }
+}
+
+@media (max-width: 640px) {
+  .app-topbar.hero {
+    grid-template-columns: 1fr;
+  }
+
+  .app-topbar__side {
+    justify-content: space-between;
+  }
+
+  body[data-home-state="complete"].app-screen-home .summary-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-home-state="complete"].app-screen-home .sheet-overview-list {
+    grid-template-columns: 1fr;
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home" data-home-state="empty">
@@ -4289,10 +4800,10 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-11-2223</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-11 22:23</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-12-0715</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-12 07:15</div>
           </div>
-          <button class="button button--ghost app-help-button" type="button" data-screen-link="support">
+          <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
           </button>
         </div>
@@ -4308,15 +4819,15 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
               <span>要確認の日付を先に見る</span>
             </div>
           </div>
-          <a class="app-nav__link app-nav__link--primary" href="#home-dashboard" data-screen-link="home">
+          <a class="app-nav__link app-nav__link--primary" href="#home-dashboard" data-screen-link="home" data-testid="nav-home">
             <span class="app-nav__icon" aria-hidden="true">家</span>
             <span class="app-nav__text">ホーム</span>
           </a>
-          <a class="app-nav__link" href="#review-section" data-screen-link="review">
+          <a class="app-nav__link" href="#review-section" data-screen-link="review" data-testid="nav-review">
             <span class="app-nav__icon" aria-hidden="true">表</span>
             <span class="app-nav__text">表レビュー</span>
           </a>
-          <a class="app-nav__link" href="#support-panel" data-screen-link="support">
+          <a class="app-nav__link" href="#support-panel" data-screen-link="support" data-testid="nav-support">
             <span class="app-nav__icon" aria-hidden="true">?</span>
             <span class="app-nav__text">困ったとき</span>
           </a>
@@ -4375,7 +4886,7 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
               <p class="panel__lead">ファイルを選ぶと、全日分チェックを自動で始めます。</p>
             </div>
             <div class="meta-pill">外部送信なし</div>
-            <button id="demo-file-button" class="button button--subtle" type="button">
+            <button id="demo-file-button" class="button button--subtle" type="button" data-testid="demo-file-button">
               ダミーxlsxで試す
             </button>
           </div>
@@ -4395,12 +4906,12 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
           <div class="control-grid">
             <label class="field">
               <span class="field__label">午睡記録ファイル (.xlsx)</span>
-              <input id="file-input" class="field__input" type="file" accept=".xlsx" />
+              <input id="file-input" class="field__input" type="file" accept=".xlsx" data-testid="file-input" aria-label="午睡記録xlsxファイルを選ぶ" />
             </label>
 
             <label class="field">
               <span class="field__label">チェックするシート</span>
-              <select id="sheet-select" class="field__input" disabled>
+              <select id="sheet-select" class="field__input" disabled data-testid="sheet-select" aria-label="チェックするシートを選ぶ">
                 <option value="">先にxlsxを読み込んでください</option>
               </select>
             </label>
@@ -4438,13 +4949,13 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
           </div>
 
           <div class="action-row">
-            <button id="analyze-all-button" class="button button--primary" type="button">
+            <button id="analyze-all-button" class="button button--primary" type="button" data-testid="analyze-all-button">
               全日分をチェックする
             </button>
-            <button id="analyze-button" class="button button--primary" type="button">
+            <button id="analyze-button" class="button button--primary" type="button" data-testid="analyze-sheet-button">
               選択シートだけチェック
             </button>
-            <button id="download-csv-button" class="button button--secondary" type="button">
+            <button id="download-csv-button" class="button button--secondary" type="button" data-testid="download-csv-button">
               CSVをダウンロード
             </button>
           </div>
@@ -4470,13 +4981,28 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
           </div>
         </section>
 
+        <aside id="home-preview-panel" class="panel panel--home-preview screen-section screen-home" tabindex="-1" aria-label="表レビューの簡易プレビュー">
+          <div class="panel__title-row">
+            <div>
+              <h2>表レビュー プレビュー</h2>
+              <p class="results-guide">日付カードを押す前に、主な確認内容を短く見られます。</p>
+            </div>
+            <div id="home-preview-status" class="meta-pill">未選択</div>
+          </div>
+          <div id="home-preview-content" class="home-preview-content" aria-live="polite">
+            <article class="result-card result-card--empty">
+              xlsxを選ぶと、確認が必要な日のプレビューを表示します。
+            </article>
+          </div>
+        </aside>
+
         <section id="diagnostics-panel" class="panel panel--diagnostics screen-section screen-support" hidden>
           <div class="panel__title-row">
             <h2>iPadデバッグ診断</h2>
             <div id="diagnostic-mode-pill" class="meta-pill">debug=1</div>
           </div>
           <div class="action-row action-row--compact">
-            <button id="copy-diagnostics-button" class="button button--ghost" type="button">
+            <button id="copy-diagnostics-button" class="button button--ghost" type="button" data-testid="copy-diagnostics-button">
               診断情報をコピー
             </button>
           </div>
@@ -4512,10 +5038,10 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
             <div class="panel__title-row">
               <h2>診断・サポート</h2>
               <div class="support-panel__actions">
-                <button id="support-check-update-button" class="button button--ghost" type="button">
+                <button id="support-check-update-button" class="button button--ghost" type="button" data-testid="support-check-update-button">
                   更新を確認
                 </button>
-                <button id="support-apply-update-button" class="button button--secondary" type="button" hidden>
+                <button id="support-apply-update-button" class="button button--secondary" type="button" hidden data-testid="support-apply-update-button">
                   更新して再読み込み
                 </button>
               </div>
@@ -4539,7 +5065,7 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
               </article>
             </div>
             <div class="action-row action-row--compact">
-              <button id="support-copy-button" class="button button--ghost" type="button">
+              <button id="support-copy-button" class="button button--ghost" type="button" data-testid="support-copy-button">
                 診断情報をコピー
               </button>
             </div>
@@ -4668,10 +5194,10 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
               </div>
 
               <div class="action-row action-row--compact">
-                <button id="field-save-button" class="button button--primary" type="button">保存して反映</button>
-                <button id="field-reset-button" class="button button--ghost" type="button">標準設定に戻す</button>
-                <button id="field-copy-button" class="button button--ghost" type="button">設定をコピー</button>
-                <button id="field-import-button" class="button button--secondary" type="button">貼り付けた設定を反映</button>
+                <button id="field-save-button" class="button button--primary" type="button" data-testid="field-save-button">保存して反映</button>
+                <button id="field-reset-button" class="button button--ghost" type="button" data-testid="field-reset-button">標準設定に戻す</button>
+                <button id="field-copy-button" class="button button--ghost" type="button" data-testid="field-copy-button">設定をコピー</button>
+                <button id="field-import-button" class="button button--secondary" type="button" data-testid="field-import-button">貼り付けた設定を反映</button>
               </div>
               <textarea id="field-settings-text" class="diagnostic-copy-fallback field-settings-text" placeholder="ここに設定テキストを貼り付けます"></textarea>
             </details>
@@ -4720,8 +5246,8 @@ body[data-review-mode="defects"].app-screen-review .results-guide {
               <p class="panel__lead">赤・黄のセルをタップすると、記録者と前後状態を確認できます。</p>
             </div>
             <div class="review-toolbar">
-              <button id="review-defects-button" class="button button--ghost" type="button">不備一覧へ戻る</button>
-              <button id="review-back-button" class="button button--ghost" type="button">ホームへ戻る</button>
+              <button id="review-defects-button" class="button button--ghost" type="button" data-testid="review-defects-button">不備一覧へ戻る</button>
+              <button id="review-back-button" class="button button--ghost" type="button" data-testid="review-home-button">ホームへ戻る</button>
               <div id="review-count" class="meta-pill">要確認 0件 / 該当0コマ</div>
             </div>
           </div>
@@ -4841,7 +5367,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-11-2223","buildLabel":"2026-05-11 22:23","buildId":"2026-05-11-222351","builtAtIso":"2026-05-11T13:23:51.604Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-12-0715","buildLabel":"2026-05-12 07:15","buildId":"2026-05-12-071549","builtAtIso":"2026-05-11T22:15:49.278Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -7761,6 +8287,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       sheetOverviewCount: document.querySelector("#sheet-overview-count"),
       sheetOverviewGuide: document.querySelector("#sheet-overview-guide"),
       sheetOverviewList: document.querySelector("#sheet-overview-list"),
+      homePreviewPanel: document.querySelector("#home-preview-panel"),
+      homePreviewStatus: document.querySelector("#home-preview-status"),
+      homePreviewContent: document.querySelector("#home-preview-content"),
       buildVersion: document.querySelector("#build-version"),
       buildDetail: document.querySelector("#build-detail"),
       appNavLinks: Array.from(document.querySelectorAll("[data-screen-link]")),
@@ -9036,6 +9565,164 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     elements.sheetOverviewList.innerHTML = overview.map(renderSheetOverviewCard).join("");
   }
 
+  function getPreviewSheetName() {
+    if (state.selectedSheetName && state.sheetAnalyses?.has(state.selectedSheetName)) {
+      return state.selectedSheetName;
+    }
+
+    const firstIssueSheet = state.sheetOverview?.[0]?.sheetName;
+    if (firstIssueSheet && state.sheetAnalyses?.has(firstIssueSheet)) {
+      return firstIssueSheet;
+    }
+
+    return state.workbook?.sheets?.find((sheet) => state.sheetAnalyses?.has(sheet.name))?.name ?? "";
+  }
+
+  function getDefectFindingsForAnalysis(analysis) {
+    return (analysis?.reviewItems ?? analysis?.findings ?? []).filter((finding) =>
+      ["red", "yellow", "info"].includes(finding.severity),
+    );
+  }
+
+  function openSheetReview(sheetName, options = {}) {
+    const result = state.sheetAnalyses.get(sheetName);
+    if (!result) {
+      setStatus("この日付はまだ解析結果がありません。全シートチェックをやり直してください。");
+      return false;
+    }
+
+    state.selectedReviewCell = null;
+    setCurrentSheetAnalysisFromResult(sheetName, result);
+    renderAll();
+    setActiveScreen("review", { focus: true, keepReviewMode: options.keepReviewMode });
+    setStatus(`「${sheetName}」の要確認レビューを表示しました。`);
+    return true;
+  }
+
+  function renderHomePreview() {
+    if (!elements?.homePreviewContent) {
+      return;
+    }
+
+    const sheetName = getPreviewSheetName();
+    const result = sheetName ? state.sheetAnalyses.get(sheetName) : null;
+
+    if (elements.homePreviewStatus) {
+      elements.homePreviewStatus.textContent = sheetName ? getSheetDisplayDate(sheetName) : "未選択";
+    }
+
+    if (!state.workbook?.sheets?.length) {
+      elements.homePreviewContent.innerHTML = `
+        <article class="home-preview-empty">
+          <strong>まだファイルが選ばれていません。</strong>
+          <span>xlsxを選ぶと、要確認日のプレビューをここに表示します。</span>
+        </article>
+      `;
+      return;
+    }
+
+    if (state.allSheetChecking) {
+      elements.homePreviewContent.innerHTML = `
+        <article class="home-preview-empty">
+          <strong>全日分をチェック中です。</strong>
+          <span>完了すると、確認が必要な日付のプレビューを表示します。</span>
+        </article>
+      `;
+      return;
+    }
+
+    if (!result) {
+      elements.homePreviewContent.innerHTML = `
+        <article class="home-preview-empty">
+          <strong>プレビューできる解析結果がまだありません。</strong>
+          <span>全日分チェックが終わるまでお待ちください。</span>
+        </article>
+      `;
+      return;
+    }
+
+    if (result.status === "error") {
+      elements.homePreviewContent.innerHTML = `
+        <article class="home-preview-card home-preview-card--error">
+          <div class="home-preview-card__date">${escapeHtml(getSheetDisplayDate(sheetName))}</div>
+          <h3>このシートは解析できませんでした</h3>
+          <p>${escapeHtml(result.error?.message ?? "シート構造を確認してください。")}</p>
+          <button class="button button--primary" type="button" data-home-preview-open-review="1" data-sheet-name="${escapeHtml(sheetName)}" data-testid="home-preview-open-review">
+            詳細を確認
+          </button>
+        </article>
+      `;
+      return;
+    }
+
+    const findings = getDefectFindingsForAnalysis(result.analysis);
+    const summary = result.analysis?.summary ?? {};
+    const totals = summary.totals ?? { red: 0, yellow: 0, info: 0 };
+    const reviewTotals = summary.reviewTotals ?? { red: 0, yellow: 0, info: 0 };
+    const topFindings = findings.slice(0, 4);
+    const firstFinding = topFindings[0] ?? null;
+    const statusLabel = reviewTotals.red > 0 ? "要注意" : reviewTotals.yellow > 0 ? "要確認" : "OK";
+    const rows =
+      topFindings.length > 0
+        ? topFindings
+            .map((finding) => {
+              const reviewerText = finding.reviewerText ?? formatReviewerDisplay(finding.reviewerNames ?? [], "未入力");
+              return `
+                <tr>
+                  <th scope="row">${escapeHtml(finding.childName ?? "-")}</th>
+                  <td>${escapeHtml(finding.time ?? "-")}</td>
+                  <td><span class="badge badge--${escapeHtml(finding.severity)}">${escapeHtml(getSeverityMeta(finding.severity).label)}</span> ${escapeHtml(finding.shortText ?? finding.ruleName ?? "確認")}</td>
+                  <td>${escapeHtml(reviewerText)}</td>
+                </tr>
+              `;
+            })
+            .join("")
+        : `
+          <tr>
+            <td colspan="4" class="home-preview-table__empty">この日は目立つ要確認がありません。</td>
+          </tr>
+        `;
+
+    elements.homePreviewContent.innerHTML = `
+      <article class="home-preview-card">
+        <div class="home-preview-card__top">
+          <div>
+            <div class="home-preview-card__date">${escapeHtml(getSheetDisplayDate(sheetName))}</div>
+            <div class="home-preview-card__sheet">${escapeHtml(sheetName)}</div>
+          </div>
+          <span class="sheet-overview-card__status">${escapeHtml(statusLabel)}</span>
+        </div>
+        <div class="home-preview-card__counts">
+          <span class="meta-pill">赤 ${escapeHtml(formatIncidentSlotSummary(reviewTotals.red ?? 0, totals.red ?? 0))}</span>
+          <span class="meta-pill">黄 ${escapeHtml(formatIncidentSlotSummary(reviewTotals.yellow ?? 0, totals.yellow ?? 0))}</span>
+        </div>
+        <div class="home-preview-table-wrap">
+          <table class="home-preview-table">
+            <thead>
+              <tr>
+                <th scope="col">園児名</th>
+                <th scope="col">時刻</th>
+                <th scope="col">確認内容</th>
+                <th scope="col">記録者</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+        <div class="home-preview-card__actions">
+          <button class="button button--primary" type="button" data-home-preview-open-review="1" data-sheet-name="${escapeHtml(sheetName)}" data-testid="home-preview-open-review">
+            この日を確認
+          </button>
+          ${
+            firstFinding
+              ? `<button class="button button--ghost" type="button" data-home-preview-open-table="1" data-sheet-name="${escapeHtml(sheetName)}" data-defect-key="${escapeHtml(createDefectKey(firstFinding))}" data-testid="home-preview-open-table">表で確認</button>`
+              : ""
+          }
+        </div>
+      </article>
+    `;
+  }
+
   function renderResults() {
     const findings = getDisplayFindings();
     elements.resultsCount.textContent = `${findings.length}件`;
@@ -9222,7 +9909,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       : "温度・湿度: 入力漏れなし";
 
     return `
-      <button class="sheet-overview-card ${severityClass}${activeClass}" type="button" data-sheet-name="${escapeHtml(item.sheetName)}">
+      <button
+        class="sheet-overview-card ${severityClass}${activeClass}"
+        type="button"
+        data-sheet-name="${escapeHtml(item.sheetName)}"
+        data-testid="sheet-overview-card"
+        aria-label="${escapeHtml(`${item.dateLabel} ${statusLabel}。${mainText}。この日の要確認レビューを開く`)}"
+      >
         <div class="sheet-overview-card__top">
           <div>
             <div class="sheet-overview-card__date">
@@ -9683,7 +10376,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const mainText = item.mainIssueLabels.length > 0 ? item.mainIssueLabels.join(" / ") : "要確認内容あり";
 
     return `
-      <button class="sheet-overview-card ${severityClass}${activeClass}" type="button" data-sheet-name="${escapeHtml(item.sheetName)}">
+      <button
+        class="sheet-overview-card ${severityClass}${activeClass}"
+        type="button"
+        data-sheet-name="${escapeHtml(item.sheetName)}"
+        data-testid="sheet-overview-card"
+        aria-label="${escapeHtml(`${item.dateLabel} ${statusLabel}。${mainText}。この日の要確認レビューを開く`)}"
+      >
         <div class="sheet-overview-card__top">
           <div>
             <div class="sheet-overview-card__date">${escapeHtml(item.dateLabel)}</div>
@@ -10762,17 +11461,29 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       }
 
       const sheetName = button.dataset.sheetName ?? "";
-      const result = state.sheetAnalyses.get(sheetName);
-      if (!result) {
-        setStatus("この日付はまだ解析結果がありません。全シートチェックをやり直してください。");
+      openSheetReview(sheetName);
+    });
+
+    elements.homePreviewPanel?.addEventListener("click", (event) => {
+      const reviewButton = event.target.closest("[data-home-preview-open-review]");
+      const tableButton = event.target.closest("[data-home-preview-open-table]");
+      const actionButton = reviewButton ?? tableButton;
+      if (!(actionButton instanceof HTMLElement)) {
         return;
       }
 
-      state.selectedReviewCell = null;
-      setCurrentSheetAnalysisFromResult(sheetName, result);
-      renderAll();
-      setActiveScreen("review", { focus: true });
-      setStatus(`「${sheetName}」の表レビューを表示しました。`);
+      const sheetName = actionButton.dataset.sheetName ?? "";
+      if (!openSheetReview(sheetName)) {
+        return;
+      }
+
+      if (tableButton instanceof HTMLElement) {
+        const finding = selectDefectByKey(tableButton.dataset.defectKey ?? "") ?? getSelectedDefectFinding();
+        if (finding) {
+          openTableFocusForFinding(finding);
+          setStatus("プレビューから表確認モードを開きました。");
+        }
+      }
     });
 
     for (const checkbox of elements.severityInputs ?? []) {
@@ -11119,7 +11830,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         data-reviewer-row="${record.reviewerRow}"
         data-interval-index="${intervalIndex}"
         data-part="${part}"
+        data-testid="review-cell"
         title="${escapeHtml(title)}"
+        aria-label="${escapeHtml(title)}"
       >
         <span class="review-cell__text">${escapeHtml(text || " ")}</span>
         ${countBadge}
@@ -11457,10 +12170,24 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const hasFindings = getDisplayFindings().length > 0;
 
     elements.sheetSelect.disabled = !hasWorkbook;
+    if (elements.analyzeAllButton) {
+      elements.analyzeAllButton.disabled = Boolean(state.allSheetChecking);
+      elements.analyzeAllButton.dataset.state = !hasWorkbook || !state.config ? "not-ready" : "ready";
+      elements.analyzeAllButton.title = state.allSheetChecking
+        ? "全日分をチェック中です"
+        : hasWorkbook
+          ? "全シートをまとめて再チェックします"
+          : "先にxlsxファイルを選んでください";
+      elements.analyzeAllButton.setAttribute("aria-disabled", String(Boolean(state.allSheetChecking)));
+    }
     elements.analyzeButton.disabled = false;
     elements.downloadCsvButton.disabled = false;
     elements.analyzeButton.dataset.state = !hasWorkbook || !state.selectedSheetName || !state.config ? "not-ready" : "ready";
     elements.downloadCsvButton.dataset.state = hasFindings ? "ready" : "not-ready";
+    elements.analyzeButton.title =
+      hasWorkbook && state.selectedSheetName ? "選択中のシートだけをチェックします" : "先にxlsxファイルとシートを選んでください";
+    elements.downloadCsvButton.title = hasFindings ? "表示中の要確認結果をCSVで保存します" : "CSVに出す要確認結果がまだありません";
+    elements.downloadCsvButton.setAttribute("aria-disabled", String(!hasFindings));
     elements.childFilter.disabled = !(state.analysis?.records?.length > 0);
     elements.configStatus.textContent = state.config
       ? `${getConfigDisplayLabel()} を使用中${hasCustomFieldAdjustments() ? " / 現場調整あり" : ""}`
@@ -11738,7 +12465,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const contextRows = Array.isArray(finding.contextRows) ? finding.contextRows : [];
     const targetRows = contextRows.filter((row) => row.marker === "対象");
     const tableButton = getReviewTargetForFinding(finding)
-      ? `<button type="button" class="button button--primary selected-defect-detail__table-button" data-defect-detail-table="1" data-defect-key="${escapeHtml(defectKey)}">表で確認</button>`
+      ? `<button type="button" class="button button--primary selected-defect-detail__table-button" data-defect-detail-table="1" data-defect-key="${escapeHtml(defectKey)}" data-testid="selected-defect-table-button">表で確認</button>`
       : "";
 
     elements.defectDetailPanel.innerHTML = `
@@ -11783,6 +12510,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           type="button"
           class="button button--ghost result-card__review-target"
           data-result-review-target="1"
+          data-testid="defect-table-button"
           data-block-index="${reviewTarget.blockIndex}"
           data-state-row="${reviewTarget.stateRow}"
           data-reviewer-row="${reviewTarget.reviewerRow}"
@@ -11823,7 +12551,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       : "";
 
     return `
-      <article class="result-card result-card--${finding.severity}${selectedClass}" data-defect-key="${escapeHtml(defectKey)}" tabindex="0">
+      <article class="result-card result-card--${finding.severity}${selectedClass}" data-defect-key="${escapeHtml(defectKey)}" data-testid="defect-card" tabindex="0">
         <div class="result-card__top">
           <div class="result-card__time">${escapeHtml(finding.time)}</div>
           <div class="result-card__meta">
@@ -11839,7 +12567,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         <div class="result-card__action-label">確認したいこと</div>
         <div class="result-card__action">${escapeHtml(finding.action)}</div>
         <div class="result-card__actions">
-          <button type="button" class="button button--primary result-card__select" data-result-select-defect="1" data-defect-key="${escapeHtml(defectKey)}">詳細を見る</button>
+          <button type="button" class="button button--primary result-card__select" data-result-select-defect="1" data-defect-key="${escapeHtml(defectKey)}" data-testid="defect-detail-button">詳細を見る</button>
           ${reviewTargetHtml}
         </div>
         ${contextHtml}
@@ -12183,72 +12911,95 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function renderSummary() {
-    const ui = getUiSettings();
-    const summary = state.analysis?.summary ?? null;
-    const totals = summary?.totals ?? { red: 0, yellow: 0, info: 0 };
-    const reviewTotals = summary?.reviewTotals ?? { red: 0, yellow: 0, info: 0 };
-    const childCount = summary?.childCount ?? "-";
-    const reviewerCount = summary?.reviewerStats?.uniqueCount ?? "-";
-    const cards = [
-      {
-        label: ui.severityLabels.red,
-        value: summary ? formatIncidentSlotSummary(reviewTotals.red ?? 0, totals.red ?? 0) : "-",
-        description: summary ? "赤は件数を優先し、コマ数は参考情報です" : "件数はまとまりで数えます",
-        className: "summary-card--red",
-      },
-      {
-        label: ui.severityLabels.yellow,
-        value: summary ? formatIncidentSlotSummary(reviewTotals.yellow ?? 0, totals.yellow ?? 0) : "-",
-        description: summary ? "黄は件数を優先し、コマ数は参考情報です" : "件数はまとまりで数えます",
-        className: "summary-card--yellow",
-      },
-      {
-        label: ui.severityLabels.info,
-        value: summary ? formatIncidentSlotSummary(reviewTotals.info ?? 0, totals.info ?? 0) : "-",
-        description: summary ? "情報も件数とコマ数を分けています" : ui.severityDescriptions.info,
-        className: "summary-card--info",
-      },
-      {
-        label: "解析できた園児",
-        value: childCount,
-        description: "確認対象として読み取れた人数です",
-        className: "summary-card--neutral",
-      },
-      {
-        label: "記録者",
-        value: reviewerCount === "-" ? "-" : `${reviewerCount}人`,
-        description: "シート全体で見つかった記録者数です",
-        className: "summary-card--neutral",
-      },
-    ];
+    const stats = getDashboardStats();
+    const hasWorkbook = stats.totalSheets > 0;
+    const hasCheckedSheets = stats.checkedCount > 0;
+    const cards = hasCheckedSheets
+      ? [
+          {
+            label: "チェックした日数",
+            value: `${stats.checkedCount}日`,
+            description: `${stats.totalSheets}シート中、確認済みの日数です。`,
+            className: "summary-card--neutral",
+          },
+          {
+            label: "要確認の日数",
+            value: `${stats.issueDays}日`,
+            description: "日付カードを押すと、この日の確認画面へ進みます。",
+            className: stats.issueDays > 0 ? "summary-card--red" : "summary-card--ok",
+          },
+          {
+            label: "赤（要注意）",
+            value: formatIncidentSlotSummary(stats.redIncidents, stats.redCells),
+            description: "表では該当コマを赤く残し、件数は現場確認単位で数えます。",
+            className: "summary-card--red",
+          },
+          {
+            label: "黄（要確認）",
+            value: formatIncidentSlotSummary(stats.yellowIncidents, stats.yellowCells),
+            description:
+              stats.environmentMissingDays > 0
+                ? `温度・湿度の確認が必要な日: ${stats.environmentMissingDays}日`
+                : "確認者未入力などの確認件数です。",
+            className: "summary-card--yellow",
+          },
+          {
+            label: "OKの日数",
+            value: `${stats.okDays}日`,
+            description: "現時点で要確認が見つからなかった日です。",
+            className: "summary-card--ok",
+          },
+        ]
+      : [
+          {
+            label: "チェックした日数",
+            value: hasWorkbook ? "待機中" : "-",
+            description: hasWorkbook ? "xlsx選択後に全日分チェックを開始します。" : "まずxlsxを選んでください。",
+            className: "summary-card--neutral",
+          },
+          {
+            label: "要確認の日数",
+            value: "-",
+            description: "要確認がある日付だけカードで表示します。",
+            className: "summary-card--empty",
+          },
+          {
+            label: "赤（要注意）",
+            value: "-",
+            description: "危険姿勢や起床後記録などを確認します。",
+            className: "summary-card--red",
+          },
+          {
+            label: "黄（要確認）",
+            value: "-",
+            description: "確認者未入力や温度・湿度の入力漏れを確認します。",
+            className: "summary-card--yellow",
+          },
+          {
+            label: "OKの日数",
+            value: "-",
+            description: "問題が見つからなかった日を数えます。",
+            className: "summary-card--ok",
+          },
+        ];
 
     elements.summaryCards.innerHTML = cards.map(renderSummaryCard).join("");
 
-    if (!summary) {
+    if (!hasCheckedSheets) {
       elements.structureSummary.innerHTML = `
-        <div class="structure-summary__lead"><strong>ファイルを選んでチェックすると、ここに読み取れた表の情報を表示します。</strong></div>
-        <div class="structure-summary__meta">主表示は「表レビュー」です。元の並びに近い形で、どのコマを見るか確認できます。</div>
+        <div class="structure-summary__lead"><strong>ホームは、要確認の日付を先に見る画面です。</strong></div>
+        <div class="structure-summary__meta">xlsxを選ぶと全日分チェックが始まり、直す必要がありそうな日付だけカードで表示します。</div>
       `;
       return;
     }
 
-    const reviewerNames = summary.reviewerStats?.names ?? [];
-    const reviewerText = reviewerNames.length > 0 ? reviewerNames.join("、") : "記録者欄を空欄として読み取りました";
-    const environmentMissingLabels = summary.environment?.missingLabels ?? [];
-    const environmentText =
-      environmentMissingLabels.length > 0
-        ? `温湿度: ${environmentMissingLabels.join("・")}未入力`
-        : "温湿度: 入力漏れなし、または欄未検出";
-    const blockChips = (summary.blockSummaries ?? [])
-      .map((block) => `<span class="structure-summary__chip">ブロック${block.blockIndex}: ${block.pairCount}人</span>`)
-      .join("");
-
+    const issueText =
+      stats.issueDays > 0
+        ? `要確認 ${stats.issueDays}日 / 赤 ${formatIncidentSlotSummary(stats.redIncidents, stats.redCells)} / 黄 ${formatIncidentSlotSummary(stats.yellowIncidents, stats.yellowCells)}`
+        : "要確認がある日付は見つかりませんでした。";
     elements.structureSummary.innerHTML = `
-      <div class="structure-summary__lead"><strong>${summary.childCount}人分を確認できました。</strong></div>
-      <div class="structure-summary__meta">対象時間: ${summary.timeRange} / ブロック数: ${summary.blockCount} / シート全体の記録者: ${escapeHtml(reviewerText)}</div>
-      <div class="structure-summary__meta">赤 ${formatIncidentSlotSummary(reviewTotals.red ?? 0, totals.red ?? 0)} / 黄 ${formatIncidentSlotSummary(reviewTotals.yellow ?? 0, totals.yellow ?? 0)}</div>
-      <div class="structure-summary__meta">${escapeHtml(environmentText)}</div>
-      <div class="structure-summary__chips">${blockChips}</div>
+      <div class="structure-summary__lead"><strong>${escapeHtml(issueText)}</strong></div>
+      <div class="structure-summary__meta">日付カードで全体を見て、必要な日だけ「要確認レビュー」へ進みます。</div>
     `;
   }
 
@@ -12459,6 +13210,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     applyFieldAdjustmentStyles();
     renderRuntimeChrome();
     renderSheetOverview();
+    renderHomePreview();
     renderSummary();
     renderChildFilter();
     renderFilterControls();
