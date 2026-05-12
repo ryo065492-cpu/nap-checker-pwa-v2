@@ -5588,8 +5588,8 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-12-1920</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-12 19:20</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-12-2039</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-12 20:39</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -6155,7 +6155,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-12-1920","buildLabel":"2026-05-12 19:20","buildId":"2026-05-12-192004","builtAtIso":"2026-05-12T10:20:04.989Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-12-2039","buildLabel":"2026-05-12 20:39","buildId":"2026-05-12-203912","builtAtIso":"2026-05-12T11:39:12.434Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -11811,6 +11811,32 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     };
   }
 
+  function markAppError(error, phase) {
+    if (error && typeof error === "object") {
+      error.appPhase = phase;
+      return error;
+    }
+
+    const wrapped = new Error(String(error ?? "不明なエラー"));
+    wrapped.appPhase = phase;
+    return wrapped;
+  }
+
+  function getFileLoadErrorMessage(error) {
+    const message = error?.message ?? String(error ?? "不明なエラー");
+    if (error?.appPhase === "xlsx-read") {
+      return `xlsx の読み込みに失敗しました: ${message}`;
+    }
+    return `xlsx 読み込み後のチェック中にエラーが発生しました: ${message}`;
+  }
+
+  function getFileLoadStatusMessage(error) {
+    if (error?.appPhase === "xlsx-read") {
+      return "xlsx の読み込みに失敗しました。";
+    }
+    return "xlsx は読み込めましたが、チェック画面の準備中にエラーが発生しました。";
+  }
+
   function updateControls() {
     const hasWorkbook = Boolean(state.workbook?.sheets?.length);
     const hasFindings = getDisplayFindings().length > 0;
@@ -11836,13 +11862,19 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     setError("");
     setStatus("xlsx を読み込んでいます...");
 
+    let workbook = null;
     try {
       const arrayBuffer = fileOrBuffer instanceof ArrayBuffer ? fileOrBuffer : await fileOrBuffer.arrayBuffer();
-      const workbook = await readWorkbook(arrayBuffer);
+      workbook = await readWorkbook(arrayBuffer);
       if (!workbook.sheets.length) {
         throw new Error("シートを検出できませんでした。xlsx の内容を確認してください。");
       }
+    } catch (error) {
+      setDiagnostic(elements.diagnosticFile, false, "ファイル読込: 失敗しました。Safariまたはホーム画面アプリで開いているか確認してください");
+      throw markAppError(error, "xlsx-read");
+    }
 
+    try {
       state.diagnostics.fileReads += 1;
       state.workbook = workbook;
       state.selectedSheetName = workbook.sheets[0].name;
@@ -11863,8 +11895,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         await handleAnalyzeAllSheets({ automatic: true });
       }
     } catch (error) {
-      setDiagnostic(elements.diagnosticFile, false, "ファイル読込: 失敗しました。Safariまたはホーム画面アプリで開いているか確認してください");
-      throw error;
+      setDiagnostic(elements.diagnosticFile, true, `ファイル読込: 成功しました（読込 ${state.diagnostics.fileReads}回）`);
+      throw markAppError(error, "post-read");
     }
   }
 
@@ -12122,8 +12154,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       try {
         await readWorkbookFile(file, file.name);
       } catch (error) {
-        setError(`xlsx の読み込みに失敗しました: ${error.message}`);
-        setStatus("xlsx の読み込みに失敗しました。");
+        setError(getFileLoadErrorMessage(error));
+        setStatus(getFileLoadStatusMessage(error));
       }
     });
 
@@ -12191,8 +12223,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       try {
         await handleDemoFile();
       } catch (error) {
-        setError(error.message);
-        setStatus("内蔵ダミーxlsxの読み込みに失敗しました。");
+        setError(getFileLoadErrorMessage(error));
+        setStatus(getFileLoadStatusMessage(error));
         updateControls();
       }
     });
