@@ -5588,8 +5588,8 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-12-2039</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-12 20:39</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-12-2240</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-12 22:40</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -6155,7 +6155,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-12-2039","buildLabel":"2026-05-12 20:39","buildId":"2026-05-12-203912","builtAtIso":"2026-05-12T11:39:12.434Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-12-2240","buildLabel":"2026-05-12 22:40","buildId":"2026-05-12-224003","builtAtIso":"2026-05-12T13:40:03.268Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -8992,6 +8992,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     sheetOverview: [],
     allSheetLastCheckedAt: "",
     allSheetChecking: false,
+    fileReadStatus: "idle",
+    checkStatus: "idle",
+    appStage: "unloaded",
     allSheetProgress: { current: 0, total: 0, label: "" },
     activeSeverities: new Set(["red", "yellow", "info"]),
     childFilter: "",
@@ -9021,6 +9024,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     lastCopiedDiagnosticsText: "",
     currentErrorMessage: "",
     lastErrorMessage: "",
+    lastErrorStage: "",
     lastAnalysisAt: "",
     supportIncludeSensitive: false,
     fieldAdjustments: sanitizeFieldAdjustments(DEFAULT_FIELD_ADJUSTMENTS),
@@ -10152,8 +10156,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function getHomeState() {
-    if (state.allSheetChecking && !result) {
+    if (state.fileReadStatus === "reading") {
+      return "loading";
+    }
+    if (state.allSheetChecking || state.checkStatus === "checking") {
       return "checking";
+    }
+    if (state.fileReadStatus === "failed" || state.checkStatus === "failed") {
+      return "error";
     }
     if (state.sheetAnalyses?.size > 0) {
       return "complete";
@@ -10393,7 +10403,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
 
     const sheetName = getPreviewSheetName();
-    const result = sheetName ? state.sheetAnalyses.get(sheetName) : null;
+    const previewResult = sheetName ? state.sheetAnalyses.get(sheetName) : null;
+    const result = previewResult;
 
     if (elements.homePreviewStatus) {
       elements.homePreviewStatus.textContent = sheetName ? getSheetDisplayDate(sheetName) : "未選択";
@@ -10409,7 +10420,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       return;
     }
 
-    if (state.allSheetChecking && !result) {
+    if (state.allSheetChecking && !previewResult) {
       elements.homePreviewContent.innerHTML = `
         <article class="home-preview-empty">
           <strong>全日分をチェック中です。</strong>
@@ -10419,7 +10430,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       return;
     }
 
-    if (!result) {
+    if (!previewResult) {
       elements.homePreviewContent.innerHTML = `
         <article class="home-preview-empty">
           <strong>プレビューできる解析結果がまだありません。</strong>
@@ -10429,7 +10440,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       return;
     }
 
-    if (result.status === "error") {
+    if (previewResult.status === "error") {
       elements.homePreviewContent.innerHTML = `
         <article class="home-preview-card home-preview-card--error">
           <div class="home-preview-card__date">${escapeHtml(getSheetDisplayDate(sheetName))}</div>
@@ -10443,8 +10454,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       return;
     }
 
-    const findings = getDefectFindingsForAnalysis(result.analysis);
-    const summary = result.analysis?.summary ?? {};
+    const findings = getDefectFindingsForAnalysis(previewResult.analysis);
+    const summary = previewResult.analysis?.summary ?? {};
     const totals = summary.totals ?? { red: 0, yellow: 0, info: 0 };
     const reviewTotals = summary.reviewTotals ?? { red: 0, yellow: 0, info: 0 };
     const topFindings = findings.slice(0, 3);
@@ -10608,6 +10619,30 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         `;
       })
       .join("");
+  }
+
+  function getFileLoadErrorMessage(error) {
+    const message = error?.message ?? String(error ?? "unknown error");
+    if (error?.appPhase === "xlsx-read") {
+      return `xlsxファイルを読み込めませんでした: ${message}`;
+    }
+    if (error?.appPhase === "ui-render") {
+      return `チェック結果の表示準備中にエラーが発生しました: ${message}`;
+    }
+    if (error?.appPhase === "sheet-check" || error?.appPhase === "summary-build") {
+      return `xlsxは読み込めましたが、全日分チェック中にエラーが発生しました: ${message}`;
+    }
+    return `xlsx読み込み後のチェック中にエラーが発生しました: ${message}`;
+  }
+
+  function getFileLoadStatusMessage(error) {
+    if (error?.appPhase === "xlsx-read") {
+      return "xlsxファイルを読み込めませんでした。";
+    }
+    if (error?.appPhase === "ui-render") {
+      return "チェック結果の表示準備中にエラーが発生しました。";
+    }
+    return "xlsxは読み込めましたが、全日分チェック中にエラーが発生しました。";
   }
 
   function updateControls() {
@@ -11431,7 +11466,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     try {
       state.analysis = analyzeSheet(sheet, state.config);
       state.debug = state.analysis.debug ?? null;
-      renderAll();
+      safeRenderAll("ui-render");
       setStatus("解析が完了しました。要確認箇所を一覧で確認できます。");
     } catch (error) {
       state.analysis = null;
@@ -11812,13 +11847,18 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function markAppError(error, phase) {
+    const effectivePhase = error?.appPhase ?? phase;
     if (error && typeof error === "object") {
-      error.appPhase = phase;
+      error.appPhase = effectivePhase;
+      state.lastErrorStage = effectivePhase;
+      state.lastErrorMessage = error.message ?? String(error);
       return error;
     }
 
     const wrapped = new Error(String(error ?? "不明なエラー"));
-    wrapped.appPhase = phase;
+    wrapped.appPhase = effectivePhase;
+    state.lastErrorStage = effectivePhase;
+    state.lastErrorMessage = wrapped.message;
     return wrapped;
   }
 
@@ -11862,6 +11902,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     setError("");
     setStatus("xlsx を読み込んでいます...");
 
+    state.fileReadStatus = "reading";
+    state.checkStatus = "idle";
+    state.appStage = "file-read";
+    state.lastErrorStage = "";
+
     let workbook = null;
     try {
       const arrayBuffer = fileOrBuffer instanceof ArrayBuffer ? fileOrBuffer : await fileOrBuffer.arrayBuffer();
@@ -11871,11 +11916,17 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       }
     } catch (error) {
       setDiagnostic(elements.diagnosticFile, false, "ファイル読込: 失敗しました。Safariまたはホーム画面アプリで開いているか確認してください");
+      state.fileReadStatus = "failed";
+      state.checkStatus = "idle";
+      state.appStage = "file-read";
       throw markAppError(error, "xlsx-read");
     }
 
     try {
       state.diagnostics.fileReads += 1;
+      state.fileReadStatus = "ready";
+      state.checkStatus = "idle";
+      state.appStage = "file-read-complete";
       state.workbook = workbook;
       state.selectedSheetName = workbook.sheets[0].name;
       state.analysis = null;
@@ -11888,7 +11939,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       state.sourceLabel = sourceLabel;
       state.activeScreen = "home";
       populateSheetSelect();
-      renderAll();
+      safeRenderAll("ui-render");
       setStatus("xlsx の読み込みが完了しました。続けて全日分を自動チェックします。");
       setDiagnostic(elements.diagnosticFile, true, `ファイル読込: 成功しました（読込 ${state.diagnostics.fileReads}回）`);
       if (state.config && workbook.sheets.length > 0) {
@@ -11896,7 +11947,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       }
     } catch (error) {
       setDiagnostic(elements.diagnosticFile, true, `ファイル読込: 成功しました（読込 ${state.diagnostics.fileReads}回）`);
-      throw markAppError(error, "post-read");
+      state.checkStatus = "failed";
+      state.appStage = error?.appPhase ?? "post-read";
+      throw markAppError(error, error?.appPhase ?? "post-read");
     }
   }
 
@@ -11999,9 +12052,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     state.analysis = null;
     state.debug = null;
     state.allSheetChecking = true;
+    state.checkStatus = "checking";
+    state.appStage = "sheet-check";
     state.allSheetProgress = { current: 0, total: sheets.length, label: "" };
     state.selectedReviewCell = null;
-    renderAll();
+    safeRenderAll("ui-render");
 
     try {
       for (let index = 0; index < sheets.length; index += 1) {
@@ -12024,13 +12079,20 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       if (firstSheetName) {
         setCurrentSheetAnalysisFromResult(firstSheetName, state.sheetAnalyses.get(firstSheetName));
       }
+      const failedSheetCount = [...state.sheetAnalyses.values()].filter((item) => item?.status === "error").length;
+      state.checkStatus = failedSheetCount > 0 ? "partial-failure" : "done";
+      state.appStage = failedSheetCount > 0 ? "partial-sheet-failure" : "check-complete";
       state.activeScreen = "home";
-      renderAll();
+      safeRenderAll("ui-render");
       setStatus(
         state.sheetOverview.length > 0
           ? `全日分チェックが完了しました。要確認がある日付は ${state.sheetOverview.length}日です。`
           : "全日分チェックが完了しました。要確認がある日付は見つかりませんでした。",
       );
+    } catch (error) {
+      state.checkStatus = "failed";
+      state.appStage = error?.appPhase ?? "sheet-check";
+      throw markAppError(error, error?.appPhase ?? "sheet-check");
     } finally {
       state.allSheetChecking = false;
       state.allSheetProgress = { current: sheets.length, total: sheets.length, label: "" };
@@ -14065,6 +14127,40 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     renderFieldAdjustmentControls();
     renderDebug();
     updateControls();
+  }
+
+  function safeRenderAll(phase = "ui-render") {
+    try {
+      renderAll();
+    } catch (error) {
+      state.checkStatus = "failed";
+      state.appStage = phase;
+      throw markAppError(error, phase);
+    }
+  }
+
+  function getFileLoadErrorMessage(error) {
+    const message = error?.message ?? String(error ?? "unknown error");
+    if (error?.appPhase === "xlsx-read") {
+      return `xlsxファイルを読み込めませんでした: ${message}`;
+    }
+    if (error?.appPhase === "ui-render") {
+      return `チェック結果の表示準備中にエラーが発生しました: ${message}`;
+    }
+    if (error?.appPhase === "sheet-check" || error?.appPhase === "summary-build") {
+      return `xlsxは読み込めましたが、全日分チェック中にエラーが発生しました: ${message}`;
+    }
+    return `xlsx読み込み後のチェック中にエラーが発生しました: ${message}`;
+  }
+
+  function getFileLoadStatusMessage(error) {
+    if (error?.appPhase === "xlsx-read") {
+      return "xlsxファイルを読み込めませんでした。";
+    }
+    if (error?.appPhase === "ui-render") {
+      return "チェック結果の表示準備中にエラーが発生しました。";
+    }
+    return "xlsxは読み込めましたが、全日分チェック中にエラーが発生しました。";
   }
 
   function updateControls() {
