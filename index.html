@@ -4779,6 +4779,794 @@ body[data-review-mode="table"].app-screen-review .review-board {
   }
 }
 
+/* Layout quality hardening: keep cards, chips, buttons, and scroll areas inside
+   their own surfaces on iPad instead of letting dense content spill out. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.app-shell,
+.app-frame,
+.layout,
+.panel,
+.screen-section,
+.panel__title-row,
+.summary-cards,
+.summary-card,
+.sheet-overview-list,
+.sheet-overview-card,
+.panel--home-preview,
+.home-preview-content,
+.home-preview-card,
+.home-preview-table-wrap,
+.results-list,
+.result-card,
+.child-group,
+.child-group__header,
+.selected-defect-detail-panel,
+.selected-defect-detail,
+.review-board,
+.review-block,
+.review-block__scroll,
+.cell-detail-panel {
+  min-width: 0;
+  min-height: 0;
+}
+
+.meta-pill,
+.badge,
+.button,
+.sheet-overview-card__reason,
+.sheet-overview-card__hint,
+.result-card__reviewer,
+.result-card__count {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.panel__title-row {
+  flex-wrap: wrap;
+}
+
+.panel__title-row > *,
+.sheet-overview-card__top > *,
+.home-preview-card__top > *,
+.result-card__top > *,
+.selected-defect-detail__top > *,
+.child-group__header > * {
+  min-width: 0;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  line-height: 1.25;
+}
+
+body[data-home-state="complete"].app-screen-home .layout,
+body[data-review-mode="defects"].app-screen-review .layout,
+body[data-review-mode="table"].app-screen-review .layout {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--summary {
+  overflow: visible;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-cards {
+  align-items: stretch;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: auto;
+  min-height: 104px;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card__value {
+  letter-spacing: -0.02em;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card__description {
+  max-height: none;
+  overflow: visible;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--sheet-overview {
+  min-height: 0;
+  overflow: hidden;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 238px), 1fr));
+  grid-auto-rows: auto;
+  align-content: start;
+  align-items: stretch;
+  gap: 14px;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding: 2px 10px 22px 2px;
+}
+
+.sheet-overview-card {
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  height: auto;
+  min-height: 198px;
+  max-height: none;
+  gap: 10px;
+  overflow: visible;
+  line-height: 1.35;
+}
+
+.sheet-overview-card__top {
+  align-items: flex-start;
+  margin-bottom: 0;
+}
+
+.sheet-overview-card__top > div {
+  flex: 1 1 130px;
+}
+
+.sheet-overview-card__date {
+  line-height: 1.18;
+}
+
+.sheet-overview-card__sheet {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sheet-overview-card__counts,
+.sheet-overview-card__badges,
+.sheet-overview-card__reasons,
+.result-card__meta,
+.result-card__actions,
+.child-group__chips,
+.home-preview-card__counts,
+.home-preview-card__actions,
+.selected-defect-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.sheet-overview-card__counts .meta-pill,
+.home-preview-card__counts .meta-pill {
+  min-height: 32px;
+  padding-block: 6px;
+  line-height: 1.25;
+}
+
+.sheet-overview-card__reason {
+  height: auto;
+  min-height: 30px;
+  padding: 6px 10px;
+  line-height: 1.2;
+}
+
+.sheet-overview-card__main {
+  display: block;
+  margin-top: 0;
+  overflow: visible;
+  overflow-wrap: anywhere;
+}
+
+.sheet-overview-card__hint {
+  align-self: flex-start;
+  margin-top: auto;
+  height: auto;
+  min-height: 36px;
+  padding-block: 8px;
+  line-height: 1.2;
+}
+
+.panel--home-preview {
+  min-height: 0;
+}
+
+.home-preview-content {
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding-right: 2px;
+}
+
+.home-preview-card {
+  max-width: 100%;
+  overflow: visible;
+}
+
+.home-preview-card__top,
+.home-preview-card__actions {
+  justify-content: space-between;
+}
+
+.home-preview-card__top > div {
+  flex: 1 1 180px;
+}
+
+.home-preview-card__sheet {
+  max-width: 100%;
+}
+
+.home-preview-table-wrap {
+  max-width: 100%;
+  min-height: 0;
+}
+
+body[data-review-mode="defects"].app-screen-review #results-panel,
+body[data-review-mode="defects"].app-screen-review #defect-detail-panel {
+  min-height: 0;
+  overflow: hidden;
+}
+
+body[data-review-mode="defects"].app-screen-review .results-list {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding: 2px 10px 22px 2px;
+}
+
+.grouped-results,
+.timeline-results,
+.child-group__findings {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.child-group {
+  overflow: visible;
+}
+
+.child-group__header {
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.result-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.result-card__top {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-bottom: 0;
+}
+
+.result-card__meta {
+  justify-content: flex-start;
+}
+
+.result-card__rule,
+.result-card__reason,
+.result-card__action,
+.result-card__message,
+.result-card__details,
+.selected-defect-detail__rule,
+.selected-defect-detail__reason,
+.selected-defect-detail__reviewer {
+  overflow-wrap: anywhere;
+}
+
+.result-card__actions {
+  margin-top: 2px;
+}
+
+.result-card__actions .button,
+.selected-defect-detail__actions .button {
+  min-width: min(150px, 100%);
+}
+
+body[data-review-mode="defects"].app-screen-review .selected-defect-detail-panel {
+  min-height: 0;
+  overflow: hidden;
+}
+
+body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.selected-defect-detail__top {
+  flex-wrap: wrap;
+}
+
+.selected-defect-detail__count {
+  min-width: min(150px, 100%);
+  max-width: 100%;
+}
+
+.selected-defect-detail__context {
+  min-width: 0;
+  overflow: auto;
+}
+
+.selected-defect-detail__context-row,
+.context-list__row {
+  min-width: 0;
+}
+
+.selected-defect-detail__context-row > *,
+.context-list__row > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+body[data-review-mode="table"].app-screen-review #review-section {
+  min-height: 0;
+  overflow: hidden;
+}
+
+body[data-review-mode="table"].app-screen-review .review-board {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding-right: 4px;
+}
+
+.review-block {
+  overflow: hidden;
+}
+
+.review-block__scroll {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+@media (max-width: 1120px) {
+  body[data-home-state="complete"].app-screen-home .sheet-overview-list {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  body[data-home-state="complete"].app-screen-home .layout {
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  body[data-review-mode="defects"].app-screen-review .layout {
+    grid-template-rows: minmax(260px, 46svh) minmax(0, 1fr);
+  }
+
+  body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 640px) {
+  body[data-home-state="complete"].app-screen-home .summary-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  body[data-home-state="complete"].app-screen-home .sheet-overview-list {
+    grid-template-columns: 1fr;
+    padding-right: 4px;
+  }
+
+  .sheet-overview-card {
+    min-height: 0;
+  }
+
+  .result-card__actions .button,
+  .selected-defect-detail__actions .button {
+    width: 100%;
+  }
+}
+
+/* Deep dashboard composition: this layer changes the surfaces themselves,
+   not just overflow behavior, so the iPad view reads like an app dashboard. */
+.app-topbar.hero {
+  min-height: 58px;
+  padding: 9px 14px;
+  border-radius: 22px;
+}
+
+.app-topbar__brand {
+  min-width: 0;
+}
+
+.app-topbar__side {
+  min-width: 0;
+}
+
+.app-status-pill,
+.hero__build .meta-pill,
+.app-help-button {
+  min-height: 38px;
+  padding-inline: 14px;
+}
+
+.app-nav {
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 252, 247, 0.94)),
+    var(--surface);
+}
+
+.app-nav__brand {
+  min-height: 74px;
+}
+
+.app-nav__link {
+  min-height: 64px;
+  box-shadow: 0 8px 18px rgba(47, 38, 30, 0.04);
+}
+
+body[data-home-state="complete"].app-screen-home .layout {
+  grid-template-columns: minmax(0, 1.72fr) minmax(292px, 0.58fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 10px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel {
+  border-radius: 22px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--control {
+  padding: 10px;
+  grid-template-columns: minmax(0, 1fr) minmax(168px, auto);
+}
+
+body[data-home-state="complete"].app-screen-home .home-file-status-bar {
+  border-radius: 18px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.96), rgba(239, 248, 246, 0.92)),
+    var(--surface);
+}
+
+.home-file-status-bar__item--file::before {
+  content: "X";
+  display: grid;
+  place-items: center;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #1f8b4c;
+  color: white;
+  font-weight: 950;
+}
+
+.home-file-status-bar__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-file-status-bar__item > span,
+.home-file-status-bar__item > strong {
+  min-width: 0;
+}
+
+body[data-home-state="complete"].app-screen-home #analyze-all-button {
+  min-width: 168px;
+  min-height: 54px;
+  border-radius: 18px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--summary {
+  padding: 10px 12px;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-cards {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 9px;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  min-height: 92px;
+  padding: 10px;
+  border-radius: 16px;
+}
+
+.summary-card__icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: rgba(0, 108, 103, 0.1);
+  color: var(--brand-strong);
+  font-weight: 950;
+}
+
+.summary-card--red .summary-card__icon {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.summary-card--yellow .summary-card__icon {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+.summary-card--ok .summary-card__icon {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.summary-card__body {
+  min-width: 0;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card__label {
+  margin: 0 0 4px;
+  font-size: 0.82rem;
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card__value {
+  font-size: clamp(1.18rem, 1.45vw, 1.55rem);
+}
+
+body[data-home-state="complete"].app-screen-home .summary-card__description {
+  margin-top: 5px;
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--sheet-overview {
+  padding: 12px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--sheet-overview .panel__title-row {
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--sheet-overview .results-guide {
+  margin-bottom: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-list {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 178px), 1fr));
+  gap: 10px;
+  padding: 2px 8px 16px 2px;
+}
+
+body[data-home-state="complete"].app-screen-home .sheet-overview-card {
+  min-height: 174px;
+  padding: 12px;
+  gap: 8px;
+  border-left-width: 3px;
+  border-radius: 18px;
+  box-shadow: 0 12px 26px rgba(87, 63, 26, 0.08);
+}
+
+.sheet-overview-card__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.sheet-overview-card__date {
+  font-size: clamp(1.02rem, 1.25vw, 1.18rem);
+}
+
+.sheet-overview-card__sheet {
+  font-size: 0.74rem;
+}
+
+.sheet-overview-card__status {
+  min-height: 28px;
+  padding: 4px 9px;
+  font-size: 0.76rem;
+}
+
+.sheet-overview-card__counts {
+  gap: 6px;
+}
+
+.sheet-overview-card__counts .meta-pill {
+  min-height: 29px;
+  padding: 5px 9px;
+  font-size: 0.78rem;
+}
+
+.meta-pill--red {
+  background: rgba(201, 60, 45, 0.1);
+  color: #8a2419;
+}
+
+.sheet-overview-card__main {
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+
+.sheet-overview-card__reasons {
+  gap: 6px;
+}
+
+.sheet-overview-card__reason {
+  min-height: 27px;
+  padding: 5px 8px;
+  font-size: 0.76rem;
+}
+
+.sheet-overview-card__reason--yellow {
+  background: var(--warn-soft);
+  color: #8b5a00;
+}
+
+.sheet-overview-card__hint {
+  min-height: 32px;
+  padding: 6px 11px;
+  font-size: 0.8rem;
+}
+
+body[data-home-state="complete"].app-screen-home .panel--home-preview {
+  padding: 12px;
+}
+
+.home-preview-card__lead {
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(0, 108, 103, 0.07);
+  color: var(--brand-strong);
+  font-weight: 900;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.home-preview-card__counts .meta-pill {
+  min-height: 30px;
+  font-size: 0.78rem;
+}
+
+.home-preview-table {
+  min-width: 320px;
+  font-size: 0.76rem;
+}
+
+.home-preview-card__actions .button {
+  min-height: 38px;
+  padding-inline: 12px;
+}
+
+body[data-review-mode="defects"].app-screen-review .layout {
+  grid-template-columns: minmax(360px, 0.98fr) minmax(360px, 0.82fr);
+  gap: 12px;
+}
+
+body[data-review-mode="defects"].app-screen-review #results-panel,
+body[data-review-mode="defects"].app-screen-review #defect-detail-panel {
+  padding: 14px;
+  border-radius: 22px;
+}
+
+body[data-review-mode="defects"].app-screen-review .result-card {
+  padding: 14px;
+  gap: 8px;
+}
+
+.result-card__body {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+body[data-review-mode="defects"].app-screen-review .result-card__reason,
+body[data-review-mode="defects"].app-screen-review .result-card__action,
+body[data-review-mode="defects"].app-screen-review .result-card__message {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+body[data-review-mode="defects"].app-screen-review .result-card__actions {
+  margin-top: 4px;
+}
+
+body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
+  padding: 18px;
+  border-radius: 24px;
+}
+
+@media (max-width: 979px) {
+  body[data-home-state="complete"].app-screen-home .layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "picker"
+      "summary"
+      "dates";
+  }
+
+  body[data-home-state="complete"].app-screen-home .panel--home-preview {
+    display: none;
+  }
+}
+
+@media (min-width: 980px) and (max-width: 1180px) {
+  body[data-home-state="complete"].app-screen-home .layout {
+    grid-template-columns: minmax(0, 1.5fr) minmax(270px, 0.5fr);
+    grid-template-areas:
+      "picker preview"
+      "summary preview"
+      "dates preview";
+  }
+
+  body[data-home-state="complete"].app-screen-home .panel--home-preview {
+    display: flex;
+  }
+
+  body[data-home-state="complete"].app-screen-home .summary-cards {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  body[data-home-state="complete"].app-screen-home .sheet-overview-list {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 166px), 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  body[data-home-state="complete"].app-screen-home .summary-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  body[data-home-state="complete"].app-screen-home .sheet-overview-list {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr));
+  }
+
+  body[data-review-mode="defects"].app-screen-review .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(260px, 48svh) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  body[data-home-state="complete"].app-screen-home .panel--control {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-home-state="complete"].app-screen-home .summary-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  body[data-home-state="complete"].app-screen-home .summary-card {
+    grid-template-columns: 32px minmax(0, 1fr);
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home" data-home-state="empty">
@@ -4800,8 +5588,8 @@ body[data-review-mode="table"].app-screen-review .review-board {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-12-0715</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-12 07:15</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-12-1920</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-12 19:20</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -5367,7 +6155,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-12-0715","buildLabel":"2026-05-12 07:15","buildId":"2026-05-12-071549","builtAtIso":"2026-05-11T22:15:49.278Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-12-1920","buildLabel":"2026-05-12 19:20","buildId":"2026-05-12-192004","builtAtIso":"2026-05-12T10:20:04.989Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -9364,7 +10152,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function getHomeState() {
-    if (state.allSheetChecking) {
+    if (state.allSheetChecking && !result) {
       return "checking";
     }
     if (state.sheetAnalyses?.size > 0) {
@@ -9621,7 +10409,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       return;
     }
 
-    if (state.allSheetChecking) {
+    if (state.allSheetChecking && !result) {
       elements.homePreviewContent.innerHTML = `
         <article class="home-preview-empty">
           <strong>全日分をチェック中です。</strong>
@@ -9659,7 +10447,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const summary = result.analysis?.summary ?? {};
     const totals = summary.totals ?? { red: 0, yellow: 0, info: 0 };
     const reviewTotals = summary.reviewTotals ?? { red: 0, yellow: 0, info: 0 };
-    const topFindings = findings.slice(0, 4);
+    const topFindings = findings.slice(0, 3);
     const firstFinding = topFindings[0] ?? null;
     const statusLabel = reviewTotals.red > 0 ? "要注意" : reviewTotals.yellow > 0 ? "要確認" : "OK";
     const rows =
@@ -9683,6 +10471,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           </tr>
         `;
 
+    const firstReason = firstFinding?.shortText ?? firstFinding?.ruleName ?? "";
+    const previewLead =
+      topFindings.length > 0
+        ? `${escapeHtml(topFindings[0]?.childName ?? "対象")} / ${escapeHtml(topFindings[0]?.time ?? "-")} / ${escapeHtml(firstReason)}`
+        : "この日は目立つ要確認はありません。";
+
     elements.homePreviewContent.innerHTML = `
       <article class="home-preview-card">
         <div class="home-preview-card__top">
@@ -9692,6 +10486,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           </div>
           <span class="sheet-overview-card__status">${escapeHtml(statusLabel)}</span>
         </div>
+        <div class="home-preview-card__lead">${previewLead}</div>
         <div class="home-preview-card__counts">
           <span class="meta-pill">赤 ${escapeHtml(formatIncidentSlotSummary(reviewTotals.red ?? 0, totals.red ?? 0))}</span>
           <span class="meta-pill">黄 ${escapeHtml(formatIncidentSlotSummary(reviewTotals.yellow ?? 0, totals.yellow ?? 0))}</span>
@@ -10133,11 +10928,23 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function renderSummaryCard(card) {
+    const icon =
+      card.icon ??
+      (card.className?.includes("red")
+        ? "!"
+        : card.className?.includes("yellow")
+          ? "?"
+          : card.className?.includes("ok")
+            ? "✓"
+            : "□");
     return `
       <article class="summary-card ${card.className}">
-        <div class="summary-card__value">${card.value}</div>
-        <div class="summary-card__label">${card.label}</div>
-        <div class="summary-card__description">${card.description}</div>
+        <div class="summary-card__icon" aria-hidden="true">${escapeHtml(icon)}</div>
+        <div class="summary-card__body">
+          <div class="summary-card__label">${card.label}</div>
+          <div class="summary-card__value">${card.value}</div>
+          <div class="summary-card__description">${card.description}</div>
+        </div>
       </article>
     `;
   }
@@ -10415,9 +11222,6 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             : "sheet-overview-card--ok";
     const statusLabel = item.status === "error" ? "確認できません" : hasRed ? "要注意" : hasYellow ? "要確認" : "OK";
     const activeClass = item.sheetName === state.selectedSheetName ? " sheet-overview-card--active" : "";
-    const environmentText = item.hasEnvironmentMissing
-      ? `温度・湿度: ${item.environmentMissingLabels.join("・")}未入力`
-      : "温度・湿度: 入力漏れなし";
     const mainText = item.mainIssueLabels.length > 0 ? item.mainIssueLabels.join(" / ") : "問題は見つかりませんでした";
     const weekdayLabel = getWeekdayLabel(item.dateLabel);
     const reasonLabels = [
@@ -10436,27 +11240,35 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       item.yellowIncidents > 0 || item.hasEnvironmentMissing
         ? `黄 ${item.yellowIncidents}件${item.hasEnvironmentMissing ? " / 温湿度確認" : ""}`
         : "黄 0件";
+    const issueSummary = formatIncidentSlotSummary(item.redIncidents, item.redCells);
+    const compactSheetName = item.sheetName === item.dateLabel ? "" : item.sheetName;
+    const environmentHtml = item.hasEnvironmentMissing
+      ? `<span class="sheet-overview-card__reason sheet-overview-card__reason--yellow">温度・湿度確認</span>`
+      : "";
 
     return `
-      <button class="sheet-overview-card ${severityClass}${activeClass}" type="button" data-sheet-name="${escapeHtml(item.sheetName)}">
+      <button
+        class="sheet-overview-card ${severityClass}${activeClass}"
+        type="button"
+        data-sheet-name="${escapeHtml(item.sheetName)}"
+        data-testid="sheet-overview-card"
+        aria-label="${escapeHtml(`${item.dateLabel} ${statusLabel}。${mainText}。この日の要確認レビューを開く`)}"
+      >
         <div class="sheet-overview-card__top">
           <div>
             <div class="sheet-overview-card__date">
               ${escapeHtml(item.dateLabel)}${weekdayLabel ? `<span class="sheet-overview-card__weekday">（${escapeHtml(weekdayLabel)}）</span>` : ""}
             </div>
-            <div class="sheet-overview-card__sheet">シート名: ${escapeHtml(item.sheetName)}</div>
+            ${compactSheetName ? `<div class="sheet-overview-card__sheet">シート: ${escapeHtml(compactSheetName)}</div>` : ""}
           </div>
           <span class="sheet-overview-card__status">${escapeHtml(statusLabel)}</span>
         </div>
         <div class="sheet-overview-card__counts">
-          <span class="meta-pill">赤 ${formatIncidentSlotSummary(item.redIncidents, item.redCells)}</span>
+          <span class="meta-pill meta-pill--red">赤 ${escapeHtml(issueSummary)}</span>
           <span class="meta-pill">${escapeHtml(yellowText)}</span>
         </div>
-        <div class="sheet-overview-card__badges">
-          <span class="meta-pill">${escapeHtml(environmentText)}</span>
-        </div>
         <div class="sheet-overview-card__main">${escapeHtml(mainText)}</div>
-        <div class="sheet-overview-card__reasons">${reasonHtml}</div>
+        <div class="sheet-overview-card__reasons">${reasonHtml}${environmentHtml}</div>
         <div class="sheet-overview-card__hint">表レビューを見る</div>
       </button>
     `;
@@ -12551,7 +13363,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       : "";
 
     return `
-      <article class="result-card result-card--${finding.severity}${selectedClass}" data-defect-key="${escapeHtml(defectKey)}" data-testid="defect-card" tabindex="0">
+      <article class="result-card result-card--${finding.severity}${selectedClass}" data-defect-key="${escapeHtml(defectKey)}" data-testid="defect-card" tabindex="0" aria-label="${escapeHtml(`${finding.childName ?? ""} ${finding.time ?? ""} ${finding.shortText ?? ""}`)}">
         <div class="result-card__top">
           <div class="result-card__time">${escapeHtml(finding.time)}</div>
           <div class="result-card__meta">
@@ -12560,12 +13372,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             <span class="result-card__count">${escapeHtml(formatSlotCount(slotCount))}</span>
           </div>
         </div>
-        ${options.showChildName ? `<div class="result-card__name">${escapeHtml(finding.childName)}</div>` : ""}
-        <div class="result-card__reviewer">${escapeHtml(reviewerLabel)}: ${escapeHtml(finding.reviewerText ?? formatReviewerDisplay(finding.reviewerNames ?? []))}</div>
-        <div class="result-card__rule">${escapeHtml(finding.shortText)}</div>
-        <div class="result-card__reason">理由: ${escapeHtml(finding.reason ?? "設定ルールに当てはまりました。")}</div>
-        <div class="result-card__action-label">確認したいこと</div>
-        <div class="result-card__action">${escapeHtml(finding.action)}</div>
+        <div class="result-card__body">
+          ${options.showChildName ? `<div class="result-card__name">${escapeHtml(finding.childName)}</div>` : ""}
+          <div class="result-card__rule">${escapeHtml(finding.shortText)}</div>
+          <div class="result-card__reviewer">${escapeHtml(reviewerLabel)}: ${escapeHtml(finding.reviewerText ?? formatReviewerDisplay(finding.reviewerNames ?? []))}</div>
+          <div class="result-card__reason">理由: ${escapeHtml(finding.reason ?? "設定ルールに当てはまりました。")}</div>
+          <div class="result-card__action-label">確認したいこと</div>
+          <div class="result-card__action">${escapeHtml(finding.action)}</div>
+        </div>
         <div class="result-card__actions">
           <button type="button" class="button button--primary result-card__select" data-result-select-defect="1" data-defect-key="${escapeHtml(defectKey)}" data-testid="defect-detail-button">詳細を見る</button>
           ${reviewTargetHtml}
