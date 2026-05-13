@@ -4168,6 +4168,33 @@ body[data-home-state="complete"].app-screen-home .sheet-overview-card__hint {
   font-weight: 950;
 }
 
+.selected-defect-detail__more {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(248, 251, 255, 0.74);
+  border: 1px solid rgba(18, 38, 70, 0.08);
+}
+
+.selected-defect-detail__more summary {
+  cursor: pointer;
+  font-weight: 950;
+  color: var(--primary-dark);
+}
+
+.selected-defect-detail__more-section {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.selected-defect-detail__more-message {
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.82);
+  overflow-wrap: anywhere;
+}
+
 .selected-defect-detail__context {
   padding: 12px;
   border-radius: 18px;
@@ -5484,9 +5511,63 @@ body[data-review-mode="defects"].app-screen-review .result-card {
   min-width: 0;
 }
 
+.result-card__affected-slots,
+.selected-defect-detail__target-slots {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(18, 38, 70, 0.08);
+}
+
+.result-card__affected-slots__title,
+.selected-defect-detail__target-slots__title {
+  font-size: 0.82rem;
+  font-weight: 950;
+  color: var(--muted);
+}
+
+.result-card__affected-slots__list,
+.selected-defect-detail__target-slots__list {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.result-card__affected-slots__row,
+.selected-defect-detail__target-slots__row {
+  display: grid;
+  grid-template-columns: minmax(54px, auto) minmax(48px, auto) minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  padding: 6px 8px;
+  border-radius: 12px;
+  background: rgba(255, 247, 245, 0.86);
+}
+
+.result-card__affected-slots__time,
+.selected-defect-detail__target-slots__time,
+.result-card__affected-slots__status,
+.selected-defect-detail__target-slots__status,
+.result-card__affected-slots__reviewer,
+.selected-defect-detail__target-slots__reviewer,
+.result-card__affected-slots__empty,
+.selected-defect-detail__target-slots__empty {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.result-card__affected-slots__reviewer,
+.selected-defect-detail__target-slots__reviewer {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 body[data-review-mode="defects"].app-screen-review .result-card__reason,
-body[data-review-mode="defects"].app-screen-review .result-card__action,
-body[data-review-mode="defects"].app-screen-review .result-card__message {
+body[data-review-mode="defects"].app-screen-review .result-card__action {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -5588,8 +5669,8 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-13-2003</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-13 20:03</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-13-2045</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-13 20:45</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -6155,7 +6236,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-13-2003","buildLabel":"2026-05-13 20:03","buildId":"2026-05-13-200305","builtAtIso":"2026-05-13T11:03:05.908Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-13-2045","buildLabel":"2026-05-13 20:45","buildId":"2026-05-13-204503","builtAtIso":"2026-05-13T11:45:03.750Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -8090,7 +8171,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
 
     if (item.ruleKey === "proneOccurred") {
-      return `うつぶせの記録が続いています (${item.time})。前後の向きと返し確認を確認してください。`;
+      return `うつぶせの記録が続いています (${item.time})。返し確認の記録を確認してください。`;
     }
 
     if (item.ruleKey === "stateAfterWake") {
@@ -9763,14 +9844,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   function buildDefaultActionText(ruleName, severity) {
     if (severity === "red") {
-      return "記録の前後を含めて、早めに確認してください。";
+      return "該当コマの記録を早めに確認してください。";
     }
 
     if (severity === "yellow") {
-      return "念のため前後の記録も確認してください。";
+      return "該当コマまたは該当欄の記録を確認してください。";
     }
 
-    return "参考情報です。必要に応じて前後の記録を確認してください。";
+    return "参考情報です。必要に応じて記録内容を確認してください。";
   }
 
   function getReviewerNamesFromFinding(finding) {
@@ -13331,6 +13412,71 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     `;
   }
 
+  function getTargetContextRows(finding) {
+    const rows = Array.isArray(finding?.contextRows) ? finding.contextRows : [];
+    return rows.filter((row) => row.marker === "対象");
+  }
+
+  function renderAffectedSlotRows(rows, options = {}) {
+    const className = options.className ?? "affected-slots";
+    const title = options.title ?? "該当コマ";
+
+    if (!Array.isArray(rows) || rows.length === 0) {
+      return `
+        <div class="${escapeHtml(className)} ${escapeHtml(className)}--empty">
+          <div class="${escapeHtml(className)}__title">${escapeHtml(title)}</div>
+          <div class="${escapeHtml(className)}__empty">表で位置を確認してください。</div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="${escapeHtml(className)}" data-testid="affected-slots">
+        <div class="${escapeHtml(className)}__title">${escapeHtml(title)}</div>
+        <div class="${escapeHtml(className)}__list">
+          ${rows
+            .map(
+              (row) => `
+                <div class="${escapeHtml(className)}__row">
+                  <span class="${escapeHtml(className)}__time">${escapeHtml(row.time ?? "-")}</span>
+                  <strong class="${escapeHtml(className)}__status">${escapeHtml(row.status || "(空欄)")}</strong>
+                  <span class="${escapeHtml(className)}__reviewer">記録者: ${escapeHtml(row.reviewer || "未入力")}</span>
+                </div>
+              `,
+            )
+            .join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderDefectMoreDetails(finding, contextRows, detailMessages) {
+    const messages = [...new Set([finding.message, ...(detailMessages ?? [])].filter(Boolean))];
+    const messageHtml = messages.length
+      ? `
+        <div class="selected-defect-detail__more-section">
+          <div class="selected-defect-detail__section-title">ルール詳細</div>
+          ${messages.map((message) => `<div class="selected-defect-detail__more-message">${escapeHtml(message)}</div>`).join("")}
+        </div>
+      `
+      : "";
+    const contextHtml = Array.isArray(contextRows) && contextRows.length > 0
+      ? renderDefectContextRows(contextRows, { title: "前後の参考情報" })
+      : "";
+
+    if (!messageHtml && !contextHtml) {
+      return "";
+    }
+
+    return `
+      <details class="selected-defect-detail__more" data-testid="defect-context-details">
+        <summary>詳しく見る</summary>
+        ${messageHtml}
+        ${contextHtml}
+      </details>
+    `;
+  }
+
   function renderSelectedDefectDetail() {
     if (!elements?.defectDetailPanel) {
       return;
@@ -13340,7 +13486,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       elements.defectDetailPanel.innerHTML = `
         <div class="panel__title-row">
           <div>
-            <h2>選択中の不備</h2>
+            <h2>この日の不備</h2>
             <p class="panel__lead">xlsxを選ぶと、この日の確認内容を表示します。</p>
           </div>
         </div>
@@ -13355,11 +13501,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       elements.defectDetailPanel.innerHTML = `
         <div class="panel__title-row">
           <div>
-            <h2>選択中の不備</h2>
+            <h2>この日の不備</h2>
             <p class="panel__lead">この日に表示中の赤・黄はありません。</p>
           </div>
         </div>
-        <div class="selected-defect-detail selected-defect-detail--empty">必要に応じて表で全体を確認してください。</div>
+        <div class="selected-defect-detail selected-defect-detail--empty">通常表示では、直す必要がある子どもだけを表示します。</div>
       `;
       return;
     }
@@ -13370,6 +13516,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const reviewerText = finding.reviewerText || formatReviewerDisplay(finding.reviewerNames ?? [], "未入力または対象なし");
     const contextRows = Array.isArray(finding.contextRows) ? finding.contextRows : [];
     const targetRows = contextRows.filter((row) => row.marker === "対象");
+    const detailMessages = (finding.details ?? []).filter((detail) => detail && detail !== finding.message);
     const tableButton = getReviewTargetForFinding(finding)
       ? `<button type="button" class="button button--primary selected-defect-detail__table-button" data-defect-detail-table="1" data-defect-key="${escapeHtml(defectKey)}" data-testid="selected-defect-table-button">表で確認</button>`
       : "";
@@ -13377,8 +13524,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     elements.defectDetailPanel.innerHTML = `
       <div class="panel__title-row">
         <div>
-          <h2>選択中の不備</h2>
-          <p class="panel__lead">内容を確認し、必要なら「表で確認」で元表の位置を見ます。</p>
+          <h2>この日の不備</h2>
+          <p class="panel__lead">選んだ1件だけを確認します。前後の参考情報は「詳しく見る」に入れています。</p>
         </div>
         <span class="badge badge--${finding.severity}">${escapeHtml(severity.label)}</span>
       </div>
@@ -13391,13 +13538,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           <div class="selected-defect-detail__count">${escapeHtml(formatIncidentSlotSummary(1, slotCount, { prefix: "要確認" }))}</div>
         </div>
         <div class="selected-defect-detail__rule">${escapeHtml(finding.ruleName ?? finding.shortText ?? "確認が必要です")}</div>
-        <div class="selected-defect-detail__reason">${escapeHtml(finding.reason ?? finding.message ?? "記録内容を確認してください。")}</div>
+        <div class="selected-defect-detail__reason">確認したいこと: ${escapeHtml(finding.action ?? "記録内容を確認してください。")}</div>
         <div class="selected-defect-detail__reviewer">記録者: ${escapeHtml(reviewerText)}</div>
-        ${renderDefectContextRows(contextRows, { title: "前後の状態" })}
-        ${targetRows.length > 1 ? renderDefectContextRows(targetRows, { title: "該当コマの並び" }) : ""}
+        ${renderAffectedSlotRows(targetRows, { className: "selected-defect-detail__target-slots", title: "該当コマ" })}
         <div class="selected-defect-detail__actions">
           ${tableButton}
         </div>
+        ${renderDefectMoreDetails(finding, contextRows, detailMessages)}
       </article>
     `;
   }
@@ -13406,8 +13553,6 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const severity = getSeverityMeta(finding.severity);
     const defectKey = createDefectKey(finding);
     const selectedClass = defectKey === state.selectedDefectKey ? " result-card--selected" : "";
-    const detailMessages = (finding.details ?? []).filter((detail) => detail && detail !== finding.message);
-    const detailText = finding.message && finding.message !== finding.shortText ? finding.message : "";
     const slotCount = getFindingSlotCount(finding);
     const reviewTarget = getReviewTargetForFinding(finding);
     const reviewTargetHtml = reviewTarget
@@ -13427,39 +13572,20 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         </button>
       `
       : "";
-    const reviewerLabel =
-      finding.ruleKey === "singleReviewerSheet"
-        ? "記録者（シート全体）"
-        : slotCount > 1 || String(finding.time ?? "").includes(" - ")
-          ? "記録者（この区間）"
-          : "記録者（この時刻）";
-    const contextRows = Array.isArray(finding.contextRows) ? finding.contextRows : [];
-    const contextHtml = contextRows.length
-      ? `
-        <div class="result-card__context">
-          <div class="result-card__action-label">前後の状態</div>
-          <div class="context-list">
-            ${contextRows
-              .map(
-                (row) => `
-                  <div class="context-list__row context-list__row--${row.marker === "対象" ? "target" : "side"}">
-                    <span class="context-list__marker">${escapeHtml(row.marker)}</span>
-                    <span class="context-list__time">${escapeHtml(row.time)}</span>
-                    <span>状態: ${escapeHtml(row.status)}</span>
-                    <span>記録者: ${escapeHtml(row.reviewer)}</span>
-                  </div>
-                `,
-              )
-              .join("")}
-          </div>
-        </div>
-      `
-      : "";
+    const reviewerText = finding.reviewerText ?? formatReviewerDisplay(finding.reviewerNames ?? []);
+    const targetRows = getTargetContextRows(finding);
+    const affectedSlotsHtml = renderAffectedSlotRows(targetRows, {
+      className: "result-card__affected-slots",
+      title: "該当",
+    });
 
     return `
       <article class="result-card result-card--${finding.severity}${selectedClass}" data-defect-key="${escapeHtml(defectKey)}" data-testid="defect-card" tabindex="0" aria-label="${escapeHtml(`${finding.childName ?? ""} ${finding.time ?? ""} ${finding.shortText ?? ""}`)}">
         <div class="result-card__top">
-          <div class="result-card__time">${escapeHtml(finding.time)}</div>
+          <div>
+            <div class="result-card__time">${escapeHtml(finding.time)}</div>
+            ${options.showChildName ? `<div class="result-card__name">${escapeHtml(finding.childName)}</div>` : ""}
+          </div>
           <div class="result-card__meta">
             <span class="badge badge--${finding.severity}">${escapeHtml(severity.label)}</span>
             <span class="result-card__count">${escapeHtml(formatIncidentCount(1, { prefix: "要確認" }))}</span>
@@ -13467,26 +13593,15 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           </div>
         </div>
         <div class="result-card__body">
-          ${options.showChildName ? `<div class="result-card__name">${escapeHtml(finding.childName)}</div>` : ""}
           <div class="result-card__rule">${escapeHtml(finding.shortText)}</div>
-          <div class="result-card__reviewer">${escapeHtml(reviewerLabel)}: ${escapeHtml(finding.reviewerText ?? formatReviewerDisplay(finding.reviewerNames ?? []))}</div>
-          <div class="result-card__reason">理由: ${escapeHtml(finding.reason ?? "設定ルールに当てはまりました。")}</div>
-          <div class="result-card__action-label">確認したいこと</div>
-          <div class="result-card__action">${escapeHtml(finding.action)}</div>
+          <div class="result-card__reason">${escapeHtml(finding.reason ?? "設定ルールに当てはまりました。")}</div>
+          <div class="result-card__reviewer">記録者: ${escapeHtml(reviewerText)}</div>
+          ${affectedSlotsHtml}
         </div>
         <div class="result-card__actions">
-          <button type="button" class="button button--primary result-card__select" data-result-select-defect="1" data-defect-key="${escapeHtml(defectKey)}" data-testid="defect-detail-button">詳細を見る</button>
+          <button type="button" class="button button--primary result-card__select" data-result-select-defect="1" data-defect-key="${escapeHtml(defectKey)}" data-testid="defect-detail-button">内容を見る</button>
           ${reviewTargetHtml}
         </div>
-        ${contextHtml}
-        ${detailText ? `<div class="result-card__message">${escapeHtml(detailText)}</div>` : ""}
-        ${
-          detailMessages.length > 0
-            ? `<details class="result-card__details"><summary>記録の詳細を見る</summary>${detailMessages
-                .map((detail) => `<div>${escapeHtml(detail)}</div>`)
-                .join("")}</details>`
-            : ""
-        }
       </article>
     `;
   }
@@ -13516,7 +13631,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                   <div>
                     <div class="child-group__name">${escapeHtml(group.childName)}</div>
                     <div class="child-group__subtitle">${formatIncidentCount(group.findings.length)}（${formatSlotCount(groupSlotCount)}）</div>
-                    <div class="child-group__reviewers">記録者（この園児の要確認内）: ${escapeHtml(formatReviewerDisplay(group.reviewerNames, "未入力または対象なし"))}</div>
+                    <div class="child-group__reviewers">この園児の不備だけを表示しています / 記録者: ${escapeHtml(formatReviewerDisplay(group.reviewerNames, "未入力または対象なし"))}</div>
                   </div>
                   <div class="child-group__chips">${chips}</div>
                 </div>
@@ -13954,8 +14069,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     if (elements.resultsGuide) {
       elements.resultsGuide.textContent =
         state.viewMode === "timeline"
-          ? `一覧は連続した同種の異常を1件として表示しています。表レビューでは${formatSlotCount(slotCount, { prefix: "" })}をそのまま確認できます。`
-          : `園児ごとに不備のまとまりを表示しています。表レビューでは${formatSlotCount(slotCount, { prefix: "" })}を色付けしています。${ui.severityLabels.red}は赤、${ui.severityLabels.yellow}は黄として表示します。`;
+          ? `直す必要がある不備だけを時刻順で表示しています。問題ない子どもは通常表示に出していません。表では${formatSlotCount(slotCount, { prefix: "" })}を色付けします。`
+          : `園児ごとに不備だけを表示しています。問題ない子どもは通常表示に出していません。${ui.severityLabels.red}は赤、${ui.severityLabels.yellow}は黄として扱います。`;
     }
 
     elements.resultsList.innerHTML =
