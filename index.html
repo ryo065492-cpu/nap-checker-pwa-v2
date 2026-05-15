@@ -5648,9 +5648,979 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
   }
 }
 
+/* UI Hard Reset: queue-first app surfaces. Keep analysis logic, replace the visible UI layer. */
+.queue-hard-reset,
+.queue-hard-reset * {
+  box-sizing: border-box;
+}
+
+.queue-hard-reset {
+  min-height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 8%, rgba(0, 137, 122, 0.15), transparent 28%),
+    linear-gradient(135deg, #f7efe3 0%, #fbf8f1 42%, #eef8f4 100%);
+}
+
+.queue-hard-reset .app-shell {
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
+  padding: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+  overflow: hidden;
+}
+
+.queue-hard-reset .app-topbar {
+  min-height: 72px;
+  padding: 14px 18px;
+  border: 1px solid rgba(0, 92, 84, 0.12);
+  border-radius: 24px;
+  box-shadow: 0 18px 42px rgba(53, 36, 18, 0.08);
+}
+
+.queue-hard-reset .app-topbar__brand h1 {
+  font-size: clamp(1.35rem, 2vw, 2rem);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.queue-hard-reset .hero__eyebrow,
+.queue-hard-reset .hero__lead,
+.queue-hard-reset .hero__build-detail {
+  display: none;
+}
+
+.queue-hard-reset .app-frame {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 12px;
+  overflow: hidden;
+}
+
+.queue-hard-reset .app-nav {
+  min-height: 0;
+  padding: 16px;
+  border-radius: 24px;
+  background: rgba(255, 252, 246, 0.92);
+  box-shadow: 0 18px 44px rgba(53, 36, 18, 0.08);
+  overflow: auto;
+}
+
+.queue-hard-reset .app-nav__brand {
+  margin-bottom: 18px;
+}
+
+.queue-hard-reset .app-nav__brand span {
+  font-size: 0.85rem;
+}
+
+.queue-hard-reset .app-nav__link {
+  min-height: 68px;
+  border-radius: 20px;
+  font-size: 1.12rem;
+}
+
+.queue-hard-reset .layout {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.queue-hard-reset .panel {
+  min-width: 0;
+  min-height: 0;
+  border-radius: 24px;
+  border: 1px solid rgba(82, 57, 27, 0.1);
+  background: rgba(255, 252, 246, 0.94);
+  box-shadow: 0 18px 44px rgba(53, 36, 18, 0.08);
+}
+
+.queue-hard-reset .screen-section,
+.queue-hard-reset .panel--home-preview,
+.queue-hard-reset .review-options-panel,
+.queue-hard-reset .admin-only {
+  display: none !important;
+}
+
+.queue-hard-reset.app-screen-home .screen-home,
+.queue-hard-reset.app-screen-review .screen-review,
+.queue-hard-reset.app-screen-support .screen-support {
+  display: block;
+}
+
+.queue-hard-reset.app-screen-support .screen-support {
+  overflow: auto;
+}
+
+.queue-hard-reset.app-screen-home .layout {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="empty"] .layout,
+.queue-hard-reset.app-screen-home[data-home-state="loading"] .layout,
+.queue-hard-reset.app-screen-home[data-home-state="checking"] .layout {
+  place-items: center;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="empty"] .panel--control,
+.queue-hard-reset.app-screen-home[data-home-state="loading"] .panel--control,
+.queue-hard-reset.app-screen-home[data-home-state="checking"] .panel--control {
+  display: grid;
+  width: min(720px, 100%);
+  min-height: min(520px, 78dvh);
+  place-items: center;
+  padding: clamp(22px, 4vw, 52px);
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="empty"] .panel--summary,
+.queue-hard-reset.app-screen-home[data-home-state="empty"] .panel--sheet-overview,
+.queue-hard-reset.app-screen-home[data-home-state="loading"] .panel--summary,
+.queue-hard-reset.app-screen-home[data-home-state="loading"] .panel--sheet-overview,
+.queue-hard-reset.app-screen-home[data-home-state="checking"] .panel--summary,
+.queue-hard-reset.app-screen-home[data-home-state="checking"] .panel--sheet-overview {
+  display: none !important;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="empty"] #home-dashboard > .panel__title-row,
+.queue-hard-reset.app-screen-home[data-home-state="empty"] .home-file-status-bar,
+.queue-hard-reset.app-screen-home[data-home-state="empty"] .control-grid,
+.queue-hard-reset.app-screen-home[data-home-state="empty"] .action-row {
+  width: 100%;
+  max-width: 520px;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="empty"] #home-dashboard > .panel__title-row {
+  display: grid;
+  gap: 10px;
+  text-align: center;
+  justify-items: center;
+  margin: 0;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="empty"] #home-dashboard h2 {
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="empty"] #home-dashboard .field:first-child {
+  display: grid;
+  min-height: 170px;
+  place-items: center;
+  padding: 24px;
+  border: 2px dashed rgba(0, 129, 117, 0.34);
+  border-radius: 26px;
+  background: linear-gradient(160deg, rgba(227, 248, 242, 0.72), rgba(255, 255, 255, 0.86));
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="empty"] #home-dashboard .field:first-child .field__label {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #00685f;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="empty"] #home-dashboard .field:first-child input[type="file"] {
+  min-height: 56px;
+  border-radius: 999px;
+  background: #007f73;
+  color: #fff;
+  font-weight: 900;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="empty"] #home-dashboard .field:not(:first-child),
+.queue-hard-reset.app-screen-home[data-home-state="empty"] #analyze-button,
+.queue-hard-reset.app-screen-home[data-home-state="empty"] #download-csv-button,
+.queue-hard-reset.app-screen-home[data-home-state="empty"] #analyze-all-button {
+  display: none;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="checking"] #home-dashboard > :not(.home-progress-card):not(.status-banner):not(.error-box) {
+  display: none !important;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="checking"] .home-progress-card {
+  display: grid;
+  width: min(540px, 100%);
+  gap: 18px;
+  text-align: center;
+  justify-items: center;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="complete"] .layout {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-areas:
+    "picker"
+    "summary"
+    "dates";
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="complete"] .panel--control {
+  grid-area: picker;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="complete"] .panel--control > .panel__title-row,
+.queue-hard-reset.app-screen-home[data-home-state="complete"] .panel--control > .control-grid,
+.queue-hard-reset.app-screen-home[data-home-state="complete"] .panel--control > .status-banner,
+.queue-hard-reset.app-screen-home[data-home-state="complete"] .panel--control > .error-box {
+  display: none;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="complete"] .home-file-status-bar {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto auto auto;
+  gap: 12px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="complete"] #analyze-all-button {
+  display: inline-flex;
+  min-height: 58px;
+  padding-inline: 28px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="complete"] #analyze-button,
+.queue-hard-reset.app-screen-home[data-home-state="complete"] #download-csv-button {
+  display: none;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="complete"] .panel--summary {
+  grid-area: summary;
+  display: block;
+  padding: 14px;
+  overflow: hidden;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="complete"] .panel--summary .panel__title-row,
+.queue-hard-reset.app-screen-home[data-home-state="complete"] #structure-summary {
+  display: none;
+}
+
+.queue-hard-reset .summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.queue-summary-card {
+  min-width: 180px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(82, 57, 27, 0.1);
+  background: #fffefa;
+}
+
+.queue-summary-card__label {
+  font-weight: 800;
+  color: #584a3a;
+  font-size: 0.98rem;
+  line-height: 1.25;
+  word-break: keep-all;
+}
+
+.queue-summary-card__value {
+  margin-top: 8px;
+  font-size: clamp(1.75rem, 2.7vw, 2.45rem);
+  line-height: 1.05;
+  font-weight: 950;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+.queue-summary-card__sub {
+  margin-top: 7px;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: #71665b;
+  word-break: keep-all;
+}
+
+.queue-summary-card--red .queue-summary-card__value {
+  color: #c93c2d;
+}
+
+.queue-summary-card--yellow .queue-summary-card__value {
+  color: #b87400;
+}
+
+.queue-summary-card--ok .queue-summary-card__value {
+  color: #11833b;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="complete"] .panel--sheet-overview {
+  grid-area: dates;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 14px;
+  padding: 18px;
+  overflow: hidden;
+}
+
+.queue-hard-reset.app-screen-home[data-home-state="complete"] .sheet-overview-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  overflow: auto;
+  min-height: 0;
+  padding: 2px 4px 10px 2px;
+}
+
+.queue-date-card {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  min-height: 0;
+  padding: 18px;
+  border: 2px solid rgba(206, 60, 45, 0.26);
+  border-radius: 22px;
+  text-align: left;
+  background: linear-gradient(160deg, #fffefd, #fff3ef);
+  color: #2f261f;
+  box-shadow: 0 18px 34px rgba(85, 45, 25, 0.08);
+  cursor: pointer;
+}
+
+.queue-date-card--yellow {
+  border-color: rgba(184, 116, 0, 0.36);
+  background: linear-gradient(160deg, #fffefd, #fff7df);
+}
+
+.queue-date-card--ok {
+  border-color: rgba(18, 130, 79, 0.34);
+  background: linear-gradient(160deg, #fffefd, #edfbf2);
+}
+
+.queue-date-card__status {
+  justify-self: start;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #d43b2f;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.queue-date-card--yellow .queue-date-card__status {
+  background: #c68513;
+}
+
+.queue-date-card--ok .queue-date-card__status {
+  background: #159452;
+}
+
+.queue-date-card__date {
+  font-size: 1.28rem;
+  font-weight: 950;
+}
+
+.queue-date-card__weekday {
+  margin-top: -8px;
+  color: #6e6258;
+  font-weight: 800;
+}
+
+.queue-date-card__counts,
+.queue-date-card__reasons,
+.queue-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  min-width: 0;
+}
+
+.queue-count,
+.queue-chip {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: 30px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(82, 57, 27, 0.08);
+  font-weight: 850;
+  font-size: 0.9rem;
+  line-height: 1.25;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.queue-count--red {
+  color: #9f261e;
+  background: rgba(217, 64, 49, 0.12);
+}
+
+.queue-count--yellow {
+  color: #8a5b00;
+  background: rgba(206, 147, 31, 0.16);
+}
+
+.queue-chip--muted {
+  color: #6e6258;
+}
+
+.queue-date-card__action {
+  align-self: end;
+  justify-self: start;
+  padding: 8px 13px;
+  border-radius: 999px;
+  background: #e3f4ef;
+  color: #00685f;
+  font-weight: 950;
+}
+
+.queue-empty-card {
+  display: grid;
+  gap: 8px;
+  align-content: center;
+  min-height: 180px;
+  padding: 24px;
+  border: 1px dashed rgba(0, 92, 84, 0.28);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #4f453b;
+}
+
+.queue-hard-reset.app-screen-review .layout {
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "list detail";
+}
+
+.queue-hard-reset.app-screen-review[data-review-mode="table"] .layout {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "table"
+    "cell";
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.queue-hard-reset.app-screen-review .panel--results {
+  grid-area: list;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 12px;
+  padding: 18px;
+  overflow: hidden;
+}
+
+.queue-hard-reset.app-screen-review .panel--defect-detail {
+  grid-area: detail;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
+  padding: 18px;
+  overflow: hidden;
+}
+
+.queue-hard-reset.app-screen-review .panel--review {
+  grid-area: table;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 12px;
+  padding: 18px;
+  overflow: hidden;
+}
+
+.queue-hard-reset.app-screen-review .cell-detail-panel {
+  grid-area: cell;
+  display: block;
+  padding: 0;
+}
+
+.queue-hard-reset.app-screen-review[data-review-mode="defects"] .panel--review,
+.queue-hard-reset.app-screen-review[data-review-mode="defects"] .cell-detail-panel,
+.queue-hard-reset.app-screen-review[data-review-mode="table"] .panel--results,
+.queue-hard-reset.app-screen-review[data-review-mode="table"] .panel--defect-detail {
+  display: none !important;
+}
+
+.queue-hard-reset .results-list {
+  display: grid;
+  gap: 12px;
+  overflow: auto;
+  min-height: 0;
+  padding: 2px 4px 8px 2px;
+}
+
+.queue-defect-card {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 16px;
+  border: 2px solid rgba(211, 65, 50, 0.18);
+  border-radius: 22px;
+  background: linear-gradient(160deg, #fffefd, #fff4f0);
+  box-shadow: 0 16px 30px rgba(80, 42, 28, 0.07);
+}
+
+.queue-defect-card--yellow {
+  border-color: rgba(191, 130, 22, 0.26);
+  background: linear-gradient(160deg, #fffefd, #fff8e4);
+}
+
+.queue-defect-card--selected {
+  box-shadow: 0 0 0 3px rgba(0, 128, 115, 0.18), 0 18px 34px rgba(80, 42, 28, 0.1);
+}
+
+.queue-defect-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.queue-defect-card__head strong {
+  flex: 1 1 180px;
+  min-width: 0;
+  line-height: 1.25;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.queue-severity {
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: #fff;
+  background: #d43b2f;
+  font-weight: 950;
+  font-size: 0.82rem;
+}
+
+.queue-severity--yellow {
+  background: #c68513;
+}
+
+.queue-severity--info {
+  background: #2f61aa;
+}
+
+.queue-defect-card__count {
+  margin-left: auto;
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(82, 57, 27, 0.08);
+  font-weight: 900;
+  word-break: keep-all;
+}
+
+.queue-defect-card__child,
+.queue-detail__child {
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  line-height: 1.1;
+  font-weight: 950;
+  overflow-wrap: anywhere;
+}
+
+.queue-defect-card__time,
+.queue-detail__time {
+  color: #00776c;
+  font-size: 1.15rem;
+  font-weight: 950;
+}
+
+.queue-defect-card__reason,
+.queue-defect-card__reviewer,
+.queue-detail__reviewer,
+.queue-detail__action {
+  line-height: 1.45;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.queue-defect-card__actions,
+.queue-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.queue-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 950;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.queue-button--primary {
+  background: #008578;
+  color: #fff;
+  box-shadow: 0 12px 22px rgba(0, 112, 101, 0.18);
+}
+
+.queue-button--subtle {
+  background: #e6f3ef;
+  color: #00685f;
+}
+
+.queue-affected {
+  display: grid;
+  gap: 8px;
+}
+
+.queue-affected__title,
+.queue-context__title {
+  font-weight: 950;
+}
+
+.queue-affected__rows {
+  display: grid;
+  gap: 6px;
+}
+
+.queue-affected__row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) minmax(90px, auto);
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.queue-affected__time,
+.queue-affected__status,
+.queue-affected__reviewer {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.queue-affected__time {
+  font-weight: 950;
+  color: #00685f;
+}
+
+.queue-detail {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 0;
+  padding: 22px;
+  border: 2px solid rgba(211, 65, 50, 0.24);
+  border-radius: 26px;
+  background: linear-gradient(160deg, #fffefd, #fff5f2);
+  overflow: auto;
+}
+
+.queue-detail--yellow {
+  border-color: rgba(191, 130, 22, 0.32);
+  background: linear-gradient(160deg, #fffefd, #fff8e4);
+}
+
+.queue-detail__status {
+  justify-self: end;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #ffe1dd;
+  color: #a62a21;
+  font-weight: 950;
+}
+
+.queue-detail__rule {
+  font-weight: 950;
+}
+
+.queue-detail__action {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.queue-context {
+  border-top: 1px solid rgba(82, 57, 27, 0.1);
+  padding-top: 10px;
+}
+
+.queue-context summary {
+  min-height: 42px;
+  cursor: pointer;
+  color: #00685f;
+  font-weight: 950;
+}
+
+.queue-context__body {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.queue-context__row {
+  display: grid;
+  grid-template-columns: 54px 64px minmax(0, 1fr) minmax(90px, auto);
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.queue-context__row--target {
+  background: rgba(211, 65, 50, 0.12);
+  font-weight: 900;
+}
+
+.queue-table-block {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px;
+  min-height: 0;
+}
+
+.queue-table-block + .queue-table-block {
+  margin-top: 14px;
+}
+
+.queue-table-block__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.queue-table-scroll {
+  min-width: 0;
+  overflow: auto;
+  border: 1px solid rgba(82, 57, 27, 0.1);
+  border-radius: 18px;
+  background: #fffefa;
+}
+
+.queue-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.queue-table th,
+.queue-table td {
+  min-width: var(--review-cell-width, 56px);
+  padding: 0;
+  border-right: 1px solid rgba(82, 57, 27, 0.09);
+  border-bottom: 1px solid rgba(82, 57, 27, 0.09);
+}
+
+.queue-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 8px;
+  background: #edf5f2;
+  font-size: calc(0.82rem * var(--review-font-scale, 1));
+}
+
+.queue-table__child {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  min-width: 118px !important;
+  background: #fffefa !important;
+  padding: 8px !important;
+  text-align: left;
+}
+
+.queue-table__row-label {
+  position: sticky;
+  left: 118px;
+  z-index: 3;
+  min-width: 72px !important;
+  background: #f7f1e8 !important;
+  padding: 8px !important;
+}
+
+.queue-table__cell {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: var(--review-row-height, 48px);
+  border: 0;
+  background: transparent;
+  font-weight: 900;
+  font-size: calc(0.92rem * var(--review-font-scale, 1));
+  cursor: pointer;
+}
+
+.queue-table__cell--red {
+  background: linear-gradient(135deg, var(--review-red-start, rgba(201, 60, 45, 0.18)), var(--review-red-end, #fff0ec));
+  color: #9f261e;
+}
+
+.queue-table__cell--yellow {
+  background: linear-gradient(135deg, var(--review-yellow-start, rgba(190, 122, 8, 0.18)), var(--review-yellow-end, #fff7e1));
+  color: #8a5b00;
+}
+
+.queue-table__cell--selected {
+  outline: 3px solid #008578;
+  outline-offset: -3px;
+}
+
+.queue-cell-detail {
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 20px;
+  background: rgba(255, 252, 246, 0.96);
+  border: 1px solid rgba(82, 57, 27, 0.1);
+}
+
+.queue-cell-detail__head,
+.queue-cell-detail__grid,
+.queue-cell-detail__finding {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.queue-cell-detail__head {
+  justify-content: space-between;
+}
+
+.queue-cell-detail__grid {
+  margin-top: 10px;
+}
+
+.queue-cell-detail__grid span,
+.queue-cell-detail__finding span {
+  color: #6e6258;
+}
+
+.queue-cell-detail__findings {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.queue-cell-detail__finding {
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(211, 65, 50, 0.1);
+}
+
+@media (max-width: 980px) {
+  .queue-hard-reset {
+    overflow: auto;
+  }
+
+  .queue-hard-reset .app-shell {
+    min-height: 100dvh;
+    height: auto;
+    overflow: visible;
+    padding-bottom: calc(82px + env(safe-area-inset-bottom));
+  }
+
+  .queue-hard-reset .app-frame {
+    display: block;
+    overflow: visible;
+  }
+
+  .queue-hard-reset .app-nav {
+    position: fixed;
+    left: max(10px, env(safe-area-inset-left));
+    right: max(10px, env(safe-area-inset-right));
+    bottom: max(10px, env(safe-area-inset-bottom));
+    z-index: 30;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .queue-hard-reset .app-nav__brand {
+    display: none;
+  }
+
+  .queue-hard-reset .app-nav__link {
+    min-height: 58px;
+    justify-content: center;
+    font-size: 0.95rem;
+  }
+
+  .queue-hard-reset .layout {
+    overflow: visible;
+  }
+
+  .queue-hard-reset.app-screen-home[data-home-state="complete"] .summary-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .queue-hard-reset.app-screen-review .layout,
+  .queue-hard-reset.app-screen-review[data-review-mode="table"] .layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "list"
+      "detail";
+    overflow: visible;
+  }
+
+  .queue-hard-reset.app-screen-review[data-review-mode="table"] .layout {
+    grid-template-areas:
+      "table"
+      "cell";
+  }
+}
+
+@media (max-width: 640px) {
+  .queue-hard-reset .app-topbar {
+    align-items: start;
+  }
+
+  .queue-hard-reset .app-topbar__side {
+    gap: 6px;
+  }
+
+  .queue-hard-reset.app-screen-home[data-home-state="complete"] .home-file-status-bar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .queue-hard-reset.app-screen-home[data-home-state="complete"] .panel--control {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .queue-hard-reset.app-screen-home[data-home-state="complete"] .summary-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .queue-hard-reset.app-screen-home[data-home-state="complete"] .sheet-overview-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .queue-affected__row,
+  .queue-context__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
     </style>
   </head>
-  <body class="app-screen-home" data-home-state="empty">
+  <body class="app-screen-home queue-hard-reset" data-home-state="empty">
     <noscript>
       <div class="noscript-alert">
         このツールはJavaScriptが必要です。iPadではFilesからHTMLを直接開かず、Safariで配布URLを開いてホーム画面に追加してください。
@@ -5669,8 +6639,8 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-13-2045</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-13 20:45</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-16-0005</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-16 00:05</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -5685,7 +6655,7 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
             <div class="app-nav__logo" aria-hidden="true">午</div>
             <div>
               <strong>午睡チェック</strong>
-              <span>要確認の日付を先に見る</span>
+              <span>不備だけを順番に確認</span>
             </div>
           </div>
           <a class="app-nav__link app-nav__link--primary" href="#home-dashboard" data-screen-link="home" data-testid="nav-home">
@@ -5693,8 +6663,8 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
             <span class="app-nav__text">ホーム</span>
           </a>
           <a class="app-nav__link" href="#review-section" data-screen-link="review" data-testid="nav-review">
-            <span class="app-nav__icon" aria-hidden="true">表</span>
-            <span class="app-nav__text">表レビュー</span>
+            <span class="app-nav__icon" aria-hidden="true">不</span>
+            <span class="app-nav__text">この日の不備</span>
           </a>
           <a class="app-nav__link" href="#support-panel" data-screen-link="support" data-testid="nav-support">
             <span class="app-nav__icon" aria-hidden="true">?</span>
@@ -5770,6 +6740,9 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
               <strong id="home-last-checked">未実行</strong>
             </div>
             <div id="home-check-status" class="home-file-status-bar__status">未読込</div>
+            <button id="change-file-button" class="button button--secondary home-file-status-bar__action" type="button" data-testid="change-file-button">
+              別ファイルを読み込む
+            </button>
           </div>
 
           <div class="control-grid">
@@ -5853,7 +6826,7 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
         <aside id="home-preview-panel" class="panel panel--home-preview screen-section screen-home" tabindex="-1" aria-label="表レビューの簡易プレビュー">
           <div class="panel__title-row">
             <div>
-              <h2>表レビュー プレビュー</h2>
+              <h2>確認プレビュー</h2>
               <p class="results-guide">日付カードを押す前に、主な確認内容を短く見られます。</p>
             </div>
             <div id="home-preview-status" class="meta-pill">未選択</div>
@@ -6111,8 +7084,8 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
         <section id="review-section" class="panel panel--review screen-section screen-review" tabindex="-1">
           <div class="panel__title-row">
             <div>
-              <h2 id="review-title">表確認モード</h2>
-              <p class="panel__lead">赤・黄のセルをタップすると、記録者と前後状態を確認できます。</p>
+              <h2 id="review-title">表で確認</h2>
+              <p class="panel__lead">必要な時だけ元表に近い表示で、色付きセルの位置を確認します。</p>
             </div>
             <div class="review-toolbar">
               <button id="review-defects-button" class="button button--ghost" type="button" data-testid="review-defects-button">不備一覧へ戻る</button>
@@ -6121,7 +7094,7 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
             </div>
           </div>
           <p id="review-guide" class="results-guide">
-            元の表に近い並びで、赤と黄のコマを確認できます。
+            不備カードの「表で確認」から開く専用モードです。
           </p>
           <div id="sheet-alert-banner" class="sheet-alert-banner" hidden></div>
           <div id="review-board" class="review-board">
@@ -6183,11 +7156,11 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
 
         <section id="results-panel" class="panel panel--results defect-list-panel screen-section screen-review">
           <div class="panel__title-row">
-            <h2>不備一覧</h2>
+              <h2>この日の不備</h2>
             <div id="results-count" class="meta-pill">表示中 0件 / 該当0コマ</div>
           </div>
           <p id="results-guide" class="results-guide">
-            表で色が付いたコマの理由を、現場確認のまとまりごとに表示します。
+            直す必要がある子どもと時刻だけを表示します。問題ない子どもは通常表示に出しません。
           </p>
           <div id="results-list" class="results-list" aria-live="polite">
             <article class="result-card result-card--empty">
@@ -6200,7 +7173,7 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
           <div class="panel__title-row">
             <div>
               <h2>選択中の不備</h2>
-              <p class="panel__lead">不備カードを選ぶと、理由・記録者・前後状態をここで確認できます。</p>
+              <p class="panel__lead">該当コマだけを表示します。前後は必要な時だけ開きます。</p>
             </div>
           </div>
           <div class="selected-defect-detail selected-defect-detail--empty">
@@ -6236,7 +7209,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-13-2045","buildLabel":"2026-05-13 20:45","buildId":"2026-05-13-204503","builtAtIso":"2026-05-13T11:45:03.750Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-16-0005","buildLabel":"2026-05-16 00:05","buildId":"2026-05-16-000525","builtAtIso":"2026-05-15T15:05:25.634Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -9137,6 +10110,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       homeFileName: document.querySelector("#home-file-name"),
       homeLastChecked: document.querySelector("#home-last-checked"),
       homeCheckStatus: document.querySelector("#home-check-status"),
+      changeFileButton: document.querySelector("#change-file-button"),
       summaryCards: document.querySelector("#summary-cards"),
       structureSummary: document.querySelector("#structure-summary"),
       appStatusPill: document.querySelector("#app-status-pill"),
@@ -11600,6 +12574,18 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       setStatus("不備一覧に戻りました。");
     });
 
+    elements.changeFileButton?.addEventListener("click", () => {
+      resetReviewSelectionState({ clearAnalysis: true });
+      state.sheetAnalyses = new Map();
+      state.sheetOverview = [];
+      state.allSheetLastCheckedAt = "";
+      state.currentErrorMessage = "";
+      setError("");
+      setStatus("別ファイルを選び直します。xlsxを選ぶと全日分チェックを始めます。");
+      renderAll();
+      elements.fileInput?.click();
+    });
+
     elements.fileInput.addEventListener("change", async (event) => {
       const file = event.target.files?.[0];
       if (!file) {
@@ -12009,14 +12995,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       state.checkStatus = "idle";
       state.appStage = "file-read-complete";
       state.workbook = workbook;
+      resetReviewSelectionState({ clearAnalysis: true });
       state.selectedSheetName = workbook.sheets[0].name;
-      state.analysis = null;
-      state.debug = null;
       state.sheetAnalyses = new Map();
       state.sheetOverview = [];
       state.allSheetLastCheckedAt = "";
-      state.childFilter = "";
-      state.selectedReviewCell = null;
       state.sourceLabel = sourceLabel;
       state.activeScreen = "home";
       populateSheetSelect();
@@ -12128,10 +13111,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       automatic ? "読み込み後に全日分確認中..." : "全日分を再確認中...",
     );
     setError("");
+    resetReviewSelectionState({ clearAnalysis: true });
     state.sheetAnalyses = new Map();
     state.sheetOverview = [];
-    state.analysis = null;
-    state.debug = null;
     state.allSheetChecking = true;
     state.checkStatus = "checking";
     state.appStage = "sheet-check";
@@ -12631,14 +13613,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     };
   }
 
-  function getCellLevelGroupedFindings() {
-    return (state.analysis?.reviewItems ?? []).filter(
-      (finding) => Number.isInteger(finding.stateRow) && Number.isInteger(finding.reviewerRow),
+  function getQueueGroupedFindings() {
+    return (state.analysis?.reviewItems ?? state.analysis?.findings ?? []).filter((finding) =>
+      ["red", "yellow", "info"].includes(finding.severity),
     );
   }
 
   function getFilteredGroupedFindings() {
-    return getCellLevelGroupedFindings().filter((finding) => {
+    return getQueueGroupedFindings().filter((finding) => {
       if (!state.activeSeverities.has(finding.severity)) {
         return false;
       }
@@ -12656,7 +13638,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function getAllDisplayFindings() {
-    return sortDisplayFindings(getCellLevelGroupedFindings().map(buildDisplayFindingFromReviewItem), "grouped");
+    return sortDisplayFindings(getQueueGroupedFindings().map(buildDisplayFindingFromReviewItem), "grouped");
   }
 
   function createReviewSlotKey(blockIndex, stateRow, reviewerRow, intervalIndex) {
@@ -13207,6 +14189,37 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   function sumFindingSlotCounts(findings) {
     return findings.reduce((total, finding) => total + getFindingSlotCount(finding), 0);
+  }
+
+  function buildQueueDefectCountModel(allFindings, visibleFindings = allFindings) {
+    const countSeverity = (items, severity) => {
+      const severityItems = items.filter((finding) => finding.severity === severity);
+      return {
+        incidents: severityItems.length,
+        cells: sumFindingSlotCounts(severityItems),
+      };
+    };
+    const red = countSeverity(allFindings, "red");
+    const yellow = countSeverity(allFindings, "yellow");
+
+    return {
+      redIncidentCount: red.incidents,
+      redCellCount: red.cells,
+      yellowIncidentCount: yellow.incidents,
+      yellowCellCount: yellow.cells,
+      totalDefectCount: allFindings.length,
+      visibleDefectCount: visibleFindings.length,
+      visibleCellCount: sumFindingSlotCounts(visibleFindings),
+    };
+  }
+
+  function formatQueueVisibleCount(model) {
+    const visibleSummary = formatIncidentSlotSummary(model.visibleDefectCount, model.visibleCellCount);
+    if (model.visibleDefectCount === model.totalDefectCount) {
+      return `表示中 ${visibleSummary}`;
+    }
+
+    return `表示中 ${visibleSummary} / 全${model.totalDefectCount}件`;
   }
 
   function formatIncidentSlotSummary(incidentCount, slotCount, options = {}) {
@@ -15122,6 +16135,23 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     return ["home", "review", "support"].includes(screen) ? screen : "home";
   }
 
+  function resetReviewSelectionState(options = {}) {
+    state.selectedDefectKey = "";
+    state.selectedReviewCell = null;
+    state.reviewMode = "defects";
+    state.childFilter = "";
+
+    if (options.clearAnalysis) {
+      state.selectedSheetName = "";
+      state.analysis = null;
+      state.debug = null;
+    }
+
+    if (elements?.childFilter) {
+      elements.childFilter.value = "";
+    }
+  }
+
   function renderScreenChrome() {
     const activeScreen = normalizeAppScreen(state.activeScreen);
     state.activeScreen = activeScreen;
@@ -15156,6 +16186,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   function setActiveScreen(screen, options = {}) {
     state.activeScreen = normalizeAppScreen(screen);
+    if (state.activeScreen === "home") {
+      resetReviewSelectionState();
+    }
     if (state.activeScreen === "review" && !options.keepReviewMode) {
       state.reviewMode = "defects";
     }
@@ -15454,6 +16487,663 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
   }
 
+  function getQueueStatusMeta(item) {
+    if (!item || item.status === "error" || item.redIncidents > 0) {
+      return { tone: "red", label: item?.status === "error" ? "要確認" : "要注意" };
+    }
+    if (item.yellowIncidents > 0 || item.hasEnvironmentMissing) {
+      return { tone: "yellow", label: "要確認" };
+    }
+    return { tone: "ok", label: "OK" };
+  }
+
+  function getQueueReasonLabels(item, limit = 2) {
+    const labels = [];
+    for (const label of item?.mainIssueLabels ?? []) {
+      if (label && !labels.includes(label)) {
+        labels.push(label);
+      }
+    }
+    for (const label of item?.environmentMissingLabels ?? []) {
+      const text = `${label}未入力`;
+      if (!labels.includes(text)) {
+        labels.push(text);
+      }
+    }
+    if (item?.status === "error" && item.errorMessage && !labels.includes("解析エラー")) {
+      labels.unshift("解析エラー");
+    }
+    return labels.slice(0, limit);
+  }
+
+  // UI HARD RESET ACTIVE RENDER LAYER.
+  // Runtime rendering is intentionally driven by the final queue-* functions below.
+  // Earlier duplicate render functions are legacy phase artifacts; do not extend them.
+  function renderQueueReasonChips(labels, className = "queue-chip-list") {
+    if (!labels?.length) {
+      return `<div class="${className}"><span class="queue-chip queue-chip--muted">主な不備なし</span></div>`;
+    }
+
+    return `
+      <div class="${className}">
+        ${labels.map((label) => `<span class="queue-chip">${escapeHtml(label)}</span>`).join("")}
+      </div>
+    `;
+  }
+
+  function renderSummary() {
+    if (!elements?.summaryCards) {
+      return;
+    }
+
+    const stats = getDashboardStats();
+    const cards = [
+      { label: "チェック日数", value: `${stats.checkedCount}日`, sub: `${stats.totalSheets}シート中`, tone: "neutral" },
+      { label: "直す日付", value: `${stats.issueDays}日`, sub: "日付カードから確認", tone: stats.issueDays > 0 ? "red" : "ok" },
+      { label: "赤", value: formatIncidentSlotSummary(stats.redIncidents, stats.redCells), sub: "危険姿勢・起床後など", tone: "red" },
+      { label: "黄", value: formatIncidentSlotSummary(stats.yellowIncidents, stats.yellowCells), sub: "記録漏れなど", tone: "yellow" },
+      { label: "OK", value: `${stats.okDays}日`, sub: "通常表示では詳細を省略", tone: "ok" },
+    ];
+
+    elements.summaryCards.innerHTML = cards
+      .map(
+        (card) => `
+          <article class="queue-summary-card queue-summary-card--${card.tone}">
+            <div class="queue-summary-card__label">${escapeHtml(card.label)}</div>
+            <div class="queue-summary-card__value">${escapeHtml(card.value)}</div>
+            <div class="queue-summary-card__sub">${escapeHtml(card.sub)}</div>
+          </article>
+        `,
+      )
+      .join("");
+
+    if (elements.structureSummary) {
+      elements.structureSummary.innerHTML = `
+        <div class="queue-ok-summary">
+          <strong>問題ない日付: ${escapeHtml(String(stats.okDays))}日</strong>
+          <span>OKの日付や問題ない子どもは通常画面では詳しく表示しません。直す必要があるものだけを上から確認します。</span>
+        </div>
+      `;
+    }
+  }
+
+  function renderSheetOverviewCard(item) {
+    const meta = getQueueStatusMeta(item);
+    const weekday = getWeekdayLabel(item.dateLabel);
+    const reasons = getQueueReasonLabels(item, 2);
+    const redSummary = formatIncidentSlotSummary(item.redIncidents ?? 0, item.redCells ?? 0);
+    const yellowSummary = formatIncidentCount(item.yellowIncidents ?? 0);
+
+    return `
+      <button
+        class="queue-date-card queue-date-card--${meta.tone}"
+        type="button"
+        data-sheet-name="${escapeHtml(item.sheetName)}"
+        data-testid="sheet-overview-card"
+        aria-label="${escapeHtml(`${item.dateLabel} ${meta.label} ${redSummary} 黄${yellowSummary}`)}"
+      >
+        <span class="queue-date-card__status">${escapeHtml(meta.label)}</span>
+        <span class="queue-date-card__date">${escapeHtml(item.dateLabel)}</span>
+        <span class="queue-date-card__weekday">${escapeHtml(weekday)}</span>
+        <span class="queue-date-card__counts">
+          <span class="queue-count queue-count--red">赤 ${escapeHtml(redSummary)}</span>
+          <span class="queue-count queue-count--yellow">黄 ${escapeHtml(yellowSummary)}</span>
+        </span>
+        ${renderQueueReasonChips(reasons, "queue-date-card__reasons")}
+        <span class="queue-date-card__action">確認する</span>
+      </button>
+    `;
+  }
+
+  function renderSheetOverview() {
+    if (!elements?.sheetOverviewList) {
+      return;
+    }
+
+    const stats = getDashboardStats();
+    const issueItems = state.sheetOverview ?? [];
+
+    if (elements.sheetOverviewCount) {
+      elements.sheetOverviewCount.textContent =
+        stats.checkedCount > 0
+          ? `直す日付 ${stats.issueDays}日 / OK ${stats.okDays}日`
+          : "未チェック";
+    }
+
+    if (elements.sheetOverviewGuide) {
+      elements.sheetOverviewGuide.textContent =
+        stats.checkedCount > 0
+          ? "直す必要がある日付だけを表示しています。カードを押すと、その日の不備キューへ進みます。"
+          : "xlsxを選ぶと全日分を自動チェックし、直す必要がある日付だけを表示します。";
+    }
+
+    if (!state.workbook?.sheets?.length) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="queue-empty-card">
+          <strong>まだファイルが選ばれていません。</strong>
+          <span>ホームの「午睡記録ファイルを選ぶ」からxlsxを選んでください。</span>
+        </article>
+      `;
+      return;
+    }
+
+    if (state.allSheetChecking || state.checkStatus === "checking") {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="queue-empty-card queue-empty-card--checking">
+          <strong>全日分を確認しています。</strong>
+          <span>完了すると、直す必要がある日付だけがここに並びます。</span>
+        </article>
+      `;
+      return;
+    }
+
+    if (issueItems.length === 0 && stats.checkedCount > 0) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="queue-empty-card queue-empty-card--ok">
+          <strong>直す必要がある日付は見つかりませんでした。</strong>
+          <span>OK ${escapeHtml(String(stats.okDays))}日。問題ない日付の詳細は通常表示では省略しています。</span>
+        </article>
+      `;
+      return;
+    }
+
+    elements.sheetOverviewList.innerHTML = issueItems.map(renderSheetOverviewCard).join("");
+  }
+
+  function renderHomePreview() {
+    if (elements?.homePreviewPanel) {
+      elements.homePreviewPanel.hidden = true;
+    }
+  }
+
+  function getQueueTargetRows(finding) {
+    return getTargetContextRows(finding).map((row) => ({
+      ...row,
+      reviewer: abbreviateReviewerName(row.reviewer) || "未入力",
+      status: row.status || "(空欄)",
+    }));
+  }
+
+  function getQueueContextRows(finding) {
+    const rows = Array.isArray(finding?.contextRows) ? finding.contextRows : [];
+    return rows.map((row) => ({
+      ...row,
+      reviewer: abbreviateReviewerName(row.reviewer) || "未入力",
+      status: row.status || "(空欄)",
+    }));
+  }
+
+  function renderQueueAffectedRows(rows, options = {}) {
+    const title = options.title ?? "該当コマ";
+    if (!rows.length) {
+      return `
+        <div class="queue-affected">
+          <div class="queue-affected__title">${escapeHtml(title)}</div>
+          <div class="queue-affected__empty">該当コマの詳細を取得できませんでした。</div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="queue-affected" data-testid="affected-slots">
+        <div class="queue-affected__title">${escapeHtml(title)}</div>
+        <div class="queue-affected__rows">
+          ${rows
+            .map(
+              (row) => `
+                <div class="queue-affected__row">
+                  <span class="queue-affected__time">${escapeHtml(row.time ?? "-")}</span>
+                  <span class="queue-affected__status">${escapeHtml(row.status ?? "(空欄)")}</span>
+                  <span class="queue-affected__reviewer">記録者: ${escapeHtml(row.reviewer ?? "未入力")}</span>
+                </div>
+              `,
+            )
+            .join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderQueueContextDetails(finding, targetRows) {
+    const contextRows = getQueueContextRows(finding);
+    const targetKeys = new Set(targetRows.map((row) => `${row.time}|${row.status}|${row.reviewer}`));
+    const contextHtml = contextRows.length
+      ? contextRows
+          .map((row) => {
+            const isTarget = row.marker === "対象" || targetKeys.has(`${row.time}|${row.status}|${row.reviewer}`);
+            return `
+              <div class="queue-context__row ${isTarget ? "queue-context__row--target" : ""}">
+                <span>${escapeHtml(row.marker ?? (isTarget ? "該当" : "参考"))}</span>
+                <strong>${escapeHtml(row.time ?? "-")}</strong>
+                <span>${escapeHtml(row.status ?? "(空欄)")}</span>
+                <span>記録者: ${escapeHtml(row.reviewer ?? "未入力")}</span>
+              </div>
+            `;
+          })
+          .join("")
+      : `<div class="queue-context__empty">前後の参考情報は取得できませんでした。</div>`;
+
+    return `
+      <details class="queue-context" data-testid="defect-context-details">
+        <summary>詳しく見る</summary>
+        <div class="queue-context__body">
+          <div class="queue-context__title">前後の参考情報</div>
+          ${contextHtml}
+          ${(finding.details ?? [])
+            .filter(Boolean)
+            .slice(0, 3)
+            .map((detail) => `<div class="queue-context__note">${escapeHtml(detail)}</div>`)
+            .join("")}
+        </div>
+      </details>
+    `;
+  }
+
+  function renderResultCard(finding, options = {}) {
+    const defectKey = createDefectKey(finding);
+    const selectedClass = defectKey === state.selectedDefectKey ? " queue-defect-card--selected" : "";
+    const slotCount = getFindingSlotCount(finding);
+    const targetRows = getQueueTargetRows(finding);
+    const reviewerText = abbreviateReviewerName(finding.reviewerText) || finding.reviewerText || "未入力または対象なし";
+    const severityLabel = getSeverityMeta(finding.severity).label;
+    const tableButton = `
+      <button
+        type="button"
+        class="queue-button queue-button--primary"
+        data-result-review-target="1"
+        data-defect-key="${escapeHtml(defectKey)}"
+        data-testid="defect-table-button"
+      >表で確認</button>
+    `;
+
+    return `
+      <article
+        class="queue-defect-card queue-defect-card--${finding.severity}${selectedClass}"
+        data-defect-key="${escapeHtml(defectKey)}"
+        data-testid="defect-card"
+        tabindex="0"
+        aria-label="${escapeHtml(`${finding.childName ?? "対象なし"} ${finding.time ?? ""} ${finding.shortText ?? finding.ruleName ?? ""}`)}"
+      >
+        <div class="queue-defect-card__head">
+          <span class="queue-severity queue-severity--${finding.severity}">${escapeHtml(severityLabel)}</span>
+          <strong>${escapeHtml(finding.shortText ?? finding.ruleName ?? "確認が必要です")}</strong>
+          <span class="queue-defect-card__count">${escapeHtml(formatIncidentSlotSummary(1, slotCount, { prefix: "要確認" }))}</span>
+        </div>
+        <div class="queue-defect-card__child">${escapeHtml(finding.childName ?? "対象なし")}</div>
+        <div class="queue-defect-card__time">${escapeHtml(finding.time ?? "時刻不明")}</div>
+        <div class="queue-defect-card__reason">${escapeHtml(finding.reason ?? finding.action ?? "記録内容を確認してください。")}</div>
+        <div class="queue-defect-card__reviewer">記録者: ${escapeHtml(reviewerText)}</div>
+        ${renderQueueAffectedRows(targetRows)}
+        <div class="queue-defect-card__actions">
+          <button
+            type="button"
+            class="queue-button queue-button--subtle"
+            data-result-select-defect="1"
+            data-defect-key="${escapeHtml(defectKey)}"
+            data-testid="defect-detail-button"
+          >内容を見る</button>
+          ${tableButton}
+        </div>
+      </article>
+    `;
+  }
+
+  function renderGroupedResults(findings) {
+    if (!findings.length) {
+      return `
+        <article class="queue-empty-card queue-empty-card--ok">
+          <strong>この日に直す必要がある不備はありません。</strong>
+          <span>問題ない子どもは通常表示では出していません。</span>
+        </article>
+      `;
+    }
+
+    return findings.map((finding) => renderResultCard(finding)).join("");
+  }
+
+  function renderTimelineResults(findings) {
+    return renderGroupedResults(findings);
+  }
+
+  function renderSelectedDefectDetail() {
+    if (!elements?.defectDetailPanel) {
+      return;
+    }
+
+    const findings = getCurrentDefectFindings();
+    const finding = getSelectedDefectFinding(findings);
+    const shell = elements.defectDetailPanel;
+    const heading = shell.querySelector("h2");
+    const lead = shell.querySelector(".panel__lead");
+    if (heading) {
+      heading.textContent = "選択中の不備";
+    }
+    if (lead) {
+      lead.textContent = "通常表示は該当コマだけです。前後は必要なときだけ開きます。";
+    }
+
+    if (!state.analysis) {
+      shell.querySelector(".selected-defect-detail")?.remove();
+      shell.innerHTML += `<div class="queue-detail queue-detail--empty selected-defect-detail">日付カードを選ぶと、この日の不備詳細を表示します。</div>`;
+      return;
+    }
+
+    const existing = shell.querySelector(".selected-defect-detail, .queue-detail");
+    if (!finding) {
+      const emptyHtml = `<div class="queue-detail queue-detail--empty selected-defect-detail">この日に直す必要がある不備はありません。問題ない子どもは表示していません。</div>`;
+      if (existing) {
+        existing.outerHTML = emptyHtml;
+      } else {
+        shell.innerHTML += emptyHtml;
+      }
+      return;
+    }
+
+    const defectKey = createDefectKey(finding);
+    const targetRows = getQueueTargetRows(finding);
+    const slotCount = getFindingSlotCount(finding);
+    const reviewerText = abbreviateReviewerName(finding.reviewerText) || finding.reviewerText || "未入力または対象なし";
+    const detailHtml = `
+      <article class="queue-detail queue-detail--${finding.severity} selected-defect-detail">
+        <div class="queue-detail__status">${escapeHtml(getSeverityMeta(finding.severity).label)}</div>
+        <h3 class="queue-detail__child">${escapeHtml(finding.childName ?? "対象なし")}</h3>
+        <div class="queue-detail__rule">${escapeHtml(finding.shortText ?? finding.ruleName ?? "確認が必要です")}</div>
+        <div class="queue-detail__time">${escapeHtml(finding.time ?? "時刻不明")}</div>
+        <div class="queue-detail__count">${escapeHtml(formatIncidentSlotSummary(1, slotCount, { prefix: "要確認" }))}</div>
+        <div class="queue-detail__action">
+          <strong>確認したいこと</strong>
+          <span>${escapeHtml(finding.action ?? finding.reason ?? "記録内容を確認してください。")}</span>
+        </div>
+        <div class="queue-detail__reviewer">記録者: ${escapeHtml(reviewerText)}</div>
+        ${renderQueueAffectedRows(targetRows, { title: "該当コマ" })}
+        <div class="queue-detail__actions">
+          <button
+            type="button"
+            class="queue-button queue-button--primary"
+            data-defect-detail-table="1"
+            data-defect-key="${escapeHtml(defectKey)}"
+            data-testid="selected-defect-table-button"
+          >表で確認</button>
+        </div>
+        ${renderQueueContextDetails(finding, targetRows)}
+      </article>
+    `;
+
+    if (existing) {
+      existing.outerHTML = detailHtml;
+    } else {
+      shell.innerHTML += detailHtml;
+    }
+  }
+
+  function renderResults() {
+    const allFindings = getAllDisplayFindings();
+    const findings = getDisplayFindings();
+    const slotCount = sumFindingSlotCounts(findings);
+    const counts = buildQueueDefectCountModel(allFindings, findings);
+
+    if (elements?.filtersPanel) {
+      elements.filtersPanel.hidden = true;
+    }
+    if (elements?.resultsPanel) {
+      elements.resultsPanel.hidden = state.reviewMode === "table";
+    }
+    if (elements?.defectDetailPanel) {
+      elements.defectDetailPanel.hidden = state.reviewMode === "table";
+    }
+    if (elements?.resultsCount) {
+      elements.resultsCount.textContent = `表示中 ${escapeHtml(formatIncidentSlotSummary(findings.length, slotCount))}`;
+    }
+    if (elements?.resultsCount) {
+      elements.resultsCount.textContent = formatQueueVisibleCount(counts);
+    }
+    if (elements?.reviewCount) {
+      elements.reviewCount.textContent = formatQueueVisibleCount(counts);
+    }
+    if (elements?.resultsGuide) {
+      elements.resultsGuide.textContent =
+        "直す必要がある子ども・時刻だけを表示しています。問題ない子どもや前後コマは通常表示に出していません。";
+    }
+    if (elements?.downloadCsvButton) {
+      elements.downloadCsvButton.disabled = findings.length === 0;
+    }
+
+    if (state.reviewMode !== "table" && elements?.resultsList) {
+      elements.resultsList.innerHTML = renderGroupedResults(findings);
+      renderSelectedDefectDetail();
+    }
+  }
+
+  function renderQueueReviewCell({ record, intervalIndex, part, reviewMaps }) {
+    const interval = record.intervals[intervalIndex];
+    const slotKey = createReviewSlotKey(record.blockIndex, record.stateRow, record.reviewerRow, intervalIndex);
+    const statusFindings = reviewMaps.slotFindingMap.get(slotKey) ?? [];
+    const reviewerFindings = reviewMaps.reviewerAlertMap.get(slotKey) ?? [];
+    const severity = part === "reviewer" ? getHighestSeverity(reviewerFindings) : getHighestSeverity(statusFindings);
+    const text = part === "reviewer" ? abbreviateReviewerName(interval.reviewerText) : interval.statusText;
+    const selected = state.selectedReviewCell;
+    const isSelected =
+      selected &&
+      selected.blockIndex === record.blockIndex &&
+      selected.stateRow === record.stateRow &&
+      selected.reviewerRow === record.reviewerRow &&
+      selected.intervalIndex === intervalIndex &&
+      selected.part === part;
+
+    return `
+      <button
+        class="queue-table__cell queue-table__cell--${part} ${severity ? `queue-table__cell--${severity}` : ""} ${isSelected ? "queue-table__cell--selected" : ""}"
+        type="button"
+        data-review-slot="${escapeHtml(slotKey)}"
+        data-block-index="${record.blockIndex}"
+        data-state-row="${record.stateRow}"
+        data-reviewer-row="${record.reviewerRow}"
+        data-interval-index="${intervalIndex}"
+        data-part="${part}"
+        data-testid="review-cell"
+        aria-label="${escapeHtml(`${record.childName} ${interval.timeLabel} ${part === "reviewer" ? "記録者" : "状態"} ${text || "空欄"}`)}"
+      >${escapeHtml(text || "")}</button>
+    `;
+  }
+
+  function renderReviewBoard() {
+    if (!elements?.reviewBoard) {
+      return;
+    }
+
+    if (state.reviewMode !== "table") {
+      elements.reviewBoard.innerHTML = `
+        <article class="queue-empty-card">
+          <strong>表は必要な時だけ開きます。</strong>
+          <span>不備カードの「表で確認」を押すと、元表に近い表示で該当セルを確認できます。</span>
+        </article>
+      `;
+      renderSelectedCellDetail(null, { slotFindingMap: new Map(), reviewerAlertMap: new Map() });
+      return;
+    }
+
+    const reviewMaps = buildReviewMaps();
+    const selected = ensureSelectedReviewCell(reviewMaps);
+    renderSheetAlertBanner();
+
+    if (!state.analysis) {
+      elements.reviewBoard.innerHTML = `
+        <article class="queue-empty-card">
+          <strong>まだ表で確認できる日付がありません。</strong>
+          <span>ホームでxlsxを選ぶと全日分チェックが始まります。</span>
+        </article>
+      `;
+      renderSelectedCellDetail(null, reviewMaps);
+      return;
+    }
+
+    const records = state.analysis.records ?? [];
+    if (!records.length) {
+      elements.reviewBoard.innerHTML = `
+        <article class="queue-empty-card">
+          <strong>表の行を読み取れませんでした。</strong>
+          <span>診断・サポートの詳細ログを確認してください。</span>
+        </article>
+      `;
+      renderSelectedCellDetail(null, reviewMaps);
+      return;
+    }
+
+    const recordsByBlock = new Map();
+    for (const record of records) {
+      if (!recordsByBlock.has(record.blockIndex)) {
+        recordsByBlock.set(record.blockIndex, []);
+      }
+      recordsByBlock.get(record.blockIndex).push(record);
+    }
+
+    const selectedFinding = getSelectedDefectFinding(getCurrentDefectFindings());
+    if (elements.reviewTitle) {
+      elements.reviewTitle.textContent = state.selectedSheetName
+        ? `${getSheetDisplayDate(state.selectedSheetName)} 表で確認`
+        : "表で確認";
+    }
+    if (elements.reviewGuide) {
+      elements.reviewGuide.textContent = selectedFinding
+        ? `選択中: ${selectedFinding.childName ?? "対象なし"} / ${selectedFinding.time ?? "時刻不明"}。色付きセルが修正候補です。`
+        : "色付きセルが修正候補です。表では必要に応じて元の位置だけ確認します。";
+    }
+
+    elements.reviewBoard.innerHTML = [...recordsByBlock.entries()]
+      .map(([blockIndex, blockRecords]) => {
+        const columns = blockRecords[0]?.intervals ?? [];
+        const timeHeaders = columns.map((interval) => `<th>${escapeHtml(interval.timeLabel)}</th>`).join("");
+        const rows = blockRecords
+          .map((record) => {
+            const statusCells = record.intervals
+              .map(
+                (_, intervalIndex) =>
+                  `<td>${renderQueueReviewCell({ record, intervalIndex, part: "status", reviewMaps })}</td>`,
+              )
+              .join("");
+            const reviewerCells = record.intervals
+              .map(
+                (_, intervalIndex) =>
+                  `<td>${renderQueueReviewCell({ record, intervalIndex, part: "reviewer", reviewMaps })}</td>`,
+              )
+              .join("");
+
+            return `
+              <tbody>
+                <tr>
+                  <th class="queue-table__child" rowspan="2">${escapeHtml(record.childName)}</th>
+                  <th class="queue-table__row-label">状態</th>
+                  ${statusCells}
+                </tr>
+                <tr>
+                  <th class="queue-table__row-label">記録者</th>
+                  ${reviewerCells}
+                </tr>
+              </tbody>
+            `;
+          })
+          .join("");
+
+        return `
+          <section class="queue-table-block">
+            <div class="queue-table-block__head">
+              <strong>ブロック${escapeHtml(String(blockIndex))}</strong>
+              <span>${escapeHtml(String(blockRecords.length))}人 / ${escapeHtml(columns[0]?.timeLabel ?? "-")} - ${escapeHtml(columns[columns.length - 1]?.timeLabel ?? "-")}</span>
+            </div>
+            <div class="queue-table-scroll">
+              <table class="queue-table">
+                <thead>
+                  <tr>
+                    <th>園児名</th>
+                    <th>行</th>
+                    ${timeHeaders}
+                  </tr>
+                </thead>
+                ${rows}
+              </table>
+            </div>
+          </section>
+        `;
+      })
+      .join("");
+
+    renderSelectedCellDetail(selected, reviewMaps);
+    focusSelectedReviewCell();
+  }
+
+  function renderSelectedCellDetail(selected, reviewMaps) {
+    if (!elements?.cellDetailPanel) {
+      return;
+    }
+
+    if (!selected) {
+      elements.cellDetailPanel.innerHTML = `
+        <div class="queue-cell-detail queue-cell-detail--empty">セルを押すと、このコマの状態と記録者を確認できます。</div>
+      `;
+      return;
+    }
+
+    const record = (state.analysis?.records ?? []).find(
+      (item) =>
+        item.blockIndex === selected.blockIndex &&
+        item.stateRow === selected.stateRow &&
+        item.reviewerRow === selected.reviewerRow,
+    );
+    const interval = record?.intervals?.[selected.intervalIndex];
+    if (!record || !interval) {
+      elements.cellDetailPanel.innerHTML = `
+        <div class="queue-cell-detail queue-cell-detail--empty">このセルの詳細を読み取れませんでした。</div>
+      `;
+      return;
+    }
+
+    const findings = getGroupedFindingsForSelectedCell(selected);
+    const slotKey = createReviewSlotKey(record.blockIndex, record.stateRow, record.reviewerRow, selected.intervalIndex);
+    const rawFindings = reviewMaps?.slotFindingMap?.get(slotKey) ?? [];
+    const displayFindings = findings.length > 0 ? findings : rawFindings.map(buildDisplayFindingFromRaw);
+    const findingHtml = displayFindings.length
+      ? displayFindings
+          .map(
+            (finding) => `
+              <div class="queue-cell-detail__finding queue-cell-detail__finding--${finding.severity}">
+                <span>${escapeHtml(getSeverityMeta(finding.severity).label)}</span>
+                <strong>${escapeHtml(finding.shortText ?? finding.ruleName ?? "確認が必要です")}</strong>
+              </div>
+            `,
+          )
+          .join("")
+      : `<div class="queue-cell-detail__note">このコマ自体は要確認ではありません。</div>`;
+
+    elements.cellDetailPanel.innerHTML = `
+      <aside class="queue-cell-detail">
+        <div class="queue-cell-detail__head">
+          <strong>${escapeHtml(record.childName)} / ${escapeHtml(interval.timeLabel)}</strong>
+          <span>${selected.part === "reviewer" ? "記録者セル" : "状態セル"}</span>
+        </div>
+        <div class="queue-cell-detail__grid">
+          <span>状態</span><strong>${escapeHtml(interval.statusText || "(空欄)")}</strong>
+          <span>記録者</span><strong>${escapeHtml(abbreviateReviewerName(interval.reviewerText) || "未入力")}</strong>
+        </div>
+        <div class="queue-cell-detail__findings">${findingHtml}</div>
+      </aside>
+    `;
+  }
+
+  function renderAll() {
+    applyFieldAdjustmentStyles();
+    document.body?.classList.add("queue-hard-reset");
+    renderRuntimeChrome();
+    renderHomeStateChrome();
+    renderSummary();
+    renderSheetOverview();
+    renderHomePreview();
+    renderReviewBoard();
+    renderResults();
+    renderFieldAdjustmentControls();
+    renderDebug();
+    updateControls();
+  }
+
   function init() {
     elements = getElements();
     state.configLabel = "既定設定";
@@ -15471,6 +17161,26 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     elements?.reviewBackButton?.addEventListener("click", () => {
       setActiveScreen("home", { focus: true });
       setStatus("ホームに戻りました。要確認の日付カードを確認できます。");
+    });
+
+    elements?.changeFileButton?.addEventListener("click", () => {
+      resetReviewSelectionState({ clearAnalysis: true });
+      state.workbook = null;
+      state.sheetAnalyses = new Map();
+      state.sheetOverview = [];
+      state.allSheetLastCheckedAt = "";
+      state.fileReadStatus = "idle";
+      state.checkStatus = "idle";
+      state.appStage = "unloaded";
+      state.sourceLabel = "未選択";
+      state.currentErrorMessage = "";
+      if (elements.fileInput) {
+        elements.fileInput.value = "";
+      }
+      setError("");
+      setStatus("別ファイルを選び直します。xlsxを選ぶと全日分チェックを始めます。");
+      renderAll();
+      elements.fileInput?.click();
     });
 
     if (!state.supportListenersBound) {
