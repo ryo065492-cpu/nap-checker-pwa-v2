@@ -7335,6 +7335,843 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
   }
 }
 
+/* vNext2: minimal operation-first app shell. This layer intentionally hides the
+   accumulated legacy UI and renders a single delegated-action application root. */
+body.vnext2-app,
+body.vnext2-app * {
+  box-sizing: border-box;
+}
+
+body.vnext2-app {
+  min-height: 100dvh;
+  margin: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 10%, rgba(0, 127, 115, 0.16), transparent 30%),
+    linear-gradient(135deg, #fbf7ee 0%, #f1eadf 48%, #eef8f5 100%);
+  color: #251f18;
+  font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  word-break: keep-all;
+}
+
+body.vnext2-app > .app-shell {
+  display: none !important;
+}
+
+#vnext2-root {
+  display: block;
+  width: 100%;
+  height: 100dvh;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+.vnext2-shell {
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 14px;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+
+.vnext2-topbar {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  border: 1px solid rgba(0, 127, 115, 0.14);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 16px 36px rgba(56, 45, 31, 0.08);
+}
+
+.vnext2-brand {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vnext2-logo {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: #00897d;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.vnext2-brand strong {
+  display: block;
+  font-size: clamp(22px, 2.1vw, 30px);
+  line-height: 1.15;
+}
+
+.vnext2-brand span:last-child {
+  display: block;
+  margin-top: 2px;
+  color: #6f6255;
+  font-size: 14px;
+}
+
+.vnext2-topbar__actions,
+.vnext2-card-actions,
+.vnext2-filebar__actions,
+.vnext2-actionbar {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.vnext2-status,
+.vnext2-build,
+.vnext2-count-pill,
+.vnext2-chip,
+.vnext2-severity {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 32px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.vnext2-status {
+  background: #e7f7eb;
+  color: #147e39;
+}
+
+.vnext2-status--checking,
+.vnext2-status--reading {
+  background: #fff2cf;
+  color: #996a00;
+}
+
+.vnext2-status--failed {
+  background: #ffe0dc;
+  color: #bb352d;
+}
+
+.vnext2-build,
+.vnext2-count-pill {
+  background: #e7f4f2;
+  color: #006d63;
+}
+
+.vnext2-main {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.vnext2-screen {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.vnext2-button,
+.vnext2-ghost,
+.vnext2-link-button {
+  min-height: 46px;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.2;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.vnext2-button--primary {
+  background: #00897d;
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(0, 137, 125, 0.2);
+}
+
+.vnext2-button--subtle,
+.vnext2-ghost,
+.vnext2-link-button {
+  background: #e7f2ef;
+  color: #006d63;
+}
+
+.vnext2-link-button {
+  background: transparent;
+  text-decoration: underline;
+  box-shadow: none;
+}
+
+.vnext2-button:focus-visible,
+.vnext2-ghost:focus-visible,
+.vnext2-link-button:focus-visible,
+.vnext2-date-card:focus-visible,
+.vnext2-defect-card:focus-visible,
+.vnext2-table-cell:focus-visible {
+  outline: 4px solid rgba(0, 137, 125, 0.28);
+  outline-offset: 3px;
+}
+
+.vnext2-home--empty,
+.vnext2-home--checking {
+  display: grid;
+  place-items: center;
+}
+
+.vnext2-upload-card,
+.vnext2-progress-card,
+.vnext2-empty-panel,
+.vnext2-support-card,
+.vnext2-detail-card {
+  min-width: 0;
+  border: 1px solid rgba(0, 127, 115, 0.14);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 40px rgba(56, 45, 31, 0.09);
+}
+
+.vnext2-upload-card,
+.vnext2-progress-card {
+  width: min(620px, 100%);
+  padding: clamp(24px, 5vw, 52px);
+  text-align: center;
+}
+
+.vnext2-upload-card h1,
+.vnext2-progress-card h1,
+.vnext2-page-head h1,
+.vnext2-detail-card h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.16;
+}
+
+.vnext2-upload-card p,
+.vnext2-progress-card p,
+.vnext2-section-head p,
+.vnext2-defect-card p,
+.vnext2-support-card p {
+  color: #665b51;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.vnext2-upload-card__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 18px;
+  border-radius: 22px;
+  background: #e7f4f2;
+  color: #006d63;
+  font-weight: 900;
+}
+
+.vnext2-build-note {
+  display: block;
+  margin-top: 16px;
+  color: #75695d;
+  font-size: 14px;
+}
+
+.vnext2-progress {
+  height: 14px;
+  margin: 22px 0 12px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #eee4d6;
+}
+
+.vnext2-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #00897d, #61c5b7);
+}
+
+.vnext2-home--ready {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 14px;
+}
+
+.vnext2-filebar {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(180px, 0.7fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(0, 127, 115, 0.14);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.vnext2-filebar > div {
+  min-width: 0;
+}
+
+.vnext2-filebar span {
+  display: block;
+  color: #6f6255;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.vnext2-filebar strong {
+  display: block;
+  min-width: 0;
+  margin-top: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 17px;
+}
+
+.vnext2-summary-grid {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.vnext2-summary-card {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid rgba(56, 45, 31, 0.08);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.vnext2-summary-card span,
+.vnext2-summary-card small {
+  display: block;
+  color: #6f6255;
+  font-weight: 800;
+}
+
+.vnext2-summary-card strong {
+  display: block;
+  margin: 6px 0;
+  font-size: clamp(30px, 4.2vw, 44px);
+  line-height: 1.05;
+}
+
+.vnext2-summary-card--red strong,
+.vnext2-date-card--red strong,
+.vnext2-defect-card--red .vnext2-defect-card__main strong {
+  color: #cc3a31;
+}
+
+.vnext2-summary-card--yellow strong {
+  color: #bd7a12;
+}
+
+.vnext2-summary-card--ok strong {
+  color: #17823d;
+}
+
+.vnext2-date-section {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  padding: 18px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 40px rgba(56, 45, 31, 0.08);
+}
+
+.vnext2-section-head,
+.vnext2-page-head {
+  min-width: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.vnext2-section-head h2,
+.vnext2-page-head h1 {
+  margin: 0;
+}
+
+.vnext2-date-list,
+.vnext2-scroll-list {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vnext2-date-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  align-content: start;
+  gap: 14px;
+  padding: 2px 4px 12px 2px;
+}
+
+.vnext2-date-card {
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  min-height: 220px;
+  border: 2px solid #f0a8a2;
+  border-radius: 24px;
+  padding: 18px;
+  background: #fffaf8;
+  color: #251f18;
+  text-align: left;
+  cursor: pointer;
+}
+
+.vnext2-date-card--yellow {
+  border-color: #e2b45b;
+  background: #fffaf0;
+}
+
+.vnext2-date-card--ok {
+  border-color: #9acfc4;
+  background: #f6fffc;
+}
+
+.vnext2-date-card__status,
+.vnext2-severity--red {
+  background: #d63c31;
+  color: #fff;
+}
+
+.vnext2-date-card--yellow .vnext2-date-card__status,
+.vnext2-severity--yellow {
+  background: #bd7a12;
+  color: #fff;
+}
+
+.vnext2-date-card__status {
+  width: fit-content;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 900;
+}
+
+.vnext2-date-card strong {
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.vnext2-date-card__counts,
+.vnext2-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vnext2-date-card__counts span,
+.vnext2-chip,
+.vnext2-reviewer {
+  background: rgba(76, 66, 56, 0.08);
+  color: #4d4338;
+}
+
+.vnext2-date-card__action {
+  align-self: end;
+  width: fit-content;
+  min-height: 36px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #e1f0ed;
+  color: #006d63;
+  font-weight: 900;
+}
+
+.vnext2-day-queue,
+.vnext2-detail {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 12px;
+}
+
+.vnext2-actionbar {
+  justify-content: flex-start;
+}
+
+.vnext2-defect-list {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding-right: 6px;
+}
+
+.vnext2-defect-card {
+  min-width: 0;
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 2px solid #f0a8a2;
+  border-radius: 24px;
+  background: rgba(255, 250, 248, 0.94);
+  box-shadow: 0 12px 28px rgba(56, 45, 31, 0.08);
+  cursor: pointer;
+}
+
+.vnext2-defect-card--yellow {
+  border-color: #e2b45b;
+  background: rgba(255, 250, 240, 0.96);
+}
+
+.vnext2-defect-card.is-selected {
+  box-shadow: 0 0 0 5px rgba(0, 137, 125, 0.16);
+}
+
+.vnext2-defect-card__top,
+.vnext2-defect-card__main,
+.vnext2-detail-card__top {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.vnext2-defect-card__top strong,
+.vnext2-defect-card__main strong,
+.vnext2-detail-card h2 {
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.vnext2-affected {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.vnext2-affected > span {
+  font-weight: 900;
+  color: #006d63;
+}
+
+.vnext2-affected__row,
+.vnext2-context__row {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(56px, auto) minmax(44px, auto) minmax(120px, 1fr);
+  gap: 8px;
+  align-items: center;
+  font-size: 15px;
+}
+
+.vnext2-detail-card {
+  min-height: 0;
+  overflow: auto;
+  padding: clamp(18px, 3vw, 28px);
+}
+
+.vnext2-confirm-box {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.vnext2-time {
+  color: #006d63;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.vnext2-context {
+  margin-top: 14px;
+  border-top: 1px solid rgba(56, 45, 31, 0.12);
+  padding-top: 12px;
+}
+
+.vnext2-context summary {
+  cursor: pointer;
+  color: #006d63;
+  font-weight: 900;
+}
+
+.vnext2-context__body {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.vnext2-context__row.is-target {
+  border-radius: 12px;
+  background: #ffe7e4;
+  padding: 8px;
+}
+
+.vnext2-table-focus {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
+}
+
+.vnext2-table-focus__head {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.vnext2-table-focus__head h1,
+.vnext2-table-focus__head p {
+  margin: 0;
+}
+
+.vnext2-table-workspace {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.vnext2-table-scroll {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  border-radius: 22px;
+  background: #fff;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vnext2-table-block {
+  min-width: max-content;
+  padding: 12px;
+}
+
+.vnext2-table-block__head {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.vnext2-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: max-content;
+  font-size: 15px;
+}
+
+.vnext2-table th,
+.vnext2-table td {
+  border: 1px solid #e6ddd1;
+  padding: 0;
+  background: #fff;
+}
+
+.vnext2-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 8px;
+  background: #eef6f4;
+  white-space: nowrap;
+}
+
+.vnext2-table-child {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  min-width: 124px;
+}
+
+.vnext2-table-row-label {
+  min-width: 64px;
+}
+
+.vnext2-table-cell {
+  display: grid;
+  place-items: center;
+  min-width: var(--review-cell-width, 54px);
+  min-height: var(--review-row-height, 38px);
+  border: 0;
+  background: transparent;
+  font-size: calc(14px * var(--review-font-scale, 1));
+  cursor: pointer;
+}
+
+.vnext2-table-cell--red {
+  background: var(--review-red-end, #ffe7e4);
+  color: #9f241d;
+  font-weight: 900;
+}
+
+.vnext2-table-cell--yellow {
+  background: var(--review-yellow-end, #fff3d6);
+  color: #8b5d00;
+  font-weight: 900;
+}
+
+.vnext2-table-cell.is-selected {
+  outline: 4px solid #00897d;
+  outline-offset: -4px;
+}
+
+.vnext2-cell-detail {
+  min-width: 0;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.vnext2-cell-detail div {
+  display: flex;
+  gap: 6px;
+}
+
+.vnext2-support {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
+}
+
+.vnext2-support-card {
+  min-height: 0;
+  overflow: auto;
+  padding: 22px;
+}
+
+.vnext2-support-card ol {
+  line-height: 1.8;
+}
+
+.vnext2-diagnostic-text {
+  width: 100%;
+  min-height: 180px;
+  margin-top: 12px;
+  border: 1px solid #d8cdc0;
+  border-radius: 16px;
+  padding: 12px;
+  font: 14px/1.5 Consolas, "Yu Gothic", monospace;
+  resize: vertical;
+}
+
+.vnext2-support-message {
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: #e7f4f2;
+  color: #006d63;
+  font-weight: 900;
+}
+
+.vnext2-admin-details {
+  margin-top: 16px;
+  border-top: 1px solid rgba(56, 45, 31, 0.12);
+  padding-top: 14px;
+}
+
+@media (max-width: 1100px) {
+  .vnext2-filebar {
+    grid-template-columns: 1fr;
+  }
+
+  .vnext2-summary-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  body.vnext2-app {
+    overflow: auto;
+  }
+
+  #vnext2-root {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .vnext2-shell {
+    min-height: 100dvh;
+  }
+
+  .vnext2-topbar,
+  .vnext2-section-head,
+  .vnext2-page-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .vnext2-topbar__actions,
+  .vnext2-card-actions,
+  .vnext2-filebar__actions,
+  .vnext2-actionbar {
+    width: 100%;
+  }
+
+  .vnext2-button,
+  .vnext2-ghost,
+  .vnext2-link-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .vnext2-summary-grid,
+  .vnext2-date-list {
+    grid-template-columns: 1fr;
+  }
+
+  .vnext2-home--ready,
+  .vnext2-day-queue,
+  .vnext2-detail,
+  .vnext2-table-focus,
+  .vnext2-support {
+    height: auto;
+    overflow: visible;
+  }
+
+  .vnext2-date-section,
+  .vnext2-date-list,
+  .vnext2-scroll-list,
+  .vnext2-detail-card,
+  .vnext2-support-card {
+    overflow: visible;
+  }
+
+  .vnext2-affected__row,
+  .vnext2-context__row {
+    grid-template-columns: 1fr;
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home queue-hard-reset" data-home-state="empty">
@@ -7356,8 +8193,8 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-17-2018</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-17 20:18</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-17-2122</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-17 21:22</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -7926,7 +8763,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-17-2018","buildLabel":"2026-05-17 20:18","buildId":"2026-05-17-201844","builtAtIso":"2026-05-17T11:18:44.210Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-17-2122","buildLabel":"2026-05-17 21:22","buildId":"2026-05-17-212259","builtAtIso":"2026-05-17T12:22:59.124Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -18540,17 +19377,934 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     `;
   }
 
+  // vNext2 UI: the active, minimal app shell.
+  // Keep the analysis and rule engine intact; only screen state, display data,
+  // delegated actions, and scroll-safe rendering live in this layer.
+  const uiVNext2State = {
+    screen: "home",
+    fileState: "empty",
+    selectedFileId: null,
+    selectedDayId: null,
+    selectedDefectId: null,
+    selectedCellId: null,
+    previousScreen: "home",
+    error: null,
+    supportMessage: "",
+  };
+
+  function getVNext2Root() {
+    let root = document.querySelector("#vnext2-root");
+    if (!root) {
+      root = document.createElement("div");
+      root.id = "vnext2-root";
+      document.body?.appendChild(root);
+    }
+    return root;
+  }
+
+  function getVNext2FileState() {
+    if (state.fileReadStatus === "failed" || state.checkStatus === "failed") {
+      return "failed";
+    }
+    if (state.fileReadStatus === "reading") {
+      return "reading";
+    }
+    if (state.allSheetChecking || state.checkStatus === "checking") {
+      return "checking";
+    }
+    if (state.workbook?.sheets?.length) {
+      return "ready";
+    }
+    return "empty";
+  }
+
+  function syncVNext2State() {
+    uiVNext2State.fileState = getVNext2FileState();
+    uiVNext2State.error = state.currentErrorMessage || state.lastErrorMessage || null;
+
+    if (!state.workbook?.sheets?.length && uiVNext2State.screen !== "support") {
+      uiVNext2State.screen = "home";
+      uiVNext2State.selectedDayId = null;
+      uiVNext2State.selectedDefectId = null;
+      uiVNext2State.selectedCellId = null;
+      return;
+    }
+
+    if (
+      uiVNext2State.selectedDayId &&
+      !state.sheetAnalyses.has(uiVNext2State.selectedDayId)
+    ) {
+      uiVNext2State.screen = "home";
+      uiVNext2State.selectedDayId = null;
+      uiVNext2State.selectedDefectId = null;
+      uiVNext2State.selectedCellId = null;
+      return;
+    }
+
+    if (
+      ["dayQueue", "defectDetail", "tableFocus"].includes(uiVNext2State.screen) &&
+      uiVNext2State.selectedDayId
+    ) {
+      ensureVNext2DayLoaded(uiVNext2State.selectedDayId);
+    }
+  }
+
+  function getVNext2DayItems() {
+    return state.sheetOverview ?? [];
+  }
+
+  function getVNext2DayItem(dayId) {
+    return getVNext2DayItems().find((item) => item.sheetName === dayId) ?? null;
+  }
+
+  function ensureVNext2DayLoaded(dayId) {
+    if (!dayId) {
+      return false;
+    }
+    const result = state.sheetAnalyses.get(dayId);
+    if (!result) {
+      return false;
+    }
+
+    if (state.selectedSheetName !== dayId || state.analysis !== result.analysis) {
+      setCurrentSheetAnalysisFromResult(dayId, result);
+    }
+    return true;
+  }
+
+  function getVNext2DefectRecords(dayId = uiVNext2State.selectedDayId) {
+    if (!dayId || !ensureVNext2DayLoaded(dayId)) {
+      return [];
+    }
+
+    const result = state.sheetAnalyses.get(dayId);
+    if (result?.status === "error") {
+      return [
+        {
+          id: `${dayId}::sheet-error`,
+          index: 0,
+          finding: {
+            severity: "red",
+            ruleKey: "sheetError",
+            ruleName: "シート解析エラー",
+            shortText: "シートを解析できませんでした",
+            childName: "この日付",
+            time: getSheetDisplayDate(dayId),
+            reason: result.error?.message ?? "シート構造を確認してください。",
+            action: "診断・サポートの詳細ログを確認してください。",
+            reviewerText: "対象なし",
+            contextRows: [],
+            count: 1,
+          },
+        },
+      ];
+    }
+
+    return getAllDisplayFindings().map((finding, index) => ({
+      id: `${dayId}::${index}::${createDefectKey(finding)}`,
+      index,
+      finding,
+    }));
+  }
+
+  function getVNext2DefectRecord(defectId = uiVNext2State.selectedDefectId) {
+    return getVNext2DefectRecords().find((record) => record.id === defectId) ?? null;
+  }
+
+  function getVNext2CountModel(dayId = uiVNext2State.selectedDayId) {
+    const records = getVNext2DefectRecords(dayId);
+    const findings = records.map((record) => record.finding);
+    const model = buildQueueDefectCountModel(findings, findings);
+    return {
+      ...model,
+      visibleDefectCount: records.length,
+      totalDefectCount: records.length,
+      visibleCellCount: sumFindingSlotCounts(findings),
+    };
+  }
+
+  function getVNext2DefectSlotRows(finding) {
+    return getVNextTargetRows(finding).map((row) => ({
+      ...row,
+      reviewer: row.reviewer || "未入力",
+      status: row.status || "(空欄)",
+    }));
+  }
+
+  function getVNext2DefectContextRows(finding) {
+    return getVNextContextRows(finding).map((row) => ({
+      ...row,
+      reviewer: row.reviewer || "未入力",
+      status: row.status || "(空欄)",
+    }));
+  }
+
+  function resetForNewFile() {
+    resetReviewSelectionState({ clearAnalysis: true });
+    state.workbook = null;
+    state.sheetAnalyses = new Map();
+    state.sheetOverview = [];
+    state.allSheetLastCheckedAt = "";
+    state.allSheetChecking = false;
+    state.allSheetProgress = { current: 0, total: 0, label: "" };
+    state.fileReadStatus = "idle";
+    state.checkStatus = "idle";
+    state.appStage = "unloaded";
+    state.sourceLabel = "未選択";
+    state.currentErrorMessage = "";
+    state.lastErrorMessage = "";
+    state.lastErrorStage = "";
+    uiVNext2State.screen = "home";
+    uiVNext2State.fileState = "empty";
+    uiVNext2State.selectedFileId = null;
+    uiVNext2State.selectedDayId = null;
+    uiVNext2State.selectedDefectId = null;
+    uiVNext2State.selectedCellId = null;
+    uiVNext2State.error = null;
+    if (elements?.fileInput) {
+      elements.fileInput.value = "";
+    }
+    setError("");
+  }
+
+  function openHome() {
+    uiVNext2State.screen = "home";
+    uiVNext2State.selectedDayId = null;
+    uiVNext2State.selectedDefectId = null;
+    uiVNext2State.selectedCellId = null;
+    resetReviewSelectionState();
+    setActiveScreen("home", { focus: false });
+    setStatus("ホームへ戻りました。別ファイルを読み込む場合は「別ファイルを読み込む」を押してください。");
+    renderAll();
+  }
+
+  function openDayQueue(dayId) {
+    if (!ensureVNext2DayLoaded(dayId)) {
+      setError("この日付の解析結果を表示できません。全日分を再チェックしてください。");
+      setStatus("日付カードの表示に失敗しました。");
+      uiVNext2State.screen = "home";
+      renderAll();
+      return;
+    }
+
+    uiVNext2State.screen = "dayQueue";
+    uiVNext2State.selectedDayId = dayId;
+    uiVNext2State.selectedDefectId = null;
+    uiVNext2State.selectedCellId = null;
+    state.selectedDefectKey = "";
+    state.reviewMode = "defects";
+    setStatus(`「${dayId}」の不備一覧を表示しました。`);
+    renderAll();
+  }
+
+  function openDefectDetail(defectId) {
+    const record = getVNext2DefectRecords().find((item) => item.id === defectId);
+    if (!record) {
+      setStatus("不備カードを表示できませんでした。日付一覧から選び直してください。");
+      uiVNext2State.screen = "dayQueue";
+      renderAll();
+      return;
+    }
+
+    uiVNext2State.screen = "defectDetail";
+    uiVNext2State.selectedDefectId = defectId;
+    uiVNext2State.selectedCellId = null;
+    state.selectedDefectKey = createDefectKey(record.finding);
+    setStatus("選択した不備の詳細を表示しました。");
+    renderAll();
+  }
+
+  function openTableFocus(defectId = uiVNext2State.selectedDefectId) {
+    const record = getVNext2DefectRecords().find((item) => item.id === defectId);
+    if (!record) {
+      setStatus("表で確認する不備を見つけられませんでした。");
+      uiVNext2State.screen = "dayQueue";
+      renderAll();
+      return;
+    }
+
+    uiVNext2State.screen = "tableFocus";
+    uiVNext2State.selectedDefectId = record.id;
+    state.selectedDefectKey = createDefectKey(record.finding);
+    const reviewTarget = getReviewTargetForFinding(record.finding);
+    if (reviewTarget) {
+      state.selectedReviewCell = {
+        blockIndex: reviewTarget.blockIndex,
+        stateRow: reviewTarget.stateRow,
+        reviewerRow: reviewTarget.reviewerRow,
+        intervalIndex: reviewTarget.intervalIndex,
+        part: reviewTarget.part === "reviewer" ? "reviewer" : "status",
+      };
+      uiVNext2State.selectedCellId = createReviewSlotKey(
+        reviewTarget.blockIndex,
+        reviewTarget.stateRow,
+        reviewTarget.reviewerRow,
+        reviewTarget.intervalIndex,
+      );
+    }
+    setStatus("表で確認する画面を開きました。");
+    renderAll();
+    focusSelectedReviewCell();
+  }
+
+  function openSupport() {
+    uiVNext2State.previousScreen = uiVNext2State.screen === "support" ? "home" : uiVNext2State.screen;
+    uiVNext2State.screen = "support";
+    setActiveScreen("support", { focus: false });
+    setStatus("困ったとき / 診断・サポートを表示しました。");
+    renderAll();
+  }
+
+  function returnFromSupport() {
+    uiVNext2State.screen = uiVNext2State.previousScreen || "home";
+    setStatus("前の画面へ戻りました。");
+    renderAll();
+  }
+
+  function returnFromTableFocus() {
+    uiVNext2State.screen = "dayQueue";
+    setStatus("不備一覧へ戻りました。");
+    renderAll();
+  }
+
+  function startFilePick() {
+    resetForNewFile();
+    setStatus("別ファイルを読み込みます。xlsxを選んでください。");
+    renderAll();
+    elements?.fileInput?.click();
+  }
+
+  async function startFullCheck() {
+    if (!state.workbook?.sheets?.length) {
+      setError("先にxlsxファイルを選んでください。");
+      setStatus("全日分チェックは、xlsxを選んでから実行できます。");
+      renderAll();
+      return;
+    }
+
+    try {
+      uiVNext2State.screen = "home";
+      uiVNext2State.fileState = "checking";
+      renderAll();
+      await handleAnalyzeAllSheets({ automatic: false });
+      renderAll();
+    } catch (error) {
+      setError(error.message);
+      setStatus("全日分チェック中にエラーが発生しました。");
+      renderAll();
+    }
+  }
+
+  async function copyVNext2Diagnostics() {
+    const report = buildDiagnosticCopyText(false);
+    state.lastCopiedDiagnosticsText = report;
+    try {
+      if (!navigator.clipboard?.writeText || !globalThis.isSecureContext) {
+        throw new Error("clipboard-unavailable");
+      }
+      await navigator.clipboard.writeText(report);
+      uiVNext2State.supportMessage = "診断情報をコピーしました。";
+      setStatus("診断情報をコピーしました。");
+    } catch (error) {
+      uiVNext2State.supportMessage = "自動コピーできませんでした。下の診断情報を長押ししてコピーしてください。";
+      setStatus("診断情報を手動コピーできる状態にしました。");
+    }
+    renderAll();
+  }
+
+  function renderVNext2StatusPill() {
+    const stateLabel = {
+      empty: "未読込",
+      reading: "読込中",
+      checking: "確認中",
+      ready: "チェック完了",
+      failed: "確認が必要",
+    }[uiVNext2State.fileState] ?? "未読込";
+    return `<span class="vnext2-status vnext2-status--${escapeHtml(uiVNext2State.fileState)}">${escapeHtml(stateLabel)}</span>`;
+  }
+
+  function renderVNext2Topbar() {
+    const buildInfo = state.buildInfo ?? APP_BUILD_INFO;
+    return `
+      <header class="vnext2-topbar">
+        <div class="vnext2-brand">
+          <span class="vnext2-logo">午</span>
+          <div>
+            <strong>午睡チェック</strong>
+            <span>直す必要がある記録だけを確認します</span>
+          </div>
+        </div>
+        <div class="vnext2-topbar__actions">
+          ${renderVNext2StatusPill()}
+          <span class="vnext2-build" id="vnext2-build-version">${escapeHtml(buildInfo.versionLabel ?? "確認版 -")}</span>
+          <button type="button" class="vnext2-ghost" data-action="open-support" data-testid="vnext2-support-button">困ったとき</button>
+        </div>
+      </header>
+    `;
+  }
+
+  function renderVNext2ActionBar(options = {}) {
+    const showDayBack = Boolean(options.dayBack);
+    return `
+      <div class="vnext2-actionbar">
+        <button type="button" class="vnext2-button vnext2-button--subtle" data-action="open-home" data-testid="vnext2-open-home">ホームへ戻る</button>
+        ${showDayBack ? `<button type="button" class="vnext2-button vnext2-button--subtle" data-action="open-day" data-day-id="${escapeHtml(uiVNext2State.selectedDayId ?? "")}" data-testid="vnext2-back-day">不備一覧へ戻る</button>` : ""}
+      </div>
+    `;
+  }
+
+  function renderVNext2EmptyHome() {
+    return `
+      <section class="vnext2-screen vnext2-home vnext2-home--empty" data-testid="vnext2-home-empty">
+        <article class="vnext2-upload-card">
+          <div class="vnext2-upload-card__icon">xlsx</div>
+          <h1>午睡記録ファイルを選ぶ</h1>
+          <p>xlsxを選ぶと、全日分を自動チェックして、直す必要がある日付だけを表示します。</p>
+          <button type="button" class="vnext2-button vnext2-button--primary" data-action="pick-file" data-testid="vnext2-pick-file">ファイルを選ぶ</button>
+          <button type="button" class="vnext2-link-button" data-action="open-support">困ったときはこちら</button>
+          <span class="vnext2-build-note">${escapeHtml((state.buildInfo ?? APP_BUILD_INFO).versionLabel ?? "確認版 -")}</span>
+        </article>
+      </section>
+    `;
+  }
+
+  function renderVNext2CheckingHome() {
+    const progress = state.allSheetProgress ?? { current: 0, total: 0, label: "" };
+    const total = Math.max(1, progress.total || state.workbook?.sheets?.length || 1);
+    const current = Math.min(total, Math.max(0, progress.current || 0));
+    const percent = Math.round((current / total) * 100);
+    return `
+      <section class="vnext2-screen vnext2-home vnext2-home--checking" data-testid="vnext2-home-checking">
+        <article class="vnext2-progress-card">
+          <h1>全日分を確認しています</h1>
+          <p>${escapeHtml(progress.label ? `処理中: ${progress.label}` : "xlsxを読み込み、各シートを確認しています。")}</p>
+          <div class="vnext2-progress" aria-label="チェック進捗">
+            <span style="width: ${percent}%"></span>
+          </div>
+          <strong>${escapeHtml(String(current))} / ${escapeHtml(String(total))} シート</strong>
+        </article>
+      </section>
+    `;
+  }
+
+  function renderVNext2SummaryCards(stats) {
+    const cards = [
+      { label: "要確認日付", value: `${stats.issueDays}日`, tone: stats.issueDays > 0 ? "red" : "ok" },
+      { label: "赤", value: `${stats.redIncidents}件`, sub: `該当${stats.redCells}コマ`, tone: "red" },
+      { label: "黄", value: `${stats.yellowIncidents}件`, sub: `該当${stats.yellowCells}コマ`, tone: "yellow" },
+      { label: "OK", value: `${stats.okDays}日`, tone: "ok" },
+    ];
+    return `
+      <div class="vnext2-summary-grid" data-testid="vnext2-summary-grid">
+        ${cards.map((card) => `
+          <article class="vnext2-summary-card vnext2-summary-card--${card.tone}">
+            <span>${escapeHtml(card.label)}</span>
+            <strong>${escapeHtml(card.value)}</strong>
+            ${card.sub ? `<small>${escapeHtml(card.sub)}</small>` : ""}
+          </article>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  function renderVNext2DateCard(item) {
+    const meta = getQueueStatusMeta(item);
+    const reasons = getQueueReasonLabels(item, 2);
+    return `
+      <button
+        type="button"
+        class="vnext2-date-card vnext2-date-card--${meta.tone}"
+        data-action="open-day"
+        data-day-id="${escapeHtml(item.sheetName)}"
+        data-testid="vnext2-date-card"
+      >
+        <span class="vnext2-date-card__status">${escapeHtml(meta.label)}</span>
+        <strong>${escapeHtml(item.dateLabel)}</strong>
+        <span>${escapeHtml(getWeekdayLabel(item.dateLabel))}</span>
+        <div class="vnext2-date-card__counts">
+          <span>赤 ${escapeHtml(formatIncidentSlotSummary(item.redIncidents ?? 0, item.redCells ?? 0))}</span>
+          <span>黄 ${escapeHtml(formatIncidentCount(item.yellowIncidents ?? 0))}</span>
+        </div>
+        <div class="vnext2-chip-row">
+          ${reasons.length ? reasons.map((label) => `<span class="vnext2-chip">${escapeHtml(label)}</span>`).join("") : `<span class="vnext2-chip vnext2-chip--muted">理由なし</span>`}
+        </div>
+        <span class="vnext2-date-card__action">確認する</span>
+      </button>
+    `;
+  }
+
+  function renderVNext2ReadyHome() {
+    const stats = getDashboardStats();
+    const days = getVNext2DayItems();
+    const fileLabel = state.sourceLabel || "未選択";
+    const lastChecked = state.allSheetLastCheckedAt ? formatSupportDateTime(state.allSheetLastCheckedAt) : "未実行";
+    return `
+      <section class="vnext2-screen vnext2-home vnext2-home--ready" data-testid="vnext2-home-ready">
+        <div class="vnext2-filebar">
+          <div>
+            <span>ファイル</span>
+            <strong>${escapeHtml(fileLabel)}</strong>
+          </div>
+          <div>
+            <span>最終チェック</span>
+            <strong>${escapeHtml(lastChecked)}</strong>
+          </div>
+          <div class="vnext2-filebar__actions">
+            <button type="button" class="vnext2-button vnext2-button--primary" data-action="recheck" data-testid="vnext2-recheck">全日分を再チェック</button>
+            <button type="button" class="vnext2-button vnext2-button--subtle" data-action="pick-file" data-testid="vnext2-change-file">別ファイルを読み込む</button>
+          </div>
+        </div>
+        ${renderVNext2SummaryCards(stats)}
+        <section class="vnext2-date-section">
+          <div class="vnext2-section-head">
+            <div>
+              <h2>要確認の日付</h2>
+              <p>問題ない日付と子どもの詳細は表示せず、直す必要がある日付だけを出しています。</p>
+            </div>
+            <span class="vnext2-count-pill">要確認 ${escapeHtml(String(stats.issueDays))}日 / OK ${escapeHtml(String(stats.okDays))}日</span>
+          </div>
+          <div class="vnext2-date-list" data-testid="vnext2-day-list">
+            ${days.length ? days.map(renderVNext2DateCard).join("") : `
+              <article class="vnext2-empty-panel">
+                <strong>直す必要がある日付は見つかりませんでした。</strong>
+                <span>OK ${escapeHtml(String(stats.okDays))}日。必要なら別ファイルを読み込めます。</span>
+              </article>
+            `}
+          </div>
+        </section>
+      </section>
+    `;
+  }
+
+  function renderVNext2HomeScreen() {
+    if (uiVNext2State.fileState === "reading" || uiVNext2State.fileState === "checking") {
+      return renderVNext2CheckingHome();
+    }
+    if (uiVNext2State.fileState === "ready" || state.workbook?.sheets?.length) {
+      return renderVNext2ReadyHome();
+    }
+    return renderVNext2EmptyHome();
+  }
+
+  function renderVNext2DefectCard(record) {
+    const finding = record.finding;
+    const slotCount = getVNext2SlotCount(finding);
+    const rows = getVNext2DefectSlotRows(finding);
+    const selected = record.id === uiVNext2State.selectedDefectId;
+    return `
+      <article
+        class="vnext2-defect-card vnext2-defect-card--${escapeHtml(finding.severity)} ${selected ? "is-selected" : ""}"
+        data-action="open-defect"
+        data-defect-id="${escapeHtml(record.id)}"
+        data-testid="vnext2-defect-card"
+        tabindex="0"
+      >
+        <div class="vnext2-defect-card__top">
+          <span class="vnext2-severity vnext2-severity--${escapeHtml(finding.severity)}">${escapeHtml(getSeverityMeta(finding.severity).label)}</span>
+          <strong>${escapeHtml(getVNextDefectTitle(finding))}</strong>
+          <span>${escapeHtml(formatVNextIncidentSlot(1, slotCount))}</span>
+        </div>
+        <div class="vnext2-defect-card__main">
+          <strong>${escapeHtml(finding.childName ?? "対象なし")}</strong>
+          <span>${escapeHtml(finding.time ?? "時刻不明")}</span>
+        </div>
+        <p>${escapeHtml(getVNextDefectMessage(finding))}</p>
+        <span class="vnext2-reviewer">記録者: ${escapeHtml(getVNextReviewerText(finding))}</span>
+        ${renderVNext2AffectedRows(rows)}
+        <div class="vnext2-card-actions">
+          <button type="button" class="vnext2-button vnext2-button--subtle" data-action="open-defect" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-defect">内容を見る</button>
+          <button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-table">表で確認</button>
+        </div>
+      </article>
+    `;
+  }
+
+  function renderVNext2AffectedRows(rows) {
+    return `
+      <div class="vnext2-affected" data-testid="vnext2-affected-slots">
+        <span>該当コマ</span>
+        ${rows.length ? rows.map((row) => `
+          <div class="vnext2-affected__row">
+            <strong>${escapeHtml(row.time ?? "-")}</strong>
+            <span>${escapeHtml(row.status ?? "(空欄)")}</span>
+            <span>記録者: ${escapeHtml(row.reviewer ?? "未入力")}</span>
+          </div>
+        `).join("") : `<div class="vnext2-affected__row"><span>表で位置を確認してください</span></div>`}
+      </div>
+    `;
+  }
+
+  function renderVNext2DayQueueScreen() {
+    const dayId = uiVNext2State.selectedDayId;
+    const day = getVNext2DayItem(dayId) ?? { dateLabel: getSheetDisplayDate(dayId), sheetName: dayId };
+    const records = getVNext2DefectRecords(dayId);
+    const model = getVNext2CountModel(dayId);
+    return `
+      <section class="vnext2-screen vnext2-day-queue" data-testid="vnext2-day-queue">
+        ${renderVNext2ActionBar()}
+        <div class="vnext2-page-head">
+          <div>
+            <span>この日の不備</span>
+            <h1>${escapeHtml(day.dateLabel ?? dayId ?? "日付未選択")}</h1>
+          </div>
+          <strong class="vnext2-count-pill" data-total-defects="${escapeHtml(String(model.totalDefectCount))}" data-visible-defects="${escapeHtml(String(model.visibleDefectCount))}">
+            表示中 ${escapeHtml(String(model.visibleDefectCount))}件 / 全${escapeHtml(String(model.totalDefectCount))}件
+          </strong>
+        </div>
+        <div class="vnext2-scroll-list vnext2-defect-list" data-testid="vnext2-defect-list">
+          ${records.length ? records.map(renderVNext2DefectCard).join("") : `
+            <article class="vnext2-empty-panel">
+              <strong>この日に直す必要がある不備はありません。</strong>
+              <span>問題ない子どもや問題ないコマは通常表示していません。</span>
+            </article>
+          `}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderVNext2DetailContext(finding) {
+    const rows = getVNext2DefectContextRows(finding);
+    return `
+      <details class="vnext2-context" data-testid="vnext2-context-details">
+        <summary>詳しく見る</summary>
+        <div class="vnext2-context__body">
+          <strong>前後の参考情報</strong>
+          ${rows.length ? rows.map((row) => `
+            <div class="vnext2-context__row ${row.marker === "対象" ? "is-target" : ""}">
+              <span>${escapeHtml(row.marker ?? "参考")}</span>
+              <strong>${escapeHtml(row.time ?? "-")}</strong>
+              <span>${escapeHtml(row.status ?? "(空欄)")}</span>
+              <span>記録者: ${escapeHtml(row.reviewer ?? "未入力")}</span>
+            </div>
+          `).join("") : `<span>前後の参考情報は取得できませんでした。</span>`}
+        </div>
+      </details>
+    `;
+  }
+
+  function renderVNext2DefectDetailScreen() {
+    const record = getVNext2DefectRecord();
+    if (!record) {
+      return `
+        <section class="vnext2-screen vnext2-detail" data-testid="vnext2-defect-detail">
+          ${renderVNext2ActionBar({ dayBack: true })}
+          <article class="vnext2-empty-panel">不備を選び直してください。</article>
+        </section>
+      `;
+    }
+    const finding = record.finding;
+    const rows = getVNext2DefectSlotRows(finding);
+    return `
+      <section class="vnext2-screen vnext2-detail" data-testid="vnext2-defect-detail">
+        ${renderVNext2ActionBar({ dayBack: true })}
+        <article class="vnext2-detail-card vnext2-detail-card--${escapeHtml(finding.severity)}">
+          <div class="vnext2-detail-card__top">
+            <span class="vnext2-severity vnext2-severity--${escapeHtml(finding.severity)}">${escapeHtml(getSeverityMeta(finding.severity).label)}</span>
+            <span>${escapeHtml(formatVNextIncidentSlot(1, getVNext2SlotCount(finding)))}</span>
+          </div>
+          <h1>${escapeHtml(finding.childName ?? "対象なし")}</h1>
+          <h2>${escapeHtml(getVNextDefectTitle(finding))}</h2>
+          <p class="vnext2-time">${escapeHtml(finding.time ?? "時刻不明")}</p>
+          <div class="vnext2-confirm-box">
+            <strong>確認したいこと</strong>
+            <span>${escapeHtml(getVNextDefectMessage(finding))}</span>
+          </div>
+          <p class="vnext2-reviewer">記録者: ${escapeHtml(getVNextReviewerText(finding))}</p>
+          ${renderVNext2AffectedRows(rows)}
+          <div class="vnext2-card-actions">
+            <button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-detail-open-table">表で確認</button>
+          </div>
+          ${renderVNext2DetailContext(finding)}
+        </article>
+      </section>
+    `;
+  }
+
+  function getVNext2SlotCount(finding) {
+    return Math.max(1, Number(getFindingSlotCount(finding)) || 1);
+  }
+
+  function renderVNext2TableCell({ record, intervalIndex, part, reviewMaps }) {
+    const interval = record.intervals[intervalIndex];
+    const slotKey = createReviewSlotKey(record.blockIndex, record.stateRow, record.reviewerRow, intervalIndex);
+    const statusFindings = reviewMaps.slotFindingMap.get(slotKey) ?? [];
+    const reviewerFindings = reviewMaps.reviewerAlertMap.get(slotKey) ?? [];
+    const severity = part === "reviewer" ? getHighestSeverity(reviewerFindings) : getHighestSeverity(statusFindings);
+    const text = part === "reviewer" ? abbreviateReviewerName(interval.reviewerText) : interval.statusText;
+    const selected = state.selectedReviewCell;
+    const isSelected =
+      selected &&
+      selected.blockIndex === record.blockIndex &&
+      selected.stateRow === record.stateRow &&
+      selected.reviewerRow === record.reviewerRow &&
+      selected.intervalIndex === intervalIndex &&
+      selected.part === part;
+    return `
+      <button
+        type="button"
+        class="vnext2-table-cell vnext2-table-cell--${escapeHtml(part)} ${severity ? `vnext2-table-cell--${escapeHtml(severity)}` : ""} ${isSelected ? "is-selected" : ""}"
+        data-action="select-cell"
+        data-review-slot="${escapeHtml(slotKey)}"
+        data-block-index="${record.blockIndex}"
+        data-state-row="${record.stateRow}"
+        data-reviewer-row="${record.reviewerRow}"
+        data-interval-index="${intervalIndex}"
+        data-part="${escapeHtml(part)}"
+        data-testid="vnext2-review-cell"
+      >${escapeHtml(text || "")}</button>
+    `;
+  }
+
+  function renderVNext2CellDetail() {
+    const selected = state.selectedReviewCell;
+    if (!selected) {
+      return `<aside class="vnext2-cell-detail">セルを押すと、このコマの状態と記録者を確認できます。</aside>`;
+    }
+    const record = (state.analysis?.records ?? []).find(
+      (item) =>
+        item.blockIndex === selected.blockIndex &&
+        item.stateRow === selected.stateRow &&
+        item.reviewerRow === selected.reviewerRow,
+    );
+    const interval = record?.intervals?.[selected.intervalIndex];
+    if (!record || !interval) {
+      return `<aside class="vnext2-cell-detail">このセルの詳細を読み取れませんでした。</aside>`;
+    }
+    return `
+      <aside class="vnext2-cell-detail" data-testid="vnext2-cell-detail">
+        <strong>${escapeHtml(record.childName)} / ${escapeHtml(interval.timeLabel)}</strong>
+        <div><span>状態</span><b>${escapeHtml(interval.statusText || "(空欄)")}</b></div>
+        <div><span>記録者</span><b>${escapeHtml(abbreviateReviewerName(interval.reviewerText) || "未入力")}</b></div>
+      </aside>
+    `;
+  }
+
+  function renderVNext2TableFocusScreen() {
+    const record = getVNext2DefectRecord();
+    const selectedFinding = record?.finding ?? null;
+    const reviewMaps = buildReviewMaps();
+    ensureSelectedReviewCell(reviewMaps);
+    const records = state.analysis?.records ?? [];
+    const recordsByBlock = new Map();
+    for (const item of records) {
+      if (!recordsByBlock.has(item.blockIndex)) {
+        recordsByBlock.set(item.blockIndex, []);
+      }
+      recordsByBlock.get(item.blockIndex).push(item);
+    }
+
+    const tableHtml = [...recordsByBlock.entries()].map(([blockIndex, blockRecords]) => {
+      const columns = blockRecords[0]?.intervals ?? [];
+      const timeHeaders = columns.map((interval) => `<th>${escapeHtml(interval.timeLabel)}</th>`).join("");
+      const rows = blockRecords.map((recordItem) => {
+        const statusCells = recordItem.intervals.map((_, intervalIndex) => `<td>${renderVNext2TableCell({ record: recordItem, intervalIndex, part: "status", reviewMaps })}</td>`).join("");
+        const reviewerCells = recordItem.intervals.map((_, intervalIndex) => `<td>${renderVNext2TableCell({ record: recordItem, intervalIndex, part: "reviewer", reviewMaps })}</td>`).join("");
+        return `
+          <tbody>
+            <tr>
+              <th class="vnext2-table-child" rowspan="2">${escapeHtml(recordItem.childName)}</th>
+              <th class="vnext2-table-row-label">状態</th>
+              ${statusCells}
+            </tr>
+            <tr>
+              <th class="vnext2-table-row-label">記録者</th>
+              ${reviewerCells}
+            </tr>
+          </tbody>
+        `;
+      }).join("");
+      return `
+        <section class="vnext2-table-block">
+          <div class="vnext2-table-block__head">
+            <strong>ブロック${escapeHtml(String(blockIndex))}</strong>
+            <span>${escapeHtml(String(blockRecords.length))}人</span>
+          </div>
+          <table class="vnext2-table">
+            <thead>
+              <tr><th>園児名</th><th>行</th>${timeHeaders}</tr>
+            </thead>
+            ${rows}
+          </table>
+        </section>
+      `;
+    }).join("");
+
+    return `
+      <section class="vnext2-screen vnext2-table-focus" data-testid="vnext2-table-focus">
+        <div class="vnext2-table-focus__head">
+          ${renderVNext2ActionBar({ dayBack: true })}
+          <div>
+            <span>表で確認</span>
+            <h1>${escapeHtml(getSheetDisplayDate(uiVNext2State.selectedDayId ?? state.selectedSheetName))}</h1>
+            <p>${selectedFinding ? escapeHtml(`${selectedFinding.childName ?? "対象なし"} / ${selectedFinding.time ?? "時刻不明"} / ${getVNextDefectTitle(selectedFinding)}`) : "色付きセルが確認候補です。"}</p>
+          </div>
+        </div>
+        <div class="vnext2-table-workspace">
+          <div class="vnext2-table-scroll" data-testid="vnext2-table-scroll">
+            ${tableHtml || `<article class="vnext2-empty-panel">表の行を読み取れませんでした。</article>`}
+          </div>
+          ${renderVNext2CellDetail()}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderVNext2SupportScreen() {
+    const diagnosticText = state.lastCopiedDiagnosticsText || buildDiagnosticCopyText(false);
+    const fieldSettings = getFieldAdjustmentExportText();
+    return `
+      <section class="vnext2-screen vnext2-support" data-testid="vnext2-support">
+        ${renderVNext2ActionBar()}
+        <article class="vnext2-support-card">
+          <h1>困ったとき / 診断・サポート</h1>
+          <ol>
+            <li>まず画面のスクショを撮ります。</li>
+            <li>診断情報をコピーします。</li>
+            <li>「何が変だったか」を一言添えて共有します。</li>
+          </ol>
+          <button type="button" class="vnext2-button vnext2-button--primary" data-action="copy-diagnostics" data-testid="vnext2-copy-diagnostics">診断情報をコピー</button>
+          ${uiVNext2State.supportMessage ? `<p class="vnext2-support-message">${escapeHtml(uiVNext2State.supportMessage)}</p>` : ""}
+          <textarea class="vnext2-diagnostic-text" readonly>${escapeHtml(diagnosticText)}</textarea>
+          <details class="vnext2-admin-details">
+            <summary>管理モード / 現場調整</summary>
+            <p>設定だけをiPad内に保存します。xlsxや個人情報は保存しません。</p>
+            <textarea id="vnext2-field-settings-text" class="vnext2-diagnostic-text">${escapeHtml(fieldSettings)}</textarea>
+            <div class="vnext2-card-actions">
+              <button type="button" class="vnext2-button vnext2-button--subtle" data-action="copy-field-settings">設定をコピー</button>
+              <button type="button" class="vnext2-button vnext2-button--subtle" data-action="import-field-settings">貼り付け設定を反映</button>
+              <button type="button" class="vnext2-button vnext2-button--subtle" data-action="reset-field-settings">標準設定に戻す</button>
+            </div>
+          </details>
+        </article>
+      </section>
+    `;
+  }
+
+  function renderVNext2Screen() {
+    switch (uiVNext2State.screen) {
+      case "dayQueue":
+        return renderVNext2DayQueueScreen();
+      case "defectDetail":
+        return renderVNext2DefectDetailScreen();
+      case "tableFocus":
+        return renderVNext2TableFocusScreen();
+      case "support":
+        return renderVNext2SupportScreen();
+      case "home":
+      default:
+        return renderVNext2HomeScreen();
+    }
+  }
+
+  function renderVNext2App() {
+    syncVNext2State();
+    const root = getVNext2Root();
+    const body = document.body;
+    if (body) {
+      body.classList.remove(
+        "queue-hard-reset",
+        "vnext-app",
+        "app-screen-review",
+        "app-screen-support",
+        "vnext2-screen-home",
+        "vnext2-screen-dayQueue",
+        "vnext2-screen-defectDetail",
+        "vnext2-screen-tableFocus",
+        "vnext2-screen-support",
+      );
+      body.classList.add("vnext2-app", `vnext2-screen-${uiVNext2State.screen}`);
+      body.classList.toggle("vnext2-file-empty", uiVNext2State.fileState === "empty");
+      body.dataset.vnext2Screen = uiVNext2State.screen;
+      body.dataset.vnext2FileState = uiVNext2State.fileState;
+    }
+    root.innerHTML = `
+      <div class="vnext2-shell">
+        ${renderVNext2Topbar()}
+        <main class="vnext2-main">
+          ${renderVNext2Screen()}
+        </main>
+      </div>
+    `;
+  }
+
+  async function handleVNext2Action(event) {
+    const target = event.target?.closest?.("[data-action]");
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const action = target.dataset.action;
+    if (!action) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (action === "open-home") {
+      openHome();
+    } else if (action === "pick-file") {
+      startFilePick();
+    } else if (action === "recheck") {
+      await startFullCheck();
+    } else if (action === "open-day") {
+      openDayQueue(target.dataset.dayId ?? uiVNext2State.selectedDayId ?? "");
+    } else if (action === "open-defect") {
+      openDefectDetail(target.dataset.defectId ?? "");
+    } else if (action === "open-table") {
+      openTableFocus(target.dataset.defectId ?? uiVNext2State.selectedDefectId ?? "");
+    } else if (action === "select-cell") {
+      state.selectedReviewCell = {
+        blockIndex: Number(target.dataset.blockIndex),
+        stateRow: Number(target.dataset.stateRow),
+        reviewerRow: Number(target.dataset.reviewerRow),
+        intervalIndex: Number(target.dataset.intervalIndex),
+        part: target.dataset.part === "reviewer" ? "reviewer" : "status",
+      };
+      uiVNext2State.selectedCellId = target.dataset.reviewSlot ?? "";
+      renderAll();
+    } else if (action === "open-support") {
+      openSupport();
+    } else if (action === "copy-diagnostics") {
+      await copyVNext2Diagnostics();
+    } else if (action === "copy-field-settings") {
+      await copyFieldAdjustmentSettings();
+      uiVNext2State.supportMessage = state.fieldAdjustmentStatus || "設定テキストをコピーしました。";
+      renderAll();
+    } else if (action === "import-field-settings") {
+      const area = document.querySelector("#vnext2-field-settings-text");
+      if (area instanceof HTMLTextAreaElement) {
+        elements.fieldSettingsText = area;
+      }
+      importFieldAdjustmentSettings();
+      uiVNext2State.supportMessage = state.fieldAdjustmentStatus || "設定を反映しました。";
+      renderAll();
+    } else if (action === "reset-field-settings") {
+      applyFieldAdjustmentChanges(DEFAULT_FIELD_ADJUSTMENTS, { message: "標準設定に戻しました。" });
+      uiVNext2State.supportMessage = "標準設定に戻しました。";
+      renderAll();
+    }
+  }
+
+  function bindVNext2Events() {
+    if (state.vNext2ListenersBound) {
+      return;
+    }
+    state.vNext2ListenersBound = true;
+    document.addEventListener("click", (event) => {
+      handleVNext2Action(event).catch((error) => {
+        setError(error.message);
+        setStatus("操作中にエラーが発生しました。");
+        renderAll();
+      });
+    });
+  }
+
   function renderAll() {
     applyFieldAdjustmentStyles();
-    document.body?.classList.add("queue-hard-reset");
-    document.body?.classList.add("vnext-app");
     renderRuntimeChrome();
-    renderHomeStateChrome();
-    renderSummary();
-    renderSheetOverview();
-    renderHomePreview();
-    renderReviewBoard();
-    renderResults();
+    renderVNext2App();
     renderFieldAdjustmentControls();
     renderDebug();
     updateControls();
@@ -18569,6 +20323,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     applyUiDefaults();
     renderAll();
     bindEvents();
+    bindVNext2Events();
     bindFieldAdjustmentEvents();
     elements?.reviewBackButton?.addEventListener("click", () => {
       setActiveScreen("home", { focus: true });
