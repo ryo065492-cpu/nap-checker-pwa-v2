@@ -6618,6 +6618,723 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
   }
 }
 
+/* vNext UI: action-queue screen layer. This is the active visual system; older
+   panel containers remain only as mount points for existing analysis logic. */
+.vnext-app,
+.vnext-app * {
+  box-sizing: border-box;
+  writing-mode: horizontal-tb;
+}
+
+.vnext-app {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-break: strict;
+  --vnext-ink: #2c251d;
+  --vnext-muted: #766a5e;
+  --vnext-green: #007f73;
+  --vnext-red: #d63c31;
+  --vnext-yellow: #bd7a12;
+  --vnext-card: rgba(255, 253, 248, 0.96);
+}
+
+.vnext-app .app-shell {
+  height: 100dvh;
+  min-height: 100svh;
+}
+
+.vnext-app .layout,
+.vnext-app .panel,
+.vnext-app .screen-section {
+  min-width: 0;
+  min-height: 0;
+}
+
+.vnext-app .panel--home-preview,
+.vnext-app.app-screen-home .panel--home-preview {
+  display: none !important;
+}
+
+.vnext-app.app-screen-home[data-home-state="complete"] .layout {
+  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-areas:
+    "picker"
+    "summary"
+    "dates";
+  overflow: hidden;
+}
+
+.vnext-app.app-screen-home[data-home-state="complete"] .panel--summary {
+  padding: 16px;
+}
+
+.vnext-summary-grid {
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+
+.vnext-summary-card {
+  min-width: 0;
+  min-height: 112px;
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  padding: 16px 18px;
+  border: 1px solid rgba(82, 57, 27, 0.1);
+  border-radius: 20px;
+  background: var(--vnext-card);
+  box-shadow: 0 14px 32px rgba(49, 35, 19, 0.07);
+}
+
+.vnext-summary-card--primary {
+  grid-column: span 2;
+}
+
+.vnext-summary-card--minor {
+  grid-column: span 3;
+  min-height: 92px;
+}
+
+.vnext-summary-card__label {
+  color: var(--vnext-muted);
+  font-size: clamp(1rem, 1.4vw, 1.12rem);
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+.vnext-summary-card__value {
+  color: var(--vnext-ink);
+  font-size: clamp(1.85rem, 3vw, 2.7rem);
+  line-height: 1.05;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.vnext-summary-card__sub {
+  color: var(--vnext-muted);
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  line-height: 1.45;
+}
+
+.vnext-summary-card--red .vnext-summary-card__value {
+  color: var(--vnext-red);
+}
+
+.vnext-summary-card--yellow .vnext-summary-card__value {
+  color: var(--vnext-yellow);
+}
+
+.vnext-summary-card--ok .vnext-summary-card__value {
+  color: #178a49;
+}
+
+.vnext-ok-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  color: var(--vnext-muted);
+}
+
+.vnext-app.app-screen-home[data-home-state="complete"] .panel--sheet-overview {
+  overflow: hidden;
+}
+
+.vnext-app.app-screen-home[data-home-state="complete"] .sheet-overview-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  align-content: start;
+  gap: 14px;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: 2px 6px 14px 2px;
+}
+
+.vnext-date-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "date status"
+    "weekday status"
+    "counts counts"
+    "reasons reasons"
+    "action action";
+  gap: 10px;
+  min-width: 0;
+  min-height: 0;
+  padding: 18px;
+  border: 2px solid rgba(214, 60, 49, 0.28);
+  border-radius: 22px;
+  text-align: left;
+  background: linear-gradient(160deg, #fffefd, #fff3ef);
+  color: var(--vnext-ink);
+  box-shadow: 0 18px 36px rgba(86, 48, 24, 0.08);
+  cursor: pointer;
+}
+
+.vnext-date-card--yellow {
+  border-color: rgba(189, 122, 18, 0.36);
+  background: linear-gradient(160deg, #fffefd, #fff7df);
+}
+
+.vnext-date-card--ok {
+  border-color: rgba(23, 138, 73, 0.34);
+  background: linear-gradient(160deg, #fffefd, #edfbf2);
+}
+
+.vnext-date-card__status {
+  grid-area: status;
+  justify-self: end;
+  align-self: start;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: var(--vnext-red);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.vnext-date-card--yellow .vnext-date-card__status {
+  background: var(--vnext-yellow);
+}
+
+.vnext-date-card--ok .vnext-date-card__status {
+  background: #178a49;
+}
+
+.vnext-date-card__date {
+  grid-area: date;
+  min-width: 0;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  font-weight: 950;
+  line-height: 1.2;
+}
+
+.vnext-date-card__weekday {
+  grid-area: weekday;
+  color: var(--vnext-muted);
+  font-weight: 850;
+}
+
+.vnext-date-card__counts {
+  grid-area: counts;
+}
+
+.vnext-date-card__reasons {
+  grid-area: reasons;
+}
+
+.vnext-date-card__action {
+  grid-area: action;
+  justify-self: start;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 13px;
+  border-radius: 999px;
+  background: #e3f4ef;
+  color: var(--vnext-green);
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.vnext-date-card__counts,
+.vnext-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.vnext-count,
+.vnext-chip {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: 31px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(82, 57, 27, 0.08);
+  font-size: 0.92rem;
+  line-height: 1.3;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.vnext-count--red {
+  color: #9f261e;
+  background: rgba(214, 60, 49, 0.12);
+}
+
+.vnext-count--yellow {
+  color: #845800;
+  background: rgba(189, 122, 18, 0.15);
+}
+
+.vnext-empty-card {
+  display: grid;
+  gap: 8px;
+  align-content: center;
+  min-height: 170px;
+  padding: 24px;
+  border: 1px dashed rgba(0, 127, 115, 0.3);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.74);
+  color: var(--vnext-muted);
+}
+
+.vnext-empty-card strong {
+  color: var(--vnext-ink);
+  font-size: 1.15rem;
+}
+
+.vnext-app.app-screen-review[data-review-mode="defects"] .layout {
+  grid-template-columns: minmax(360px, 0.95fr) minmax(360px, 1.05fr);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "list detail";
+  overflow: hidden;
+}
+
+.vnext-app.app-screen-review[data-review-mode="defects"] .panel--results,
+.vnext-app.app-screen-review[data-review-mode="defects"] .panel--defect-detail {
+  display: grid !important;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.vnext-app.app-screen-review[data-review-mode="defects"] .panel--results {
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.vnext-app.app-screen-review[data-review-mode="defects"] .panel--defect-detail {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.vnext-app.app-screen-review[data-review-mode="defects"] .results-list {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 0;
+  overflow: auto;
+  padding: 2px 6px 12px 2px;
+}
+
+.vnext-defect-card {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 16px;
+  border: 2px solid rgba(214, 60, 49, 0.2);
+  border-radius: 22px;
+  background: linear-gradient(160deg, #fffefd, #fff5f1);
+  box-shadow: 0 16px 30px rgba(80, 42, 28, 0.07);
+}
+
+.vnext-defect-card--yellow {
+  border-color: rgba(189, 122, 18, 0.28);
+  background: linear-gradient(160deg, #fffefd, #fff8e4);
+}
+
+.vnext-defect-card--selected {
+  box-shadow: 0 0 0 3px rgba(0, 127, 115, 0.18), 0 18px 34px rgba(80, 42, 28, 0.1);
+}
+
+.vnext-defect-card__top,
+.vnext-detail__top,
+.vnext-defect-card__actions,
+.vnext-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.vnext-defect-card__top,
+.vnext-detail__top {
+  justify-content: space-between;
+}
+
+.vnext-severity {
+  display: inline-flex;
+  align-items: center;
+  min-height: 31px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--vnext-red);
+  font-size: 0.9rem;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.vnext-severity--yellow {
+  background: var(--vnext-yellow);
+}
+
+.vnext-severity--info {
+  background: #3265ad;
+}
+
+.vnext-defect-card__count,
+.vnext-detail__count {
+  min-height: 31px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(82, 57, 27, 0.08);
+  font-weight: 950;
+}
+
+.vnext-defect-card__child,
+.vnext-detail__child {
+  min-width: 0;
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  line-height: 1.15;
+  font-weight: 950;
+}
+
+.vnext-defect-card__time,
+.vnext-detail__time {
+  color: var(--vnext-green);
+  font-size: 1.15rem;
+  font-weight: 950;
+}
+
+.vnext-defect-card__title,
+.vnext-detail__rule {
+  font-size: 1.08rem;
+  font-weight: 950;
+}
+
+.vnext-defect-card__message,
+.vnext-defect-card__reviewer,
+.vnext-detail__reviewer,
+.vnext-detail__action {
+  min-width: 0;
+  line-height: 1.5;
+}
+
+.vnext-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 10px 15px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 950;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.vnext-button--primary {
+  color: #fff;
+  background: var(--vnext-green);
+  box-shadow: 0 12px 22px rgba(0, 112, 101, 0.18);
+}
+
+.vnext-button--subtle {
+  color: var(--vnext-green);
+  background: #e6f3ef;
+}
+
+.vnext-affected {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.vnext-affected__title,
+.vnext-context__title {
+  font-weight: 950;
+}
+
+.vnext-affected__rows {
+  display: grid;
+  gap: 6px;
+}
+
+.vnext-affected__row {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr) minmax(104px, auto);
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  padding: 9px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.vnext-affected__time {
+  color: var(--vnext-green);
+  font-weight: 950;
+}
+
+.vnext-affected__status,
+.vnext-affected__reviewer {
+  min-width: 0;
+}
+
+.vnext-detail {
+  display: grid;
+  align-content: start;
+  gap: 13px;
+  min-height: 0;
+  padding: 22px;
+  border: 2px solid rgba(214, 60, 49, 0.24);
+  border-radius: 26px;
+  background: linear-gradient(160deg, #fffefd, #fff5f2);
+  overflow: auto;
+}
+
+.vnext-detail--yellow {
+  border-color: rgba(189, 122, 18, 0.32);
+  background: linear-gradient(160deg, #fffefd, #fff8e4);
+}
+
+.vnext-detail--empty {
+  align-content: center;
+  color: var(--vnext-muted);
+}
+
+.vnext-detail__action {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.vnext-context {
+  border-top: 1px solid rgba(82, 57, 27, 0.1);
+  padding-top: 10px;
+}
+
+.vnext-context summary {
+  min-height: 42px;
+  color: var(--vnext-green);
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.vnext-context__body {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.vnext-context__row {
+  display: grid;
+  grid-template-columns: 58px 68px minmax(0, 1fr) minmax(104px, auto);
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.vnext-context__row--target {
+  background: rgba(214, 60, 49, 0.12);
+  font-weight: 900;
+}
+
+.vnext-app.app-screen-review[data-review-mode="table"] .layout {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "table"
+    "cell";
+  overflow: hidden;
+}
+
+.vnext-table-block {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px;
+  min-height: 0;
+}
+
+.vnext-table-block + .vnext-table-block {
+  margin-top: 14px;
+}
+
+.vnext-table-block__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.vnext-table-scroll {
+  min-width: 0;
+  overflow: auto;
+  border: 1px solid rgba(82, 57, 27, 0.1);
+  border-radius: 18px;
+  background: #fffefa;
+}
+
+.vnext-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.vnext-table th,
+.vnext-table td {
+  min-width: var(--review-cell-width, 56px);
+  padding: 0;
+  border-right: 1px solid rgba(82, 57, 27, 0.09);
+  border-bottom: 1px solid rgba(82, 57, 27, 0.09);
+}
+
+.vnext-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 8px;
+  background: #edf5f2;
+  font-size: calc(0.86rem * var(--review-font-scale, 1));
+}
+
+.vnext-table__child {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  min-width: 126px !important;
+  background: #fffefa !important;
+  padding: 8px !important;
+  text-align: left;
+}
+
+.vnext-table__row-label {
+  position: sticky;
+  left: 126px;
+  z-index: 3;
+  min-width: 74px !important;
+  background: #f7f1e8 !important;
+  padding: 8px !important;
+}
+
+.vnext-table__cell {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: var(--review-row-height, 48px);
+  border: 0;
+  background: transparent;
+  font-size: calc(0.96rem * var(--review-font-scale, 1));
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.vnext-table__cell--red {
+  background: linear-gradient(135deg, var(--review-red-start, rgba(201, 60, 45, 0.18)), var(--review-red-end, #fff0ec));
+  color: #9f261e;
+}
+
+.vnext-table__cell--yellow {
+  background: linear-gradient(135deg, var(--review-yellow-start, rgba(190, 122, 8, 0.18)), var(--review-yellow-end, #fff7e1));
+  color: #8a5b00;
+}
+
+.vnext-table__cell--selected {
+  outline: 3px solid var(--vnext-green);
+  outline-offset: -3px;
+}
+
+.vnext-cell-detail {
+  margin-top: 10px;
+  padding: 14px;
+  border: 1px solid rgba(82, 57, 27, 0.1);
+  border-radius: 20px;
+  background: rgba(255, 252, 246, 0.96);
+}
+
+.vnext-cell-detail__head,
+.vnext-cell-detail__grid,
+.vnext-cell-detail__finding {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.vnext-cell-detail__head {
+  justify-content: space-between;
+}
+
+.vnext-cell-detail__grid,
+.vnext-cell-detail__findings {
+  margin-top: 10px;
+}
+
+.vnext-cell-detail__findings {
+  display: grid;
+  gap: 8px;
+}
+
+.vnext-cell-detail__finding {
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(214, 60, 49, 0.1);
+}
+
+@media (max-width: 1180px) {
+  .vnext-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vnext-summary-card--primary,
+  .vnext-summary-card--minor {
+    grid-column: auto;
+  }
+
+  .vnext-app.app-screen-review[data-review-mode="defects"] .layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(320px, 52svh) minmax(0, 1fr);
+    grid-template-areas:
+      "list"
+      "detail";
+  }
+}
+
+@media (max-width: 980px) {
+  .vnext-app .app-shell {
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .vnext-app.app-screen-home[data-home-state="complete"] .layout,
+  .vnext-app.app-screen-review[data-review-mode="defects"] .layout,
+  .vnext-app.app-screen-review[data-review-mode="table"] .layout {
+    overflow: visible;
+  }
+
+  .vnext-app.app-screen-home[data-home-state="complete"] .sheet-overview-list,
+  .vnext-app.app-screen-review[data-review-mode="defects"] .results-list {
+    overflow: visible;
+  }
+}
+
+@media (max-width: 640px) {
+  .vnext-summary-grid,
+  .vnext-app.app-screen-home[data-home-state="complete"] .sheet-overview-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vnext-affected__row,
+  .vnext-context__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home queue-hard-reset" data-home-state="empty">
@@ -6639,8 +7356,8 @@ body[data-review-mode="defects"].app-screen-review .selected-defect-detail {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-17-1918</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-17 19:18</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-17-2018</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-17 20:18</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -7209,7 +7926,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-17-1918","buildLabel":"2026-05-17 19:18","buildId":"2026-05-17-191851","builtAtIso":"2026-05-17T10:18:51.150Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-17-2018","buildLabel":"2026-05-17 20:18","buildId":"2026-05-17-201844","builtAtIso":"2026-05-17T11:18:44.210Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -13411,6 +14128,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     });
 
     elements.defectDetailPanel?.addEventListener("click", (event) => {
+      const homeButton = event.target.closest("[data-action-home]");
+      if (homeButton instanceof HTMLElement) {
+        setActiveScreen("home", { focus: true });
+        setStatus("ホームに戻りました。別ファイルを読み込む場合は「ファイルを変更」を押してください。");
+        return;
+      }
+
       const tableButton = event.target.closest("[data-defect-detail-table]");
       if (!(tableButton instanceof HTMLElement)) {
         return;
@@ -16269,6 +16993,20 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     document.documentElement.classList.toggle("is-debug-mode", Boolean(state.debugMode));
     renderScreenChrome();
 
+    if (elements?.appStatusPill) {
+      const homeState = getHomeState();
+      const statusMeta =
+        homeState === "checking" || homeState === "loading"
+          ? { label: "チェック中", tone: "busy" }
+          : homeState === "complete"
+            ? { label: "チェック完了", tone: "done" }
+            : homeState === "error"
+              ? { label: "確認が必要", tone: "warn" }
+              : { label: "未読込", tone: "idle" };
+      elements.appStatusPill.textContent = statusMeta.label;
+      elements.appStatusPill.dataset.statusTone = statusMeta.tone;
+    }
+
     if (elements?.buildVersion) {
       elements.buildVersion.textContent = buildInfo.versionLabel ?? "確認版 -";
       elements.buildVersion.classList.toggle("meta-pill--debug", state.debugMode);
@@ -17129,9 +17867,683 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     `;
   }
 
+  // vNext UI active layer.
+  // Analysis/rule data stays intact; only display data and screen rendering are rebuilt here.
+  function getVNextReviewerText(finding) {
+    const raw =
+      finding?.reviewerText ||
+      (Array.isArray(finding?.reviewerNames) ? finding.reviewerNames.filter(Boolean).join("、") : "") ||
+      "";
+    return abbreviateReviewerName(raw) || raw || "未入力";
+  }
+
+  function getVNextSlotCount(finding) {
+    return Math.max(1, Number(getFindingSlotCount(finding)) || 1);
+  }
+
+  function getVNextDefectTitle(finding) {
+    return finding?.shortText || finding?.ruleName || "確認が必要です";
+  }
+
+  function getVNextDefectMessage(finding) {
+    return finding?.action || finding?.reason || finding?.message || "該当コマの記録を確認してください。";
+  }
+
+  function getVNextTargetRows(finding) {
+    return getQueueTargetRows(finding).map((row) => ({
+      ...row,
+      marker: row.marker || "対象",
+      reviewer: row.reviewer || "未入力",
+      status: row.status || "(空欄)",
+    }));
+  }
+
+  function getVNextContextRows(finding) {
+    return getQueueContextRows(finding).map((row) => ({
+      ...row,
+      reviewer: row.reviewer || "未入力",
+      status: row.status || "(空欄)",
+    }));
+  }
+
+  function formatVNextIncidentSlot(incidentCount, slotCount) {
+    return `要確認${incidentCount}件 / 該当${slotCount}コマ`;
+  }
+
+  function formatVNextVisibleCount(model) {
+    const visibleSummary = formatVNextIncidentSlot(model.visibleDefectCount, model.visibleCellCount);
+    if (model.visibleDefectCount === model.totalDefectCount) {
+      return `表示中 ${visibleSummary}`;
+    }
+    return `表示中 ${visibleSummary} / 全${model.totalDefectCount}件`;
+  }
+
+  function renderVNextChipList(labels, className = "vnext-chip-list") {
+    const uniqueLabels = [...new Set((labels ?? []).filter(Boolean))].slice(0, 2);
+    if (!uniqueLabels.length) {
+      return `<div class="${className}"><span class="vnext-chip vnext-chip--muted">主な理由なし</span></div>`;
+    }
+    return `
+      <div class="${className}">
+        ${uniqueLabels.map((label) => `<span class="vnext-chip">${escapeHtml(label)}</span>`).join("")}
+      </div>
+    `;
+  }
+
+  function renderSummary() {
+    if (!elements?.summaryCards) {
+      return;
+    }
+
+    const stats = getDashboardStats();
+    elements.summaryCards.classList.add("vnext-summary-grid");
+    const cards = [
+      {
+        label: "要確認の日付",
+        value: `${stats.issueDays}日`,
+        sub: `確認済み ${stats.checkedCount}日 / OK ${stats.okDays}日`,
+        tone: stats.issueDays > 0 ? "red" : "ok",
+        size: "primary",
+      },
+      {
+        label: "赤",
+        value: `${stats.redIncidents}件`,
+        sub: `該当${stats.redCells}コマ`,
+        tone: "red",
+        size: "primary",
+      },
+      {
+        label: "黄",
+        value: `${stats.yellowIncidents}件`,
+        sub: `該当${stats.yellowCells}コマ`,
+        tone: "yellow",
+        size: "primary",
+      },
+      {
+        label: "チェック済み",
+        value: `${stats.checkedCount}日`,
+        sub: `${stats.totalSheets}シート中`,
+        tone: "neutral",
+        size: "minor",
+      },
+      {
+        label: "OK",
+        value: `${stats.okDays}日`,
+        sub: "問題なしの日付はまとめています",
+        tone: "ok",
+        size: "minor",
+      },
+    ];
+
+    elements.summaryCards.innerHTML = cards
+      .map(
+        (card) => `
+          <article class="vnext-summary-card vnext-summary-card--${card.tone} vnext-summary-card--${card.size}">
+            <div class="vnext-summary-card__label">${escapeHtml(card.label)}</div>
+            <div class="vnext-summary-card__value">${escapeHtml(card.value)}</div>
+            <div class="vnext-summary-card__sub">${escapeHtml(card.sub)}</div>
+          </article>
+        `,
+      )
+      .join("");
+
+    if (elements.structureSummary) {
+      elements.structureSummary.innerHTML = `
+        <div class="vnext-ok-summary">
+          <strong>問題なし: ${escapeHtml(String(stats.okDays))}日</strong>
+          <span>通常表示では、直す必要がある日付だけを表示します。</span>
+        </div>
+      `;
+    }
+  }
+
+  function renderSheetOverviewCard(item) {
+    const meta = getQueueStatusMeta(item);
+    const weekday = getWeekdayLabel(item.dateLabel);
+    const reasons = getQueueReasonLabels(item, 2);
+    const redSummary = formatVNextIncidentSlot(item.redIncidents ?? 0, item.redCells ?? 0);
+    const yellowSummary = `${item.yellowIncidents ?? 0}件`;
+
+    return `
+      <button
+        class="vnext-date-card vnext-date-card--${meta.tone}"
+        type="button"
+        data-sheet-name="${escapeHtml(item.sheetName)}"
+        data-testid="sheet-overview-card"
+        aria-label="${escapeHtml(`${item.dateLabel} ${meta.label} 赤${redSummary} 黄${yellowSummary}`)}"
+      >
+        <span class="vnext-date-card__status">${escapeHtml(meta.label)}</span>
+        <span class="vnext-date-card__date">${escapeHtml(item.dateLabel)}</span>
+        <span class="vnext-date-card__weekday">${escapeHtml(weekday)}</span>
+        <span class="vnext-date-card__counts">
+          <span class="vnext-count vnext-count--red">赤 ${escapeHtml(redSummary)}</span>
+          <span class="vnext-count vnext-count--yellow">黄 ${escapeHtml(yellowSummary)}</span>
+        </span>
+        ${renderVNextChipList(reasons, "vnext-date-card__reasons")}
+        <span class="vnext-date-card__action">確認する</span>
+      </button>
+    `;
+  }
+
+  function renderSheetOverview() {
+    if (!elements?.sheetOverviewList) {
+      return;
+    }
+
+    const stats = getDashboardStats();
+    const issueItems = state.sheetOverview ?? [];
+
+    if (elements.sheetOverviewCount) {
+      elements.sheetOverviewCount.textContent =
+        stats.checkedCount > 0 ? `要確認 ${stats.issueDays}日 / 確認済み ${stats.checkedCount}日` : "未チェック";
+    }
+
+    if (elements.sheetOverviewGuide) {
+      elements.sheetOverviewGuide.textContent =
+        stats.checkedCount > 0
+          ? "直す必要がある日付だけを表示しています。日付カードを押すと、この日の不備キューへ進みます。"
+          : "xlsxを選ぶと、全日分チェックを自動で始めます。";
+    }
+
+    if (!state.workbook?.sheets?.length) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="vnext-empty-card">
+          <strong>まだファイルが選ばれていません。</strong>
+          <span>ホームの「午睡記録ファイルを選ぶ」からxlsxを選んでください。</span>
+        </article>
+      `;
+      return;
+    }
+
+    if (state.allSheetChecking || state.checkStatus === "checking") {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="vnext-empty-card vnext-empty-card--checking">
+          <strong>全日分を確認しています。</strong>
+          <span>完了すると、直す必要がある日付だけがここに並びます。</span>
+        </article>
+      `;
+      return;
+    }
+
+    if (issueItems.length === 0 && stats.checkedCount > 0) {
+      elements.sheetOverviewList.innerHTML = `
+        <article class="vnext-empty-card vnext-empty-card--ok">
+          <strong>直す必要がある日付は見つかりませんでした。</strong>
+          <span>OK ${escapeHtml(String(stats.okDays))}日。問題ない日付の詳細は通常表示では省略しています。</span>
+        </article>
+      `;
+      return;
+    }
+
+    elements.sheetOverviewList.innerHTML = issueItems.map(renderSheetOverviewCard).join("");
+  }
+
+  function renderHomePreview() {
+    if (elements?.homePreviewPanel) {
+      elements.homePreviewPanel.hidden = true;
+    }
+  }
+
+  function renderQueueAffectedRows(rows, options = {}) {
+    const title = options.title ?? "該当コマ";
+    if (!rows.length) {
+      return `
+        <div class="vnext-affected" data-testid="affected-slots">
+          <div class="vnext-affected__title">${escapeHtml(title)}</div>
+          <div class="vnext-affected__empty">該当コマの詳細を取得できませんでした。</div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="vnext-affected" data-testid="affected-slots">
+        <div class="vnext-affected__title">${escapeHtml(title)}</div>
+        <div class="vnext-affected__rows">
+          ${rows
+            .map(
+              (row) => `
+                <div class="vnext-affected__row">
+                  <span class="vnext-affected__time">${escapeHtml(row.time ?? "-")}</span>
+                  <strong class="vnext-affected__status">${escapeHtml(row.status ?? "(空欄)")}</strong>
+                  <span class="vnext-affected__reviewer">記録者: ${escapeHtml(row.reviewer ?? "未入力")}</span>
+                </div>
+              `,
+            )
+            .join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderQueueContextDetails(finding, targetRows) {
+    const contextRows = getVNextContextRows(finding);
+    const targetKeys = new Set(targetRows.map((row) => `${row.time}|${row.status}|${row.reviewer}`));
+    const contextHtml = contextRows.length
+      ? contextRows
+          .map((row) => {
+            const isTarget = row.marker === "対象" || targetKeys.has(`${row.time}|${row.status}|${row.reviewer}`);
+            return `
+              <div class="vnext-context__row ${isTarget ? "vnext-context__row--target" : ""}">
+                <span>${escapeHtml(row.marker ?? (isTarget ? "対象" : "参考"))}</span>
+                <strong>${escapeHtml(row.time ?? "-")}</strong>
+                <span>${escapeHtml(row.status ?? "(空欄)")}</span>
+                <span>記録者: ${escapeHtml(row.reviewer ?? "未入力")}</span>
+              </div>
+            `;
+          })
+          .join("")
+      : `<div class="vnext-context__empty">前後の参考情報は取得できませんでした。</div>`;
+
+    return `
+      <details class="vnext-context" data-testid="defect-context-details">
+        <summary>詳しく見る</summary>
+        <div class="vnext-context__body">
+          <div class="vnext-context__title">前後の参考情報</div>
+          ${contextHtml}
+          ${(finding.details ?? [])
+            .filter(Boolean)
+            .slice(0, 3)
+            .map((detail) => `<div class="vnext-context__note">${escapeHtml(detail)}</div>`)
+            .join("")}
+        </div>
+      </details>
+    `;
+  }
+
+  function renderResultCard(finding, options = {}) {
+    const defectKey = createDefectKey(finding);
+    const selectedClass = defectKey === state.selectedDefectKey ? " vnext-defect-card--selected" : "";
+    const slotCount = getVNextSlotCount(finding);
+    const targetRows = getVNextTargetRows(finding);
+    const reviewerText = getVNextReviewerText(finding);
+    const severityLabel = getSeverityMeta(finding.severity).label;
+    const title = getVNextDefectTitle(finding);
+    const message = getVNextDefectMessage(finding);
+
+    return `
+      <article
+        class="vnext-defect-card vnext-defect-card--${finding.severity}${selectedClass}"
+        data-defect-key="${escapeHtml(defectKey)}"
+        data-testid="defect-card"
+        tabindex="0"
+        aria-label="${escapeHtml(`${finding.childName ?? "対象なし"} ${finding.time ?? ""} ${title}`)}"
+      >
+        <div class="vnext-defect-card__top">
+          <span class="vnext-severity vnext-severity--${finding.severity}">${escapeHtml(severityLabel)}</span>
+          <span class="vnext-defect-card__count">${escapeHtml(formatVNextIncidentSlot(1, slotCount))}</span>
+        </div>
+        <div class="vnext-defect-card__child">${escapeHtml(finding.childName ?? "対象なし")}</div>
+        <div class="vnext-defect-card__time">${escapeHtml(finding.time ?? "時刻不明")}</div>
+        <div class="vnext-defect-card__title">${escapeHtml(title)}</div>
+        <div class="vnext-defect-card__message">${escapeHtml(message)}</div>
+        <div class="vnext-defect-card__reviewer">記録者: ${escapeHtml(reviewerText)}</div>
+        ${renderQueueAffectedRows(targetRows)}
+        <div class="vnext-defect-card__actions">
+          <button
+            type="button"
+            class="vnext-button vnext-button--subtle"
+            data-result-select-defect="1"
+            data-defect-key="${escapeHtml(defectKey)}"
+            data-testid="defect-detail-button"
+          >内容を見る</button>
+          <button
+            type="button"
+            class="vnext-button vnext-button--primary"
+            data-result-review-target="1"
+            data-defect-key="${escapeHtml(defectKey)}"
+            data-testid="defect-table-button"
+          >表で確認</button>
+        </div>
+      </article>
+    `;
+  }
+
+  function renderGroupedResults(findings) {
+    if (!findings.length) {
+      return `
+        <article class="vnext-empty-card vnext-empty-card--ok">
+          <strong>この日に直す必要がある不備はありません。</strong>
+          <span>問題ない子どもや問題ないコマは通常表示していません。</span>
+        </article>
+      `;
+    }
+    return findings.map((finding) => renderResultCard(finding)).join("");
+  }
+
+  function renderTimelineResults(findings) {
+    return renderGroupedResults(findings);
+  }
+
+  function renderSelectedDefectDetail() {
+    if (!elements?.defectDetailPanel) {
+      return;
+    }
+
+    const findings = getCurrentDefectFindings();
+    const finding = getSelectedDefectFinding(findings);
+    const shell = elements.defectDetailPanel;
+    const heading = shell.querySelector("h2");
+    const lead = shell.querySelector(".panel__lead");
+    if (heading) {
+      heading.textContent = "不備の詳細";
+    }
+    if (lead) {
+      lead.textContent = "選んだ1件だけを確認します。前後の参考情報は「詳しく見る」に入れています。";
+    }
+
+    const existing = shell.querySelector(".selected-defect-detail, .queue-detail, .vnext-detail");
+    if (!state.analysis || !finding) {
+      const emptyHtml = `
+        <div class="vnext-detail vnext-detail--empty selected-defect-detail">
+          日付カードを選ぶと、この日の不備詳細を表示します。
+        </div>
+      `;
+      if (existing) {
+        existing.outerHTML = emptyHtml;
+      } else {
+        shell.innerHTML += emptyHtml;
+      }
+      return;
+    }
+
+    const defectKey = createDefectKey(finding);
+    const targetRows = getVNextTargetRows(finding);
+    const slotCount = getVNextSlotCount(finding);
+    const reviewerText = getVNextReviewerText(finding);
+    const title = getVNextDefectTitle(finding);
+    const detailHtml = `
+      <article class="vnext-detail vnext-detail--${finding.severity} selected-defect-detail">
+        <div class="vnext-detail__top">
+          <span class="vnext-severity vnext-severity--${finding.severity}">${escapeHtml(getSeverityMeta(finding.severity).label)}</span>
+          <span class="vnext-detail__count">${escapeHtml(formatVNextIncidentSlot(1, slotCount))}</span>
+        </div>
+        <h3 class="vnext-detail__child">${escapeHtml(finding.childName ?? "対象なし")}</h3>
+        <div class="vnext-detail__rule">${escapeHtml(title)}</div>
+        <div class="vnext-detail__time">${escapeHtml(finding.time ?? "時刻不明")}</div>
+        <div class="vnext-detail__action">
+          <strong>確認したいこと</strong>
+          <span>${escapeHtml(getVNextDefectMessage(finding))}</span>
+        </div>
+        <div class="vnext-detail__reviewer">記録者: ${escapeHtml(reviewerText)}</div>
+        ${renderQueueAffectedRows(targetRows, { title: "該当コマ" })}
+        <div class="vnext-detail__actions">
+          <button
+            type="button"
+            class="vnext-button vnext-button--primary"
+            data-defect-detail-table="1"
+            data-defect-key="${escapeHtml(defectKey)}"
+            data-testid="selected-defect-table-button"
+          >表で確認</button>
+          <button type="button" class="vnext-button vnext-button--subtle" data-action-home="1">ホームへ戻る</button>
+        </div>
+        ${renderQueueContextDetails(finding, targetRows)}
+      </article>
+    `;
+
+    if (existing) {
+      existing.outerHTML = detailHtml;
+    } else {
+      shell.innerHTML += detailHtml;
+    }
+  }
+
+  function renderResults() {
+    const allFindings = getAllDisplayFindings();
+    const findings = getDisplayFindings();
+    const counts = buildQueueDefectCountModel(allFindings, findings);
+
+    if (elements?.filtersPanel) {
+      elements.filtersPanel.hidden = true;
+    }
+    if (elements?.resultsPanel) {
+      elements.resultsPanel.hidden = state.reviewMode === "table";
+    }
+    if (elements?.defectDetailPanel) {
+      elements.defectDetailPanel.hidden = state.reviewMode === "table";
+    }
+    if (elements?.resultsCount) {
+      elements.resultsCount.textContent = formatVNextVisibleCount(counts);
+      elements.resultsCount.dataset.totalDefects = String(counts.totalDefectCount);
+      elements.resultsCount.dataset.visibleDefects = String(counts.visibleDefectCount);
+    }
+    if (elements?.reviewCount) {
+      elements.reviewCount.textContent = formatVNextVisibleCount(counts);
+    }
+    if (elements?.resultsGuide) {
+      elements.resultsGuide.textContent =
+        "直す必要がある子ども・時刻だけを表示しています。問題ない子どもと前後コマは通常表示しません。";
+    }
+    if (elements?.downloadCsvButton) {
+      elements.downloadCsvButton.disabled = findings.length === 0;
+    }
+
+    if (state.reviewMode !== "table" && elements?.resultsList) {
+      elements.resultsList.dataset.totalDefects = String(counts.totalDefectCount);
+      elements.resultsList.dataset.visibleDefects = String(counts.visibleDefectCount);
+      elements.resultsList.innerHTML = renderGroupedResults(findings);
+      renderSelectedDefectDetail();
+    }
+  }
+
+  function renderQueueReviewCell({ record, intervalIndex, part, reviewMaps }) {
+    const interval = record.intervals[intervalIndex];
+    const slotKey = createReviewSlotKey(record.blockIndex, record.stateRow, record.reviewerRow, intervalIndex);
+    const statusFindings = reviewMaps.slotFindingMap.get(slotKey) ?? [];
+    const reviewerFindings = reviewMaps.reviewerAlertMap.get(slotKey) ?? [];
+    const severity = part === "reviewer" ? getHighestSeverity(reviewerFindings) : getHighestSeverity(statusFindings);
+    const text = part === "reviewer" ? abbreviateReviewerName(interval.reviewerText) : interval.statusText;
+    const selected = state.selectedReviewCell;
+    const isSelected =
+      selected &&
+      selected.blockIndex === record.blockIndex &&
+      selected.stateRow === record.stateRow &&
+      selected.reviewerRow === record.reviewerRow &&
+      selected.intervalIndex === intervalIndex &&
+      selected.part === part;
+
+    return `
+      <button
+        class="vnext-table__cell queue-table__cell vnext-table__cell--${part} ${severity ? `vnext-table__cell--${severity}` : ""} ${isSelected ? "vnext-table__cell--selected" : ""}"
+        type="button"
+        data-review-slot="${escapeHtml(slotKey)}"
+        data-block-index="${record.blockIndex}"
+        data-state-row="${record.stateRow}"
+        data-reviewer-row="${record.reviewerRow}"
+        data-interval-index="${intervalIndex}"
+        data-part="${part}"
+        data-testid="review-cell"
+        aria-label="${escapeHtml(`${record.childName} ${interval.timeLabel} ${part === "reviewer" ? "記録者" : "状態"} ${text || "空欄"}`)}"
+      >${escapeHtml(text || "")}</button>
+    `;
+  }
+
+  function renderReviewBoard() {
+    if (!elements?.reviewBoard) {
+      return;
+    }
+
+    if (state.reviewMode !== "table") {
+      elements.reviewBoard.innerHTML = `
+        <article class="vnext-empty-card">
+          <strong>表は必要な時だけ開きます。</strong>
+          <span>不備カードまたは詳細の「表で確認」を押すと、元表に近い表示で該当セルを確認できます。</span>
+        </article>
+      `;
+      renderSelectedCellDetail(null, { slotFindingMap: new Map(), reviewerAlertMap: new Map() });
+      return;
+    }
+
+    const reviewMaps = buildReviewMaps();
+    const selected = ensureSelectedReviewCell(reviewMaps);
+    renderSheetAlertBanner();
+
+    if (!state.analysis) {
+      elements.reviewBoard.innerHTML = `
+        <article class="vnext-empty-card">
+          <strong>まだ表で確認できる日付がありません。</strong>
+          <span>ホームでxlsxを選ぶと全日分チェックが始まります。</span>
+        </article>
+      `;
+      renderSelectedCellDetail(null, reviewMaps);
+      return;
+    }
+
+    const records = state.analysis.records ?? [];
+    if (!records.length) {
+      elements.reviewBoard.innerHTML = `
+        <article class="vnext-empty-card">
+          <strong>表の行を読み取れませんでした。</strong>
+          <span>困ったときから診断情報を確認してください。</span>
+        </article>
+      `;
+      renderSelectedCellDetail(null, reviewMaps);
+      return;
+    }
+
+    const recordsByBlock = new Map();
+    for (const record of records) {
+      if (!recordsByBlock.has(record.blockIndex)) {
+        recordsByBlock.set(record.blockIndex, []);
+      }
+      recordsByBlock.get(record.blockIndex).push(record);
+    }
+
+    const selectedFinding = getSelectedDefectFinding(getCurrentDefectFindings());
+    if (elements.reviewTitle) {
+      elements.reviewTitle.textContent = state.selectedSheetName
+        ? `${getSheetDisplayDate(state.selectedSheetName)} 表で確認`
+        : "表で確認";
+    }
+    if (elements.reviewGuide) {
+      elements.reviewGuide.textContent = selectedFinding
+        ? `選択中: ${selectedFinding.childName ?? "対象なし"} / ${selectedFinding.time ?? "時刻不明"}。色付きセルが修正候補です。`
+        : "色付きセルが修正候補です。表では必要に応じて元の位置だけ確認します。";
+    }
+
+    elements.reviewBoard.innerHTML = [...recordsByBlock.entries()]
+      .map(([blockIndex, blockRecords]) => {
+        const columns = blockRecords[0]?.intervals ?? [];
+        const timeHeaders = columns.map((interval) => `<th>${escapeHtml(interval.timeLabel)}</th>`).join("");
+        const rows = blockRecords
+          .map((record) => {
+            const statusCells = record.intervals
+              .map(
+                (_, intervalIndex) =>
+                  `<td>${renderQueueReviewCell({ record, intervalIndex, part: "status", reviewMaps })}</td>`,
+              )
+              .join("");
+            const reviewerCells = record.intervals
+              .map(
+                (_, intervalIndex) =>
+                  `<td>${renderQueueReviewCell({ record, intervalIndex, part: "reviewer", reviewMaps })}</td>`,
+              )
+              .join("");
+
+            return `
+              <tbody>
+                <tr>
+                  <th class="vnext-table__child" rowspan="2">${escapeHtml(record.childName)}</th>
+                  <th class="vnext-table__row-label">状態</th>
+                  ${statusCells}
+                </tr>
+                <tr>
+                  <th class="vnext-table__row-label">記録者</th>
+                  ${reviewerCells}
+                </tr>
+              </tbody>
+            `;
+          })
+          .join("");
+
+        return `
+          <section class="vnext-table-block">
+            <div class="vnext-table-block__head">
+              <strong>ブロック${escapeHtml(String(blockIndex))}</strong>
+              <span>${escapeHtml(String(blockRecords.length))}人 / ${escapeHtml(columns[0]?.timeLabel ?? "-")} - ${escapeHtml(columns[columns.length - 1]?.timeLabel ?? "-")}</span>
+            </div>
+            <div class="vnext-table-scroll">
+              <table class="vnext-table queue-table">
+                <thead>
+                  <tr>
+                    <th>園児名</th>
+                    <th>行</th>
+                    ${timeHeaders}
+                  </tr>
+                </thead>
+                ${rows}
+              </table>
+            </div>
+          </section>
+        `;
+      })
+      .join("");
+
+    renderSelectedCellDetail(selected, reviewMaps);
+    focusSelectedReviewCell();
+  }
+
+  function renderSelectedCellDetail(selected, reviewMaps) {
+    if (!elements?.cellDetailPanel) {
+      return;
+    }
+
+    if (!selected) {
+      elements.cellDetailPanel.innerHTML = `
+        <div class="vnext-cell-detail vnext-cell-detail--empty">セルを押すと、このコマの状態と記録者を確認できます。</div>
+      `;
+      return;
+    }
+
+    const record = (state.analysis?.records ?? []).find(
+      (item) =>
+        item.blockIndex === selected.blockIndex &&
+        item.stateRow === selected.stateRow &&
+        item.reviewerRow === selected.reviewerRow,
+    );
+    const interval = record?.intervals?.[selected.intervalIndex];
+    if (!record || !interval) {
+      elements.cellDetailPanel.innerHTML = `
+        <div class="vnext-cell-detail vnext-cell-detail--empty">このセルの詳細を読み取れませんでした。</div>
+      `;
+      return;
+    }
+
+    const findings = getGroupedFindingsForSelectedCell(selected);
+    const slotKey = createReviewSlotKey(record.blockIndex, record.stateRow, record.reviewerRow, selected.intervalIndex);
+    const rawFindings = reviewMaps?.slotFindingMap?.get(slotKey) ?? [];
+    const displayFindings = findings.length > 0 ? findings : rawFindings.map(buildDisplayFindingFromRaw);
+    const findingHtml = displayFindings.length
+      ? displayFindings
+          .map(
+            (finding) => `
+              <div class="vnext-cell-detail__finding vnext-cell-detail__finding--${finding.severity}">
+                <span>${escapeHtml(getSeverityMeta(finding.severity).label)}</span>
+                <strong>${escapeHtml(getVNextDefectTitle(finding))}</strong>
+              </div>
+            `,
+          )
+          .join("")
+      : `<div class="vnext-cell-detail__note">このコマ単体の要確認はありません。</div>`;
+
+    elements.cellDetailPanel.innerHTML = `
+      <aside class="vnext-cell-detail">
+        <div class="vnext-cell-detail__head">
+          <strong>${escapeHtml(record.childName)} / ${escapeHtml(interval.timeLabel)}</strong>
+          <span>${selected.part === "reviewer" ? "記録者セル" : "状態セル"}</span>
+        </div>
+        <div class="vnext-cell-detail__grid">
+          <span>状態</span><strong>${escapeHtml(interval.statusText || "(空欄)")}</strong>
+          <span>記録者</span><strong>${escapeHtml(abbreviateReviewerName(interval.reviewerText) || "未入力")}</strong>
+        </div>
+        <div class="vnext-cell-detail__findings">${findingHtml}</div>
+      </aside>
+    `;
+  }
+
   function renderAll() {
     applyFieldAdjustmentStyles();
     document.body?.classList.add("queue-hard-reset");
+    document.body?.classList.add("vnext-app");
     renderRuntimeChrome();
     renderHomeStateChrome();
     renderSummary();
@@ -17161,6 +18573,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     elements?.reviewBackButton?.addEventListener("click", () => {
       setActiveScreen("home", { focus: true });
       setStatus("ホームに戻りました。要確認の日付カードを確認できます。");
+    });
+
+    elements?.reviewDefectsButton?.addEventListener("click", () => {
+      setReviewMode("defects");
+      setActiveScreen("review", { focus: true });
+      renderAll();
+      setStatus("この日の不備一覧に戻りました。");
     });
 
     elements?.changeFileButton?.addEventListener("click", () => {
