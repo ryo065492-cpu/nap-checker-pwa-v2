@@ -7769,6 +7769,38 @@ body.vnext2-app > .app-shell {
   font-weight: 900;
 }
 
+.vnext2-filter-context {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(0, 137, 125, 0.18);
+  border-radius: 18px;
+  background: rgba(231, 242, 239, 0.82);
+}
+
+.vnext2-filter-context > div {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.vnext2-filter-context strong {
+  color: #006d63;
+  font-size: 17px;
+}
+
+.vnext2-filter-context span {
+  color: #5f5449;
+  font-size: 15px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
 .vnext2-date-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -7961,6 +7993,26 @@ body.vnext2-app > .app-shell {
 
 .vnext2-day-missing p {
   margin: 0;
+}
+
+.vnext2-day-missing__place {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.vnext2-day-missing__place span {
+  color: #7b5100;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.vnext2-day-missing__place strong {
+  font-size: 16px;
+  overflow-wrap: anywhere;
 }
 
 .vnext2-day-missing__chips {
@@ -8318,8 +8370,8 @@ body.vnext2-app > .app-shell {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-18-1219</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-18 12:19</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-18-1426</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-18 14:26</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -8888,7 +8940,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-18-1219","buildLabel":"2026-05-18 12:19","buildId":"2026-05-18-121938","builtAtIso":"2026-05-18T03:19:38.653Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-18-1426","buildLabel":"2026-05-18 14:26","buildId":"2026-05-18-142628","builtAtIso":"2026-05-18T05:26:28.852Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -19549,6 +19601,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     selectedDefectId: null,
     selectedCellId: null,
     severityFilter: "all",
+    severityFilterSource: "home",
     previousScreen: "home",
     error: null,
     supportMessage: "",
@@ -19585,6 +19638,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     uiVNext2State.error = state.currentErrorMessage || state.lastErrorMessage || null;
     if (!["all", "red", "yellow"].includes(uiVNext2State.severityFilter)) {
       uiVNext2State.severityFilter = "all";
+    }
+    if (!["home", "day"].includes(uiVNext2State.severityFilterSource)) {
+      uiVNext2State.severityFilterSource = "home";
     }
 
     if (!state.workbook?.sheets?.length && uiVNext2State.screen !== "support") {
@@ -19639,6 +19695,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       red: "赤のみ",
       yellow: "黄のみ",
     }[uiVNext2State.severityFilter] ?? "すべて";
+  }
+
+  function isVNext2DayQueueUsingHomeFilter() {
+    return uiVNext2State.screen === "dayQueue" &&
+      uiVNext2State.severityFilter !== "all" &&
+      uiVNext2State.severityFilterSource === "home";
   }
 
   function getVNext2DayItem(dayId) {
@@ -19757,10 +19819,31 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     return labels;
   }
 
+  function getVNext2EnvironmentLocationText(finding) {
+    const labels = getVNext2EnvironmentLabels(finding);
+    const labelText = labels.length
+      ? labels.map((label) => `「${label}」`).join("・")
+      : "「温度」「湿度」";
+    const addresses = [];
+    const addAddress = (value) => {
+      const text = normalizeText(value);
+      if (text && !addresses.includes(text)) {
+        addresses.push(text);
+      }
+    };
+
+    addAddress(finding?.environment?.labelCell?.address);
+    for (const item of [...(finding?.sourceFindings ?? []), ...(finding?.rawFindings ?? [])]) {
+      addAddress(item?.environment?.labelCell?.address);
+    }
+
+    return `シート上部の${labelText}欄${addresses.length ? `（${addresses.join("、")}付近）` : ""}`;
+  }
+
   function getVNext2EnvironmentMessage(finding) {
     const labels = getVNext2EnvironmentLabels(finding);
     const labelText = labels.length ? labels.join("・") : "温度・湿度";
-    return `${labelText}欄が未入力です。この日の温度・湿度欄を確認してください。`;
+    return `${labelText}欄が未入力です。${getVNext2EnvironmentLocationText(finding)}を確認してください。`;
   }
 
   function canOpenVNext2TableForFinding(finding) {
@@ -19780,8 +19863,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     return `
       <div class="vnext2-day-missing" data-testid="vnext2-day-missing">
         <span>この日の入力漏れ</span>
-        <strong>この日の温度・湿度欄を確認してください</strong>
+        <strong>シート上部の温度・湿度欄を確認してください</strong>
         <p>${escapeHtml(getVNext2EnvironmentMessage(finding))}</p>
+        <div class="vnext2-day-missing__place">
+          <span>確認する場所</span>
+          <strong>${escapeHtml(getVNext2EnvironmentLocationText(finding))}</strong>
+        </div>
         <div class="vnext2-day-missing__chips">
           ${chips.map((label) => `<span>${escapeHtml(label)}未入力</span>`).join("")}
         </div>
@@ -19811,6 +19898,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     uiVNext2State.selectedDefectId = null;
     uiVNext2State.selectedCellId = null;
     uiVNext2State.severityFilter = "all";
+    uiVNext2State.severityFilterSource = "home";
     uiVNext2State.error = null;
     if (elements?.fileInput) {
       elements.fileInput.value = "";
@@ -19838,8 +19926,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     uiVNext2State.error = null;
   }
 
-  function setVNext2SeverityFilter(filter) {
+  function setVNext2SeverityFilter(filter, source = "") {
     uiVNext2State.severityFilter = ["red", "yellow"].includes(filter) ? filter : "all";
+    uiVNext2State.severityFilterSource = ["home", "day"].includes(source)
+      ? source
+      : (uiVNext2State.screen === "home" ? "home" : "day");
     uiVNext2State.selectedDefectId = null;
     uiVNext2State.selectedCellId = null;
     state.selectedDefectKey = "";
@@ -19849,6 +19940,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function openDayQueue(dayId) {
+    const enteringFromHome = uiVNext2State.screen === "home";
     if (!ensureVNext2DayLoaded(dayId)) {
       setError("この日付の解析結果を表示できません。全日分を再チェックしてください。");
       setStatus("日付カードの表示に失敗しました。");
@@ -19861,6 +19953,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     uiVNext2State.selectedDayId = dayId;
     uiVNext2State.selectedDefectId = null;
     uiVNext2State.selectedCellId = null;
+    if (enteringFromHome) {
+      uiVNext2State.severityFilterSource = "home";
+    }
     state.selectedDefectKey = "";
     state.reviewMode = "defects";
     setStatus(`「${dayId}」の不備一覧を表示しました。`);
@@ -20098,6 +20193,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const allActive = uiVNext2State.severityFilter === "all";
     const redActive = uiVNext2State.severityFilter === "red";
     const yellowActive = uiVNext2State.severityFilter === "yellow";
+    const filterSource = scope === "home" ? "home" : "day";
     return `
       <div class="vnext2-filter-bar" data-testid="vnext2-filter-bar">
         <div class="vnext2-filter-buttons" role="group" aria-label="表示する不備の種類">
@@ -20106,6 +20202,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             class="vnext2-filter-button ${allActive ? "is-active" : ""}"
             data-action="set-severity-filter"
             data-filter="all"
+            data-filter-source="${filterSource}"
             data-testid="vnext2-filter-all"
             aria-pressed="${allActive ? "true" : "false"}"
           >すべて</button>
@@ -20114,6 +20211,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             class="vnext2-filter-button ${redActive ? "is-active" : ""}"
             data-action="set-severity-filter"
             data-filter="red"
+            data-filter-source="${filterSource}"
             data-testid="vnext2-filter-red"
             aria-pressed="${redActive ? "true" : "false"}"
           >赤</button>
@@ -20122,6 +20220,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             class="vnext2-filter-button ${yellowActive ? "is-active" : ""}"
             data-action="set-severity-filter"
             data-filter="yellow"
+            data-filter-source="${filterSource}"
             data-testid="vnext2-filter-yellow"
             aria-pressed="${yellowActive ? "true" : "false"}"
           >黄</button>
@@ -20129,6 +20228,26 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         <span class="vnext2-filter-summary">
           表示中: ${escapeHtml(getVNext2SeverityFilterLabel())} / ${escapeHtml(String(visibleCount))}${scope === "day" ? "件" : "日"} / 全${escapeHtml(String(totalCount))}${scope === "day" ? "件" : "日"}
         </span>
+      </div>
+    `;
+  }
+
+  function renderVNext2InheritedDayFilterNotice(visibleCount, totalCount) {
+    const filterLabel = getVNext2SeverityFilterLabel();
+    return `
+      <div class="vnext2-filter-context" data-testid="vnext2-filter-context">
+        <div>
+          <strong>${escapeHtml(filterLabel)}表示中</strong>
+          <span>ホームで選んだ条件を引き継いでいます。表示中 ${escapeHtml(String(visibleCount))}件 / 全${escapeHtml(String(totalCount))}件</span>
+        </div>
+        <button
+          type="button"
+          class="vnext2-button vnext2-button--subtle"
+          data-action="set-severity-filter"
+          data-filter="all"
+          data-filter-source="day"
+          data-testid="vnext2-show-all-defects"
+        >すべて表示</button>
       </div>
     `;
   }
@@ -20286,7 +20405,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             表示中 ${escapeHtml(String(model.visibleDefectCount))}件 / 全${escapeHtml(String(model.totalDefectCount))}件
           </strong>
         </div>
-        ${renderVNext2SeverityFilters("day", model.visibleDefectCount, model.totalDefectCount)}
+        ${isVNext2DayQueueUsingHomeFilter()
+          ? renderVNext2InheritedDayFilterNotice(model.visibleDefectCount, model.totalDefectCount)
+          : renderVNext2SeverityFilters("day", model.visibleDefectCount, model.totalDefectCount)}
         <div class="vnext2-scroll-list vnext2-defect-list" data-testid="vnext2-defect-list">
           ${records.length ? records.map(renderVNext2DefectCard).join("") : `
             <article class="vnext2-empty-panel">
@@ -20603,7 +20724,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     } else if (action === "recheck") {
       await startFullCheck();
     } else if (action === "set-severity-filter") {
-      setVNext2SeverityFilter(target.dataset.filter ?? "all");
+      setVNext2SeverityFilter(target.dataset.filter ?? "all", target.dataset.filterSource ?? "");
     } else if (action === "open-day") {
       openDayQueue(target.dataset.dayId ?? uiVNext2State.selectedDayId ?? "");
     } else if (action === "open-defect") {
