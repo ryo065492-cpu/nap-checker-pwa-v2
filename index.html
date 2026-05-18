@@ -7657,16 +7657,41 @@ body.vnext2-app > .app-shell {
 .vnext2-summary-grid {
   min-width: 0;
   display: grid;
-  grid-template-columns: repeat(4, minmax(170px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 12px;
 }
 
 .vnext2-summary-card {
   min-width: 0;
+  width: 100%;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  min-height: 128px;
   padding: 18px;
   border: 1px solid rgba(56, 45, 31, 0.08);
   border-radius: 22px;
   background: rgba(255, 255, 255, 0.88);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+button.vnext2-summary-card {
+  appearance: none;
+  cursor: pointer;
+}
+
+button.vnext2-summary-card:hover,
+button.vnext2-summary-card:focus-visible {
+  border-color: rgba(0, 137, 125, 0.34);
+  box-shadow: 0 0 0 4px rgba(0, 137, 125, 0.12), 0 16px 30px rgba(56, 45, 31, 0.08);
+  transform: translateY(-1px);
+}
+
+.vnext2-summary-card.is-active {
+  border-color: rgba(0, 137, 125, 0.56);
+  box-shadow: 0 0 0 4px rgba(0, 137, 125, 0.16), 0 18px 34px rgba(56, 45, 31, 0.1);
 }
 
 .vnext2-summary-card span,
@@ -7674,6 +7699,8 @@ body.vnext2-app > .app-shell {
   display: block;
   color: #6f6255;
   font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .vnext2-summary-card strong {
@@ -7681,6 +7708,7 @@ body.vnext2-app > .app-shell {
   margin: 6px 0;
   font-size: clamp(30px, 4.2vw, 44px);
   line-height: 1.05;
+  white-space: nowrap;
 }
 
 .vnext2-summary-card--red strong,
@@ -7702,6 +7730,7 @@ body.vnext2-app > .app-shell {
   min-height: 0;
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 2px;
   padding: 18px;
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.9);
@@ -7721,6 +7750,16 @@ body.vnext2-app > .app-shell {
 .vnext2-section-head h2,
 .vnext2-page-head h1 {
   margin: 0;
+}
+
+.vnext2-section-head p,
+.vnext2-page-head p {
+  max-width: 760px;
+  margin: 6px 0 0;
+  color: #6f6255;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.6;
 }
 
 .vnext2-date-list,
@@ -7755,12 +7794,28 @@ body.vnext2-app > .app-shell {
 .vnext2-filter-button {
   min-height: 40px;
   padding: 9px 14px;
+  border: 1px solid rgba(0, 137, 125, 0.18);
+  border-radius: 999px;
+  background: #fff;
+  color: #006d63;
   font-size: 15px;
+  font-weight: 900;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
 .vnext2-filter-button.is-active {
   background: #00897d;
   color: #fff;
+}
+
+.vnext2-filter-button[data-filter="red"].is-active {
+  background: #cc3a31;
+}
+
+.vnext2-filter-button[data-filter="yellow"].is-active {
+  background: #bd7a12;
 }
 
 .vnext2-filter-summary {
@@ -7803,7 +7858,7 @@ body.vnext2-app > .app-shell {
 
 .vnext2-date-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   align-content: start;
   gap: 14px;
   padding: 2px 4px 12px 2px;
@@ -7814,7 +7869,7 @@ body.vnext2-app > .app-shell {
   display: grid;
   gap: 10px;
   align-content: start;
-  min-height: 220px;
+  min-height: 238px;
   border: 2px solid #f0a8a2;
   border-radius: 24px;
   padding: 18px;
@@ -7822,6 +7877,12 @@ body.vnext2-app > .app-shell {
   color: #251f18;
   text-align: left;
   cursor: pointer;
+}
+
+.vnext2-date-card:hover,
+.vnext2-date-card:focus-visible {
+  box-shadow: 0 0 0 4px rgba(0, 137, 125, 0.12), 0 18px 34px rgba(56, 45, 31, 0.1);
+  transform: translateY(-1px);
 }
 
 .vnext2-date-card--yellow {
@@ -7868,12 +7929,24 @@ body.vnext2-app > .app-shell {
 .vnext2-date-card__counts span,
 .vnext2-chip,
 .vnext2-reviewer {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 30px;
+  padding: 5px 10px;
+  border-radius: 999px;
   background: rgba(76, 66, 56, 0.08);
   color: #4d4338;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .vnext2-date-card__action {
   align-self: end;
+  margin-top: auto;
   width: fit-content;
   min-height: 36px;
   padding: 8px 14px;
@@ -7881,6 +7954,7 @@ body.vnext2-app > .app-shell {
   background: #e1f0ed;
   color: #006d63;
   font-weight: 900;
+  white-space: nowrap;
 }
 
 .vnext2-day-queue {
@@ -7918,6 +7992,14 @@ body.vnext2-app > .app-shell {
   cursor: pointer;
 }
 
+.vnext2-defect-card p {
+  margin: 0;
+  color: #4d4338;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
 .vnext2-defect-card--yellow {
   border-color: #e2b45b;
   background: rgba(255, 250, 240, 0.96);
@@ -7943,6 +8025,7 @@ body.vnext2-app > .app-shell {
 .vnext2-detail-card h2 {
   font-size: 22px;
   line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .vnext2-affected {
@@ -8370,8 +8453,8 @@ body.vnext2-app > .app-shell {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-18-1426</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-18 14:26</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-18-1759</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-18 17:59</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -8940,7 +9023,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-18-1426","buildLabel":"2026-05-18 14:26","buildId":"2026-05-18-142628","builtAtIso":"2026-05-18T05:26:28.852Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-18-1759","buildLabel":"2026-05-18 17:59","buildId":"2026-05-18-175921","builtAtIso":"2026-05-18T08:59:21.693Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -20171,20 +20254,58 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   function renderVNext2SummaryCards(stats) {
     const cards = [
-      { label: "要確認日付", value: `${stats.issueDays}日`, tone: stats.issueDays > 0 ? "red" : "ok" },
-      { label: "赤", value: `${stats.redIncidents}件`, sub: `該当${stats.redCells}コマ`, tone: "red" },
-      { label: "黄", value: `${stats.yellowIncidents}件`, sub: `該当${stats.yellowCells}コマ`, tone: "yellow" },
-      { label: "OK", value: `${stats.okDays}日`, tone: "ok" },
+      {
+        label: "要確認の日付",
+        value: `${stats.issueDays}日`,
+        sub: "日付カードから確認へ",
+        tone: stats.issueDays > 0 ? "red" : "ok",
+        filter: "all",
+        testId: "vnext2-summary-filter-all",
+      },
+      {
+        label: "赤だけ見る",
+        value: `${stats.redIncidents}件`,
+        sub: `該当${stats.redCells}コマ`,
+        tone: "red",
+        filter: "red",
+        testId: "vnext2-summary-filter-red",
+      },
+      {
+        label: "黄だけ見る",
+        value: `${stats.yellowIncidents}件`,
+        sub: `該当${stats.yellowCells}コマ`,
+        tone: "yellow",
+        filter: "yellow",
+        testId: "vnext2-summary-filter-yellow",
+      },
+      { label: "OKの日付", value: `${stats.okDays}日`, sub: "確認不要", tone: "ok", testId: "vnext2-summary-ok" },
     ];
+    const renderCard = (card) => {
+      const isFilterCard = Boolean(card.filter);
+      const active = isFilterCard && uiVNext2State.severityFilter === card.filter;
+      const body = `
+        <span>${escapeHtml(card.label)}</span>
+        <strong>${escapeHtml(card.value)}</strong>
+        ${card.sub ? `<small>${escapeHtml(card.sub)}</small>` : ""}
+      `;
+      if (!isFilterCard) {
+        return `<article class="vnext2-summary-card vnext2-summary-card--${card.tone}" data-testid="${card.testId}">${body}</article>`;
+      }
+      return `
+        <button
+          type="button"
+          class="vnext2-summary-card vnext2-summary-card--${card.tone} ${active ? "is-active" : ""}"
+          data-action="set-severity-filter"
+          data-filter="${card.filter}"
+          data-filter-source="home"
+          data-testid="${card.testId}"
+          aria-pressed="${active ? "true" : "false"}"
+        >${body}</button>
+      `;
+    };
     return `
       <div class="vnext2-summary-grid" data-testid="vnext2-summary-grid">
-        ${cards.map((card) => `
-          <article class="vnext2-summary-card vnext2-summary-card--${card.tone}">
-            <span>${escapeHtml(card.label)}</span>
-            <strong>${escapeHtml(card.value)}</strong>
-            ${card.sub ? `<small>${escapeHtml(card.sub)}</small>` : ""}
-          </article>
-        `).join("")}
+        ${cards.map(renderCard).join("")}
       </div>
     `;
   }
@@ -20205,7 +20326,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             data-filter-source="${filterSource}"
             data-testid="vnext2-filter-all"
             aria-pressed="${allActive ? "true" : "false"}"
-          >すべて</button>
+          >すべて見る</button>
           <button
             type="button"
             class="vnext2-filter-button ${redActive ? "is-active" : ""}"
@@ -20214,7 +20335,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             data-filter-source="${filterSource}"
             data-testid="vnext2-filter-red"
             aria-pressed="${redActive ? "true" : "false"}"
-          >赤</button>
+          >赤だけ</button>
           <button
             type="button"
             class="vnext2-filter-button ${yellowActive ? "is-active" : ""}"
@@ -20223,10 +20344,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             data-filter-source="${filterSource}"
             data-testid="vnext2-filter-yellow"
             aria-pressed="${yellowActive ? "true" : "false"}"
-          >黄</button>
+          >黄だけ</button>
         </div>
         <span class="vnext2-filter-summary">
-          表示中: ${escapeHtml(getVNext2SeverityFilterLabel())} / ${escapeHtml(String(visibleCount))}${scope === "day" ? "件" : "日"} / 全${escapeHtml(String(totalCount))}${scope === "day" ? "件" : "日"}
+          ${escapeHtml(getVNext2SeverityFilterLabel())}: 表示中 ${escapeHtml(String(visibleCount))}${scope === "day" ? "件" : "日"} / 全${escapeHtml(String(totalCount))}${scope === "day" ? "件" : "日"}
         </span>
       </div>
     `;
@@ -20237,8 +20358,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     return `
       <div class="vnext2-filter-context" data-testid="vnext2-filter-context">
         <div>
-          <strong>${escapeHtml(filterLabel)}表示中</strong>
-          <span>ホームで選んだ条件を引き継いでいます。表示中 ${escapeHtml(String(visibleCount))}件 / 全${escapeHtml(String(totalCount))}件</span>
+          <strong>ホームの${escapeHtml(filterLabel)}を引き継ぎ中</strong>
+          <span>今は${escapeHtml(filterLabel)}だけを表示しています。表示中 ${escapeHtml(String(visibleCount))}件 / 全${escapeHtml(String(totalCount))}件</span>
         </div>
         <button
           type="button"
@@ -20247,7 +20368,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           data-filter="all"
           data-filter-source="day"
           data-testid="vnext2-show-all-defects"
-        >すべて表示</button>
+        >この日の全不備を見る</button>
       </div>
     `;
   }
@@ -20273,7 +20394,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         <div class="vnext2-chip-row">
           ${reasons.length ? reasons.map((label) => `<span class="vnext2-chip">${escapeHtml(label)}</span>`).join("") : `<span class="vnext2-chip vnext2-chip--muted">理由なし</span>`}
         </div>
-        <span class="vnext2-date-card__action">確認する</span>
+        <span class="vnext2-date-card__action">この日を確認する</span>
       </button>
     `;
   }
@@ -20304,8 +20425,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         <section class="vnext2-date-section">
           <div class="vnext2-section-head">
             <div>
-              <h2>要確認の日付</h2>
-              <p>問題ない日付と子どもの詳細は表示せず、直す必要がある日付だけを出しています。</p>
+              <h2>まず確認する日付を選んでください</h2>
+              <p>赤だけ・黄だけで絞るか、日付カードを押してこの日の不備へ進みます。問題ない子どもの詳細はここには出しません。</p>
             </div>
             <span class="vnext2-count-pill">表示中 ${escapeHtml(String(days.length))}日 / 全${escapeHtml(String(allDays.length))}日 / OK ${escapeHtml(String(stats.okDays))}日</span>
           </div>
@@ -20365,8 +20486,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
               ${renderVNext2AffectedRows(rows)}`
         }
         <div class="vnext2-card-actions">
-          <button type="button" class="vnext2-button vnext2-button--subtle" data-action="open-defect" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-defect">内容を見る</button>
-          ${canOpenTable ? `<button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-table">表で確認</button>` : ""}
+          <button type="button" class="vnext2-button vnext2-button--subtle" data-action="open-defect" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-defect">内容を確認</button>
+          ${canOpenTable ? `<button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-table">表で場所を見る</button>` : ""}
         </div>
       </article>
     `;
@@ -20397,9 +20518,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         ${renderVNext2ActionBar()}
         <div class="vnext2-page-head">
           <div>
-            <span>この日の不備</span>
+            <span>この日の不備だけを確認</span>
             <h1>${escapeHtml(day.dateLabel ?? dayId ?? "日付未選択")}</h1>
-            <p>問題ない子どもや問題ないコマは通常表示していません。</p>
+            <p>問題ない子どもや問題ないコマは通常表示していません。カードを押して内容を確認し、表の位置が必要な不備だけ「表で場所を見る」を使います。</p>
           </div>
           <strong class="vnext2-count-pill" data-total-defects="${escapeHtml(String(model.totalDefectCount))}" data-visible-defects="${escapeHtml(String(model.visibleDefectCount))}">
             表示中 ${escapeHtml(String(model.visibleDefectCount))}件 / 全${escapeHtml(String(model.totalDefectCount))}件
