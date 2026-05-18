@@ -7937,6 +7937,52 @@ body.vnext2-app > .app-shell {
   font-size: 15px;
 }
 
+.vnext2-day-missing {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid rgba(226, 180, 91, 0.42);
+  border-radius: 18px;
+  background: rgba(255, 248, 232, 0.86);
+}
+
+.vnext2-day-missing > span {
+  color: #9a6500;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.vnext2-day-missing strong {
+  color: #372515;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.vnext2-day-missing p {
+  margin: 0;
+}
+
+.vnext2-day-missing__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vnext2-day-missing__chips span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 221, 143, 0.74);
+  color: #7b5100;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
 .vnext2-detail-card {
   min-height: 0;
   overflow: auto;
@@ -8272,8 +8318,8 @@ body.vnext2-app > .app-shell {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-17-2214</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-17 22:14</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-18-1219</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-18 12:19</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -8842,7 +8888,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-17-2214","buildLabel":"2026-05-17 22:14","buildId":"2026-05-17-221419","builtAtIso":"2026-05-17T13:14:19.324Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-18-1219","buildLabel":"2026-05-18 12:19","buildId":"2026-05-18-121938","builtAtIso":"2026-05-18T03:19:38.653Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -19687,6 +19733,62 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }));
   }
 
+  function isVNext2EnvironmentFinding(finding) {
+    return Boolean(finding?.environment) || ["missingTemperature", "missingHumidity"].includes(finding?.ruleKey);
+  }
+
+  function getVNext2EnvironmentLabels(finding) {
+    const labels = [];
+    const addLabel = (value) => {
+      const text = normalizeText(value);
+      if (text && !labels.includes(text)) {
+        labels.push(text);
+      }
+    };
+
+    addLabel(finding?.environment?.label);
+    for (const item of [...(finding?.sourceFindings ?? []), ...(finding?.rawFindings ?? [])]) {
+      addLabel(item?.environment?.label);
+    }
+    if (!labels.length) {
+      if (finding?.ruleKey === "missingTemperature") addLabel("温度");
+      if (finding?.ruleKey === "missingHumidity") addLabel("湿度");
+    }
+    return labels;
+  }
+
+  function getVNext2EnvironmentMessage(finding) {
+    const labels = getVNext2EnvironmentLabels(finding);
+    const labelText = labels.length ? labels.join("・") : "温度・湿度";
+    return `${labelText}欄が未入力です。この日の温度・湿度欄を確認してください。`;
+  }
+
+  function canOpenVNext2TableForFinding(finding) {
+    return !isVNext2EnvironmentFinding(finding) && Boolean(getReviewTargetForFinding(finding));
+  }
+
+  function getVNext2DisplayCountText(finding) {
+    if (isVNext2EnvironmentFinding(finding)) {
+      return `要確認${Math.max(1, Number(finding?.count) || 1)}件`;
+    }
+    return formatVNextIncidentSlot(1, getVNext2SlotCount(finding));
+  }
+
+  function renderVNext2EnvironmentMissingPanel(finding) {
+    const labels = getVNext2EnvironmentLabels(finding);
+    const chips = labels.length ? labels : ["温度・湿度"];
+    return `
+      <div class="vnext2-day-missing" data-testid="vnext2-day-missing">
+        <span>この日の入力漏れ</span>
+        <strong>この日の温度・湿度欄を確認してください</strong>
+        <p>${escapeHtml(getVNext2EnvironmentMessage(finding))}</p>
+        <div class="vnext2-day-missing__chips">
+          ${chips.map((label) => `<span>${escapeHtml(label)}未入力</span>`).join("")}
+        </div>
+      </div>
+    `;
+  }
+
   function resetForNewFile() {
     resetReviewSelectionState({ clearAnalysis: true });
     state.workbook = null;
@@ -19787,6 +19889,16 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     if (!record) {
       setStatus("表で確認する不備を見つけられませんでした。");
       uiVNext2State.screen = "dayQueue";
+      renderAll();
+      return;
+    }
+
+    if (!canOpenVNext2TableForFinding(record.finding)) {
+      uiVNext2State.screen = "defectDetail";
+      uiVNext2State.selectedDefectId = record.id;
+      uiVNext2State.selectedCellId = null;
+      state.selectedReviewCell = null;
+      setStatus("温度・湿度未入力は表セルではなく、この日の入力欄として確認します。");
       renderAll();
       return;
     }
@@ -20104,9 +20216,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   function renderVNext2DefectCard(record) {
     const finding = record.finding;
-    const slotCount = getVNext2SlotCount(finding);
     const rows = getVNext2DefectSlotRows(finding);
     const selected = record.id === uiVNext2State.selectedDefectId;
+    const isEnvironment = isVNext2EnvironmentFinding(finding);
+    const countText = getVNext2DisplayCountText(finding);
+    const canOpenTable = canOpenVNext2TableForFinding(finding);
     return `
       <article
         class="vnext2-defect-card vnext2-defect-card--${escapeHtml(finding.severity)} ${selected ? "is-selected" : ""}"
@@ -20117,19 +20231,23 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       >
         <div class="vnext2-defect-card__top">
           <span class="vnext2-severity vnext2-severity--${escapeHtml(finding.severity)}">${escapeHtml(getSeverityMeta(finding.severity).label)}</span>
-          <strong>${escapeHtml(getVNextDefectTitle(finding))}</strong>
-          <span>${escapeHtml(formatVNextIncidentSlot(1, slotCount))}</span>
+          <strong>${escapeHtml(isEnvironment ? "この日の入力漏れ" : getVNextDefectTitle(finding))}</strong>
+          <span>${escapeHtml(countText)}</span>
         </div>
         <div class="vnext2-defect-card__main">
-          <strong>${escapeHtml(finding.childName ?? "対象なし")}</strong>
-          <span>${escapeHtml(finding.time ?? "時刻不明")}</span>
+          <strong>${escapeHtml(isEnvironment ? "温度・湿度欄" : (finding.childName ?? "対象なし"))}</strong>
+          <span>${escapeHtml(isEnvironment ? "この日全体" : (finding.time ?? "時刻不明"))}</span>
         </div>
-        <p>${escapeHtml(getVNextDefectMessage(finding))}</p>
-        <span class="vnext2-reviewer">記録者: ${escapeHtml(getVNextReviewerText(finding))}</span>
-        ${renderVNext2AffectedRows(rows)}
+        <p>${escapeHtml(isEnvironment ? getVNext2EnvironmentMessage(finding) : getVNextDefectMessage(finding))}</p>
+        ${
+          isEnvironment
+            ? renderVNext2EnvironmentMissingPanel(finding)
+            : `<span class="vnext2-reviewer">記録者: ${escapeHtml(getVNextReviewerText(finding))}</span>
+              ${renderVNext2AffectedRows(rows)}`
+        }
         <div class="vnext2-card-actions">
           <button type="button" class="vnext2-button vnext2-button--subtle" data-action="open-defect" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-defect">内容を見る</button>
-          <button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-table">表で確認</button>
+          ${canOpenTable ? `<button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-table">表で確認</button>` : ""}
         </div>
       </article>
     `;
@@ -20213,27 +20331,33 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
     const finding = record.finding;
     const rows = getVNext2DefectSlotRows(finding);
+    const isEnvironment = isVNext2EnvironmentFinding(finding);
+    const canOpenTable = canOpenVNext2TableForFinding(finding);
     return `
       <section class="vnext2-screen vnext2-detail" data-testid="vnext2-defect-detail">
         ${renderVNext2ActionBar({ dayBack: true })}
         <article class="vnext2-detail-card vnext2-detail-card--${escapeHtml(finding.severity)}">
           <div class="vnext2-detail-card__top">
             <span class="vnext2-severity vnext2-severity--${escapeHtml(finding.severity)}">${escapeHtml(getSeverityMeta(finding.severity).label)}</span>
-            <span>${escapeHtml(formatVNextIncidentSlot(1, getVNext2SlotCount(finding)))}</span>
+            <span>${escapeHtml(getVNext2DisplayCountText(finding))}</span>
           </div>
-          <h1>${escapeHtml(finding.childName ?? "対象なし")}</h1>
-          <h2>${escapeHtml(getVNextDefectTitle(finding))}</h2>
-          <p class="vnext2-time">${escapeHtml(finding.time ?? "時刻不明")}</p>
+          <h1>${escapeHtml(isEnvironment ? "この日の入力漏れ" : (finding.childName ?? "対象なし"))}</h1>
+          <h2>${escapeHtml(isEnvironment ? "温度・湿度を確認してください" : getVNextDefectTitle(finding))}</h2>
+          <p class="vnext2-time">${escapeHtml(isEnvironment ? "この日の温度・湿度欄" : (finding.time ?? "時刻不明"))}</p>
           <div class="vnext2-confirm-box">
             <strong>確認したいこと</strong>
-            <span>${escapeHtml(getVNextDefectMessage(finding))}</span>
+            <span>${escapeHtml(isEnvironment ? getVNext2EnvironmentMessage(finding) : getVNextDefectMessage(finding))}</span>
           </div>
-          <p class="vnext2-reviewer">記録者: ${escapeHtml(getVNextReviewerText(finding))}</p>
-          ${renderVNext2AffectedRows(rows)}
+          ${
+            isEnvironment
+              ? renderVNext2EnvironmentMissingPanel(finding)
+              : `<p class="vnext2-reviewer">記録者: ${escapeHtml(getVNextReviewerText(finding))}</p>
+                ${renderVNext2AffectedRows(rows)}`
+          }
           <div class="vnext2-card-actions">
-            <button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-detail-open-table">表で確認</button>
+            ${canOpenTable ? `<button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-detail-open-table">表で確認</button>` : ""}
           </div>
-          ${renderVNext2DetailContext(finding)}
+          ${isEnvironment ? "" : renderVNext2DetailContext(finding)}
         </article>
       </section>
     `;
