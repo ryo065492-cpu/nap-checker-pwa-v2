@@ -8453,8 +8453,8 @@ button.vnext2-summary-card:focus-visible {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-18-1759</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-18 17:59</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-18-1839</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-18 18:39</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -9023,7 +9023,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-18-1759","buildLabel":"2026-05-18 17:59","buildId":"2026-05-18-175921","builtAtIso":"2026-05-18T08:59:21.693Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-18-1839","buildLabel":"2026-05-18 18:39","buildId":"2026-05-18-183915","builtAtIso":"2026-05-18T09:39:15.754Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -12327,13 +12327,18 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     const items = analysis?.reviewItems ?? [];
     const labels = [];
+    let hasEnvironmentMissing = false;
     for (const item of items) {
-      if (!labels.includes(item.ruleName)) {
+      if (isVNext2EnvironmentFinding(item)) {
+        hasEnvironmentMissing = true;
+        continue;
+      }
+      if (labels.length < 3 && !labels.includes(item.ruleName)) {
         labels.push(item.ruleName);
       }
-      if (labels.length >= 3) {
-        break;
-      }
+    }
+    if (hasEnvironmentMissing && !labels.includes("温度・湿度未入力")) {
+      labels.push("温度・湿度未入力");
     }
     return labels;
   }
@@ -12370,6 +12375,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const totals = summary.totals ?? { red: 0, yellow: 0, info: 0 };
     const reviewTotals = summary.reviewTotals ?? { red: 0, yellow: 0, info: 0 };
     const environmentMissingLabels = getEnvironmentMissingLabels(analysis);
+    const reviewItems = analysis?.reviewItems ?? [];
+    const environmentReviewItemCount = reviewItems.filter(isVNext2EnvironmentFinding).length;
+    const yellowReviewItemsWithoutEnvironment = Math.max(0, (reviewTotals.yellow ?? 0) - environmentReviewItemCount);
+    const yellowIncidents = yellowReviewItemsWithoutEnvironment + (environmentMissingLabels.length > 0 ? 1 : 0);
 
     return {
       sheetName,
@@ -12377,7 +12386,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       status: "ok",
       redIncidents: reviewTotals.red ?? 0,
       redCells: countTableCellFindings(analysis, "red"),
-      yellowIncidents: reviewTotals.yellow ?? 0,
+      yellowIncidents,
       yellowCells: countTableCellFindings(analysis, "yellow"),
       hasEnvironmentMissing: environmentMissingLabels.length > 0,
       environmentMissingLabels,
@@ -15439,10 +15448,93 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     };
   }
 
+  function flattenVNext2EnvironmentSourceFindings(finding) {
+    const sources = [finding, ...(finding?.sourceFindings ?? []), ...(finding?.rawFindings ?? [])].filter(Boolean);
+    const deduped = [];
+    const seen = new Set();
+    for (const item of sources) {
+      const key = JSON.stringify([
+        item.ruleKey ?? item.ruleName ?? "",
+        item.environment?.label ?? "",
+        item.environment?.labelCell?.address ?? "",
+        item.message ?? "",
+      ]);
+      if (!seen.has(key)) {
+        seen.add(key);
+        deduped.push(item);
+      }
+    }
+    return deduped;
+  }
+
+  function buildVNext2DayLevelEnvironmentFinding(environmentFindings) {
+    const sources = environmentFindings.flatMap(flattenVNext2EnvironmentSourceFindings);
+    const first = environmentFindings[0] ?? sources[0] ?? {};
+    const labels = [];
+    const addLabel = (value) => {
+      const text = normalizeText(value);
+      if (text && !labels.includes(text)) {
+        labels.push(text);
+      }
+    };
+
+    for (const item of sources) {
+      addLabel(item.environment?.label);
+      if (item.ruleKey === "missingTemperature") addLabel("温度");
+      if (item.ruleKey === "missingHumidity") addLabel("湿度");
+    }
+    if (!labels.length) {
+      addLabel("温度・湿度");
+    }
+
+    const labelText = labels.join("・");
+    return {
+      ...first,
+      severity: "yellow",
+      ruleKey: "environmentMissingDay",
+      ruleName: "入力漏れ",
+      shortText: "温度・湿度未入力",
+      childName: "この日の入力欄",
+      time: "この日の温度・湿度欄",
+      message: `この日の${labelText}欄に入力漏れがあります。`,
+      reason: `未入力: ${labelText}`,
+      action: "シート上部の「温度」「湿度」欄を確認してください。",
+      count: 1,
+      rawFindingCount: sources.length,
+      details: [`未入力: ${labelText}`],
+      reviewerNames: [],
+      reviewerText: "対象なし",
+      contextRows: [],
+      sourceFindings: sources,
+      rawFindings: sources,
+      environment: {
+        dayLevel: true,
+        labels,
+      },
+    };
+  }
+
+  function groupVNext2DayLevelEnvironmentFindings(findings) {
+    const environmentFindings = [];
+    const normalFindings = [];
+    for (const finding of findings) {
+      if (isVNext2EnvironmentFinding(finding)) {
+        environmentFindings.push(finding);
+      } else {
+        normalFindings.push(finding);
+      }
+    }
+    if (environmentFindings.length > 0) {
+      normalFindings.push(buildVNext2DayLevelEnvironmentFinding(environmentFindings));
+    }
+    return normalFindings;
+  }
+
   function getQueueGroupedFindings() {
-    return (state.analysis?.reviewItems ?? state.analysis?.findings ?? []).filter((finding) =>
+    const findings = (state.analysis?.reviewItems ?? state.analysis?.findings ?? []).filter((finding) =>
       ["red", "yellow", "info"].includes(finding.severity),
     );
+    return groupVNext2DayLevelEnvironmentFindings(findings);
   }
 
   function getFilteredGroupedFindings() {
@@ -19892,6 +19984,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     };
 
     addLabel(finding?.environment?.label);
+    for (const label of finding?.environment?.labels ?? []) {
+      addLabel(label);
+    }
     for (const item of [...(finding?.sourceFindings ?? []), ...(finding?.rawFindings ?? [])]) {
       addLabel(item?.environment?.label);
     }
@@ -19907,20 +20002,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const labelText = labels.length
       ? labels.map((label) => `「${label}」`).join("・")
       : "「温度」「湿度」";
-    const addresses = [];
-    const addAddress = (value) => {
-      const text = normalizeText(value);
-      if (text && !addresses.includes(text)) {
-        addresses.push(text);
-      }
-    };
-
-    addAddress(finding?.environment?.labelCell?.address);
-    for (const item of [...(finding?.sourceFindings ?? []), ...(finding?.rawFindings ?? [])]) {
-      addAddress(item?.environment?.labelCell?.address);
-    }
-
-    return `シート上部の${labelText}欄${addresses.length ? `（${addresses.join("、")}付近）` : ""}`;
+    return `シート上部の${labelText}欄`;
   }
 
   function getVNext2EnvironmentMessage(finding) {
@@ -19935,7 +20017,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   function getVNext2DisplayCountText(finding) {
     if (isVNext2EnvironmentFinding(finding)) {
-      return `要確認${Math.max(1, Number(finding?.count) || 1)}件`;
+      return "要確認1件";
     }
     return formatVNextIncidentSlot(1, getVNext2SlotCount(finding));
   }
