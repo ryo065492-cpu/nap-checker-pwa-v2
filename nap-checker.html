@@ -7432,6 +7432,11 @@ body.vnext2-app > .app-shell {
   flex-wrap: wrap;
 }
 
+.vnext2-card-actions .vnext2-button {
+  min-height: 48px;
+  padding-inline: 18px;
+}
+
 .vnext2-status,
 .vnext2-build,
 .vnext2-count-pill,
@@ -7489,7 +7494,7 @@ body.vnext2-app > .app-shell {
 .vnext2-link-button,
 .vnext2-filter-button,
 .vnext2-update-alert {
-  min-height: 46px;
+  min-height: 48px;
   border: 0;
   border-radius: 999px;
   padding: 12px 18px;
@@ -7657,19 +7662,21 @@ body.vnext2-app > .app-shell {
 .vnext2-summary-grid {
   min-width: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 12px;
 }
 
 .vnext2-summary-card {
+  position: relative;
   min-width: 0;
   width: 100%;
   display: grid;
   gap: 6px;
   align-content: start;
-  min-height: 128px;
-  padding: 18px;
-  border: 1px solid rgba(56, 45, 31, 0.08);
+  min-height: 136px;
+  overflow: hidden;
+  padding: 20px;
+  border: 2px solid rgba(56, 45, 31, 0.08);
   border-radius: 22px;
   background: rgba(255, 255, 255, 0.88);
   color: inherit;
@@ -7677,17 +7684,38 @@ body.vnext2-app > .app-shell {
   text-align: left;
 }
 
+.vnext2-summary-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 7px;
+  border-radius: 22px 0 0 22px;
+  background: #00897d;
+}
+
+.vnext2-summary-card--red::before {
+  background: #d63c31;
+}
+
+.vnext2-summary-card--yellow::before {
+  background: #bd7a12;
+}
+
+.vnext2-summary-card--ok::before {
+  background: #17823d;
+}
+
 .vnext2-summary-card__hint {
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  min-height: 26px;
+  min-height: 30px;
   margin-top: 2px;
-  padding: 4px 9px;
+  padding: 5px 11px;
   border-radius: 999px;
   background: rgba(0, 137, 125, 0.1);
   color: #006d63;
-  font-size: 13px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 900;
   line-height: 1.2;
@@ -7707,7 +7735,13 @@ button.vnext2-summary-card:focus-visible {
 
 .vnext2-summary-card.is-active {
   border-color: rgba(0, 137, 125, 0.56);
-  box-shadow: 0 0 0 4px rgba(0, 137, 125, 0.16), 0 18px 34px rgba(56, 45, 31, 0.1);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(231, 242, 239, 0.9));
+  box-shadow: 0 0 0 5px rgba(0, 137, 125, 0.16), 0 18px 34px rgba(56, 45, 31, 0.1);
+}
+
+.vnext2-summary-card.is-active .vnext2-summary-card__hint {
+  background: #00897d;
+  color: #fff;
 }
 
 .vnext2-summary-card span,
@@ -7821,13 +7855,13 @@ button.vnext2-summary-card:focus-visible {
 }
 
 .vnext2-filter-button {
-  min-height: 44px;
-  padding: 10px 16px;
+  min-height: 48px;
+  padding: 12px 18px;
   border: 1px solid rgba(0, 137, 125, 0.18);
   border-radius: 999px;
   background: #fff;
   color: #006d63;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 900;
   line-height: 1.2;
   white-space: nowrap;
@@ -7837,14 +7871,17 @@ button.vnext2-summary-card:focus-visible {
 .vnext2-filter-button.is-active {
   background: #00897d;
   color: #fff;
+  box-shadow: 0 10px 22px rgba(0, 137, 125, 0.18);
 }
 
 .vnext2-filter-button[data-filter="red"].is-active {
   background: #cc3a31;
+  box-shadow: 0 10px 22px rgba(204, 58, 49, 0.2);
 }
 
 .vnext2-filter-button[data-filter="yellow"].is-active {
   background: #bd7a12;
+  box-shadow: 0 10px 22px rgba(189, 122, 18, 0.2);
 }
 
 .vnext2-filter-summary {
@@ -7894,18 +7931,29 @@ button.vnext2-summary-card:focus-visible {
 }
 
 .vnext2-date-card {
+  position: relative;
   min-width: 0;
   display: grid;
-  gap: 12px;
+  gap: 14px;
   align-content: start;
-  min-height: 218px;
+  min-height: 232px;
+  overflow: hidden;
   border: 2px solid #f0a8a2;
-  border-radius: 24px;
-  padding: 18px;
+  border-radius: 26px;
+  padding: 20px;
   background: #fffaf8;
   color: #251f18;
   text-align: left;
   cursor: pointer;
+}
+
+.vnext2-date-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 7px;
+  border-radius: 26px 0 0 26px;
+  background: #d63c31;
 }
 
 .vnext2-date-card__head {
@@ -7939,9 +7987,17 @@ button.vnext2-summary-card:focus-visible {
   background: #fffaf0;
 }
 
+.vnext2-date-card--yellow::before {
+  background: #bd7a12;
+}
+
 .vnext2-date-card--ok {
   border-color: #9acfc4;
   background: #f6fffc;
+}
+
+.vnext2-date-card--ok::before {
+  background: #17823d;
 }
 
 .vnext2-date-card__status,
@@ -8005,14 +8061,18 @@ button.vnext2-summary-card:focus-visible {
 }
 
 .vnext2-date-card__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   align-self: end;
   margin-top: auto;
   width: fit-content;
-  min-height: 36px;
-  padding: 8px 14px;
+  min-height: 42px;
+  padding: 10px 16px;
   border-radius: 999px;
   background: #e1f0ed;
   color: #006d63;
+  font-size: 15px;
   font-weight: 900;
   white-space: nowrap;
 }
@@ -8041,11 +8101,13 @@ button.vnext2-summary-card:focus-visible {
 }
 
 .vnext2-defect-card {
+  position: relative;
   min-width: 0;
   display: grid;
-  gap: 12px;
-  padding: 18px;
+  gap: 14px;
+  padding: 20px;
   border: 2px solid #f0a8a2;
+  border-left-width: 8px;
   border-radius: 24px;
   background: rgba(255, 250, 248, 0.94);
   box-shadow: 0 12px 28px rgba(56, 45, 31, 0.08);
@@ -8063,6 +8125,11 @@ button.vnext2-summary-card:focus-visible {
 .vnext2-defect-card--yellow {
   border-color: #e2b45b;
   background: rgba(255, 250, 240, 0.96);
+}
+
+.vnext2-defect-card--red {
+  border-color: #ed8e86;
+  background: linear-gradient(180deg, rgba(255, 250, 248, 0.98), rgba(255, 239, 236, 0.9));
 }
 
 .vnext2-defect-card--environment {
@@ -8098,15 +8165,16 @@ button.vnext2-summary-card:focus-visible {
 }
 
 .vnext2-defect-card__order,
-.vnext2-defect-card__count {
+.vnext2-defect-card__count,
+.vnext2-defect-card__route {
   display: inline-flex;
   align-items: center;
-  min-height: 30px;
-  padding: 5px 10px;
+  min-height: 34px;
+  padding: 6px 12px;
   border-radius: 999px;
   background: rgba(76, 66, 56, 0.08);
   color: #4d4338;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 900;
   line-height: 1.2;
   white-space: nowrap;
@@ -8115,6 +8183,16 @@ button.vnext2-summary-card:focus-visible {
 .vnext2-defect-card__order {
   background: rgba(0, 137, 125, 0.12);
   color: #006d63;
+}
+
+.vnext2-defect-card__route {
+  background: rgba(0, 137, 125, 0.1);
+  color: #006d63;
+}
+
+.vnext2-defect-card--no-table .vnext2-defect-card__route {
+  background: rgba(189, 122, 18, 0.13);
+  color: #8d5b0d;
 }
 
 .vnext2-defect-card__top strong,
@@ -8153,8 +8231,9 @@ button.vnext2-summary-card:focus-visible {
   min-width: 0;
   display: grid;
   gap: 8px;
-  padding: 14px;
+  padding: 16px;
   border: 1px solid rgba(226, 180, 91, 0.42);
+  border-left: 6px solid #d6a63a;
   border-radius: 18px;
   background: rgba(255, 248, 232, 0.86);
 }
@@ -8550,8 +8629,8 @@ button.vnext2-summary-card:focus-visible {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-18-1956</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-18 19:56</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-25-1855</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-25 18:55</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -9120,7 +9199,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-18-1956","buildLabel":"2026-05-18 19:56","buildId":"2026-05-18-195610","builtAtIso":"2026-05-18T10:56:10.722Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-25-1855","buildLabel":"2026-05-25 18:55","buildId":"2026-05-25-185508","builtAtIso":"2026-05-25T09:55:08.624Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -20462,11 +20541,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const renderCard = (card) => {
       const isFilterCard = Boolean(card.filter);
       const active = isFilterCard && uiVNext2State.severityFilter === card.filter;
+      const hintText = active ? "選択中" : "タップして切り替え";
       const body = `
         <span>${escapeHtml(card.label)}</span>
         <strong>${escapeHtml(card.value)}</strong>
         ${card.sub ? `<small>${escapeHtml(card.sub)}</small>` : ""}
-        ${isFilterCard ? `<em class="vnext2-summary-card__hint">タップして表示を切り替え</em>` : ""}
+        ${isFilterCard ? `<em class="vnext2-summary-card__hint">${escapeHtml(hintText)}</em>` : ""}
       `;
       if (!isFilterCard) {
         return `<article class="vnext2-summary-card vnext2-summary-card--${card.tone}" data-testid="${card.testId}">${body}</article>`;
@@ -20646,12 +20726,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const isEnvironment = isVNext2EnvironmentFinding(finding);
     const countText = getVNext2DisplayCountText(finding);
     const canOpenTable = canOpenVNext2TableForFinding(finding);
+    const routeLabel = isEnvironment ? "入力欄を確認" : canOpenTable ? "表で場所を確認" : "内容を確認";
     const displayIndex = Number.isInteger(record.displayIndex) ? record.displayIndex : 0;
     const displayTotal = Number.isInteger(record.displayTotal) ? Math.max(record.displayTotal, 1) : 1;
     const positionText = `${displayIndex + 1} / ${displayTotal}`;
     return `
       <article
-        class="vnext2-defect-card vnext2-defect-card--${escapeHtml(finding.severity)} ${selected ? "is-selected" : ""} ${isEnvironment ? "vnext2-defect-card--environment" : ""}"
+        class="vnext2-defect-card vnext2-defect-card--${escapeHtml(finding.severity)} ${selected ? "is-selected" : ""} ${isEnvironment ? "vnext2-defect-card--environment" : ""} ${canOpenTable ? "vnext2-defect-card--table" : "vnext2-defect-card--no-table"}"
         data-action="open-defect"
         data-defect-id="${escapeHtml(record.id)}"
         data-testid="vnext2-defect-card"
@@ -20664,6 +20745,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             <strong>${escapeHtml(isEnvironment ? "この日の入力漏れ" : getVNextDefectTitle(finding))}</strong>
           </div>
           <span class="vnext2-defect-card__count">${escapeHtml(countText)}</span>
+          <span class="vnext2-defect-card__route">${escapeHtml(routeLabel)}</span>
         </div>
         <div class="vnext2-defect-card__main">
           <strong>${escapeHtml(isEnvironment ? "温度・湿度欄" : (finding.childName ?? "対象なし"))}</strong>
