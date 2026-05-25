@@ -8347,15 +8347,130 @@ button.vnext2-summary-card:focus-visible {
 .vnext2-table-focus__head {
   min-width: 0;
   display: grid;
-  gap: 8px;
-  padding: 12px 14px;
-  border-radius: 22px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.3fr);
+  gap: 12px;
+  align-items: stretch;
+  padding: 14px;
+  border: 1px solid rgba(0, 127, 115, 0.14);
+  border-radius: 24px;
   background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 28px rgba(56, 45, 31, 0.07);
 }
 
 .vnext2-table-focus__head h1,
 .vnext2-table-focus__head p {
   margin: 0;
+}
+
+.vnext2-table-focus__head .vnext2-actionbar {
+  grid-column: 1 / -1;
+}
+
+.vnext2-table-focus__title {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+}
+
+.vnext2-table-focus__title > span {
+  color: #006d63;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.vnext2-table-focus__title p {
+  color: #665b51;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.vnext2-table-target {
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(0, 137, 125, 0.16);
+  border-left: 7px solid #00897d;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(231, 242, 239, 0.72));
+}
+
+.vnext2-table-target--red {
+  border-color: rgba(214, 60, 49, 0.28);
+  border-left-color: #d63c31;
+  background: linear-gradient(180deg, rgba(255, 250, 248, 0.98), rgba(255, 236, 232, 0.72));
+}
+
+.vnext2-table-target--yellow {
+  border-color: rgba(189, 122, 18, 0.28);
+  border-left-color: #bd7a12;
+  background: linear-gradient(180deg, rgba(255, 250, 240, 0.98), rgba(255, 242, 211, 0.72));
+}
+
+.vnext2-table-target__main {
+  min-width: 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.vnext2-table-target__main strong {
+  min-width: 0;
+  color: #251f18;
+  font-size: 20px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.vnext2-table-target__main > span:last-child {
+  color: #4d4338;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.vnext2-table-target__meta {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.vnext2-table-target__meta div {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+  padding: 9px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.vnext2-table-target__meta dt {
+  color: #6f6255;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.vnext2-table-target__meta dd {
+  min-width: 0;
+  margin: 0;
+  color: #251f18;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.vnext2-table-target__hint {
+  color: #665b51;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
 }
 
 .vnext2-table-workspace {
@@ -8371,8 +8486,10 @@ button.vnext2-summary-card:focus-visible {
   min-width: 0;
   min-height: 0;
   overflow: auto;
+  border: 1px solid rgba(0, 127, 115, 0.1);
   border-radius: 22px;
   background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
   -webkit-overflow-scrolling: touch;
 }
 
@@ -8386,6 +8503,7 @@ button.vnext2-summary-card:focus-visible {
   gap: 8px;
   align-items: center;
   margin-bottom: 8px;
+  color: #4d4338;
 }
 
 .vnext2-table {
@@ -8406,7 +8524,7 @@ button.vnext2-summary-card:focus-visible {
   position: sticky;
   top: 0;
   z-index: 2;
-  padding: 8px;
+  padding: 9px;
   background: #eef6f4;
   white-space: nowrap;
 }
@@ -8415,7 +8533,8 @@ button.vnext2-summary-card:focus-visible {
   position: sticky;
   left: 0;
   z-index: 3;
-  min-width: 124px;
+  min-width: 136px;
+  font-weight: 900;
 }
 
 .vnext2-table-row-label {
@@ -8430,6 +8549,7 @@ button.vnext2-summary-card:focus-visible {
   border: 0;
   background: transparent;
   font-size: calc(14px * var(--review-font-scale, 1));
+  font-weight: 800;
   cursor: pointer;
 }
 
@@ -8446,17 +8566,19 @@ button.vnext2-summary-card:focus-visible {
 }
 
 .vnext2-table-cell.is-selected {
-  outline: 4px solid #00897d;
-  outline-offset: -4px;
+  outline: 5px solid #00897d;
+  outline-offset: -5px;
+  box-shadow: inset 0 0 0 2px #fff;
 }
 
 .vnext2-cell-detail {
   min-width: 0;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto minmax(180px, 1fr) repeat(2, minmax(120px, auto)) minmax(180px, 1fr);
+  gap: 10px;
   align-items: center;
-  padding: 12px 14px;
+  padding: 14px;
+  border: 1px solid rgba(0, 127, 115, 0.12);
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.9);
 }
@@ -8464,6 +8586,56 @@ button.vnext2-summary-card:focus-visible {
 .vnext2-cell-detail div {
   display: flex;
   gap: 6px;
+  align-items: center;
+  min-width: 0;
+}
+
+.vnext2-cell-detail__label {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 32px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #00897d;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.vnext2-cell-detail > strong {
+  min-width: 0;
+  font-size: 17px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.vnext2-cell-detail div span {
+  color: #6f6255;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.vnext2-cell-detail div b {
+  color: #251f18;
+  font-size: 16px;
+}
+
+.vnext2-cell-detail__hint {
+  color: #665b51;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.vnext2-cell-detail--empty {
+  display: block;
+  color: #665b51;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.5;
 }
 
 .vnext2-support {
@@ -8540,6 +8712,14 @@ button.vnext2-summary-card:focus-visible {
   .vnext2-summary-grid {
     grid-template-columns: repeat(2, minmax(180px, 1fr));
   }
+
+  .vnext2-table-focus__head {
+    grid-template-columns: 1fr;
+  }
+
+  .vnext2-cell-detail {
+    grid-template-columns: auto minmax(180px, 1fr) repeat(2, minmax(120px, auto));
+  }
 }
 
 @media (max-width: 720px) {
@@ -8606,6 +8786,16 @@ button.vnext2-summary-card:focus-visible {
   .vnext2-context__row {
     grid-template-columns: 1fr;
   }
+
+  .vnext2-table-target__meta,
+  .vnext2-cell-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .vnext2-table-target__main {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
     </style>
@@ -8629,8 +8819,8 @@ button.vnext2-summary-card:focus-visible {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-25-1855</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-25 18:55</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-25-2024</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-25 20:24</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -9199,7 +9389,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-25-1855","buildLabel":"2026-05-25 18:55","buildId":"2026-05-25-185508","builtAtIso":"2026-05-25T09:55:08.624Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-25-2024","buildLabel":"2026-05-25 20:24","buildId":"2026-05-25-202404","builtAtIso":"2026-05-25T11:24:04.931Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -20916,7 +21106,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function renderVNext2CellDetail() {
     const selected = state.selectedReviewCell;
     if (!selected) {
-      return `<aside class="vnext2-cell-detail">セルを押すと、このコマの状態と記録者を確認できます。</aside>`;
+      return `<aside class="vnext2-cell-detail vnext2-cell-detail--empty">表の赤・黄セルを押すと、このコマの状態と記録者を確認できます。</aside>`;
     }
     const record = (state.analysis?.records ?? []).find(
       (item) =>
@@ -20926,13 +21116,44 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     );
     const interval = record?.intervals?.[selected.intervalIndex];
     if (!record || !interval) {
-      return `<aside class="vnext2-cell-detail">このセルの詳細を読み取れませんでした。</aside>`;
+      return `<aside class="vnext2-cell-detail vnext2-cell-detail--empty">このセルの詳細を読み取れませんでした。</aside>`;
     }
     return `
       <aside class="vnext2-cell-detail" data-testid="vnext2-cell-detail">
+        <span class="vnext2-cell-detail__label">選択中セル</span>
         <strong>${escapeHtml(record.childName)} / ${escapeHtml(interval.timeLabel)}</strong>
         <div><span>状態</span><b>${escapeHtml(interval.statusText || "(空欄)")}</b></div>
         <div><span>記録者</span><b>${escapeHtml(abbreviateReviewerName(interval.reviewerText) || "未入力")}</b></div>
+        <span class="vnext2-cell-detail__hint">このコマをはいチーズ側で確認します。</span>
+      </aside>
+    `;
+  }
+
+  function renderVNext2TableFocusTarget(finding) {
+    if (!finding) {
+      return `
+        <aside class="vnext2-table-target" data-testid="vnext2-table-target">
+          <div class="vnext2-table-target__main">
+            <span class="vnext2-severity vnext2-severity--yellow">確認</span>
+            <strong>色付きセルを確認してください</strong>
+          </div>
+          <p>赤・黄のセルを押すと、下に状態と記録者が表示されます。</p>
+        </aside>
+      `;
+    }
+    return `
+      <aside class="vnext2-table-target vnext2-table-target--${escapeHtml(finding.severity)}" data-testid="vnext2-table-target">
+        <div class="vnext2-table-target__main">
+          <span class="vnext2-severity vnext2-severity--${escapeHtml(finding.severity)}">${escapeHtml(getSeverityMeta(finding.severity).label)}</span>
+          <strong>${escapeHtml(finding.childName ?? "対象なし")}</strong>
+          <span>${escapeHtml(finding.time ?? "時刻不明")} / ${escapeHtml(getVNextDefectTitle(finding))}</span>
+        </div>
+        <dl class="vnext2-table-target__meta">
+          <div><dt>確認理由</dt><dd>${escapeHtml(getVNextDefectMessage(finding))}</dd></div>
+          <div><dt>件数</dt><dd>${escapeHtml(getVNext2DisplayCountText(finding))}</dd></div>
+          <div><dt>記録者</dt><dd>${escapeHtml(getVNextReviewerText(finding))}</dd></div>
+        </dl>
+        <p class="vnext2-table-target__hint">表の色付きセルと記録者行を見て、元データ側で直す場所を確認します。</p>
       </aside>
     `;
   }
@@ -20991,11 +21212,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       <section class="vnext2-screen vnext2-table-focus" data-testid="vnext2-table-focus">
         <div class="vnext2-table-focus__head">
           ${renderVNext2ActionBar({ dayBack: true })}
-          <div>
-            <span>表で確認</span>
+          <div class="vnext2-table-focus__title">
+            <span>表で場所を見る</span>
             <h1>${escapeHtml(getSheetDisplayDate(uiVNext2State.selectedDayId ?? state.selectedSheetName))}</h1>
-            <p>${selectedFinding ? escapeHtml(`${selectedFinding.childName ?? "対象なし"} / ${selectedFinding.time ?? "時刻不明"} / ${getVNextDefectTitle(selectedFinding)}`) : "色付きセルが確認候補です。"}</p>
+            <p>赤・黄のセルと記録者行を見て、元表上の位置を確認します。</p>
           </div>
+          ${renderVNext2TableFocusTarget(selectedFinding)}
         </div>
         <div class="vnext2-table-workspace">
           <div class="vnext2-table-scroll" data-testid="vnext2-table-scroll">
