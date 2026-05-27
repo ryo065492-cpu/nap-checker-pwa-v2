@@ -9844,6 +9844,771 @@ body.vnext2-app *::after {
   }
 }
 
+/* vNext2 final design pass: calm field-ready application skin. */
+:root {
+  --app-bg: #f3eee5;
+  --app-bg-soft: #f8f5ee;
+  --surface: #fffdfa;
+  --surface-soft: #f6f1e8;
+  --text-main: #241f19;
+  --text-sub: #6d6257;
+  --primary: #006f66;
+  --primary-strong: #004f49;
+  --primary-soft: #e2f1ee;
+  --danger: #c83a32;
+  --danger-soft: #fff0ed;
+  --warning: #b77913;
+  --warning-soft: #fff4d8;
+  --success: #177f45;
+  --success-soft: #e8f6ed;
+  --info: #2f6d9f;
+  --neutral: #8b8176;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --space-xs: 6px;
+  --space-sm: 10px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --shadow-card: 0 14px 34px rgba(44, 35, 25, 0.09);
+  --shadow-card-hover: 0 18px 42px rgba(44, 35, 25, 0.13);
+  --shadow-press: 0 7px 16px rgba(44, 35, 25, 0.16);
+}
+
+body.vnext2-app {
+  --v2-bg: var(--app-bg);
+  --v2-bg-2: #edf5f2;
+  --v2-surface: rgba(255, 253, 250, 0.96);
+  --v2-surface-strong: var(--surface);
+  --v2-line: rgba(49, 41, 32, 0.11);
+  --v2-line-strong: rgba(49, 41, 32, 0.22);
+  --v2-ink: var(--text-main);
+  --v2-muted: var(--text-sub);
+  --v2-brand: var(--primary);
+  --v2-brand-strong: var(--primary-strong);
+  --v2-brand-soft: var(--primary-soft);
+  --v2-red: var(--danger);
+  --v2-red-soft: var(--danger-soft);
+  --v2-red-tint: #fff8f6;
+  --v2-yellow: var(--warning);
+  --v2-yellow-soft: var(--warning-soft);
+  --v2-yellow-tint: #fffaf0;
+  --v2-ok: var(--success);
+  --v2-ok-soft: var(--success-soft);
+  --v2-card-radius: var(--radius-lg);
+  --v2-control-radius: 999px;
+  --v2-shadow-card: var(--shadow-card);
+  --v2-shadow-lift: var(--shadow-card-hover);
+  --v2-focus-ring: rgba(0, 111, 102, 0.27);
+  --v2-press-shadow: var(--shadow-press);
+  --v2-soft-shadow: 0 10px 24px rgba(44, 35, 25, 0.08);
+  background:
+    radial-gradient(circle at 8% 4%, rgba(0, 111, 102, 0.13), transparent 25%),
+    linear-gradient(135deg, var(--app-bg) 0%, var(--app-bg-soft) 48%, #edf5f2 100%);
+}
+
+.vnext2-shell {
+  gap: 12px;
+  padding: max(10px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+
+.vnext2-topbar,
+.vnext2-filebar,
+.vnext2-date-section,
+.vnext2-upload-card,
+.vnext2-progress-card,
+.vnext2-empty-panel,
+.vnext2-support-card,
+.vnext2-detail-card,
+.vnext2-table-focus__head,
+.vnext2-table-scroll,
+.vnext2-cell-detail {
+  border: 1px solid var(--v2-line);
+  background: var(--surface);
+}
+
+.vnext2-topbar {
+  min-height: 66px;
+  padding: 10px 14px;
+}
+
+.vnext2-logo {
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary), #098d80);
+  box-shadow: 0 12px 22px rgba(0, 111, 102, 0.22);
+}
+
+.vnext2-brand strong {
+  font-size: clamp(24px, 2vw, 30px);
+}
+
+.vnext2-brand span:last-child,
+.vnext2-filebar span,
+.vnext2-section-head p,
+.vnext2-page-head p,
+.vnext2-table-focus__title p,
+.vnext2-table-target__hint,
+.vnext2-cell-detail__hint {
+  color: var(--text-sub);
+}
+
+.vnext2-button,
+.vnext2-ghost,
+.vnext2-link-button,
+.vnext2-filter-button,
+.vnext2-update-alert,
+.vnext2-date-card,
+.vnext2-defect-card,
+.vnext2-summary-card {
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    filter 0.15s ease;
+}
+
+.vnext2-button,
+.vnext2-ghost,
+.vnext2-link-button,
+.vnext2-filter-button,
+.vnext2-update-alert {
+  border: 1px solid rgba(0, 111, 102, 0.14);
+  min-height: 48px;
+  padding: 12px 20px;
+  text-decoration: none;
+}
+
+.vnext2-button--primary {
+  background: linear-gradient(180deg, #07877b, var(--primary));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 12px 24px rgba(0, 111, 102, 0.24);
+}
+
+.vnext2-button--subtle,
+.vnext2-ghost,
+.vnext2-link-button,
+.vnext2-filter-button {
+  background: #f5faf8;
+  color: var(--primary-strong);
+  box-shadow: inset 0 0 0 1px rgba(0, 111, 102, 0.06);
+}
+
+.vnext2-link-button {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+@media (hover: hover) {
+  .vnext2-button:hover,
+  .vnext2-ghost:hover,
+  .vnext2-link-button:hover,
+  .vnext2-filter-button:hover,
+  .vnext2-date-card:hover,
+  .vnext2-defect-card:hover,
+  .vnext2-summary-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+  }
+}
+
+.vnext2-button:active:not(:disabled),
+.vnext2-ghost:active:not(:disabled),
+.vnext2-link-button:active:not(:disabled),
+.vnext2-filter-button:active:not(:disabled),
+.vnext2-update-alert:active:not(:disabled),
+.vnext2-date-card:active,
+.vnext2-defect-card:active,
+.vnext2-summary-card:active {
+  box-shadow: var(--shadow-press);
+  transform: translateY(2px) scale(0.985);
+}
+
+.vnext2-status,
+.vnext2-build,
+.vnext2-count-pill,
+.vnext2-chip,
+.vnext2-severity,
+.vnext2-reviewer,
+.vnext2-date-card__counts span,
+.vnext2-defect-card__order,
+.vnext2-defect-card__count,
+.vnext2-defect-card__route {
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.vnext2-filebar {
+  grid-template-columns: minmax(0, 1.4fr) minmax(150px, 0.55fr) auto;
+  padding: 12px 14px;
+}
+
+.vnext2-filebar strong {
+  font-size: 16px;
+}
+
+.vnext2-filebar__actions .vnext2-button {
+  min-height: 46px;
+}
+
+.vnext2-summary-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.vnext2-summary-card {
+  border: 1px solid var(--v2-line);
+  border-left: 8px solid var(--primary);
+  border-radius: var(--radius-lg);
+  min-height: 112px;
+  padding: 17px 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.vnext2-summary-card::before {
+  display: none;
+}
+
+.vnext2-summary-card--red {
+  border-left-color: var(--danger);
+}
+
+.vnext2-summary-card--yellow {
+  border-left-color: var(--warning);
+}
+
+.vnext2-summary-card--ok {
+  border-left-color: var(--success);
+}
+
+.vnext2-summary-card span,
+.vnext2-summary-card small {
+  color: var(--text-sub);
+  font-size: 14px;
+}
+
+.vnext2-summary-card strong {
+  font-size: clamp(30px, 3.4vw, 40px);
+}
+
+.vnext2-summary-card.is-active {
+  border-color: rgba(0, 111, 102, 0.34);
+  border-left-color: var(--primary);
+  box-shadow:
+    0 0 0 4px rgba(0, 111, 102, 0.12),
+    var(--shadow-card-hover);
+}
+
+.vnext2-summary-card--red.is-active {
+  border-color: rgba(200, 58, 50, 0.32);
+  border-left-color: var(--danger);
+  box-shadow:
+    0 0 0 4px rgba(200, 58, 50, 0.11),
+    var(--shadow-card-hover);
+}
+
+.vnext2-summary-card--yellow.is-active {
+  border-color: rgba(183, 121, 19, 0.34);
+  border-left-color: var(--warning);
+  box-shadow:
+    0 0 0 4px rgba(183, 121, 19, 0.13),
+    var(--shadow-card-hover);
+}
+
+.vnext2-summary-card__hint {
+  background: #edf5f2;
+  color: var(--primary-strong);
+  font-size: 13px;
+}
+
+.vnext2-summary-card.is-active .vnext2-summary-card__hint {
+  background: var(--primary);
+  color: #fff;
+}
+
+.vnext2-summary-card--red.is-active .vnext2-summary-card__hint {
+  background: var(--danger);
+}
+
+.vnext2-summary-card--yellow.is-active .vnext2-summary-card__hint {
+  background: var(--warning);
+}
+
+.vnext2-date-section {
+  gap: 10px;
+  padding: 16px;
+}
+
+.vnext2-home--ready .vnext2-section-head p,
+.vnext2-day-queue .vnext2-page-head p {
+  display: none;
+}
+
+.vnext2-section-head,
+.vnext2-page-head {
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.vnext2-section-head h2,
+.vnext2-page-head h1 {
+  font-size: clamp(21px, 2.2vw, 28px);
+  letter-spacing: -0.02em;
+}
+
+.vnext2-filter-bar,
+.vnext2-filter-context {
+  border: 1px solid rgba(0, 111, 102, 0.13);
+  background: #f3faf7;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+.vnext2-filter-label {
+  color: var(--primary-strong);
+}
+
+.vnext2-filter-button {
+  min-width: 96px;
+  background: #fff;
+  border-color: rgba(49, 41, 32, 0.09);
+}
+
+.vnext2-filter-button.is-active {
+  background: linear-gradient(180deg, #07877b, var(--primary));
+  color: #fff;
+}
+
+.vnext2-filter-button[data-filter="red"].is-active {
+  background: linear-gradient(180deg, #da4a3f, var(--danger));
+}
+
+.vnext2-filter-button[data-filter="yellow"].is-active {
+  background: linear-gradient(180deg, #c9891c, var(--warning));
+}
+
+.vnext2-filter-summary {
+  color: var(--text-sub);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.vnext2-date-list {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  padding: 3px;
+}
+
+.vnext2-date-card {
+  border: 1px solid rgba(200, 58, 50, 0.25);
+  border-left: 8px solid var(--danger);
+  border-radius: 22px;
+  min-height: 194px;
+  padding: 16px;
+  background: var(--surface);
+}
+
+.vnext2-date-card::before {
+  display: none;
+}
+
+.vnext2-date-card--yellow {
+  border-color: rgba(183, 121, 19, 0.25);
+  border-left-color: var(--warning);
+}
+
+.vnext2-date-card--ok {
+  border-color: rgba(23, 127, 69, 0.22);
+  border-left-color: var(--success);
+}
+
+.vnext2-date-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.vnext2-date-card strong {
+  font-size: 23px;
+}
+
+.vnext2-date-card__status,
+.vnext2-severity {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.vnext2-date-card__counts span {
+  background: #f2eee6;
+  color: var(--text-main);
+}
+
+.vnext2-date-card--red .vnext2-date-card__counts span:first-child,
+.vnext2-date-card--red .vnext2-date-card__status,
+.vnext2-severity--red {
+  background: var(--danger);
+  color: #fff;
+}
+
+.vnext2-date-card--yellow .vnext2-date-card__counts span,
+.vnext2-date-card--yellow .vnext2-date-card__status,
+.vnext2-severity--yellow {
+  background: var(--warning);
+  color: #fff;
+}
+
+.vnext2-date-card__action {
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 900;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  width: 100%;
+}
+
+.vnext2-defect-list {
+  gap: 14px;
+  padding: 4px;
+}
+
+.vnext2-defect-card {
+  border: 1px solid var(--v2-line);
+  border-left-width: 8px;
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  padding: 17px 18px;
+}
+
+.vnext2-defect-card--red {
+  border-left-color: var(--danger);
+  background: linear-gradient(180deg, #fff, #fff8f7);
+}
+
+.vnext2-defect-card--yellow {
+  border-left-color: var(--warning);
+  background: linear-gradient(180deg, #fff, #fffaf0);
+}
+
+.vnext2-defect-card--environment {
+  border-left-color: var(--warning);
+  background:
+    linear-gradient(180deg, #fffefa, #fff6df);
+}
+
+.vnext2-defect-card--environment::after {
+  display: none;
+}
+
+.vnext2-defect-card.is-selected {
+  border-color: rgba(0, 111, 102, 0.32);
+  box-shadow:
+    0 0 0 4px rgba(0, 111, 102, 0.11),
+    var(--shadow-card-hover);
+}
+
+.vnext2-defect-card__heading {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.vnext2-defect-card__heading strong {
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.vnext2-defect-card__order {
+  background: #f2eee6;
+  color: var(--text-main);
+  min-width: 72px;
+}
+
+.vnext2-defect-card--red .vnext2-defect-card__order {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.vnext2-defect-card--yellow .vnext2-defect-card__order,
+.vnext2-defect-card--environment .vnext2-defect-card__order {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.vnext2-defect-card__route {
+  border: 1px solid rgba(0, 111, 102, 0.13);
+  background: #e9f4f1;
+  color: var(--primary-strong);
+}
+
+.vnext2-defect-card--no-table .vnext2-defect-card__route {
+  border-color: rgba(183, 121, 19, 0.18);
+  background: #fff4d8;
+  color: #7a5100;
+}
+
+.vnext2-defect-card p {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.vnext2-affected,
+.vnext2-confirm-box,
+.vnext2-day-missing {
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1px rgba(49, 41, 32, 0.04);
+}
+
+.vnext2-affected__row,
+.vnext2-context__row {
+  align-items: center;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(54px, auto) minmax(44px, auto) minmax(0, 1fr);
+}
+
+.vnext2-detail-card {
+  border-radius: var(--radius-xl);
+  padding: 22px;
+}
+
+.vnext2-detail-card h1 {
+  font-size: clamp(28px, 3.2vw, 38px);
+}
+
+.vnext2-detail-card h2 {
+  color: var(--text-main);
+}
+
+.vnext2-table-focus__head {
+  border-radius: 24px;
+  box-shadow: var(--shadow-card);
+  grid-template-columns: minmax(150px, auto) minmax(180px, 0.48fr) minmax(360px, 1.22fr);
+}
+
+.vnext2-table-focus__title p {
+  display: none;
+}
+
+.vnext2-table-target {
+  border: 1px solid rgba(0, 111, 102, 0.15);
+  border-left: 8px solid var(--primary);
+  border-radius: 22px;
+  background: var(--surface);
+}
+
+.vnext2-table-target--red {
+  border-left-color: var(--danger);
+  background: linear-gradient(180deg, #fff, #fff8f7);
+}
+
+.vnext2-table-target--yellow {
+  border-left-color: var(--warning);
+  background: linear-gradient(180deg, #fff, #fffaf0);
+}
+
+.vnext2-table-target__meta div {
+  background: #faf7f0;
+}
+
+.vnext2-table-target__hint {
+  display: none;
+}
+
+.vnext2-table-scroll {
+  background: #fff;
+  border-radius: 24px;
+  scrollbar-color: rgba(0, 111, 102, 0.42) rgba(49, 41, 32, 0.08);
+  scrollbar-width: thin;
+}
+
+.vnext2-table-block__head {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.vnext2-table-block__head strong {
+  font-size: 16px;
+}
+
+.vnext2-table {
+  font-size: 14px;
+}
+
+.vnext2-table th {
+  background: #eef5f2;
+  color: var(--primary-strong);
+}
+
+.vnext2-table-child {
+  box-shadow: 8px 0 12px rgba(44, 35, 25, 0.05);
+}
+
+.vnext2-table-row-label {
+  min-width: 76px;
+}
+
+.vnext2-table-cell {
+  border: 1px solid rgba(49, 41, 32, 0.08);
+  min-width: 62px;
+  padding: 8px;
+}
+
+.vnext2-table-cell--red {
+  border-color: rgba(200, 58, 50, 0.26);
+  background: #ffe8e4;
+}
+
+.vnext2-table-cell--yellow {
+  border-color: rgba(183, 121, 19, 0.26);
+  background: #fff1cc;
+}
+
+.vnext2-table-cell.is-selected {
+  border-color: #fff;
+  background: #d9f4ee;
+  box-shadow:
+    inset 0 0 0 3px #fff,
+    0 0 0 4px var(--primary-strong),
+    0 12px 26px rgba(0, 79, 73, 0.22);
+}
+
+.vnext2-cell-detail {
+  border-radius: 24px;
+  background: var(--surface);
+}
+
+.vnext2-cell-detail strong {
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.vnext2-cell-detail div {
+  align-items: center;
+  background: #faf7f0;
+  border-radius: 16px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  padding: 10px 12px;
+}
+
+.vnext2-cell-detail div span {
+  color: var(--text-sub);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.vnext2-cell-detail div b {
+  color: var(--text-main);
+  font-size: 16px;
+}
+
+.vnext2-support-card {
+  border-radius: var(--radius-xl);
+  max-width: 900px;
+}
+
+.vnext2-support-card h1 {
+  font-size: clamp(26px, 3vw, 36px);
+}
+
+.vnext2-support-card ol {
+  background: #faf7f0;
+  border-radius: 20px;
+  padding: 14px 18px 14px 36px;
+}
+
+.vnext2-diagnostic-text {
+  border-radius: 18px;
+}
+
+@media (max-width: 1180px) {
+  .vnext2-filebar,
+  .vnext2-table-focus__head {
+    grid-template-columns: 1fr;
+  }
+
+  .vnext2-filebar__actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 860px) {
+  .vnext2-topbar,
+  .vnext2-section-head,
+  .vnext2-page-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .vnext2-topbar__actions {
+    justify-content: flex-start;
+  }
+
+  .vnext2-summary-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  body.vnext2-app {
+    overflow: auto;
+  }
+
+  #vnext2-root {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .vnext2-shell {
+    min-height: 100dvh;
+  }
+
+  .vnext2-screen {
+    height: auto;
+    overflow: visible;
+  }
+
+  .vnext2-summary-grid,
+  .vnext2-date-list {
+    grid-template-columns: 1fr;
+  }
+
+  .vnext2-filebar,
+  .vnext2-date-section,
+  .vnext2-defect-card,
+  .vnext2-detail-card,
+  .vnext2-table-focus__head,
+  .vnext2-table-scroll,
+  .vnext2-cell-detail {
+    border-radius: 20px;
+  }
+
+  .vnext2-date-card {
+    min-height: auto;
+  }
+
+  .vnext2-affected__row,
+  .vnext2-context__row {
+    grid-template-columns: 1fr;
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home queue-hard-reset" data-home-state="empty">
@@ -9865,8 +10630,8 @@ body.vnext2-app *::after {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-26-2026</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-26 20:26</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-27-2134</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-27 21:34</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -10435,7 +11200,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-26-2026","buildLabel":"2026-05-26 20:26","buildId":"2026-05-26-202615","builtAtIso":"2026-05-26T11:26:15.544Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-27-2134","buildLabel":"2026-05-27 21:34","buildId":"2026-05-27-213421","builtAtIso":"2026-05-27T12:34:21.557Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
