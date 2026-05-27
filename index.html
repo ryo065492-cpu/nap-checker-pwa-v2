@@ -10609,6 +10609,354 @@ body.vnext2-app {
   }
 }
 
+/* vNext2 iPad heavy pass: table grid and home date section stability. */
+body.vnext2-screen-tableFocus {
+  overflow-x: hidden;
+}
+
+.vnext2-table-focus {
+  --v2-table-child-width: 136px;
+  --v2-table-row-label-width: 78px;
+  --v2-table-time-width: 66px;
+}
+
+.vnext2-table-focus__head {
+  align-items: start;
+  gap: 14px;
+  grid-template-columns: minmax(0, 0.62fr) minmax(360px, 1.38fr);
+  padding: 14px;
+}
+
+.vnext2-table-focus__head .vnext2-actionbar {
+  align-items: center;
+  gap: 10px;
+}
+
+.vnext2-table-target {
+  padding: 14px 16px;
+}
+
+.vnext2-table-target__meta {
+  grid-template-columns: minmax(0, 1.25fr) minmax(130px, 0.55fr) minmax(120px, 0.45fr);
+}
+
+.vnext2-table-target__meta div {
+  border-radius: 14px;
+  padding: 10px 12px;
+}
+
+.vnext2-table-workspace {
+  gap: 12px;
+  overflow: hidden;
+}
+
+.vnext2-table-scroll {
+  background: #fffdfa;
+  border: 1px solid rgba(49, 41, 32, 0.16);
+  border-radius: 22px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 14px 30px rgba(44, 35, 25, 0.08);
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0;
+  scroll-padding-left: calc(var(--v2-table-child-width) + var(--v2-table-row-label-width));
+}
+
+.vnext2-table-block {
+  min-width: max-content;
+  padding: 0;
+}
+
+.vnext2-table-block + .vnext2-table-block {
+  border-top: 10px solid #f1ece3;
+}
+
+.vnext2-table-block__head {
+  background: #f7f2ea;
+  border-bottom: 1px solid rgba(49, 41, 32, 0.13);
+  margin: 0;
+  padding: 8px 12px;
+  position: sticky;
+  left: 0;
+  z-index: 45;
+}
+
+.vnext2-table {
+  background: #fffdfa;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--text-main);
+  font-size: 14px;
+  min-width: max-content;
+  table-layout: fixed;
+}
+
+.vnext2-table th,
+.vnext2-table td {
+  background: #fffdfa;
+  border: 1px solid #e3ddd1;
+  box-sizing: border-box;
+  height: 46px;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.vnext2-table thead th {
+  background: #edf7f3;
+  color: var(--primary-strong);
+  font-size: 15px;
+  font-weight: 950;
+  height: 44px;
+  padding: 9px 8px;
+  position: sticky;
+  top: 0;
+  white-space: nowrap;
+  z-index: 30;
+}
+
+.vnext2-table-head-child,
+.vnext2-table thead th:first-child {
+  left: 0;
+  min-width: var(--v2-table-child-width);
+  width: var(--v2-table-child-width);
+  z-index: 60;
+}
+
+.vnext2-table-head-row,
+.vnext2-table thead th:nth-child(2) {
+  left: var(--v2-table-child-width);
+  min-width: var(--v2-table-row-label-width);
+  width: var(--v2-table-row-label-width);
+  z-index: 59;
+}
+
+.vnext2-table-time,
+.vnext2-table thead th:nth-child(n + 3),
+.vnext2-table td {
+  min-width: var(--v2-table-time-width);
+  width: var(--v2-table-time-width);
+}
+
+.vnext2-table-child {
+  background: #edf7f3 !important;
+  box-shadow:
+    1px 0 0 #d8ded6,
+    10px 0 16px rgba(44, 35, 25, 0.05);
+  color: var(--primary-strong);
+  font-size: 14px;
+  font-weight: 950;
+  left: 0;
+  line-height: 1.25;
+  min-width: var(--v2-table-child-width);
+  max-width: var(--v2-table-child-width);
+  overflow: hidden;
+  padding: 8px 10px;
+  position: sticky;
+  text-align: center;
+  text-orientation: mixed;
+  vertical-align: middle;
+  white-space: normal;
+  width: var(--v2-table-child-width);
+  word-break: keep-all;
+  z-index: 42;
+}
+
+.vnext2-table-row-label {
+  background: #f3faf7 !important;
+  box-shadow: 1px 0 0 #d8ded6;
+  color: var(--primary-strong);
+  font-size: 14px;
+  font-weight: 950;
+  left: var(--v2-table-child-width);
+  min-width: var(--v2-table-row-label-width);
+  padding: 0 8px;
+  position: sticky;
+  text-align: center;
+  white-space: nowrap;
+  width: var(--v2-table-row-label-width);
+  z-index: 41;
+}
+
+.vnext2-table td {
+  background: #fffdfa;
+}
+
+.vnext2-table-cell,
+.vnext2-table-cell:active,
+.vnext2-table-cell:focus-visible {
+  appearance: none;
+  background: transparent;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  box-sizing: border-box;
+  color: #1f6feb;
+  cursor: pointer;
+  display: grid;
+  filter: none !important;
+  font-size: calc(14px * var(--review-font-scale, 1));
+  font-weight: 900;
+  height: 100%;
+  line-height: 1.1;
+  min-height: 44px;
+  min-width: var(--v2-table-time-width);
+  outline-offset: -3px;
+  padding: 0 4px;
+  place-items: center;
+  position: relative;
+  transform: none !important;
+  width: 100%;
+}
+
+.vnext2-table-cell--red {
+  background: #ffe0dc;
+  color: #a3211b;
+}
+
+.vnext2-table-cell--yellow {
+  background: #fff0c8;
+  color: #835100;
+}
+
+.vnext2-table-cell.is-selected {
+  background: #d9f5ef;
+  color: #7a1e18;
+  outline: 4px solid var(--primary-strong);
+  z-index: 5;
+}
+
+.vnext2-table-cell.is-selected::after {
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  content: "";
+  inset: 4px;
+  pointer-events: none;
+  position: absolute;
+}
+
+.vnext2-table-cell--reviewer {
+  color: #1f6feb;
+  font-weight: 950;
+}
+
+.vnext2-cell-detail {
+  box-shadow: var(--shadow-card);
+  grid-template-columns: auto minmax(180px, 1fr) minmax(110px, auto) minmax(110px, auto) minmax(180px, 1fr);
+}
+
+.vnext2-home--ready {
+  min-height: 0;
+}
+
+.vnext2-date-section {
+  gap: 16px;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  overflow: hidden;
+  padding: 20px;
+  position: relative;
+}
+
+.vnext2-section-head {
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.vnext2-section-head h2 {
+  line-height: 1.25;
+  margin: 0;
+}
+
+.vnext2-section-head .vnext2-count-pill {
+  flex: 0 0 auto;
+}
+
+.vnext2-date-section .vnext2-filter-bar {
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.vnext2-date-list {
+  align-content: start;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  overflow: auto;
+  padding: 6px 4px 28px;
+  position: relative;
+  z-index: 0;
+}
+
+.vnext2-date-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 240px;
+  overflow: hidden;
+  padding: 18px;
+}
+
+.vnext2-date-card__head,
+.vnext2-date-card__counts,
+.vnext2-date-card .vnext2-chip-row {
+  flex: 0 0 auto;
+}
+
+.vnext2-date-card__action {
+  flex: 0 0 auto;
+  margin-top: auto;
+  position: static;
+}
+
+@media (max-width: 1180px) {
+  .vnext2-table-focus__head {
+    grid-template-columns: 1fr;
+  }
+
+  .vnext2-table-target__meta {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .vnext2-date-section {
+    overflow: visible;
+  }
+
+  .vnext2-date-list {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    overflow: visible;
+  }
+
+  .vnext2-table-focus {
+    --v2-table-child-width: 124px;
+    --v2-table-row-label-width: 72px;
+    --v2-table-time-width: 62px;
+  }
+
+  .vnext2-cell-detail {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .vnext2-date-list {
+    grid-template-columns: 1fr;
+  }
+
+  .vnext2-date-card {
+    min-height: auto;
+  }
+
+  .vnext2-table-focus {
+    --v2-table-child-width: 118px;
+    --v2-table-row-label-width: 68px;
+    --v2-table-time-width: 58px;
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home queue-hard-reset" data-home-state="empty">
@@ -10630,8 +10978,8 @@ body.vnext2-app {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-27-2134</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-27 21:34</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-27-2237</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-27 22:37</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -11200,7 +11548,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-27-2134","buildLabel":"2026-05-27 21:34","buildId":"2026-05-27-213421","builtAtIso":"2026-05-27T12:34:21.557Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-27-2237","buildLabel":"2026-05-27 22:37","buildId":"2026-05-27-223702","builtAtIso":"2026-05-27T13:37:02.899Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -22985,7 +23333,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
     const tableHtml = [...recordsByBlock.entries()].map(([blockIndex, blockRecords]) => {
       const columns = blockRecords[0]?.intervals ?? [];
-      const timeHeaders = columns.map((interval) => `<th>${escapeHtml(interval.timeLabel)}</th>`).join("");
+      const timeHeaders = columns.map((interval) => `<th class="vnext2-table-time">${escapeHtml(interval.timeLabel)}</th>`).join("");
       const rows = blockRecords.map((recordItem) => {
         const statusCells = recordItem.intervals.map((_, intervalIndex) => `<td>${renderVNext2TableCell({ record: recordItem, intervalIndex, part: "status", reviewMaps })}</td>`).join("");
         const reviewerCells = recordItem.intervals.map((_, intervalIndex) => `<td>${renderVNext2TableCell({ record: recordItem, intervalIndex, part: "reviewer", reviewMaps })}</td>`).join("");
@@ -23011,7 +23359,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           </div>
           <table class="vnext2-table">
             <thead>
-              <tr><th>園児名</th><th>行</th>${timeHeaders}</tr>
+              <tr><th class="vnext2-table-head-child">園児名</th><th class="vnext2-table-head-row">行</th>${timeHeaders}</tr>
             </thead>
             ${rows}
           </table>
