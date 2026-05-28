@@ -1,6 +1,6 @@
-const CACHE_NAME = "nap-checker-2026-05-28-195538";
-const BUILD_LABEL = "2026-05-28 19:55";
-const BUILD_ID = "2026-05-28-195538";
+const CACHE_NAME = "nap-checker-2026-05-28-204018";
+const BUILD_LABEL = "2026-05-28 20:40";
+const BUILD_ID = "2026-05-28-204018";
 const APP_SHELL_URL = "./";
 const PRECACHE_URLS = [
   "./",

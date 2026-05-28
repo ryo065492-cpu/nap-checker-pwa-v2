@@ -10992,6 +10992,444 @@ body.vnext2-screen-tableFocus {
   }
 }
 
+/* vNext2 Phase 3 visual polish: stable UI richness without behavior changes. */
+body.vnext2-app {
+  --v2-rich-bg: #f0ede4;
+  --v2-rich-surface: #fffdfa;
+  --v2-rich-surface-raised: #ffffff;
+  --v2-rich-surface-soft: #f6f1e8;
+  --v2-rich-primary: #007f73;
+  --v2-rich-primary-strong: #005f58;
+  --v2-rich-danger: #cf342d;
+  --v2-rich-danger-soft: #fff1ee;
+  --v2-rich-warning: #bc7a05;
+  --v2-rich-warning-soft: #fff6df;
+  --v2-rich-success: #1e8e4f;
+  --v2-rich-muted: #7a7065;
+  --v2-rich-line: rgba(49, 41, 32, 0.12);
+  --v2-rich-radius-sm: 12px;
+  --v2-rich-radius-md: 18px;
+  --v2-rich-radius-lg: 24px;
+  --v2-rich-radius-xl: 30px;
+  --v2-rich-shadow-card: 0 18px 38px rgba(48, 38, 28, 0.1);
+  --v2-rich-shadow-soft: 0 10px 24px rgba(48, 38, 28, 0.08);
+  --v2-rich-shadow-press: 0 6px 14px rgba(0, 95, 88, 0.18);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(0, 127, 115, 0.08), transparent 32%),
+    linear-gradient(135deg, #f4f0e8 0%, #ebe8de 100%);
+}
+
+body.vnext2-app .vnext2-shell {
+  color: #28231e;
+}
+
+.vnext2-button,
+.vnext2-filter-button,
+.vnext2-date-card,
+.vnext2-defect-card,
+button.vnext2-summary-card,
+.vnext2-ghost,
+.vnext2-date-card__action {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    color 140ms ease,
+    opacity 140ms ease,
+    transform 120ms ease;
+}
+
+.vnext2-button,
+.vnext2-filter-button,
+.vnext2-ghost,
+.vnext2-date-card__action {
+  min-height: 44px;
+}
+
+.vnext2-button:active:not(:disabled),
+.vnext2-filter-button:active:not(:disabled),
+.vnext2-ghost:active:not(:disabled),
+.vnext2-date-card:active,
+.vnext2-defect-card:active,
+button.vnext2-summary-card:active {
+  box-shadow: var(--v2-rich-shadow-press);
+  transform: translateY(1px) scale(0.992);
+}
+
+.vnext2-button:focus-visible,
+.vnext2-filter-button:focus-visible,
+.vnext2-ghost:focus-visible,
+.vnext2-date-card:focus-visible,
+.vnext2-defect-card:focus-visible,
+button.vnext2-summary-card:focus-visible {
+  outline: 4px solid rgba(0, 127, 115, 0.26);
+  outline-offset: 3px;
+}
+
+.vnext2-button--primary {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent),
+    var(--v2-rich-primary);
+  border-color: transparent;
+  box-shadow:
+    0 12px 22px rgba(0, 127, 115, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.vnext2-button--primary:hover,
+.vnext2-button--primary:focus-visible {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent),
+    var(--v2-rich-primary-strong);
+}
+
+.vnext2-button--subtle,
+.vnext2-ghost {
+  background: rgba(255, 253, 250, 0.9);
+  border: 2px solid rgba(0, 127, 115, 0.14);
+  box-shadow: 0 8px 18px rgba(0, 79, 73, 0.08);
+}
+
+.vnext2-button--subtle:hover,
+.vnext2-ghost:hover {
+  background: #eefaf6;
+  border-color: rgba(0, 127, 115, 0.26);
+  color: var(--v2-rich-primary-strong);
+}
+
+.vnext2-filebar,
+.vnext2-summary-card,
+.vnext2-date-section,
+.vnext2-defect-card,
+.vnext2-detail-card,
+.vnext2-support-card,
+.vnext2-table-focus__head,
+.vnext2-table-target,
+.vnext2-cell-detail {
+  border-color: var(--v2-rich-line);
+  box-shadow: var(--v2-rich-shadow-soft);
+}
+
+.vnext2-filebar {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(245, 252, 249, 0.9)),
+    var(--v2-rich-surface);
+  border-radius: var(--v2-rich-radius-xl);
+}
+
+.vnext2-summary-grid {
+  gap: 16px;
+}
+
+.vnext2-summary-card {
+  background: var(--v2-rich-surface-raised);
+  border-radius: var(--v2-rich-radius-lg);
+  min-height: 138px;
+  padding: 18px 20px;
+}
+
+.vnext2-summary-card strong {
+  letter-spacing: -0.04em;
+}
+
+.vnext2-summary-card__hint,
+.vnext2-filter-summary,
+.vnext2-date-card .vnext2-chip-row,
+.vnext2-defect-card p,
+.vnext2-table-target__hint {
+  color: var(--v2-rich-muted);
+}
+
+button.vnext2-summary-card {
+  cursor: pointer;
+}
+
+.vnext2-summary-card.is-active {
+  box-shadow:
+    0 0 0 3px rgba(0, 127, 115, 0.18),
+    var(--v2-rich-shadow-card);
+  transform: translateY(-1px);
+}
+
+.vnext2-summary-card--red.is-active {
+  box-shadow:
+    0 0 0 3px rgba(207, 52, 45, 0.2),
+    var(--v2-rich-shadow-card);
+}
+
+.vnext2-summary-card--yellow.is-active {
+  box-shadow:
+    0 0 0 3px rgba(188, 122, 5, 0.22),
+    var(--v2-rich-shadow-card);
+}
+
+.vnext2-filter-bar {
+  background: rgba(240, 249, 246, 0.86);
+  border: 1px solid rgba(0, 127, 115, 0.14);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.74);
+  padding: 10px;
+}
+
+.vnext2-filter-button {
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 950;
+  min-width: 112px;
+  padding-inline: 22px;
+}
+
+.vnext2-filter-button.is-active {
+  background: var(--v2-rich-primary);
+  border-color: var(--v2-rich-primary);
+  color: #fff;
+  box-shadow:
+    0 10px 22px rgba(0, 127, 115, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.vnext2-filter-button[data-filter="red"].is-active {
+  background: var(--v2-rich-danger);
+  border-color: var(--v2-rich-danger);
+  box-shadow: 0 10px 22px rgba(207, 52, 45, 0.22);
+}
+
+.vnext2-filter-button[data-filter="yellow"].is-active {
+  background: var(--v2-rich-warning);
+  border-color: var(--v2-rich-warning);
+  box-shadow: 0 10px 22px rgba(188, 122, 5, 0.22);
+}
+
+.vnext2-date-section {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 253, 250, 0.92)),
+    var(--v2-rich-surface);
+  border-radius: var(--v2-rich-radius-xl);
+}
+
+.vnext2-date-list {
+  gap: 20px;
+}
+
+.vnext2-date-card {
+  background: var(--v2-rich-surface-raised);
+  border: 1px solid rgba(49, 41, 32, 0.1);
+  border-left-width: 9px;
+  border-radius: var(--v2-rich-radius-lg);
+  box-shadow: var(--v2-rich-shadow-soft);
+  min-height: 232px;
+}
+
+.vnext2-date-card:hover,
+.vnext2-date-card:focus-visible {
+  box-shadow: var(--v2-rich-shadow-card);
+}
+
+.vnext2-date-card--red {
+  background:
+    linear-gradient(180deg, rgba(255, 246, 244, 0.88), rgba(255, 253, 250, 0.98)),
+    var(--v2-rich-surface-raised);
+  border-color: rgba(207, 52, 45, 0.25);
+}
+
+.vnext2-date-card--yellow {
+  background:
+    linear-gradient(180deg, rgba(255, 248, 224, 0.92), rgba(255, 253, 250, 0.98)),
+    var(--v2-rich-surface-raised);
+  border-color: rgba(188, 122, 5, 0.28);
+}
+
+.vnext2-date-card--ok {
+  background:
+    linear-gradient(180deg, rgba(237, 249, 242, 0.9), rgba(255, 253, 250, 0.98)),
+    var(--v2-rich-surface-raised);
+  border-color: rgba(30, 142, 79, 0.24);
+}
+
+.vnext2-date-card__status,
+.vnext2-date-card__counts span,
+.vnext2-chip,
+.vnext2-defect-card__order,
+.vnext2-defect-card__count,
+.vnext2-defect-card__route {
+  border-radius: 999px;
+  font-weight: 950;
+}
+
+.vnext2-date-card__action {
+  align-items: center;
+  background: var(--v2-rich-primary);
+  border-radius: 999px;
+  box-shadow: 0 10px 20px rgba(0, 127, 115, 0.2);
+  color: #fff;
+  display: inline-flex;
+  font-weight: 950;
+  justify-content: center;
+  padding: 10px 18px;
+  text-align: center;
+}
+
+.vnext2-date-card:active .vnext2-date-card__action {
+  background: var(--v2-rich-primary-strong);
+}
+
+.vnext2-defect-card {
+  background: var(--v2-rich-surface-raised);
+  border-radius: var(--v2-rich-radius-lg);
+  box-shadow: var(--v2-rich-shadow-soft);
+  gap: 14px;
+  padding: 18px;
+}
+
+.vnext2-defect-card:hover,
+.vnext2-defect-card:focus-visible,
+.vnext2-defect-card.is-selected {
+  box-shadow: var(--v2-rich-shadow-card);
+}
+
+.vnext2-defect-card--red {
+  background:
+    linear-gradient(180deg, rgba(255, 242, 240, 0.94), rgba(255, 253, 250, 0.98)),
+    var(--v2-rich-surface-raised);
+  border-color: rgba(207, 52, 45, 0.28);
+}
+
+.vnext2-defect-card--yellow {
+  background:
+    linear-gradient(180deg, rgba(255, 248, 224, 0.96), rgba(255, 253, 250, 0.98)),
+    var(--v2-rich-surface-raised);
+  border-color: rgba(188, 122, 5, 0.3);
+}
+
+.vnext2-defect-card--environment {
+  background:
+    linear-gradient(135deg, rgba(255, 247, 222, 0.98), rgba(255, 253, 250, 0.98)),
+    var(--v2-rich-surface-raised);
+  border-style: solid;
+}
+
+.vnext2-defect-card--environment .vnext2-defect-card__route {
+  background: #fff0c4;
+  color: #7a5200;
+}
+
+.vnext2-defect-card--no-table {
+  box-shadow:
+    inset 0 0 0 1px rgba(188, 122, 5, 0.12),
+    var(--v2-rich-shadow-soft);
+}
+
+.vnext2-defect-card__order {
+  min-width: 58px;
+  text-align: center;
+}
+
+.vnext2-defect-card__main strong,
+.vnext2-detail-card h2 {
+  letter-spacing: -0.02em;
+}
+
+.vnext2-defect-card__actions,
+.vnext2-card-actions {
+  gap: 12px;
+}
+
+.vnext2-detail-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 253, 250, 0.98)),
+    var(--v2-rich-surface);
+  border-radius: var(--v2-rich-radius-xl);
+}
+
+.vnext2-detail-card--red {
+  border-color: rgba(207, 52, 45, 0.26);
+}
+
+.vnext2-detail-card--yellow {
+  border-color: rgba(188, 122, 5, 0.3);
+}
+
+.vnext2-table-focus__head {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(246, 251, 249, 0.94)),
+    var(--v2-rich-surface);
+  border-radius: var(--v2-rich-radius-xl);
+}
+
+.vnext2-table-target {
+  border-radius: var(--v2-rich-radius-lg);
+}
+
+.vnext2-table-target--red {
+  background:
+    linear-gradient(90deg, rgba(207, 52, 45, 0.08), transparent 52%),
+    var(--v2-rich-surface-raised);
+}
+
+.vnext2-table-target--yellow {
+  background:
+    linear-gradient(90deg, rgba(188, 122, 5, 0.12), transparent 52%),
+    var(--v2-rich-surface-raised);
+}
+
+.vnext2-table-target__meta div,
+.vnext2-cell-detail div {
+  border: 1px solid rgba(49, 41, 32, 0.08);
+}
+
+.vnext2-table-scroll {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 18px 34px rgba(44, 35, 25, 0.1);
+}
+
+.vnext2-table-cell.is-selected {
+  background: #d8f2ec;
+  outline-color: var(--v2-rich-primary-strong);
+}
+
+.vnext2-support-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 253, 250, 0.98)),
+    var(--v2-rich-surface);
+  box-shadow: var(--v2-rich-shadow-card);
+}
+
+.vnext2-support-card ol {
+  border: 1px solid rgba(0, 127, 115, 0.1);
+}
+
+@media (max-width: 860px) {
+  .vnext2-filter-bar {
+    border-radius: var(--v2-rich-radius-lg);
+  }
+
+  .vnext2-filter-buttons {
+    width: 100%;
+  }
+
+  .vnext2-filter-button {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .vnext2-summary-card,
+  .vnext2-date-card,
+  .vnext2-defect-card {
+    min-height: auto;
+  }
+
+  .vnext2-button,
+  .vnext2-filter-button,
+  .vnext2-date-card__action {
+    min-height: 48px;
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home queue-hard-reset" data-home-state="empty">
@@ -11013,8 +11451,8 @@ body.vnext2-screen-tableFocus {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-28-1955</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-28 19:55</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-28-2040</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-28 20:40</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -11583,7 +12021,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-28-1955","buildLabel":"2026-05-28 19:55","buildId":"2026-05-28-195538","builtAtIso":"2026-05-28T10:55:38.108Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-28-2040","buildLabel":"2026-05-28 20:40","buildId":"2026-05-28-204018","builtAtIso":"2026-05-28T11:40:18.143Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
