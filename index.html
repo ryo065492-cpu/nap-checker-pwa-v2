@@ -11430,6 +11430,453 @@ button.vnext2-summary-card {
   }
 }
 
+/* vNext2 Phase 4 compact polish: AppHeader, filters, date cards, and DayQueue density. */
+body.vnext2-app {
+  --v2-phase4-header-shadow: 0 18px 42px rgba(38, 31, 22, 0.12);
+  --v2-phase4-card-border: rgba(45, 35, 26, 0.1);
+  --v2-phase4-ring: rgba(0, 127, 115, 0.24);
+  --v2-phase4-danger-ring: rgba(207, 52, 45, 0.24);
+  --v2-phase4-warning-ring: rgba(188, 122, 5, 0.26);
+}
+
+.vnext2-topbar {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(242, 251, 248, 0.94)),
+    var(--v2-rich-surface-raised, #fffdfa);
+  border: 1px solid rgba(0, 127, 115, 0.12);
+  box-shadow: var(--v2-phase4-header-shadow);
+  gap: clamp(14px, 2vw, 24px);
+}
+
+.vnext2-brand {
+  min-width: 0;
+}
+
+.vnext2-brand strong {
+  letter-spacing: -0.04em;
+}
+
+.vnext2-brand span:not(.vnext2-logo) {
+  color: var(--v2-rich-muted, #70685e);
+  font-weight: 750;
+}
+
+.vnext2-topbar__actions {
+  align-items: center;
+  gap: 10px;
+}
+
+.vnext2-status,
+.vnext2-build,
+.vnext2-update-alert,
+.vnext2-topbar .vnext2-ghost {
+  min-height: 46px;
+  white-space: nowrap;
+}
+
+.vnext2-build {
+  background: linear-gradient(180deg, rgba(219, 247, 240, 0.95), rgba(205, 240, 232, 0.95));
+  border: 1px solid rgba(0, 127, 115, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  color: var(--v2-rich-primary-strong, #005f58);
+  font-weight: 950;
+}
+
+.vnext2-topbar .vnext2-ghost {
+  background: rgba(255, 253, 250, 0.92);
+  border: 2px solid rgba(0, 127, 115, 0.16);
+  box-shadow:
+    0 8px 18px rgba(0, 95, 88, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  font-weight: 950;
+  padding-inline: 20px;
+}
+
+.vnext2-topbar .vnext2-ghost:active:not(:disabled) {
+  box-shadow:
+    0 4px 10px rgba(0, 95, 88, 0.14),
+    inset 0 2px 5px rgba(0, 95, 88, 0.08);
+  transform: translateY(1px) scale(0.985);
+}
+
+.vnext2-filebar {
+  align-items: center;
+  gap: 16px;
+  padding: clamp(16px, 2vw, 22px);
+}
+
+.vnext2-filebar > div {
+  min-width: 0;
+}
+
+.vnext2-filebar span,
+.vnext2-page-head p,
+.vnext2-date-section .vnext2-section-head p,
+.vnext2-defect-card p,
+.vnext2-table-target__hint {
+  color: var(--v2-rich-muted, #70685e);
+  line-height: 1.55;
+}
+
+.vnext2-date-section .vnext2-section-head p,
+.vnext2-page-head p {
+  max-width: 48rem;
+}
+
+.vnext2-filter-bar {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(238, 250, 246, 0.95), rgba(229, 245, 239, 0.9));
+  border: 1px solid rgba(0, 127, 115, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 10px 22px rgba(0, 95, 88, 0.07);
+  gap: 12px;
+  padding: 12px;
+}
+
+.vnext2-filter-label {
+  color: var(--v2-rich-primary-strong, #005f58);
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.vnext2-filter-buttons {
+  gap: 8px;
+}
+
+.vnext2-filter-button {
+  border: 2px solid rgba(0, 127, 115, 0.12);
+  min-height: 48px;
+  position: relative;
+}
+
+.vnext2-filter-button::after {
+  border: 1px solid transparent;
+  border-radius: inherit;
+  content: "";
+  inset: 4px;
+  pointer-events: none;
+  position: absolute;
+}
+
+.vnext2-filter-button.is-active::after {
+  border-color: rgba(255, 255, 255, 0.42);
+}
+
+.vnext2-filter-button.is-active {
+  transform: translateY(-1px);
+}
+
+.vnext2-filter-button:not(.is-active):active:not(:disabled) {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: inset 0 2px 5px rgba(0, 95, 88, 0.08);
+}
+
+.vnext2-filter-summary {
+  background: rgba(255, 253, 250, 0.82);
+  border: 1px solid rgba(0, 127, 115, 0.1);
+  border-radius: 999px;
+  color: var(--v2-rich-primary-strong, #005f58);
+  font-size: 14px;
+  font-weight: 850;
+  padding: 8px 12px;
+  white-space: nowrap;
+}
+
+.vnext2-date-section {
+  padding: clamp(18px, 2vw, 24px);
+}
+
+.vnext2-section-head {
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.vnext2-section-head h2 {
+  letter-spacing: -0.04em;
+  margin-bottom: 4px;
+}
+
+.vnext2-count-pill {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+}
+
+.vnext2-date-list {
+  align-items: stretch;
+  gap: clamp(16px, 2vw, 22px);
+}
+
+.vnext2-date-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+  padding: 20px;
+  position: relative;
+}
+
+.vnext2-date-card::after {
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.vnext2-date-card__head {
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.vnext2-date-card__date-line strong {
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.08;
+}
+
+.vnext2-date-card__date-line > span {
+  color: var(--v2-rich-muted, #70685e);
+  font-weight: 900;
+}
+
+.vnext2-date-card__status {
+  box-shadow: none;
+  flex: 0 0 auto;
+}
+
+.vnext2-date-card__counts {
+  align-items: center;
+  gap: 8px;
+}
+
+.vnext2-date-card__counts span {
+  border: 1px solid rgba(49, 41, 32, 0.08);
+  box-shadow: none;
+  min-height: 36px;
+  padding: 7px 11px;
+}
+
+.vnext2-date-card .vnext2-chip-row {
+  gap: 8px;
+  margin-top: auto;
+}
+
+.vnext2-chip {
+  border: 1px solid rgba(49, 41, 32, 0.08);
+  box-shadow: none;
+  max-width: 100%;
+}
+
+.vnext2-date-card__action {
+  box-shadow:
+    0 12px 22px rgba(0, 127, 115, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  margin-top: 2px;
+  min-height: 48px;
+  position: relative;
+  width: 100%;
+}
+
+.vnext2-date-card__action::after {
+  content: ">";
+  font-size: 18px;
+  line-height: 1;
+  margin-left: 10px;
+}
+
+.vnext2-date-card:active .vnext2-date-card__action {
+  box-shadow:
+    0 6px 14px rgba(0, 95, 88, 0.18),
+    inset 0 2px 6px rgba(0, 95, 88, 0.1);
+}
+
+.vnext2-defect-list {
+  gap: 14px;
+}
+
+.vnext2-defect-card {
+  border: 1px solid var(--v2-phase4-card-border);
+  overflow: hidden;
+  padding: 18px 18px 18px 20px;
+  position: relative;
+}
+
+.vnext2-defect-card::before {
+  border-radius: 999px;
+  bottom: 18px;
+  content: "";
+  left: 8px;
+  position: absolute;
+  top: 18px;
+  width: 6px;
+}
+
+.vnext2-defect-card--red::before {
+  background: var(--v2-rich-danger, #cf342d);
+}
+
+.vnext2-defect-card--yellow::before,
+.vnext2-defect-card--environment::before {
+  background: var(--v2-rich-warning, #bc7a05);
+}
+
+.vnext2-defect-card.is-selected {
+  outline: 4px solid var(--v2-phase4-ring);
+  outline-offset: 2px;
+}
+
+.vnext2-defect-card--red.is-selected {
+  outline-color: var(--v2-phase4-danger-ring);
+}
+
+.vnext2-defect-card--yellow.is-selected,
+.vnext2-defect-card--environment.is-selected {
+  outline-color: var(--v2-phase4-warning-ring);
+}
+
+.vnext2-defect-card__top {
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.vnext2-defect-card__heading {
+  gap: 8px;
+  min-width: 0;
+}
+
+.vnext2-defect-card__heading strong {
+  overflow-wrap: anywhere;
+}
+
+.vnext2-defect-card__order {
+  background: rgba(255, 253, 250, 0.9);
+  border: 1px solid rgba(49, 41, 32, 0.08);
+  font-size: 15px;
+  min-height: 34px;
+  min-width: 64px;
+}
+
+.vnext2-defect-card--red .vnext2-defect-card__order {
+  color: var(--v2-rich-danger, #cf342d);
+}
+
+.vnext2-defect-card--yellow .vnext2-defect-card__order,
+.vnext2-defect-card--environment .vnext2-defect-card__order {
+  color: var(--v2-rich-warning, #bc7a05);
+}
+
+.vnext2-defect-card__count,
+.vnext2-defect-card__route {
+  border: 1px solid rgba(49, 41, 32, 0.08);
+  box-shadow: none;
+  min-height: 34px;
+}
+
+.vnext2-defect-card--table .vnext2-defect-card__route {
+  background: #e5f5f1;
+  color: var(--v2-rich-primary-strong, #005f58);
+}
+
+.vnext2-defect-card--no-table .vnext2-defect-card__route {
+  background: #fff3cf;
+  color: #765000;
+}
+
+.vnext2-defect-card__main {
+  align-items: baseline;
+  gap: 8px 12px;
+}
+
+.vnext2-defect-card__main strong {
+  font-size: clamp(19px, 2vw, 24px);
+}
+
+.vnext2-defect-card p {
+  margin-block: 0;
+}
+
+.vnext2-reviewer {
+  align-self: flex-start;
+  background: rgba(229, 245, 239, 0.86);
+  border: 1px solid rgba(0, 127, 115, 0.1);
+  border-radius: 999px;
+  color: var(--v2-rich-primary-strong, #005f58);
+  font-weight: 900;
+  padding: 7px 11px;
+}
+
+.vnext2-defect-card__actions .vnext2-button,
+.vnext2-card-actions .vnext2-button {
+  flex: 0 1 auto;
+  min-height: 48px;
+}
+
+.vnext2-defect-card--environment {
+  border-style: solid;
+  box-shadow:
+    inset 0 0 0 1px rgba(188, 122, 5, 0.08),
+    var(--v2-rich-shadow-soft);
+}
+
+.vnext2-defect-card--environment .vnext2-defect-card__main strong {
+  color: #765000;
+}
+
+.vnext2-defect-card--environment .vnext2-reviewer,
+.vnext2-defect-card--environment .vnext2-affected {
+  display: none;
+}
+
+.vnext2-button:active:not(:disabled),
+.vnext2-filter-button:active:not(:disabled),
+.vnext2-ghost:active:not(:disabled),
+.vnext2-date-card:active,
+.vnext2-defect-card:active {
+  filter: saturate(1.04);
+}
+
+@media (max-width: 980px) {
+  .vnext2-topbar {
+    align-items: flex-start;
+  }
+
+  .vnext2-topbar__actions {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .vnext2-filter-summary {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 720px) {
+  .vnext2-filter-bar {
+    align-items: stretch;
+    border-radius: var(--v2-rich-radius-lg, 24px);
+  }
+
+  .vnext2-filter-label,
+  .vnext2-filter-summary {
+    white-space: normal;
+  }
+
+  .vnext2-date-card {
+    padding: 18px;
+  }
+
+  .vnext2-date-card__action,
+  .vnext2-defect-card__actions .vnext2-button,
+  .vnext2-card-actions .vnext2-button {
+    width: 100%;
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home queue-hard-reset" data-home-state="empty">
@@ -11451,8 +11898,8 @@ button.vnext2-summary-card {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-28-2040</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-28 20:40</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-28-2140</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-28 21:40</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -12021,7 +12468,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-28-2040","buildLabel":"2026-05-28 20:40","buildId":"2026-05-28-204018","builtAtIso":"2026-05-28T11:40:18.143Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-28-2140","buildLabel":"2026-05-28 21:40","buildId":"2026-05-28-214034","builtAtIso":"2026-05-28T12:40:34.215Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
