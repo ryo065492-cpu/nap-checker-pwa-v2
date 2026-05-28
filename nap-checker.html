@@ -10616,6 +10616,7 @@ body.vnext2-screen-tableFocus {
 
 .vnext2-table-focus {
   --v2-table-child-width: 136px;
+  --v2-table-fixed-width: calc(var(--v2-table-child-width) + var(--v2-table-row-label-width));
   --v2-table-row-label-width: 78px;
   --v2-table-time-width: 66px;
 }
@@ -10660,6 +10661,8 @@ body.vnext2-screen-tableFocus {
   overflow: auto;
   overscroll-behavior: contain;
   padding: 0;
+  position: relative;
+  isolation: isolate;
   scroll-padding-left: calc(var(--v2-table-child-width) + var(--v2-table-row-label-width));
 }
 
@@ -10688,7 +10691,9 @@ body.vnext2-screen-tableFocus {
   border-spacing: 0;
   color: var(--text-main);
   font-size: 14px;
+  isolation: isolate;
   min-width: max-content;
+  position: relative;
   table-layout: fixed;
 }
 
@@ -10699,20 +10704,27 @@ body.vnext2-screen-tableFocus {
   box-sizing: border-box;
   height: 46px;
   padding: 0;
+  position: relative;
   vertical-align: middle;
 }
 
+.vnext2-table td {
+  overflow: hidden;
+  z-index: 0;
+}
+
 .vnext2-table thead th {
-  background: #edf7f3;
+  background: #edf7f3 !important;
+  background-clip: padding-box;
   color: var(--primary-strong);
   font-size: 15px;
   font-weight: 950;
   height: 44px;
   padding: 9px 8px;
-  position: sticky;
+  position: sticky !important;
   top: 0;
   white-space: nowrap;
-  z-index: 30;
+  z-index: 260;
 }
 
 .vnext2-table-head-child,
@@ -10720,7 +10732,7 @@ body.vnext2-screen-tableFocus {
   left: 0;
   min-width: var(--v2-table-child-width);
   width: var(--v2-table-child-width);
-  z-index: 60;
+  z-index: 340 !important;
 }
 
 .vnext2-table-head-row,
@@ -10728,7 +10740,7 @@ body.vnext2-screen-tableFocus {
   left: var(--v2-table-child-width);
   min-width: var(--v2-table-row-label-width);
   width: var(--v2-table-row-label-width);
-  z-index: 59;
+  z-index: 330 !important;
 }
 
 .vnext2-table-time,
@@ -10740,9 +10752,11 @@ body.vnext2-screen-tableFocus {
 
 .vnext2-table-child {
   background: #edf7f3 !important;
+  background-clip: padding-box;
   box-shadow:
     1px 0 0 #d8ded6,
-    10px 0 16px rgba(44, 35, 25, 0.05);
+    10px 0 0 #fffdfa,
+    18px 0 16px rgba(44, 35, 25, 0.08);
   color: var(--primary-strong);
   font-size: 14px;
   font-weight: 950;
@@ -10752,30 +10766,49 @@ body.vnext2-screen-tableFocus {
   max-width: var(--v2-table-child-width);
   overflow: hidden;
   padding: 8px 10px;
-  position: sticky;
+  position: sticky !important;
   text-align: center;
   text-orientation: mixed;
+  transform: translateZ(0);
   vertical-align: middle;
   white-space: normal;
   width: var(--v2-table-child-width);
   word-break: keep-all;
-  z-index: 42;
+  z-index: 320 !important;
 }
 
 .vnext2-table-row-label {
   background: #f3faf7 !important;
-  box-shadow: 1px 0 0 #d8ded6;
+  background-clip: padding-box;
+  box-shadow:
+    1px 0 0 #d8ded6,
+    10px 0 0 #fffdfa,
+    18px 0 16px rgba(44, 35, 25, 0.08);
   color: var(--primary-strong);
   font-size: 14px;
   font-weight: 950;
   left: var(--v2-table-child-width);
   min-width: var(--v2-table-row-label-width);
+  overflow: visible;
   padding: 0 8px;
-  position: sticky;
+  position: sticky !important;
   text-align: center;
+  transform: translateZ(0);
   white-space: nowrap;
   width: var(--v2-table-row-label-width);
-  z-index: 41;
+  z-index: 310 !important;
+}
+
+.vnext2-table-row-label::after,
+.vnext2-table-head-row::after {
+  background: linear-gradient(90deg, rgba(243, 250, 247, 0.95), rgba(255, 253, 250, 0));
+  bottom: -1px;
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  right: -14px;
+  top: -1px;
+  width: 14px;
 }
 
 .vnext2-table td {
@@ -10807,6 +10840,7 @@ body.vnext2-screen-tableFocus {
   position: relative;
   transform: none !important;
   width: 100%;
+  z-index: 0 !important;
 }
 
 .vnext2-table-cell--red {
@@ -10823,7 +10857,8 @@ body.vnext2-screen-tableFocus {
   background: #d9f5ef;
   color: #7a1e18;
   outline: 4px solid var(--primary-strong);
-  z-index: 5;
+  outline-offset: -4px;
+  z-index: 0 !important;
 }
 
 .vnext2-table-cell.is-selected::after {
@@ -10978,8 +11013,8 @@ body.vnext2-screen-tableFocus {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-28-1915</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-28 19:15</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-28-1955</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-28 19:55</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -11548,7 +11583,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-28-1915","buildLabel":"2026-05-28 19:15","buildId":"2026-05-28-191518","builtAtIso":"2026-05-28T10:15:18.919Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-28-1955","buildLabel":"2026-05-28 19:55","buildId":"2026-05-28-195538","builtAtIso":"2026-05-28T10:55:38.108Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
