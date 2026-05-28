@@ -11877,6 +11877,309 @@ body.vnext2-app {
   }
 }
 
+/* vNext2 Phase 5 state polish: first-run, loading, completion, support, and update states. */
+body.vnext2-app {
+  --v2-phase5-welcome-shadow: 0 24px 72px rgba(34, 30, 22, 0.14);
+  --v2-phase5-progress: linear-gradient(90deg, #008f83 0%, #18b79f 48%, #75d9b7 100%);
+  --v2-phase5-success-soft: #e8f8ef;
+  --v2-phase5-support-line: rgba(0, 127, 115, 0.16);
+  --v2-phase5-support-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 248, 241, 0.98));
+}
+
+.vnext2-home--empty,
+.vnext2-home--checking {
+  align-content: center;
+  min-height: min(680px, calc(100dvh - 190px));
+  padding: clamp(18px, 4vw, 48px);
+}
+
+.vnext2-home--empty .vnext2-upload-card {
+  background:
+    radial-gradient(circle at 18% 10%, rgba(0, 127, 115, 0.12), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 252, 245, 0.98));
+  border: 1px solid rgba(0, 127, 115, 0.16);
+  box-shadow: var(--v2-phase5-welcome-shadow);
+  max-width: 760px;
+  padding: clamp(30px, 5vw, 58px);
+}
+
+.vnext2-upload-card__icon {
+  align-items: center;
+  background:
+    linear-gradient(135deg, rgba(0, 127, 115, 0.98), rgba(0, 99, 91, 0.98));
+  border-radius: 28px;
+  box-shadow: 0 18px 34px rgba(0, 95, 88, 0.22);
+  color: #fff;
+  display: inline-flex;
+  font-size: clamp(32px, 5vw, 48px);
+  height: 84px;
+  justify-content: center;
+  margin-bottom: 18px;
+  width: 84px;
+}
+
+.vnext2-home--empty .vnext2-upload-card h1 {
+  font-size: clamp(32px, 4.4vw, 48px);
+  letter-spacing: -0.03em;
+}
+
+.vnext2-home--empty .vnext2-upload-card p {
+  color: var(--v2-rich-muted, #665b51);
+  font-size: clamp(16px, 1.7vw, 19px);
+  line-height: 1.72;
+  margin-inline: auto;
+  max-width: 34em;
+}
+
+.vnext2-home--empty .vnext2-button--primary {
+  border-radius: 999px;
+  font-size: clamp(17px, 1.8vw, 20px);
+  min-height: 58px;
+  padding-inline: 34px;
+}
+
+.vnext2-home--empty .vnext2-link-button {
+  background: rgba(229, 245, 239, 0.76);
+  border: 1px solid rgba(0, 127, 115, 0.12);
+  border-radius: 999px;
+  color: var(--v2-rich-primary-strong, #005f58);
+  display: inline-flex;
+  font-weight: 900;
+  margin-top: 16px;
+  min-height: 42px;
+  padding-inline: 18px;
+}
+
+.vnext2-build-note {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(49, 41, 32, 0.08);
+  border-radius: 999px;
+  color: var(--v2-rich-muted, #665b51);
+  display: inline-flex;
+  font-weight: 800;
+  margin-top: 18px;
+  padding: 7px 13px;
+}
+
+.vnext2-home--checking .vnext2-progress-card {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(117, 217, 183, 0.24), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 253, 251, 0.98));
+  border-color: rgba(0, 127, 115, 0.18);
+  box-shadow: var(--v2-phase5-welcome-shadow);
+  max-width: 720px;
+  overflow: hidden;
+  position: relative;
+}
+
+.vnext2-home--checking .vnext2-progress-card::before {
+  animation: vnext2-phase5-pulse 1.5s ease-in-out infinite;
+  background: rgba(0, 127, 115, 0.12);
+  border-radius: 999px;
+  content: "";
+  display: block;
+  height: 12px;
+  margin: 0 auto 18px;
+  width: 72px;
+}
+
+.vnext2-home--checking .vnext2-progress-card h1 {
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: -0.03em;
+}
+
+.vnext2-home--checking .vnext2-progress-card p {
+  font-size: clamp(16px, 1.8vw, 19px);
+  margin-inline: auto;
+  max-width: 36em;
+}
+
+.vnext2-progress {
+  background: rgba(0, 127, 115, 0.08);
+  border: 1px solid rgba(0, 127, 115, 0.14);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 3px rgba(0, 95, 88, 0.12);
+  height: 16px;
+  margin-block: 22px 10px;
+  overflow: hidden;
+}
+
+.vnext2-progress span {
+  background: var(--v2-phase5-progress);
+  border-radius: inherit;
+  box-shadow: 0 0 18px rgba(0, 127, 115, 0.24);
+  min-width: 8px;
+  transition: width 220ms ease;
+}
+
+.vnext2-filebar .vnext2-status--ready,
+.vnext2-status--ready {
+  background: var(--v2-phase5-success-soft);
+  border-color: rgba(26, 142, 84, 0.16);
+  color: #11663a;
+}
+
+.vnext2-empty-panel {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(40, 169, 99, 0.13), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 252, 247, 0.98));
+  border-color: rgba(40, 169, 99, 0.18);
+  box-shadow: var(--v2-rich-shadow-card);
+}
+
+.vnext2-empty-panel h2,
+.vnext2-empty-panel strong {
+  color: #11663a;
+}
+
+.vnext2-update-alert {
+  background: rgba(255, 246, 220, 0.95);
+  border: 1px solid rgba(188, 122, 5, 0.18);
+  border-radius: 999px;
+  color: #765000;
+  font-weight: 900;
+  padding: 8px 13px;
+}
+
+.vnext2-update-box {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(0, 127, 115, 0.08), transparent 34%),
+    rgba(255, 255, 255, 0.92);
+  border-left: 6px solid var(--v2-rich-primary, #007f73);
+  border-radius: 22px;
+  gap: 14px;
+}
+
+.vnext2-update-box .vnext2-button,
+.vnext2-update-box .vnext2-ghost {
+  min-height: 46px;
+}
+
+.vnext2-support {
+  align-items: center;
+  padding: clamp(12px, 3vw, 28px);
+}
+
+.vnext2-support-card {
+  background: var(--v2-phase5-support-bg);
+  border: 1px solid var(--v2-phase5-support-line);
+  box-shadow: var(--v2-phase5-welcome-shadow);
+  max-width: 820px;
+  padding: clamp(22px, 4vw, 40px);
+}
+
+.vnext2-support-card h1 {
+  font-size: clamp(30px, 4vw, 44px);
+  letter-spacing: -0.03em;
+  margin-bottom: 10px;
+}
+
+.vnext2-support-card p {
+  color: var(--v2-rich-muted, #665b51);
+  font-size: 16px;
+  line-height: 1.62;
+}
+
+.vnext2-support-card ol {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(0, 127, 115, 0.1);
+  border-radius: 24px;
+  counter-reset: vnext2-support-step;
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  margin-block: 18px;
+  padding: 16px;
+}
+
+.vnext2-support-card li {
+  align-items: center;
+  color: var(--v2-rich-text, #231f1a);
+  display: grid;
+  font-size: 16px;
+  font-weight: 900;
+  gap: 12px;
+  grid-template-columns: 34px minmax(0, 1fr);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.vnext2-support-card li::before {
+  align-items: center;
+  background: rgba(0, 127, 115, 0.12);
+  border-radius: 999px;
+  color: var(--v2-rich-primary-strong, #005f58);
+  content: counter(vnext2-support-step);
+  counter-increment: vnext2-support-step;
+  display: inline-flex;
+  font-weight: 1000;
+  height: 34px;
+  justify-content: center;
+  width: 34px;
+}
+
+.vnext2-support-card .vnext2-button--primary {
+  font-size: 17px;
+  min-height: 54px;
+  padding-inline: 24px;
+}
+
+.vnext2-support-message {
+  background: rgba(229, 245, 239, 0.86);
+  border: 1px solid rgba(0, 127, 115, 0.14);
+  border-radius: 18px;
+  color: var(--v2-rich-primary-strong, #005f58);
+  font-weight: 900;
+  padding: 12px 14px;
+}
+
+.vnext2-diagnostic-text {
+  border-radius: 20px;
+  font-size: 13px;
+  line-height: 1.5;
+  max-height: 260px;
+}
+
+@keyframes vnext2-phase5-pulse {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: scaleX(0.72);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 720px) {
+  .vnext2-home--empty,
+  .vnext2-home--checking {
+    min-height: min(620px, calc(100svh - 150px));
+    padding: 14px;
+  }
+
+  .vnext2-home--empty .vnext2-upload-card,
+  .vnext2-home--checking .vnext2-progress-card,
+  .vnext2-support-card {
+    border-radius: 24px;
+    padding: 24px 18px;
+  }
+
+  .vnext2-upload-card__icon {
+    border-radius: 22px;
+    height: 70px;
+    width: 70px;
+  }
+
+  .vnext2-update-box {
+    align-items: stretch;
+    border-radius: 20px;
+    flex-direction: column;
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home queue-hard-reset" data-home-state="empty">
@@ -11898,8 +12201,8 @@ body.vnext2-app {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-28-2140</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-28 21:40</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-28-2205</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-28 22:05</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -12468,7 +12771,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-28-2140","buildLabel":"2026-05-28 21:40","buildId":"2026-05-28-214034","builtAtIso":"2026-05-28T12:40:34.215Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-28-2205","buildLabel":"2026-05-28 22:05","buildId":"2026-05-28-220554","builtAtIso":"2026-05-28T13:05:54.057Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
