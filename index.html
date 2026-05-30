@@ -12473,6 +12473,235 @@ body.vnext2-app[data-vnext2-contrast="strong"] .vnext2-table-cell.is-selected {
   }
 }
 
+/* vNext2 Phase 7 SaaS display settings UX polish. */
+body.vnext2-app {
+  --v2-saas-surface: rgba(255, 255, 255, 0.94);
+  --v2-saas-surface-soft: rgba(239, 250, 247, 0.86);
+  --v2-saas-border: rgba(0, 95, 87, 0.16);
+  --v2-saas-text: #18312e;
+  --v2-saas-muted: rgba(24, 49, 46, 0.64);
+  --v2-saas-shadow: 0 18px 42px rgba(37, 57, 52, 0.11);
+  --v2-saas-press-shadow: 0 8px 18px rgba(0, 127, 115, 0.16);
+}
+
+body.vnext2-app .vnext2-button,
+body.vnext2-app .vnext2-filter-button,
+body.vnext2-app .vnext2-date-card,
+body.vnext2-app .vnext2-defect-card,
+.vnext2-display-choice,
+.vnext2-display-settings__toggle {
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    color 140ms ease,
+    transform 120ms ease;
+}
+
+body.vnext2-app .vnext2-button:active:not(:disabled),
+body.vnext2-app .vnext2-filter-button:active:not(:disabled),
+body.vnext2-app .vnext2-date-card:active,
+body.vnext2-app .vnext2-defect-card:active,
+.vnext2-display-choice:active,
+.vnext2-display-settings__toggle:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+body.vnext2-app .vnext2-button:focus-visible,
+body.vnext2-app .vnext2-filter-button:focus-visible,
+body.vnext2-app .vnext2-date-card:focus-visible,
+body.vnext2-app .vnext2-defect-card:focus-visible,
+.vnext2-display-choice:focus-visible,
+.vnext2-display-settings__toggle:focus-visible {
+  outline: 4px solid rgba(0, 127, 115, 0.25);
+  outline-offset: 3px;
+}
+
+body.vnext2-app .vnext2-topbar,
+body.vnext2-app .vnext2-file-card,
+body.vnext2-app .vnext2-summary-card,
+body.vnext2-app .vnext2-date-card,
+body.vnext2-app .vnext2-defect-card,
+body.vnext2-app .vnext2-detail-card,
+body.vnext2-app .vnext2-table-target,
+body.vnext2-app .vnext2-support-card {
+  box-shadow: var(--v2-saas-shadow);
+}
+
+body.vnext2-app .vnext2-date-card,
+body.vnext2-app .vnext2-defect-card,
+body.vnext2-app .vnext2-support-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 252, 247, 0.94));
+  border-color: rgba(0, 95, 87, 0.13);
+}
+
+body.vnext2-app .vnext2-date-card:hover,
+body.vnext2-app .vnext2-defect-card:hover {
+  box-shadow: 0 20px 48px rgba(37, 57, 52, 0.14);
+}
+
+body.vnext2-app .vnext2-filter-button.is-active,
+body.vnext2-app .vnext2-button--primary,
+.vnext2-display-settings__toggle {
+  box-shadow: var(--v2-saas-press-shadow);
+}
+
+.vnext2-display-settings {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 251, 248, 0.94));
+  border: 1px solid var(--v2-saas-border);
+  border-radius: 28px;
+  box-shadow: 0 18px 40px rgba(37, 57, 52, 0.1);
+  color: var(--v2-saas-text);
+  overflow: clip;
+}
+
+.vnext2-display-settings__header {
+  align-items: center;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.vnext2-display-settings__title {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.vnext2-display-settings__title h2 {
+  font-size: clamp(20px, 2vw, 24px);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.vnext2-display-settings__title p {
+  color: var(--v2-saas-muted);
+  font-size: 15px;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.vnext2-display-settings__eyebrow {
+  align-self: start;
+  background: rgba(0, 127, 115, 0.1);
+  border: 1px solid rgba(0, 127, 115, 0.12);
+  border-radius: 999px;
+  color: var(--v2-brand-strong, #005f57);
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: 0.02em;
+  padding: 5px 10px;
+}
+
+.vnext2-display-settings__toggle {
+  align-items: center;
+  background: var(--v2-brand, #007f73);
+  border: 1px solid rgba(0, 95, 87, 0.18);
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 16px;
+  font-weight: 1000;
+  justify-content: center;
+  min-height: 48px;
+  min-width: 104px;
+  padding: 11px 20px;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.vnext2-display-settings__body[hidden] {
+  display: none;
+}
+
+.vnext2-display-settings__body {
+  border-top: 1px solid rgba(0, 95, 87, 0.11);
+  display: grid;
+  gap: 14px;
+  padding: 18px 20px 20px;
+}
+
+.vnext2-display-settings__body > p {
+  display: none;
+}
+
+.vnext2-display-setting {
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(0, 95, 87, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 8px 18px rgba(37, 57, 52, 0.06);
+  padding: 15px;
+}
+
+.vnext2-display-setting strong {
+  color: var(--v2-saas-text);
+  font-size: 17px;
+}
+
+.vnext2-display-setting span {
+  color: var(--v2-saas-muted);
+  font-size: 14px;
+}
+
+.vnext2-display-setting__choices {
+  gap: 10px;
+}
+
+.vnext2-display-choice {
+  background: #fff;
+  border-color: rgba(0, 95, 87, 0.18);
+  box-shadow: 0 4px 12px rgba(37, 57, 52, 0.06);
+  min-height: 46px;
+  padding-inline: 16px;
+}
+
+.vnext2-display-choice:hover {
+  background: rgba(239, 250, 247, 0.92);
+  border-color: rgba(0, 127, 115, 0.28);
+}
+
+.vnext2-display-choice.is-active {
+  background: var(--v2-brand, #007f73);
+  border-color: var(--v2-brand, #007f73);
+  box-shadow: 0 12px 24px rgba(0, 127, 115, 0.2);
+  color: #fff;
+}
+
+.vnext2-display-settings__footer {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+body[data-vnext2-contrast="strong"].vnext2-app .vnext2-display-settings,
+body[data-vnext2-contrast="strong"].vnext2-app .vnext2-date-card,
+body[data-vnext2-contrast="strong"].vnext2-app .vnext2-defect-card,
+body[data-vnext2-contrast="strong"].vnext2-app .vnext2-support-card {
+  border-color: rgba(0, 95, 87, 0.26);
+}
+
+@media (max-width: 720px) {
+  .vnext2-display-settings__header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .vnext2-display-settings__toggle {
+    width: 100%;
+  }
+
+  .vnext2-display-settings__footer > .vnext2-button {
+    flex: 1 1 220px;
+  }
+}
+
     </style>
   </head>
   <body class="app-screen-home queue-hard-reset" data-home-state="empty">
@@ -12494,8 +12723,8 @@ body.vnext2-app[data-vnext2-contrast="strong"] .vnext2-table-cell.is-selected {
         <div class="app-topbar__side">
           <div id="app-status-pill" class="app-status-pill">未読込</div>
           <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-30-1914</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-30 19:14</div>
+            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-30-1951</div>
+            <div id="build-detail" class="hero__build-detail">build: 2026-05-30 19:51</div>
           </div>
           <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
             困ったとき
@@ -13064,7 +13293,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-30-1914","buildLabel":"2026-05-30 19:14","buildId":"2026-05-30-191420","builtAtIso":"2026-05-30T10:14:20.081Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-30-1951","buildLabel":"2026-05-30 19:51","buildId":"2026-05-30-195107","builtAtIso":"2026-05-30T10:51:07.999Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -23892,11 +24121,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       [key]: value,
     });
     saveVNext2DisplaySettings(nextSettings);
+    uiVNext2State.displaySettingsOpen = true;
     renderAll();
   }
 
   function resetVNext2DisplaySettings() {
     saveVNext2DisplaySettings({ ...VNEXT2_DISPLAY_SETTINGS_DEFAULTS });
+    uiVNext2State.displaySettingsOpen = true;
     uiVNext2State.supportMessage = "画面表示設定を初期状態に戻しました。";
     renderAll();
   }
@@ -23913,6 +24144,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     previousScreen: "home",
     error: null,
     supportMessage: "",
+    displaySettingsOpen: false,
     displaySettings: loadVNext2DisplaySettings(),
   };
 
@@ -25024,11 +25256,24 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function renderVNext2DisplaySettingsPanel() {
+    const isOpen = Boolean(uiVNext2State.displaySettingsOpen);
     return `
-      <details class="vnext2-display-settings" data-testid="vnext2-display-settings">
-        <summary>画面表示設定</summary>
-        <div class="vnext2-display-settings__body">
-          <p>見やすさだけをiPad内に保存します。午睡記録や園児名は保存しません。</p>
+      <section class="vnext2-display-settings ${isOpen ? "is-open" : ""}" data-testid="vnext2-display-settings">
+        <div class="vnext2-display-settings__header">
+          <div class="vnext2-display-settings__title">
+            <span class="vnext2-display-settings__eyebrow">このiPadだけ</span>
+            <h2>画面表示設定</h2>
+            <p>文字サイズや余白だけを保存します。午睡記録や園児名は保存しません。</p>
+          </div>
+          <button
+            type="button"
+            class="vnext2-display-settings__toggle"
+            data-action="toggle-display-settings"
+            aria-expanded="${isOpen ? "true" : "false"}"
+            data-testid="vnext2-toggle-display-settings"
+          >${isOpen ? "閉じる" : "開く"}</button>
+        </div>
+        <div class="vnext2-display-settings__body" ${isOpen ? "" : "hidden"}>
           ${renderVNext2DisplaySettingGroup("fontSize", "文字サイズ", "カード・詳細・ボタンの文字")}
           ${renderVNext2DisplaySettingGroup("density", "表示密度", "カードやボタンの間隔")}
           ${renderVNext2DisplaySettingGroup("buttonSize", "ボタンサイズ", "主要操作の押しやすさ")}
@@ -25037,9 +25282,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           ${renderVNext2DisplaySettingGroup("tableCellSize", "表セルサイズ", "表で場所を見る画面のセル")}
           <div class="vnext2-display-settings__footer">
             <button type="button" class="vnext2-button vnext2-button--subtle" data-action="reset-display-settings" data-testid="vnext2-reset-display-settings">表示設定を初期状態に戻す</button>
+            <button type="button" class="vnext2-button vnext2-button--primary" data-action="close-display-settings" data-testid="vnext2-close-display-settings">閉じる</button>
           </div>
         </div>
-      </details>
+      </section>
     `;
   }
 
@@ -25188,6 +25434,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       renderAll();
     } else if (action === "apply-update") {
       await applyWaitingUpdate();
+      renderAll();
+    } else if (action === "toggle-display-settings") {
+      uiVNext2State.displaySettingsOpen = !uiVNext2State.displaySettingsOpen;
+      renderAll();
+    } else if (action === "close-display-settings") {
+      uiVNext2State.displaySettingsOpen = false;
       renderAll();
     } else if (action === "set-display-setting") {
       updateVNext2DisplaySetting(target.dataset.settingKey ?? "", target.dataset.settingValue ?? "");
