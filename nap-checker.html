@@ -7358,6 +7358,31 @@ body.vnext2-app > .app-shell {
   display: none !important;
 }
 
+.vnext2-runtime-host {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vnext2-runtime-host > * {
+  max-width: 1px;
+  max-height: 1px;
+}
+
+.vnext2-runtime-file-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
 #vnext2-root {
   display: block;
   width: 100%;
@@ -12124,6 +12149,20 @@ body.vnext2-app {
   padding-inline: 24px;
 }
 
+.vnext2-support-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.vnext2-support-actions span {
+  color: var(--v2-rich-muted, #665b51);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
 .vnext2-support-message {
   background: rgba(229, 245, 239, 0.86);
   border: 1px solid rgba(0, 127, 115, 0.14);
@@ -12131,6 +12170,49 @@ body.vnext2-app {
   color: var(--v2-rich-primary-strong, #005f58);
   font-weight: 900;
   padding: 12px 14px;
+}
+
+.vnext2-support-details,
+.vnext2-admin-details {
+  border: 1px solid rgba(0, 127, 115, 0.13);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.74);
+  overflow: hidden;
+}
+
+.vnext2-support-details > summary,
+.vnext2-admin-details > summary {
+  cursor: pointer;
+  font-weight: 1000;
+  list-style: none;
+  min-height: 52px;
+  padding: 15px 18px;
+  touch-action: manipulation;
+}
+
+.vnext2-support-details > summary::-webkit-details-marker,
+.vnext2-admin-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.vnext2-support-details > summary::after,
+.vnext2-admin-details > summary::after {
+  content: "開く";
+  float: right;
+  color: var(--v2-rich-primary-strong, #005f58);
+  font-size: 14px;
+}
+
+.vnext2-support-details[open] > summary::after,
+.vnext2-admin-details[open] > summary::after {
+  content: "閉じる";
+}
+
+.vnext2-support-details > .vnext2-diagnostic-text,
+.vnext2-admin-details .vnext2-support-details > .vnext2-diagnostic-text {
+  border-radius: 0;
+  border-width: 1px 0 0;
+  margin: 0;
 }
 
 .vnext2-diagnostic-text {
@@ -12704,576 +12786,147 @@ body[data-vnext2-contrast="strong"].vnext2-app .vnext2-support-card {
 
     </style>
   </head>
-  <body class="app-screen-home queue-hard-reset" data-home-state="empty">
+  <body class="vnext2-app vnext2-screen-home vnext2-file-empty" data-home-state="empty" data-vnext2-screen="home" data-vnext2-file-state="empty">
     <noscript>
       <div class="noscript-alert">
         このツールはJavaScriptが必要です。iPadではFilesからHTMLを直接開かず、Safariで配布URLを開いてホーム画面に追加してください。
       </div>
     </noscript>
-    <div class="app-shell">
-      <header class="hero app-topbar">
-        <div class="app-topbar__brand">
-          <div class="app-topbar__mark" aria-hidden="true">午</div>
-          <div>
-            <div class="hero__eyebrow">iPadホーム画面アプリ</div>
-            <h1>午睡チェック</h1>
-            <p class="hero__lead">xlsxを選ぶと全日分を確認し、直す必要がありそうな日付をカードで表示します。</p>
-          </div>
-        </div>
-        <div class="app-topbar__side">
-          <div id="app-status-pill" class="app-status-pill">未読込</div>
-          <div class="hero__build">
-            <div id="build-version" class="meta-pill meta-pill--build">確認版 2026-05-30-1951</div>
-            <div id="build-detail" class="hero__build-detail">build: 2026-05-30 19:51</div>
-          </div>
-          <button class="button button--ghost app-help-button" type="button" data-screen-link="support" data-testid="top-support-button" aria-label="困ったときと診断サポートを開く">
-            困ったとき
-          </button>
-        </div>
-        <div id="debug-banner" class="debug-banner" hidden></div>
-      </header>
-
-      <div class="app-frame">
-        <nav class="app-nav" aria-label="通常メニュー">
-          <div class="app-nav__brand">
-            <div class="app-nav__logo" aria-hidden="true">午</div>
+    <div id="vnext2-root" aria-live="polite">
+      <div class="vnext2-shell">
+        <header class="vnext2-topbar">
+          <div class="vnext2-brand">
+            <span class="vnext2-logo">午</span>
             <div>
               <strong>午睡チェック</strong>
-              <span>不備だけを順番に確認</span>
+              <span>直す必要がある記録だけを確認します</span>
             </div>
           </div>
-          <a class="app-nav__link app-nav__link--primary" href="#home-dashboard" data-screen-link="home" data-testid="nav-home">
-            <span class="app-nav__icon" aria-hidden="true">家</span>
-            <span class="app-nav__text">ホーム</span>
-          </a>
-          <a class="app-nav__link" href="#review-section" data-screen-link="review" data-testid="nav-review">
-            <span class="app-nav__icon" aria-hidden="true">不</span>
-            <span class="app-nav__text">この日の不備</span>
-          </a>
-          <a class="app-nav__link" href="#support-panel" data-screen-link="support" data-testid="nav-support">
-            <span class="app-nav__icon" aria-hidden="true">?</span>
-            <span class="app-nav__text">困ったとき</span>
-          </a>
-        </nav>
-
-      <main class="layout">
-        <section class="panel panel--guide admin-only">
-          <div class="panel__title-row">
-            <h2>iPadでの使い方</h2>
-            <div class="meta-pill">本番運用: Safariでホーム画面に追加</div>
+          <div class="vnext2-topbar__actions">
+            <span class="vnext2-status vnext2-status--empty">未読込</span>
+            <span class="vnext2-build">確認版 2026-06-02-0710</span>
           </div>
-
-          <div class="guide-grid">
-            <article class="guide-card">
-              <div class="guide-card__step">1</div>
-              <div>
-                <strong>初回だけSafariで配布URLを開く</strong>
-                <p>インターネット接続できる状態で、配布されたURLを <strong>iPad Safari</strong> で開きます。</p>
-              </div>
+        </header>
+        <main class="vnext2-main">
+          <section class="vnext2-screen vnext2-home vnext2-home--empty">
+            <article class="vnext2-upload-card">
+              <div class="vnext2-upload-card__icon">xlsx</div>
+              <h1>午睡記録ファイルを選ぶ</h1>
+              <p>xlsxを選ぶと、全日分を自動チェックして、直す必要がある日付だけを表示します。</p>
             </article>
-
-            <article class="guide-card">
-              <div class="guide-card__step">2</div>
-              <div>
-                <strong>共有からホーム画面に追加</strong>
-                <p><strong>共有 → ホーム画面に追加</strong> を押すと、次回からアイコンから直接開けます。</p>
-              </div>
-            </article>
-
-            <article class="guide-card">
-              <div class="guide-card__step">3</div>
-              <div>
-                <strong>ホーム画面から開いてチェックする</strong>
-                <p>以後はオフラインでも、ホーム画面のアイコンから開いて <code>.xlsx</code> を選んで使えます。</p>
-              </div>
-            </article>
-          </div>
-
-          <div class="guide-note">
-            <strong>重要:</strong>
-            iPadで <code>nap-checker.html</code> をFilesから直接開く方式は非推奨です。
-            実機確認でJavaScriptが止まるケースがあったため、本番ではSafariから配布URLを開き、
-            ホーム画面に追加して使ってください。
-          </div>
-
-          <div id="environment-hint" class="environment-hint">
-            <strong>通信方針:</strong> 初回インストール時だけアプリ本体を読み込みます。
-            xlsxはiPad内で読み取り、外部へ送信しません。
-          </div>
-        </section>
-
-        <section id="home-dashboard" class="panel panel--control screen-section screen-home" tabindex="-1">
-          <div class="panel__title-row">
-            <div>
-              <h2>午睡記録ファイルを選ぶ</h2>
-              <p class="panel__lead">ファイルを選ぶと、全日分チェックを自動で始めます。</p>
-            </div>
-            <div class="meta-pill">外部送信なし</div>
-            <button id="demo-file-button" class="button button--subtle" type="button" data-testid="demo-file-button">
-              ダミーxlsxで試す
-            </button>
-          </div>
-
-          <div id="home-file-status-bar" class="home-file-status-bar" aria-live="polite">
-            <div class="home-file-status-bar__item home-file-status-bar__item--file">
-              <span class="home-file-status-bar__label">ファイル</span>
-              <strong id="home-file-name">未選択</strong>
-            </div>
-            <div class="home-file-status-bar__item">
-              <span class="home-file-status-bar__label">最終チェック</span>
-              <strong id="home-last-checked">未実行</strong>
-            </div>
-            <div id="home-check-status" class="home-file-status-bar__status">未読込</div>
-            <button id="change-file-button" class="button button--secondary home-file-status-bar__action" type="button" data-testid="change-file-button">
-              別ファイルを読み込む
-            </button>
-          </div>
-
-          <div class="control-grid">
-            <label class="field">
-              <span class="field__label">午睡記録ファイル (.xlsx)</span>
-              <input id="file-input" class="field__input" type="file" accept=".xlsx" data-testid="file-input" aria-label="午睡記録xlsxファイルを選ぶ" />
-            </label>
-
-            <label class="field">
-              <span class="field__label">チェックするシート</span>
-              <select id="sheet-select" class="field__input" disabled data-testid="sheet-select" aria-label="チェックするシートを選ぶ">
-                <option value="">先にxlsxを読み込んでください</option>
-              </select>
-            </label>
-          </div>
-
-          <div id="home-progress-card" class="home-progress-card" aria-live="polite">
-            <div class="home-progress-card__spinner" aria-hidden="true"></div>
-            <div>
-              <strong>全日分をチェック中です</strong>
-              <p id="home-progress-text">xlsxを読み込み、各シートを順番に確認しています。</p>
-            </div>
-            <div class="home-progress-card__track" aria-hidden="true">
-              <div id="home-progress-bar" class="home-progress-card__bar"></div>
-            </div>
-            <div id="home-progress-meta" class="home-progress-card__meta">しばらくお待ちください</div>
-          </div>
-
-          <div class="panel__title-row panel__title-row--spaced admin-only">
-            <h2>2. 設定ファイル</h2>
-            <button id="reset-config-button" class="button button--ghost" type="button">
-              既定設定に戻す
-            </button>
-          </div>
-
-          <div class="control-grid">
-            <label class="field">
-              <span class="field__label">設定JSONを読み込む</span>
-              <input id="config-input" class="field__input" type="file" accept=".json,application/json" />
-            </label>
-
-            <div class="field field--info">
-              <span class="field__label">現在の設定</span>
-              <div id="config-status" class="field__info">既定設定を使用中</div>
-            </div>
-          </div>
-
-          <div class="action-row">
-            <button id="analyze-all-button" class="button button--primary" type="button" data-testid="analyze-all-button">
-              全日分をチェックする
-            </button>
-            <button id="analyze-button" class="button button--primary" type="button" data-testid="analyze-sheet-button">
-              選択シートだけチェック
-            </button>
-            <button id="download-csv-button" class="button button--secondary" type="button" data-testid="download-csv-button">
-              CSVをダウンロード
-            </button>
-          </div>
-
-          <div id="status-banner" class="status-banner" role="status" aria-live="polite"></div>
-          <div id="error-box" class="error-box" hidden></div>
-        </section>
-
-        <section id="sheet-overview-panel" class="panel panel--sheet-overview screen-section screen-home" tabindex="-1">
-          <div class="panel__title-row">
-            <div>
-              <h2>要確認の日付</h2>
-              <p id="sheet-overview-guide" class="results-guide">
-                xlsxを読み込むと全日分を自動で確認します。必要なときだけ「全日分を再チェックする」を押してください。
-              </p>
-            </div>
-            <div id="sheet-overview-count" class="meta-pill">未チェック</div>
-          </div>
-          <div id="sheet-overview-list" class="sheet-overview-list" aria-live="polite">
-            <article class="result-card result-card--empty">
-              xlsxを選ぶと、全日分チェックを自動で開始します。
-            </article>
-          </div>
-        </section>
-
-        <aside id="home-preview-panel" class="panel panel--home-preview screen-section screen-home" tabindex="-1" aria-label="表レビューの簡易プレビュー">
-          <div class="panel__title-row">
-            <div>
-              <h2>確認プレビュー</h2>
-              <p class="results-guide">日付カードを押す前に、主な確認内容を短く見られます。</p>
-            </div>
-            <div id="home-preview-status" class="meta-pill">未選択</div>
-          </div>
-          <div id="home-preview-content" class="home-preview-content" aria-live="polite">
-            <article class="result-card result-card--empty">
-              xlsxを選ぶと、確認が必要な日のプレビューを表示します。
-            </article>
-          </div>
-        </aside>
-
-        <section id="diagnostics-panel" class="panel panel--diagnostics screen-section screen-support" hidden>
-          <div class="panel__title-row">
-            <h2>iPadデバッグ診断</h2>
-            <div id="diagnostic-mode-pill" class="meta-pill">debug=1</div>
-          </div>
-          <div class="action-row action-row--compact">
-            <button id="copy-diagnostics-button" class="button button--ghost" type="button" data-testid="copy-diagnostics-button">
-              診断情報をコピー
-            </button>
-          </div>
-          <div id="diagnostic-copy-status" class="diagnostic-copy-status" hidden></div>
-          <textarea id="diagnostic-copy-fallback" class="diagnostic-copy-fallback" hidden readonly></textarea>
-          <div class="diagnostic-list">
-            <div id="diagnostic-js" class="diagnostic-item diagnostic-item--pending">JavaScript: 確認中</div>
-            <div id="diagnostic-url" class="diagnostic-item diagnostic-item--pending">開き方: 確認中</div>
-            <div id="diagnostic-home" class="diagnostic-item diagnostic-item--pending">ホーム画面追加: 確認中</div>
-            <div id="diagnostic-offline" class="diagnostic-item diagnostic-item--pending">オフライン準備: 確認中</div>
-            <div id="diagnostic-file" class="diagnostic-item diagnostic-item--pending">ファイル読込: 未確認</div>
-            <div id="diagnostic-analyze" class="diagnostic-item diagnostic-item--pending">チェック操作: 未実行</div>
-            <div id="diagnostic-demo" class="diagnostic-item diagnostic-item--pending">内蔵ダミーxlsx: 未押下</div>
-            <div id="diagnostic-download" class="diagnostic-item diagnostic-item--pending">CSV保存: 未確認</div>
-          </div>
-          <p class="diagnostic-note">
-            「内蔵ダミーxlsxで試す」が反応する場合は、JavaScriptとボタン操作は動いています。
-            実ファイル選択だけが反応しない場合は、FilesプレビューではなくSafariまたはホーム画面アプリで開いてください。
-          </p>
-        </section>
-
-        <details id="support-panel" class="panel panel--diagnostics support-panel screen-section screen-support">
-          <summary class="support-panel__summary">
-            <div>
-              <strong>困ったとき / 診断・サポート</strong>
-              <div class="support-panel__hint">不具合時の確認用です。診断情報は初期設定で個人名を伏せてコピーします。</div>
-            </div>
-            <div class="support-panel__summary-side">
-              <div id="support-mode-pill" class="meta-pill">通常表示</div>
-            </div>
-          </summary>
-          <div class="support-panel__body">
-            <div class="panel__title-row">
-              <h2>診断・サポート</h2>
-              <div class="support-panel__actions">
-                <button id="support-check-update-button" class="button button--ghost" type="button" data-testid="support-check-update-button">
-                  更新を確認
-                </button>
-                <button id="support-apply-update-button" class="button button--secondary" type="button" hidden data-testid="support-apply-update-button">
-                  更新して再読み込み
-                </button>
-              </div>
-            </div>
-            <p class="diagnostic-note">
-              妻のiPadで違和感や不具合が出たときは、この欄を開いて
-              <strong>診断情報をコピー</strong> を押すか、そのままスクショしてください。初期設定では、園児名や記録者名を含めずに共有できます。
-            </p>
-            <div class="support-quick-steps">
-              <article>
-                <strong>1. 画面をスクショ</strong>
-                <span>赤や黄の位置が分かる状態で撮ります。</span>
-              </article>
-              <article>
-                <strong>2. 診断情報をコピー</strong>
-                <span>標準では個人名を伏せます。</span>
-              </article>
-              <article>
-                <strong>3. 一言添えて共有</strong>
-                <span>「赤が多い」「開かない」などで十分です。</span>
-              </article>
-            </div>
-            <div class="action-row action-row--compact">
-              <button id="support-copy-button" class="button button--ghost" type="button" data-testid="support-copy-button">
-                診断情報をコピー
-              </button>
-            </div>
-            <div id="support-copy-status" class="diagnostic-copy-status" hidden></div>
-            <textarea id="support-copy-fallback" class="diagnostic-copy-fallback" hidden readonly></textarea>
-            <details class="support-diagnostics-details">
-              <summary>診断情報の表示</summary>
-              <div class="diagnostic-list">
-                <div id="support-version" class="diagnostic-item diagnostic-item--pending">アプリ版: 確認中</div>
-                <div id="support-build" class="diagnostic-item diagnostic-item--pending">ビルド日時: 確認中</div>
-                <div id="support-runtime" class="diagnostic-item diagnostic-item--pending">実行環境: 確認中</div>
-                <div id="support-url" class="diagnostic-item diagnostic-item--pending">現在のURL: 確認中</div>
-                <div id="support-pwa" class="diagnostic-item diagnostic-item--pending">PWA起動: 確認中</div>
-                <div id="support-offline" class="diagnostic-item diagnostic-item--pending">オフライン状態: 確認中</div>
-                <div id="support-service-worker" class="diagnostic-item diagnostic-item--pending">Service Worker: 確認中</div>
-                <div id="support-update" class="diagnostic-item diagnostic-item--pending">更新状況: まだ確認していません</div>
-                <div id="support-file" class="diagnostic-item diagnostic-item--pending">選択ファイル: 未選択</div>
-                <div id="support-sheet" class="diagnostic-item diagnostic-item--pending">選択シート: 未選択</div>
-                <div id="support-blocks" class="diagnostic-item diagnostic-item--pending">ブロック数: 未解析</div>
-                <div id="support-children" class="diagnostic-item diagnostic-item--pending">園児数: 未解析</div>
-                <div id="support-red-incidents" class="diagnostic-item diagnostic-item--pending">赤件数: 未解析</div>
-                <div id="support-red-cells" class="diagnostic-item diagnostic-item--pending">赤コマ数: 未解析</div>
-                <div id="support-yellow-incidents" class="diagnostic-item diagnostic-item--pending">黄件数: 未解析</div>
-                <div id="support-selected-cell" class="diagnostic-item diagnostic-item--pending">最後に選択したセル: まだありません</div>
-                <div id="support-last-error" class="diagnostic-item diagnostic-item--pending">最後のエラー: ありません</div>
-                <div id="support-last-analysis" class="diagnostic-item diagnostic-item--pending">最終解析時刻: 未実行</div>
-              </div>
-            </details>
-            <details id="admin-panel" class="admin-panel">
-              <summary class="admin-panel__summary">
-                <strong>管理モード</strong>
-                <span>設定・詳細ログ・現場調整は普段はここに隠します。</span>
-              </summary>
-            <label class="toggle-chip support-panel__toggle">
-              <input id="support-sensitive-toggle" type="checkbox" />
-              <span>詳細診断を含める（ファイル名・最後に見た園児名を含む可能性があります）</span>
-            </label>
-            <details id="field-adjustment-panel" class="field-adjustment-panel">
-              <summary class="field-adjustment-panel__summary">
-                <strong>現場調整モード / 表示設定</strong>
-                <span>公開更新なしで、見え方と一部判定を調整します</span>
-              </summary>
-              <p class="diagnostic-note">
-                この設定だけをiPad内に保存します。xlsx、園児名、記録者名、ファイル名は保存しません。
-              </p>
-              <div id="field-adjustment-status" class="diagnostic-copy-status">標準設定を使用中です。</div>
-
-              <div class="field-adjustment-grid">
-                <label class="field">
-                  <span class="field__label">文字サイズ</span>
-                  <input id="field-text-size" class="field__input" type="range" min="0.85" max="1.35" step="0.05" />
-                </label>
-                <label class="field">
-                  <span class="field__label">行の高さ</span>
-                  <input id="field-row-height" class="field__input" type="range" min="40" max="76" step="2" />
-                </label>
-                <label class="field">
-                  <span class="field__label">セル幅</span>
-                  <input id="field-cell-width" class="field__input" type="range" min="44" max="84" step="2" />
-                </label>
-                <label class="field">
-                  <span class="field__label">赤色の濃さ</span>
-                  <input id="field-red-intensity" class="field__input" type="range" min="0.45" max="1" step="0.05" />
-                </label>
-                <label class="field">
-                  <span class="field__label">黄色の濃さ</span>
-                  <input id="field-yellow-intensity" class="field__input" type="range" min="0.45" max="1" step="0.05" />
-                </label>
-                <label class="field">
-                  <span class="field__label">記録者表示</span>
-                  <select id="field-reviewer-display" class="field__input">
-                    <option value="one">1文字</option>
-                    <option value="two">2文字</option>
-                    <option value="full">そのまま</option>
-                  </select>
-                </label>
-                <label class="field">
-                  <span class="field__label">詳細パネル</span>
-                  <select id="field-detail-position" class="field__input">
-                    <option value="below">表の下</option>
-                    <option value="fixed">画面下に固定</option>
-                    <option value="collapsed">折りたたみ</option>
-                  </select>
-                </label>
-                <label class="field">
-                  <span class="field__label">件数表示の文言</span>
-                  <input id="field-count-template" class="field__input" type="text" placeholder="{prefix}{incidents}件 / 該当{slots}コマ" />
-                </label>
-                <label class="field">
-                  <span class="field__label">強調する数</span>
-                  <select id="field-count-emphasis" class="field__input">
-                    <option value="incidents">件数を優先</option>
-                    <option value="slots">コマ数を優先</option>
-                  </select>
-                </label>
-                <label class="toggle-chip field-adjustment-toggle">
-                  <input id="field-show-auxiliary-list" type="checkbox" />
-                <span>不備一覧を表示する</span>
-                </label>
-              </div>
-
-              <div class="field-adjustment-rule-box">
-                <h3>判定設定</h3>
-                <div class="field-adjustment-grid">
-                  <label class="field">
-                    <span class="field__label">横向き連続で赤にする回数</span>
-                    <input id="field-lateral-threshold" class="field__input" type="number" min="2" max="6" step="1" />
-                  </label>
-                  <label class="toggle-chip field-adjustment-toggle">
-                    <input id="field-prone-red-enabled" type="checkbox" />
-                    <span>↓を1回でも赤にする</span>
-                  </label>
-                  <label class="toggle-chip field-adjustment-toggle">
-                    <input id="field-state-after-wake-enabled" type="checkbox" />
-                    <span>起床後記録を赤にする</span>
-                  </label>
-                  <label class="toggle-chip field-adjustment-toggle">
-                    <input id="field-single-reviewer-enabled" type="checkbox" />
-                    <span>記録者1人だけを赤にする</span>
-                  </label>
-                  <label class="toggle-chip field-adjustment-toggle">
-                    <input id="field-prone-return-separate" type="checkbox" />
-                    <span>↑↓を単独の↓として扱わない</span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="action-row action-row--compact">
-                <button id="field-save-button" class="button button--primary" type="button" data-testid="field-save-button">保存して反映</button>
-                <button id="field-reset-button" class="button button--ghost" type="button" data-testid="field-reset-button">標準設定に戻す</button>
-                <button id="field-copy-button" class="button button--ghost" type="button" data-testid="field-copy-button">設定をコピー</button>
-                <button id="field-import-button" class="button button--secondary" type="button" data-testid="field-import-button">貼り付けた設定を反映</button>
-              </div>
-              <textarea id="field-settings-text" class="diagnostic-copy-fallback field-settings-text" placeholder="ここに設定テキストを貼り付けます"></textarea>
-            </details>
-            </details>
-          </div>
-        </details>
-
-        <section class="panel panel--summary screen-section screen-home" tabindex="-1">
-          <div class="panel__title-row">
-            <h2>結果サマリー</h2>
-            <div id="file-meta" class="meta-pill">未読込</div>
-          </div>
-
-          <div id="summary-cards" class="summary-cards">
-            <article class="summary-card summary-card--empty">
-              <div class="summary-card__value">-</div>
-              <div class="summary-card__label">赤</div>
-              <div class="summary-card__description">すぐ確認したい項目です</div>
-            </article>
-            <article class="summary-card summary-card--empty">
-              <div class="summary-card__value">-</div>
-              <div class="summary-card__label">黄</div>
-              <div class="summary-card__description">念のため確認したい項目です</div>
-            </article>
-            <article class="summary-card summary-card--empty">
-              <div class="summary-card__value">-</div>
-              <div class="summary-card__label">情報</div>
-              <div class="summary-card__description">参考として見ておきたい項目です</div>
-            </article>
-            <article class="summary-card summary-card--empty">
-              <div class="summary-card__value">-</div>
-              <div class="summary-card__label">解析できた園児</div>
-              <div class="summary-card__description">確認対象として読み取れた人数です</div>
-            </article>
-          </div>
-
-          <div id="structure-summary" class="structure-summary">
-            ファイルを選んでチェックすると、ここに結果のまとまりが表示されます。
-          </div>
-        </section>
-
-        <section id="review-section" class="panel panel--review screen-section screen-review" tabindex="-1">
-          <div class="panel__title-row">
-            <div>
-              <h2 id="review-title">表で確認</h2>
-              <p class="panel__lead">必要な時だけ元表に近い表示で、色付きセルの位置を確認します。</p>
-            </div>
-            <div class="review-toolbar">
-              <button id="review-defects-button" class="button button--ghost" type="button" data-testid="review-defects-button">不備一覧へ戻る</button>
-              <button id="review-back-button" class="button button--ghost" type="button" data-testid="review-home-button">ホームへ戻る</button>
-              <div id="review-count" class="meta-pill">要確認 0件 / 該当0コマ</div>
-            </div>
-          </div>
-          <p id="review-guide" class="results-guide">
-            不備カードの「表で確認」から開く専用モードです。
-          </p>
-          <div id="sheet-alert-banner" class="sheet-alert-banner" hidden></div>
-          <div id="review-board" class="review-board">
-            <article class="result-card result-card--empty">
-              xlsx を読み込んで「チェックする」を押すと、ここに表レビューが表示されます。
-            </article>
-          </div>
-          <section id="cell-detail-panel" class="cell-detail-panel">
-            <div class="cell-detail-panel__empty">セルを押すと、このコマの状態・記録者・前後の状態をここで確認できます。</div>
           </section>
-        </section>
-
-        <section id="filters-panel" class="panel panel--filters review-options-panel screen-section screen-review">
-          <div class="panel__title-row">
-            <h2>表示オプション</h2>
-          </div>
-
-          <div class="filter-grid">
-            <div class="field">
-              <span class="field__label">表示方法</span>
-              <div class="view-mode-toggle">
-                <label class="toggle-chip">
-                  <input type="radio" name="view-mode" value="grouped" checked />
-                  <span>園児ごとにまとめる</span>
-                </label>
-                <label class="toggle-chip">
-                  <input type="radio" name="view-mode" value="timeline" />
-                  <span>時刻順で見る</span>
-                </label>
-              </div>
-            </div>
-
-            <div class="field">
-              <span class="field__label">表示する種類</span>
-              <div class="severity-filter">
-                <label class="toggle-chip">
-                  <input type="checkbox" name="severity-filter" value="red" checked />
-                  <span>赤</span>
-                </label>
-                <label class="toggle-chip">
-                  <input type="checkbox" name="severity-filter" value="yellow" checked />
-                  <span>黄</span>
-                </label>
-                <label class="toggle-chip">
-                  <input type="checkbox" name="severity-filter" value="info" checked />
-                  <span>情報</span>
-                </label>
-              </div>
-            </div>
-
-            <label class="field">
-              <span class="field__label">園児をしぼる</span>
-              <select id="child-filter" class="field__input">
-                <option value="">全員</option>
-              </select>
-            </label>
-          </div>
-        </section>
-
-        <section id="results-panel" class="panel panel--results defect-list-panel screen-section screen-review">
-          <div class="panel__title-row">
-              <h2>この日の不備</h2>
-            <div id="results-count" class="meta-pill">表示中 0件 / 該当0コマ</div>
-          </div>
-          <p id="results-guide" class="results-guide">
-            直す必要がある子どもと時刻だけを表示します。問題ない子どもは通常表示に出しません。
-          </p>
-          <div id="results-list" class="results-list" aria-live="polite">
-            <article class="result-card result-card--empty">
-              xlsx を読み込んで「チェックする」を押すと、ここに要確認箇所が表示されます。
-            </article>
-          </div>
-        </section>
-
-        <section id="defect-detail-panel" class="panel panel--defect-detail selected-defect-detail-panel screen-section screen-review">
-          <div class="panel__title-row">
-            <div>
-              <h2>選択中の不備</h2>
-              <p class="panel__lead">該当コマだけを表示します。前後は必要な時だけ開きます。</p>
-            </div>
-          </div>
-          <div class="selected-defect-detail selected-defect-detail--empty">
-            要確認日付を選んで、不備カードを押してください。
-          </div>
-        </section>
-
-        <details id="debug-panel" class="panel panel--debug debug-panel screen-section screen-support" hidden>
-          <summary class="debug-panel__summary">
-            <span id="debug-panel-label">詳細ログ</span>
-            <span id="debug-panel-hint" class="debug-panel__hint">必要なときだけ開く</span>
-          </summary>
-          <pre id="debug-output" class="debug-output">まだ詳細ログはありません。xlsx を読み込んでチェックすると、解析ヘッダとブロック判定がここに表示されます。</pre>
-        </details>
-      </main>
+        </main>
       </div>
+    </div>
+    <div class="vnext2-runtime-host" aria-hidden="true">
+      <input id="file-input" class="vnext2-runtime-file-input" type="file" accept=".xlsx" data-testid="file-input" aria-label="午睡記録xlsxファイルを選ぶ" tabindex="-1" />
+      <input id="config-input" type="file" accept=".json,application/json" tabindex="-1" />
+      <button id="reset-config-button" type="button" tabindex="-1"></button>
+      <select id="sheet-select" data-testid="sheet-select" tabindex="-1"><option value=""></option></select>
+      <button id="analyze-all-button" type="button" data-testid="analyze-all-button" tabindex="-1"></button>
+      <button id="analyze-button" type="button" data-testid="analyze-sheet-button" tabindex="-1"></button>
+      <button id="demo-file-button" type="button" data-testid="demo-file-button" tabindex="-1"></button>
+      <button id="download-csv-button" type="button" data-testid="download-csv-button" tabindex="-1"></button>
+      <select id="child-filter" tabindex="-1"><option value=""></option></select>
+      <div id="status-banner" role="status" aria-live="polite"></div>
+      <div id="error-box" hidden></div>
+      <div id="config-status"></div>
+      <div id="file-meta"></div>
+      <div id="build-version">確認版 2026-06-02-0710</div>
+      <div id="build-detail">build: 2026-06-02 07:10</div>
+      <div id="app-status-pill"></div>
+      <div id="debug-banner" hidden></div>
+      <div id="summary-cards"></div>
+      <div id="structure-summary"></div>
+      <div id="review-title"></div>
+      <div id="review-count"></div>
+      <div id="review-guide"></div>
+      <button id="review-back-button" type="button" tabindex="-1"></button>
+      <button id="review-defects-button" type="button" tabindex="-1"></button>
+      <div id="sheet-alert-banner" hidden></div>
+      <div id="review-board"></div>
+      <div id="cell-detail-panel"></div>
+      <div id="defect-detail-panel"></div>
+      <div id="results-list"></div>
+      <div id="results-count"></div>
+      <div id="results-guide"></div>
+      <div id="sheet-overview-panel"></div>
+      <div id="sheet-overview-count"></div>
+      <div id="sheet-overview-guide"></div>
+      <div id="sheet-overview-list"></div>
+      <div id="home-preview-panel"></div>
+      <div id="home-preview-status"></div>
+      <div id="home-preview-content"></div>
+      <div id="diagnostics-panel" hidden></div>
+      <div id="diagnostic-mode-pill"></div>
+      <button id="copy-diagnostics-button" type="button" tabindex="-1"></button>
+      <div id="diagnostic-copy-status" hidden></div>
+      <textarea id="diagnostic-copy-fallback" hidden readonly></textarea>
+      <details id="debug-panel" hidden><summary id="debug-panel-label"></summary><span id="debug-panel-hint"></span><pre id="debug-output"></pre></details>
+      <div id="environment-hint"></div>
+      <div id="diagnostic-js"></div>
+      <div id="diagnostic-url"></div>
+      <div id="diagnostic-home"></div>
+      <div id="diagnostic-offline"></div>
+      <div id="diagnostic-file"></div>
+      <div id="diagnostic-analyze"></div>
+      <div id="diagnostic-demo"></div>
+      <div id="diagnostic-download"></div>
+      <details id="support-panel"></details>
+      <div id="support-mode-pill"></div>
+      <input id="support-sensitive-toggle" type="checkbox" tabindex="-1" />
+      <button id="support-copy-button" type="button" tabindex="-1"></button>
+      <div id="support-copy-status" hidden></div>
+      <textarea id="support-copy-fallback" hidden readonly></textarea>
+      <button id="support-check-update-button" type="button" tabindex="-1"></button>
+      <button id="support-apply-update-button" type="button" tabindex="-1"></button>
+      <div id="support-version"></div>
+      <div id="support-build"></div>
+      <div id="support-runtime"></div>
+      <div id="support-url"></div>
+      <div id="support-pwa"></div>
+      <div id="support-offline"></div>
+      <div id="support-service-worker"></div>
+      <div id="support-update"></div>
+      <div id="support-file"></div>
+      <div id="support-sheet"></div>
+      <div id="support-blocks"></div>
+      <div id="support-children"></div>
+      <div id="support-red-incidents"></div>
+      <div id="support-red-cells"></div>
+      <div id="support-yellow-incidents"></div>
+      <div id="support-selected-cell"></div>
+      <div id="support-last-error"></div>
+      <div id="support-last-analysis"></div>
+      <details id="field-adjustment-panel"></details>
+      <div id="field-adjustment-status"></div>
+      <input id="field-text-size" type="range" tabindex="-1" />
+      <input id="field-row-height" type="range" tabindex="-1" />
+      <input id="field-cell-width" type="range" tabindex="-1" />
+      <input id="field-red-intensity" type="range" tabindex="-1" />
+      <input id="field-yellow-intensity" type="range" tabindex="-1" />
+      <select id="field-reviewer-display" tabindex="-1"></select>
+      <select id="field-detail-position" tabindex="-1"></select>
+      <input id="field-count-template" type="text" tabindex="-1" />
+      <select id="field-count-emphasis" tabindex="-1"></select>
+      <input id="field-show-auxiliary-list" type="checkbox" tabindex="-1" />
+      <input id="field-lateral-threshold" type="number" tabindex="-1" />
+      <input id="field-prone-red-enabled" type="checkbox" tabindex="-1" />
+      <input id="field-state-after-wake-enabled" type="checkbox" tabindex="-1" />
+      <input id="field-single-reviewer-enabled" type="checkbox" tabindex="-1" />
+      <input id="field-prone-return-separate" type="checkbox" tabindex="-1" />
+      <button id="field-save-button" type="button" data-testid="field-save-button" tabindex="-1"></button>
+      <button id="field-reset-button" type="button" data-testid="field-reset-button" tabindex="-1"></button>
+      <button id="field-copy-button" type="button" data-testid="field-copy-button" tabindex="-1"></button>
+      <button id="field-import-button" type="button" data-testid="field-import-button" tabindex="-1"></button>
+      <textarea id="field-settings-text"></textarea>
+      <div id="filters-panel"></div>
+      <div id="results-panel"></div>
+      <input type="checkbox" name="severity-filter" value="red" checked tabindex="-1" />
+      <input type="checkbox" name="severity-filter" value="yellow" checked tabindex="-1" />
+      <input type="checkbox" name="severity-filter" value="info" checked tabindex="-1" />
+      <input type="radio" name="view-mode" value="grouped" checked tabindex="-1" />
+      <input type="radio" name="view-mode" value="timeline" tabindex="-1" />
     </div>
 
     <script>
@@ -13293,7 +12946,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-05-30-1951","buildLabel":"2026-05-30 19:51","buildId":"2026-05-30-195107","builtAtIso":"2026-05-30T10:51:07.999Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-06-02-0710","buildLabel":"2026-06-02 07:10","buildId":"2026-06-02-071031","builtAtIso":"2026-06-01T22:10:31.217Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -25298,12 +24951,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         ${renderVNext2ActionBar()}
         <article class="vnext2-support-card">
           <h1>困ったとき / 診断・サポート</h1>
-          <ol>
-            <li>まず画面のスクショを撮ります。</li>
-            <li>診断情報をコピーします。</li>
-            <li>「何が変だったか」を一言添えて共有します。</li>
-          </ol>
-          <button type="button" class="vnext2-button vnext2-button--primary" data-action="copy-diagnostics" data-testid="vnext2-copy-diagnostics">診断情報をコピー</button>
+          <div class="vnext2-support-actions">
+            <button type="button" class="vnext2-button vnext2-button--primary" data-action="copy-diagnostics" data-testid="vnext2-copy-diagnostics">診断情報をコピー</button>
+            <span>スクショと一緒に共有すると状況を確認しやすくなります。</span>
+          </div>
           <div class="vnext2-update-box" data-testid="vnext2-update-box">
             <div>
               <strong>アプリ本体の更新</strong>
@@ -25317,11 +24968,17 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           </div>
           ${uiVNext2State.supportMessage ? `<p class="vnext2-support-message">${escapeHtml(uiVNext2State.supportMessage)}</p>` : ""}
           ${renderVNext2DisplaySettingsPanel()}
-          <textarea class="vnext2-diagnostic-text" readonly>${escapeHtml(diagnosticText)}</textarea>
+          <details class="vnext2-support-details">
+            <summary>診断情報の内容を見る</summary>
+            <textarea class="vnext2-diagnostic-text" readonly>${escapeHtml(diagnosticText)}</textarea>
+          </details>
           <details class="vnext2-admin-details">
             <summary>管理モード / 現場調整</summary>
             <p>設定だけをiPad内に保存します。xlsxや個人情報は保存しません。</p>
-            <textarea id="vnext2-field-settings-text" class="vnext2-diagnostic-text">${escapeHtml(fieldSettings)}</textarea>
+            <details class="vnext2-support-details">
+              <summary>設定テキストを開く</summary>
+              <textarea id="vnext2-field-settings-text" class="vnext2-diagnostic-text">${escapeHtml(fieldSettings)}</textarea>
+            </details>
             <div class="vnext2-card-actions">
               <button type="button" class="vnext2-button vnext2-button--subtle" data-action="copy-field-settings">設定をコピー</button>
               <button type="button" class="vnext2-button vnext2-button--subtle" data-action="import-field-settings">貼り付け設定を反映</button>
