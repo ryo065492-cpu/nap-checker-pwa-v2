@@ -12784,6 +12784,251 @@ body[data-vnext2-contrast="strong"].vnext2-app .vnext2-support-card {
   }
 }
 
+/* vNext2 Phase 8 operation position retention and Home space rebalance. */
+body.vnext2-app {
+  --v2-home-compact-gap: clamp(8px, 1.3vw, 12px);
+  --v2-home-compact-padding: clamp(10px, 1.6vw, 14px);
+}
+
+body.vnext2-app .vnext2-home--ready {
+  gap: var(--v2-home-compact-gap);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  min-height: 0;
+}
+
+body.vnext2-app .vnext2-filebar {
+  border-radius: 18px;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1.5fr) minmax(150px, 0.6fr) auto;
+  padding: 10px 12px;
+}
+
+body.vnext2-app .vnext2-filebar strong {
+  font-size: 15px;
+  margin-top: 2px;
+}
+
+body.vnext2-app .vnext2-summary-grid {
+  align-items: stretch;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+}
+
+body.vnext2-app .vnext2-summary-card {
+  align-content: center;
+  border-left-width: 0;
+  border-radius: 16px;
+  gap: 2px 8px;
+  grid-template-columns: auto minmax(0, 1fr);
+  min-height: 56px;
+  overflow: visible;
+  padding: 8px 12px 8px 16px;
+}
+
+body.vnext2-app .vnext2-summary-card::before {
+  border-radius: 16px 0 0 16px;
+  width: 5px;
+}
+
+body.vnext2-app .vnext2-summary-card span {
+  align-self: center;
+  color: var(--v2-saas-text, #18312e);
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+body.vnext2-app .vnext2-summary-card strong {
+  align-self: center;
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.15;
+  margin: 0;
+  white-space: normal;
+}
+
+body.vnext2-app .vnext2-summary-card small {
+  display: none;
+}
+
+body.vnext2-app .vnext2-summary-card__hint {
+  grid-column: 1 / -1;
+  min-height: 22px;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+body.vnext2-app .vnext2-date-section {
+  gap: 10px;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--v2-home-compact-padding);
+}
+
+body.vnext2-app .vnext2-section-head {
+  align-items: center;
+  gap: 10px;
+}
+
+body.vnext2-app .vnext2-section-head h2 {
+  font-size: clamp(20px, 2.4vw, 28px);
+}
+
+body.vnext2-app .vnext2-section-head p {
+  display: none;
+}
+
+body.vnext2-app .vnext2-count-pill {
+  min-height: 34px;
+  padding: 6px 10px;
+}
+
+body.vnext2-app .vnext2-filter-bar {
+  border-radius: 16px;
+  gap: 8px;
+  margin: 0;
+  padding: 8px;
+}
+
+body.vnext2-app .vnext2-filter-button {
+  min-height: 38px;
+  min-width: 88px;
+  padding: 8px 12px;
+  white-space: normal;
+}
+
+body.vnext2-app .vnext2-filter-summary {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+body.vnext2-app .vnext2-date-list {
+  align-content: start;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(236px, 1fr));
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 4px 4px 18px;
+  scrollbar-gutter: stable;
+}
+
+body.vnext2-app .vnext2-date-card {
+  gap: 8px;
+  min-height: 168px;
+  overflow: visible;
+  padding: 13px;
+}
+
+body.vnext2-app .vnext2-date-card__counts,
+body.vnext2-app .vnext2-chip-row,
+body.vnext2-app .vnext2-card-actions,
+body.vnext2-app .vnext2-day-missing__chips,
+body.vnext2-app .vnext2-display-setting__choices {
+  flex-wrap: wrap;
+}
+
+body.vnext2-app .vnext2-date-card__date-line,
+body.vnext2-app .vnext2-defect-card__heading,
+body.vnext2-app .vnext2-defect-card__main,
+body.vnext2-app .vnext2-table-target__main,
+body.vnext2-app .vnext2-cell-detail,
+body.vnext2-app .vnext2-display-setting {
+  min-width: 0;
+}
+
+body.vnext2-app .vnext2-date-card strong,
+body.vnext2-app .vnext2-defect-card strong,
+body.vnext2-app .vnext2-detail-card h1,
+body.vnext2-app .vnext2-detail-card h2,
+body.vnext2-app .vnext2-table-target strong,
+body.vnext2-app .vnext2-cell-detail strong,
+body.vnext2-app .vnext2-reviewer,
+body.vnext2-app .vnext2-day-missing,
+body.vnext2-app .vnext2-confirm-box,
+body.vnext2-app .vnext2-display-setting span {
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+body.vnext2-app .vnext2-defect-card,
+body.vnext2-app .vnext2-detail-card,
+body.vnext2-app .vnext2-table-target,
+body.vnext2-app .vnext2-day-missing,
+body.vnext2-app .vnext2-display-settings,
+body.vnext2-app .vnext2-display-setting {
+  overflow: visible;
+}
+
+body.vnext2-app .vnext2-defect-card p,
+body.vnext2-app .vnext2-table-target__hint,
+body.vnext2-app .vnext2-confirm-box span,
+body.vnext2-app .vnext2-context__row,
+body.vnext2-app .vnext2-affected__row {
+  line-height: 1.55;
+}
+
+body.vnext2-app .vnext2-button,
+body.vnext2-app .vnext2-ghost,
+body.vnext2-app .vnext2-link-button,
+body.vnext2-app .vnext2-update-alert {
+  line-height: 1.25;
+  white-space: normal;
+}
+
+body.vnext2-app .vnext2-defect-list,
+body.vnext2-app .vnext2-table-scroll,
+body.vnext2-app .vnext2-detail-card,
+body.vnext2-app .vnext2-support-card {
+  scrollbar-gutter: stable;
+}
+
+body.vnext2-app .vnext2-table-scroll {
+  overscroll-behavior: contain;
+}
+
+body.vnext2-app .vnext2-cell-detail {
+  max-height: min(34dvh, 320px);
+}
+
+body.vnext2-app[data-vnext2-font-size="xlarge"] .vnext2-summary-card {
+  grid-template-columns: 1fr;
+}
+
+body.vnext2-app[data-vnext2-density="comfortable"] .vnext2-home--ready {
+  gap: 10px;
+}
+
+body.vnext2-app[data-vnext2-density="comfortable"] .vnext2-date-section {
+  padding: clamp(12px, 1.8vw, 18px);
+}
+
+@media (max-width: 900px) {
+  body.vnext2-app .vnext2-filebar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body.vnext2-app .vnext2-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body.vnext2-app .vnext2-section-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 560px) {
+  body.vnext2-app .vnext2-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.vnext2-app .vnext2-date-list {
+    grid-template-columns: 1fr;
+  }
+}
+
     </style>
   </head>
   <body class="vnext2-app vnext2-screen-home vnext2-file-empty" data-home-state="empty" data-vnext2-screen="home" data-vnext2-file-state="empty">
@@ -12804,7 +13049,7 @@ body[data-vnext2-contrast="strong"].vnext2-app .vnext2-support-card {
           </div>
           <div class="vnext2-topbar__actions">
             <span class="vnext2-status vnext2-status--empty">未読込</span>
-            <span class="vnext2-build">確認版 2026-06-02-0710</span>
+            <span class="vnext2-build">確認版 2026-06-02-0748</span>
           </div>
         </header>
         <main class="vnext2-main">
@@ -12832,8 +13077,8 @@ body[data-vnext2-contrast="strong"].vnext2-app .vnext2-support-card {
       <div id="error-box" hidden></div>
       <div id="config-status"></div>
       <div id="file-meta"></div>
-      <div id="build-version">確認版 2026-06-02-0710</div>
-      <div id="build-detail">build: 2026-06-02 07:10</div>
+      <div id="build-version">確認版 2026-06-02-0748</div>
+      <div id="build-detail">build: 2026-06-02 07:48</div>
       <div id="app-status-pill"></div>
       <div id="debug-banner" hidden></div>
       <div id="summary-cards"></div>
@@ -12946,7 +13191,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-06-02-0710","buildLabel":"2026-06-02 07:10","buildId":"2026-06-02-071031","builtAtIso":"2026-06-01T22:10:31.217Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-06-02-0748","buildLabel":"2026-06-02 07:48","buildId":"2026-06-02-074853","builtAtIso":"2026-06-01T22:48:53.255Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -23775,14 +24020,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     });
     saveVNext2DisplaySettings(nextSettings);
     uiVNext2State.displaySettingsOpen = true;
-    renderAll();
+    renderAllPreservingVNext2Scroll(["supportCard"]);
   }
 
   function resetVNext2DisplaySettings() {
     saveVNext2DisplaySettings({ ...VNEXT2_DISPLAY_SETTINGS_DEFAULTS });
     uiVNext2State.displaySettingsOpen = true;
     uiVNext2State.supportMessage = "画面表示設定を初期状態に戻しました。";
-    renderAll();
+    renderAllPreservingVNext2Scroll(["supportCard"]);
   }
 
   const uiVNext2State = {
@@ -23799,6 +24044,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     supportMessage: "",
     displaySettingsOpen: false,
     displaySettings: loadVNext2DisplaySettings(),
+    scrollPositions: {},
   };
 
   function getVNext2Root() {
@@ -23809,6 +24055,119 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       document.body?.appendChild(root);
     }
     return root;
+  }
+
+  const VNEXT2_SCROLL_TARGETS = Object.freeze({
+    homeDayList: { screen: "home", selector: '[data-testid="vnext2-day-list"]' },
+    dayDefectList: { screen: "dayQueue", selector: '[data-testid="vnext2-defect-list"]' },
+    defectDetail: { screen: "defectDetail", selector: '[data-testid="vnext2-defect-detail"] .vnext2-detail-card' },
+    tableScroll: { screen: "tableFocus", selector: '[data-testid="vnext2-table-scroll"]' },
+    supportCard: { screen: "support", selector: '[data-testid="vnext2-support"] .vnext2-support-card' },
+  });
+
+  function getVNext2ActiveScrollTargetNames() {
+    return Object.entries(VNEXT2_SCROLL_TARGETS)
+      .filter(([, target]) => target.screen === uiVNext2State.screen)
+      .map(([name]) => name);
+  }
+
+  function getVNext2ScrollElement(targetName) {
+    const target = VNEXT2_SCROLL_TARGETS[targetName];
+    if (!target) {
+      return null;
+    }
+    return document.querySelector(target.selector);
+  }
+
+  function captureVNext2ScrollPosition(targetName) {
+    const target = VNEXT2_SCROLL_TARGETS[targetName];
+    const element = getVNext2ScrollElement(targetName);
+    if (!target || !element) {
+      return null;
+    }
+    return {
+      targetName,
+      screen: target.screen,
+      dayId: uiVNext2State.selectedDayId ?? "",
+      defectId: uiVNext2State.selectedDefectId ?? "",
+      filter: uiVNext2State.severityFilter ?? "all",
+      left: Number(element.scrollLeft) || 0,
+      top: Number(element.scrollTop) || 0,
+    };
+  }
+
+  function saveVNext2ScrollPosition(targetName) {
+    const position = captureVNext2ScrollPosition(targetName);
+    if (position) {
+      uiVNext2State.scrollPositions[targetName] = position;
+    }
+  }
+
+  function captureVNext2ScrollPositions(targetNames = getVNext2ActiveScrollTargetNames()) {
+    return Object.fromEntries(
+      targetNames
+        .map((targetName) => [targetName, captureVNext2ScrollPosition(targetName)])
+        .filter(([, position]) => Boolean(position)),
+    );
+  }
+
+  function isVNext2ScrollPositionApplicable(position) {
+    if (!position) {
+      return false;
+    }
+    const target = VNEXT2_SCROLL_TARGETS[position.targetName];
+    if (!target || target.screen !== uiVNext2State.screen || position.screen !== uiVNext2State.screen) {
+      return false;
+    }
+    if (["dayQueue", "defectDetail", "tableFocus"].includes(target.screen) && position.dayId !== (uiVNext2State.selectedDayId ?? "")) {
+      return false;
+    }
+    if (target.screen === "tableFocus" && position.defectId !== (uiVNext2State.selectedDefectId ?? "")) {
+      return false;
+    }
+    if (target.screen === "dayQueue" && position.filter !== (uiVNext2State.severityFilter ?? "all")) {
+      return false;
+    }
+    return true;
+  }
+
+  function restoreVNext2ScrollPositions(positions = {}) {
+    const restore = () => {
+      for (const [targetName, position] of Object.entries(positions)) {
+        if (!isVNext2ScrollPositionApplicable(position)) {
+          continue;
+        }
+        const element = getVNext2ScrollElement(targetName);
+        if (!element) {
+          continue;
+        }
+        element.scrollLeft = position.left;
+        element.scrollTop = position.top;
+      }
+    };
+    const frame = globalThis.requestAnimationFrame ?? ((callback) => setTimeout(callback, 0));
+    frame(() => frame(restore));
+  }
+
+  function restoreStoredVNext2ScrollPositions(targetNames = getVNext2ActiveScrollTargetNames()) {
+    const positions = Object.fromEntries(
+      targetNames
+        .map((targetName) => [targetName, uiVNext2State.scrollPositions[targetName]])
+        .filter(([, position]) => Boolean(position)),
+    );
+    restoreVNext2ScrollPositions(positions);
+  }
+
+  function renderAllPreservingVNext2Scroll(targetNames = getVNext2ActiveScrollTargetNames()) {
+    const positions = captureVNext2ScrollPositions(targetNames);
+    renderAll();
+    restoreVNext2ScrollPositions(positions);
+  }
+
+  function clearVNext2ScrollPositions(targetNames = Object.keys(VNEXT2_SCROLL_TARGETS)) {
+    for (const targetName of targetNames) {
+      delete uiVNext2State.scrollPositions[targetName];
+    }
   }
 
   function getVNext2FileState() {
@@ -24084,6 +24443,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     uiVNext2State.severityFilter = "all";
     uiVNext2State.severityFilterSource = "home";
     uiVNext2State.error = null;
+    clearVNext2ScrollPositions();
     if (elements?.fileInput) {
       elements.fileInput.value = "";
     }
@@ -24091,6 +24451,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function openHome() {
+    clearVNext2ScrollPositions(["homeDayList", "dayDefectList", "defectDetail", "tableScroll"]);
     uiVNext2State.screen = "home";
     uiVNext2State.selectedDayId = null;
     uiVNext2State.selectedDefectId = null;
@@ -24108,6 +24469,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     uiVNext2State.selectedDefectId = null;
     uiVNext2State.selectedCellId = null;
     uiVNext2State.error = null;
+    clearVNext2ScrollPositions();
   }
 
   function setVNext2SeverityFilter(filter, source = "") {
@@ -24119,6 +24481,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     uiVNext2State.selectedCellId = null;
     state.selectedDefectKey = "";
     state.selectedReviewCell = null;
+    clearVNext2ScrollPositions(["homeDayList", "dayDefectList", "defectDetail", "tableScroll"]);
     setStatus(`表示条件を「${getVNext2SeverityFilterLabel()}」にしました。`);
     renderAll();
   }
@@ -24144,14 +24507,19 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     state.reviewMode = "defects";
     setStatus(`「${dayId}」の不備一覧を表示しました。`);
     renderAll();
+    if (!enteringFromHome) {
+      restoreStoredVNext2ScrollPositions(["dayDefectList"]);
+    }
   }
 
   function openDefectDetail(defectId) {
+    saveVNext2ScrollPosition("dayDefectList");
     const record = getVNext2DefectRecords().find((item) => item.id === defectId);
     if (!record) {
       setStatus("不備カードを表示できませんでした。日付一覧から選び直してください。");
       uiVNext2State.screen = "dayQueue";
       renderAll();
+      restoreStoredVNext2ScrollPositions(["dayDefectList"]);
       return;
     }
 
@@ -24164,11 +24532,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function openTableFocus(defectId = uiVNext2State.selectedDefectId) {
+    saveVNext2ScrollPosition("dayDefectList");
+    saveVNext2ScrollPosition("defectDetail");
     const record = getVNext2DefectRecords().find((item) => item.id === defectId);
     if (!record) {
       setStatus("表で確認する不備を見つけられませんでした。");
       uiVNext2State.screen = "dayQueue";
       renderAll();
+      restoreStoredVNext2ScrollPositions(["dayDefectList"]);
       return;
     }
 
@@ -24221,9 +24592,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function returnFromTableFocus() {
+    saveVNext2ScrollPosition("tableScroll");
     uiVNext2State.screen = "dayQueue";
     setStatus("不備一覧へ戻りました。");
     renderAll();
+    restoreStoredVNext2ScrollPositions(["dayDefectList"]);
   }
 
   function startFilePick() {
@@ -24269,7 +24642,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       uiVNext2State.supportMessage = "自動コピーできませんでした。下の診断情報を長押ししてコピーしてください。";
       setStatus("診断情報を手動コピーできる状態にしました。");
     }
-    renderAll();
+    renderAllPreservingVNext2Scroll(["supportCard"]);
   }
 
   function renderVNext2StatusPill() {
@@ -24354,32 +24727,35 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function renderVNext2SummaryCards(stats) {
+    const dayItems = getVNext2DayItems();
+    const redDays = dayItems.filter((item) => item.status === "error" || (item.redIncidents ?? 0) > 0).length;
+    const yellowDays = dayItems.filter((item) => (item.yellowIncidents ?? 0) > 0 || Boolean(item.hasEnvironmentMissing)).length;
     const cards = [
       {
-        label: "要確認の日付",
+        label: "すべて",
         value: `${stats.issueDays}日`,
-        sub: "日付カードから確認へ",
+        sub: "要確認の日付",
         tone: stats.issueDays > 0 ? "red" : "ok",
         filter: "all",
         testId: "vnext2-summary-filter-all",
       },
       {
-        label: "赤だけ見る",
-        value: `${stats.redIncidents}件`,
-        sub: `該当${stats.redCells}コマ`,
+        label: "赤",
+        value: `${redDays}日`,
+        sub: `${stats.redIncidents}件 / 該当${stats.redCells}コマ`,
         tone: "red",
         filter: "red",
         testId: "vnext2-summary-filter-red",
       },
       {
-        label: "黄だけ見る",
-        value: `${stats.yellowIncidents}件`,
-        sub: `該当${stats.yellowCells}コマ`,
+        label: "黄",
+        value: `${yellowDays}日`,
+        sub: `${stats.yellowIncidents}件`,
         tone: "yellow",
         filter: "yellow",
         testId: "vnext2-summary-filter-yellow",
       },
-      { label: "OKの日付", value: `${stats.okDays}日`, sub: "確認不要", tone: "ok", testId: "vnext2-summary-ok" },
+      { label: "OK日", value: `${stats.okDays}日`, sub: "確認不要", tone: "ok", testId: "vnext2-summary-ok" },
     ];
     const renderCard = (card) => {
       const isFilterCard = Boolean(card.filter);
@@ -24759,7 +25135,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function renderVNext2CellDetail() {
     const selected = state.selectedReviewCell;
     if (!selected) {
-      return `<aside class="vnext2-cell-detail vnext2-cell-detail--empty">表の赤・黄セルを押すと、このコマの状態と記録者を確認できます。</aside>`;
+      return `<aside class="vnext2-cell-detail vnext2-cell-detail--empty" data-testid="vnext2-cell-detail">表の赤・黄セルを押すと、このコマの状態と記録者を確認できます。</aside>`;
     }
     const record = (state.analysis?.records ?? []).find(
       (item) =>
@@ -24769,7 +25145,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     );
     const interval = record?.intervals?.[selected.intervalIndex];
     if (!record || !interval) {
-      return `<aside class="vnext2-cell-detail vnext2-cell-detail--empty">このセルの詳細を読み取れませんでした。</aside>`;
+      return `<aside class="vnext2-cell-detail vnext2-cell-detail--empty" data-testid="vnext2-cell-detail">このセルの詳細を読み取れませんでした。</aside>`;
     }
     return `
       <aside class="vnext2-cell-detail" data-testid="vnext2-cell-detail">
@@ -24780,6 +25156,32 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         <span class="vnext2-cell-detail__hint">このコマをはいチーズ側で確認します。</span>
       </aside>
     `;
+  }
+
+  function updateVNext2TableSelectionDom() {
+    const selected = state.selectedReviewCell;
+    const tableScreen = document.querySelector('[data-testid="vnext2-table-focus"]');
+    if (!tableScreen) {
+      renderAllPreservingVNext2Scroll(["tableScroll"]);
+      return;
+    }
+
+    for (const cell of tableScreen.querySelectorAll('[data-testid="vnext2-review-cell"]')) {
+      const isSelected =
+        selected &&
+        Number(cell.dataset.blockIndex) === selected.blockIndex &&
+        Number(cell.dataset.stateRow) === selected.stateRow &&
+        Number(cell.dataset.reviewerRow) === selected.reviewerRow &&
+        Number(cell.dataset.intervalIndex) === selected.intervalIndex &&
+        (cell.dataset.part === "reviewer" ? "reviewer" : "status") === selected.part;
+      cell.classList.toggle("is-selected", Boolean(isSelected));
+    }
+
+    const currentDetail = tableScreen.querySelector('[data-testid="vnext2-cell-detail"]');
+    if (currentDetail) {
+      currentDetail.outerHTML = renderVNext2CellDetail();
+    }
+    renderDiagnostics();
   }
 
   function renderVNext2TableFocusTarget(finding) {
@@ -25081,7 +25483,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         part: target.dataset.part === "reviewer" ? "reviewer" : "status",
       };
       uiVNext2State.selectedCellId = target.dataset.reviewSlot ?? "";
-      renderAll();
+      updateVNext2TableSelectionDom();
     } else if (action === "open-support") {
       openSupport();
     } else if (action === "copy-diagnostics") {
@@ -25094,10 +25496,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       renderAll();
     } else if (action === "toggle-display-settings") {
       uiVNext2State.displaySettingsOpen = !uiVNext2State.displaySettingsOpen;
-      renderAll();
+      renderAllPreservingVNext2Scroll(["supportCard"]);
     } else if (action === "close-display-settings") {
       uiVNext2State.displaySettingsOpen = false;
-      renderAll();
+      renderAllPreservingVNext2Scroll(["supportCard"]);
     } else if (action === "set-display-setting") {
       updateVNext2DisplaySetting(target.dataset.settingKey ?? "", target.dataset.settingValue ?? "");
     } else if (action === "reset-display-settings") {
@@ -25105,7 +25507,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     } else if (action === "copy-field-settings") {
       await copyFieldAdjustmentSettings();
       uiVNext2State.supportMessage = state.fieldAdjustmentStatus || "設定テキストをコピーしました。";
-      renderAll();
+      renderAllPreservingVNext2Scroll(["supportCard"]);
     } else if (action === "import-field-settings") {
       const area = document.querySelector("#vnext2-field-settings-text");
       if (area instanceof HTMLTextAreaElement) {
@@ -25113,11 +25515,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       }
       importFieldAdjustmentSettings();
       uiVNext2State.supportMessage = state.fieldAdjustmentStatus || "設定を反映しました。";
-      renderAll();
+      renderAllPreservingVNext2Scroll(["supportCard"]);
     } else if (action === "reset-field-settings") {
       applyFieldAdjustmentChanges(DEFAULT_FIELD_ADJUSTMENTS, { message: "標準設定に戻しました。" });
       uiVNext2State.supportMessage = "標準設定に戻しました。";
-      renderAll();
+      renderAllPreservingVNext2Scroll(["supportCard"]);
     }
   }
 
