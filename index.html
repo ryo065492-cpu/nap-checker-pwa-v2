@@ -13004,6 +13004,23 @@ body.vnext2-app[data-vnext2-density="comfortable"] .vnext2-date-section {
   padding: clamp(12px, 1.8vw, 18px);
 }
 
+/* vNext2 Phase 9 demo and UI audit affordances. */
+body.vnext2-app .vnext2-demo-badge {
+  align-items: center;
+  background: #e8f7f3;
+  border: 1px solid rgba(0, 137, 125, 0.25);
+  border-radius: 999px;
+  color: #006d63;
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 950;
+  justify-content: center;
+  line-height: 1;
+  min-height: 30px;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+
 @media (max-width: 900px) {
   body.vnext2-app .vnext2-filebar {
     grid-template-columns: minmax(0, 1fr);
@@ -13049,7 +13066,7 @@ body.vnext2-app[data-vnext2-density="comfortable"] .vnext2-date-section {
           </div>
           <div class="vnext2-topbar__actions">
             <span class="vnext2-status vnext2-status--empty">未読込</span>
-            <span class="vnext2-build">確認版 2026-06-02-0748</span>
+            <span class="vnext2-build">確認版 2026-06-05-0416</span>
           </div>
         </header>
         <main class="vnext2-main">
@@ -13077,8 +13094,8 @@ body.vnext2-app[data-vnext2-density="comfortable"] .vnext2-date-section {
       <div id="error-box" hidden></div>
       <div id="config-status"></div>
       <div id="file-meta"></div>
-      <div id="build-version">確認版 2026-06-02-0748</div>
-      <div id="build-detail">build: 2026-06-02 07:48</div>
+      <div id="build-version">確認版 2026-06-05-0416</div>
+      <div id="build-detail">build: 2026-06-05 04:16</div>
       <div id="app-status-pill"></div>
       <div id="debug-banner" hidden></div>
       <div id="summary-cards"></div>
@@ -13191,7 +13208,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-06-02-0748","buildLabel":"2026-06-02 07:48","buildId":"2026-06-02-074853","builtAtIso":"2026-06-01T22:48:53.255Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-06-05-0416","buildLabel":"2026-06-05 04:16","buildId":"2026-06-05-041617","builtAtIso":"2026-06-04T19:16:17.481Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -16056,6 +16073,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     selectedReviewCell: null,
     sourceLabel: "未読込",
     debugMode: false,
+    demoMode: false,
     buildInfo: APP_BUILD_INFO,
     lastCopiedDiagnosticsText: "",
     currentErrorMessage: "",
@@ -18960,6 +18978,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     setError("");
     setStatus("xlsx を読み込んでいます...");
 
+    state.demoMode = false;
     state.fileReadStatus = "reading";
     state.checkStatus = "idle";
     state.appStage = "file-read";
@@ -19073,6 +19092,13 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   async function handleAnalyzeAllSheets({ automatic = false } = {}) {
+    if (state.demoMode) {
+      loadVNext2DemoMode({ screen: "home" });
+      updateControls();
+      renderAll();
+      return;
+    }
+
     state.diagnostics.analyzeClicks += 1;
     state.diagnostics.lastAnalyzeLabel = `全日分チェック（${automatic ? "自動" : "手動"}）`;
     setDiagnostic(
@@ -21517,11 +21543,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     state.sourceLabel = "未読込";
     state.buildInfo = APP_BUILD_INFO;
     state.debugMode = new URLSearchParams(location.search).get("debug") === "1";
+    state.demoMode = isVNext2DemoModeRequested();
     applyUiDefaults();
     renderAll();
     bindEvents();
     setStatus(
-      state.debugMode
+      state.demoMode
+        ? "デモモードを表示しています。通常利用時はURLから ?demo=1 を外してください。"
+        : state.debugMode
         ? "LANデバッグ用の表示です。必要なら iPad から ?debug=1 を付けて開いて確認してください。"
         : "オフラインで準備完了です。初回はSafariで開き、ホーム画面に追加してから使ってください。",
     );
@@ -21880,7 +21909,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     renderAll();
     bindEvents();
     setStatus(
-      state.debugMode
+      state.demoMode
+        ? "デモモードを表示しています。通常利用時はURLから ?demo=1 を外してください。"
+        : state.debugMode
         ? "LANデバッグ用の表示です。iPad では ?debug=1 を付けた URL で詳細確認してください。"
         : "オフライン前提の確認ツールです。通常は Safari で開き、必要に応じてホーム画面に追加してください。",
     );
@@ -24047,6 +24078,428 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     scrollPositions: {},
   };
 
+  function isVNext2DemoModeRequested() {
+    const params = new URLSearchParams(location.search);
+    return params.get("demo") === "1" || params.get("mode") === "demo";
+  }
+
+  function formatVNext2DemoTime(minutes) {
+    const hour = Math.floor(minutes / 60);
+    const minute = minutes % 60;
+    return `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+  }
+
+  function createVNext2DemoIntervals(statuses = {}, reviewers = {}) {
+    return Array.from({ length: 16 }, (_, index) => {
+      const timeMinutes = 13 * 60 + index * 5;
+      const statusText = statuses[index] ?? "";
+      const reviewerText = reviewers[index] ?? (statusText ? "職員A" : "");
+      return {
+        col: index + 3,
+        timeLabel: formatVNext2DemoTime(timeMinutes),
+        timeMinutes,
+        statusText,
+        reviewerText,
+        status: {
+          present: Boolean(statusText),
+          known: true,
+          normalized: statusText,
+          canonical: statusText,
+          category: "demo",
+        },
+      };
+    });
+  }
+
+  function createVNext2DemoRecord(sheetName, childName, stateRow, reviewerRow, statuses = {}, reviewers = {}) {
+    return {
+      sheetName,
+      blockIndex: 1,
+      childName,
+      stateRow,
+      reviewerRow,
+      intervals: createVNext2DemoIntervals(statuses, reviewers),
+    };
+  }
+
+  function createVNext2DemoContextRows(record, startIndex, endIndex = startIndex) {
+    const rows = [];
+    const first = Math.max(0, startIndex - 1);
+    const last = Math.min(record.intervals.length - 1, endIndex + 1);
+    for (let index = first; index <= last; index += 1) {
+      const interval = record.intervals[index];
+      rows.push({
+        marker: index < startIndex ? "前" : index > endIndex ? "後" : "対象",
+        time: interval.timeLabel,
+        status: interval.statusText || "(空欄)",
+        reviewer: interval.reviewerText || "未入力",
+      });
+    }
+    return rows;
+  }
+
+  function createVNext2DemoRawFinding(record, intervalIndex, options) {
+    const interval = record.intervals[intervalIndex];
+    return {
+      sheetName: record.sheetName,
+      blockIndex: record.blockIndex,
+      stateRow: record.stateRow,
+      reviewerRow: record.reviewerRow,
+      childName: record.childName,
+      ruleKey: options.ruleKey,
+      ruleName: options.ruleName,
+      severity: options.severity,
+      shortText: options.shortText,
+      reason: options.reason,
+      action: options.action,
+      message: options.message,
+      details: [options.message].filter(Boolean),
+      time: interval.timeLabel,
+      timeSort: interval.timeMinutes,
+      reviewerNames: options.reviewerNames ?? (interval.reviewerText ? [interval.reviewerText] : []),
+      reviewerText: options.reviewerText ?? interval.reviewerText ?? "",
+      context: { startIndex: intervalIndex, endIndex: intervalIndex },
+      contextRows: createVNext2DemoContextRows(record, intervalIndex),
+    };
+  }
+
+  function createVNext2DemoReviewItem(record, rawFindings, options) {
+    const startIndex = options.startIndex ?? rawFindings[0]?.context?.startIndex ?? 0;
+    const endIndex = options.endIndex ?? rawFindings.at(-1)?.context?.endIndex ?? startIndex;
+    const start = record.intervals[startIndex];
+    const end = record.intervals[endIndex];
+    const reviewerNames = [...new Set(rawFindings.flatMap((finding) => finding.reviewerNames ?? []))].filter(Boolean);
+    return {
+      ...rawFindings[0],
+      severity: options.severity ?? rawFindings[0]?.severity ?? "yellow",
+      ruleKey: options.ruleKey ?? rawFindings[0]?.ruleKey,
+      ruleName: options.ruleName ?? rawFindings[0]?.ruleName,
+      shortText: options.shortText ?? rawFindings[0]?.shortText,
+      reason: options.reason ?? rawFindings[0]?.reason,
+      action: options.action ?? rawFindings[0]?.action,
+      message: options.message ?? rawFindings[0]?.message,
+      details: options.details ?? rawFindings.map((finding) => finding.message).filter(Boolean),
+      count: rawFindings.length,
+      rawFindingCount: rawFindings.length,
+      time: start?.timeLabel === end?.timeLabel ? start?.timeLabel : `${start?.timeLabel} - ${end?.timeLabel}`,
+      timeSort: start?.timeMinutes ?? Number.MAX_SAFE_INTEGER,
+      reviewerNames,
+      reviewerText: options.reviewerText ?? reviewerNames.join("、") ?? "",
+      context: { startIndex, endIndex },
+      contextRows: createVNext2DemoContextRows(record, startIndex, endIndex),
+      sourceFindings: rawFindings,
+    };
+  }
+
+  function createVNext2DemoEnvironmentFinding(sheetName, label, ruleKey) {
+    return {
+      sheetName,
+      severity: "yellow",
+      ruleKey,
+      ruleName: "入力漏れ",
+      shortText: `${label}が未入力です`,
+      childName: "この日の入力漏れ",
+      time: "この日の入力漏れ",
+      timeSort: Number.MAX_SAFE_INTEGER,
+      message: `シート上部の「${label}」欄が未入力です。`,
+      reason: `${label}未入力`,
+      action: `シート上部の「${label}」欄を確認してください。`,
+      count: 1,
+      rawFindingCount: 1,
+      reviewerNames: [],
+      reviewerText: "対象なし",
+      contextRows: [],
+      details: [`${label}が未入力です。`],
+      environment: {
+        dayLevel: true,
+        label,
+        labels: [label],
+        labelCell: { address: label === "温度" ? "B2" : "D2", text: label },
+      },
+    };
+  }
+
+  function createVNext2DemoSummary(sheetName, records, findings, reviewItems, environmentMissingLabels = []) {
+    const reviewerNames = [
+      ...new Set(records.flatMap((record) => record.intervals.map((interval) => interval.reviewerText).filter(Boolean))),
+    ];
+    const totals = {
+      red: findings.filter((finding) => finding.severity === "red").length,
+      yellow: findings.filter((finding) => finding.severity === "yellow").length,
+      info: 0,
+    };
+    const reviewTotals = {
+      red: reviewItems.filter((finding) => finding.severity === "red").length,
+      yellow: reviewItems.filter((finding) => finding.severity === "yellow").length,
+      info: 0,
+    };
+    const columns = records[0]?.intervals?.map((interval) => ({
+      col: interval.col,
+      label: interval.timeLabel,
+      minutes: interval.timeMinutes,
+    })) ?? [];
+    return {
+      totals,
+      reviewTotals,
+      reviewItemCount: reviewItems.length,
+      childCount: records.length,
+      blockCount: records.length > 0 ? 1 : 0,
+      timeRange: columns.length ? `${columns[0].label} - ${columns.at(-1).label}` : "-",
+      blockSummaries: records.length > 0
+        ? [{
+            blockIndex: 1,
+            headerRows: "1行",
+            columnRange: "C:R",
+            dataRows: "4-12",
+            timeRange: `${columns[0]?.label ?? "-"} - ${columns.at(-1)?.label ?? "-"}`,
+            nameColumn: "A",
+            pairCount: records.length,
+          }]
+        : [],
+      reviewerStats: {
+        uniqueCount: reviewerNames.length,
+        names: reviewerNames,
+        reviewers: reviewerNames.map((name) => ({ name, count: 1, firstTime: sheetName })),
+      },
+      environment: {
+        checkedCount: 2,
+        foundCount: 2 - environmentMissingLabels.length,
+        missingCount: environmentMissingLabels.length,
+        missingTypes: environmentMissingLabels,
+        missingLabels: environmentMissingLabels,
+        checks: environmentMissingLabels.map((label) => ({ label, status: "missing" })),
+      },
+    };
+  }
+
+  function createVNext2DemoAnalysis(sheetName, records, findings, reviewItems, environmentMissingLabels = []) {
+    const columns = records[0]?.intervals?.map((interval) => ({
+      col: interval.col,
+      label: interval.timeLabel,
+      minutes: interval.timeMinutes,
+    })) ?? [];
+    const layouts = records.length > 0
+      ? [{
+          blockIndex: 1,
+          nameColumn: 1,
+          timeAxis: {
+            blockIndex: 1,
+            startCol: 3,
+            endCol: 18,
+            headerStartRow: 1,
+            headerEndRow: 1,
+            dataStartRow: 4,
+            dataEndRow: 12,
+            columns,
+          },
+        }]
+      : [];
+    return {
+      layout: layouts[0] ?? null,
+      layouts,
+      records,
+      findings,
+      reviewItems,
+      summary: createVNext2DemoSummary(sheetName, records, findings, reviewItems, environmentMissingLabels),
+      debug: {
+        demo: true,
+        environment: {
+          enabled: true,
+          checks: environmentMissingLabels.map((label) => ({ label, status: "missing" })),
+        },
+      },
+    };
+  }
+
+  function createVNext2DemoOkAnalysis(sheetName) {
+    return createVNext2DemoAnalysis(sheetName, [], [], [], []);
+  }
+
+  function buildVNext2DemoDataset() {
+    const day0606 = "2026-04-06";
+    const day0607 = "2026-04-07";
+    const day0609 = "2026-04-09";
+    const okDays = [
+      "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13",
+      "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17",
+      "2026-04-18", "2026-04-19", "2026-04-20", "2026-04-21",
+    ];
+
+    const a0606 = createVNext2DemoRecord(
+      day0606,
+      "園児A",
+      4,
+      5,
+      { 0: "入眠", 2: "横", 3: "横", 4: "横", 5: "横", 8: "仰", 12: "起床" },
+      { 0: "職員A", 2: "職員A", 3: "職員A", 4: "職員A", 5: "職員A", 8: "職員B", 12: "職員B" },
+    );
+    const b0606 = createVNext2DemoRecord(day0606, "園児B", 6, 7, { 1: "入眠", 6: "仰", 13: "起床" }, { 1: "職員B", 6: "職員B", 13: "職員C" });
+    const c0606 = createVNext2DemoRecord(day0606, "園児C", 8, 9, { 2: "入眠", 7: "仰", 14: "起床" }, { 2: "職員C", 7: "職員C", 14: "職員A" });
+    const red0606Raw = [2, 3, 4, 5].map((index) =>
+      createVNext2DemoRawFinding(a0606, index, {
+        severity: "red",
+        ruleKey: "lateralThreeConsecutive",
+        ruleName: "横向きが続いています",
+        shortText: "横向きが続いています",
+        reason: "同じ姿勢が続いています",
+        action: "横向きが続いています。表の該当コマと記録者を確認してください。",
+        message: "13:10 - 13:25 の横向きが続いています。",
+        reviewerNames: ["職員A"],
+        reviewerText: "職員A",
+      }),
+    );
+    const review0606 = [
+      createVNext2DemoReviewItem(a0606, red0606Raw, {
+        severity: "red",
+        ruleKey: "lateralThreeConsecutive",
+        ruleName: "横向きが続いています",
+        shortText: "横向きが続いています",
+        reason: "横向きが続いています",
+        action: "表の該当コマと記録者を確認してください。",
+        message: "13:10 - 13:25 の横向きが続いています。",
+        reviewerText: "職員A",
+        startIndex: 2,
+        endIndex: 5,
+      }),
+    ];
+
+    const a0607 = createVNext2DemoRecord(day0607, "園児A", 4, 5, { 0: "入眠", 9: "起床" }, { 0: "職員A", 9: "職員A" });
+    const b0607 = createVNext2DemoRecord(day0607, "園児B", 6, 7, { 2: "入眠", 12: "仰" }, { 2: "職員B", 12: "" });
+    const c0607 = createVNext2DemoRecord(day0607, "園児C", 8, 9, { 1: "入眠", 4: "うつぶせ", 5: "うつぶせ", 11: "起床" }, { 1: "職員C", 4: "職員C", 5: "職員C", 11: "職員C" });
+    const yellow0607Raw = [
+      createVNext2DemoRawFinding(b0607, 12, {
+        severity: "yellow",
+        ruleKey: "missingReviewerCell",
+        ruleName: "確認者が未入力です",
+        shortText: "確認者が未入力です",
+        reason: "確認者欄が空欄です",
+        action: "14:00 の確認者欄を確認してください。",
+        message: "確認者が未入力です。",
+        reviewerNames: [],
+        reviewerText: "未入力",
+      }),
+    ];
+    const red0607Raw = [4, 5].map((index) =>
+      createVNext2DemoRawFinding(c0607, index, {
+        severity: "red",
+        ruleKey: "proneOccurred",
+        ruleName: "うつぶせがあります",
+        shortText: "うつぶせがあります",
+        reason: "現場確認が必要です",
+        action: "表の該当コマを確認してください。",
+        message: "うつぶせの記録があります。",
+        reviewerNames: ["職員C"],
+        reviewerText: "職員C",
+      }),
+    );
+    const review0607 = [
+      createVNext2DemoReviewItem(red0607Raw[0] ? c0607 : a0607, red0607Raw, {
+        severity: "red",
+        ruleKey: "proneOccurred",
+        ruleName: "うつぶせがあります",
+        shortText: "うつぶせがあります",
+        reason: "現場確認が必要です",
+        action: "表の該当コマを確認してください。",
+        message: "13:20 - 13:25 にうつぶせがあります。",
+        reviewerText: "職員C",
+        startIndex: 4,
+        endIndex: 5,
+      }),
+      createVNext2DemoReviewItem(b0607, yellow0607Raw, {
+        severity: "yellow",
+        ruleKey: "missingReviewerCell",
+        ruleName: "確認者が未入力です",
+        shortText: "確認者が未入力です",
+        reason: "確認者欄が空欄です",
+        action: "14:00 の確認者欄を確認してください。",
+        message: "確認者が未入力です。",
+        reviewerText: "未入力",
+        startIndex: 12,
+        endIndex: 12,
+      }),
+    ];
+
+    const a0609 = createVNext2DemoRecord(day0609, "園児A", 4, 5, { 1: "うつぶせ", 4: "仰", 10: "起床" }, { 1: "職員A", 4: "職員B", 10: "職員B" });
+    const b0609 = createVNext2DemoRecord(day0609, "園児B", 6, 7, { 2: "入眠", 8: "仰", 12: "起床" }, { 2: "職員B", 8: "職員B", 12: "職員C" });
+    const red0609Raw = [
+      createVNext2DemoRawFinding(a0609, 1, {
+        severity: "red",
+        ruleKey: "proneOccurred",
+        ruleName: "うつぶせがあります",
+        shortText: "うつぶせがあります",
+        reason: "現場確認が必要です",
+        action: "表の該当コマを確認してください。",
+        message: "うつぶせの記録があります。",
+        reviewerNames: ["職員A"],
+        reviewerText: "職員A",
+      }),
+    ];
+    const env0609 = [
+      createVNext2DemoEnvironmentFinding(day0609, "温度", "missingTemperature"),
+      createVNext2DemoEnvironmentFinding(day0609, "湿度", "missingHumidity"),
+    ];
+    const review0609 = [
+      createVNext2DemoReviewItem(a0609, red0609Raw, {
+        severity: "red",
+        ruleKey: "proneOccurred",
+        ruleName: "うつぶせがあります",
+        shortText: "うつぶせがあります",
+        reason: "現場確認が必要です",
+        action: "表の該当コマを確認してください。",
+        message: "13:05 にうつぶせがあります。",
+        reviewerText: "職員A",
+        startIndex: 1,
+        endIndex: 1,
+      }),
+      ...env0609,
+    ];
+
+    const sheetAnalyses = new Map([
+      [day0606, { status: "ok", analysis: createVNext2DemoAnalysis(day0606, [a0606, b0606, c0606], red0606Raw, review0606), analyzedAt: "2026-04-06T00:00:00.000Z" }],
+      [day0607, { status: "ok", analysis: createVNext2DemoAnalysis(day0607, [a0607, b0607, c0607], [...red0607Raw, ...yellow0607Raw], review0607), analyzedAt: "2026-04-07T00:00:00.000Z" }],
+      [day0609, { status: "ok", analysis: createVNext2DemoAnalysis(day0609, [a0609, b0609], [...red0609Raw, ...env0609], review0609, ["温度", "湿度"]), analyzedAt: "2026-04-09T00:00:00.000Z" }],
+      ...okDays.map((day) => [day, { status: "ok", analysis: createVNext2DemoOkAnalysis(day), analyzedAt: `${day}T00:00:00.000Z` }]),
+    ]);
+    const sheets = [day0606, day0607, day0609, ...okDays].map((name) => ({ name, rows: [] }));
+    return { sheets, sheetAnalyses };
+  }
+
+  function loadVNext2DemoMode(options = {}) {
+    const demo = buildVNext2DemoDataset();
+    state.demoMode = true;
+    state.workbook = { sheets: demo.sheets };
+    state.sheetAnalyses = demo.sheetAnalyses;
+    state.sheetOverview = buildSheetOverviewFromAnalyses();
+    state.allSheetLastCheckedAt = new Date().toISOString();
+    state.allSheetChecking = false;
+    state.allSheetProgress = { current: demo.sheets.length, total: demo.sheets.length, label: "" };
+    state.fileReadStatus = "ready";
+    state.checkStatus = "done";
+    state.appStage = "demo";
+    state.sourceLabel = "匿名デモデータ";
+    state.currentErrorMessage = "";
+    state.lastErrorMessage = "";
+    state.lastErrorStage = "";
+    state.selectedReviewCell = null;
+    state.selectedDefectKey = "";
+    const firstIssueDay = state.sheetOverview[0]?.sheetName ?? demo.sheets[0]?.name ?? "";
+    if (firstIssueDay) {
+      setCurrentSheetAnalysisFromResult(firstIssueDay, state.sheetAnalyses.get(firstIssueDay));
+    }
+    uiVNext2State.screen = options.screen ?? "home";
+    uiVNext2State.fileState = "ready";
+    uiVNext2State.selectedDayId = null;
+    uiVNext2State.selectedDefectId = null;
+    uiVNext2State.selectedCellId = null;
+    uiVNext2State.severityFilter = "all";
+    uiVNext2State.severityFilterSource = "home";
+    uiVNext2State.error = null;
+    clearVNext2ScrollPositions();
+    populateSheetSelect();
+    setError("");
+    setStatus("デモモードを表示しています。実データは使わず、匿名サンプルだけで確認できます。");
+  }
+
   function getVNext2Root() {
     let root = document.querySelector("#vnext2-root");
     if (!root) {
@@ -24421,6 +24874,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
   function resetForNewFile() {
     resetReviewSelectionState({ clearAnalysis: true });
+    state.demoMode = false;
     state.workbook = null;
     state.sheetAnalyses = new Map();
     state.sheetOverview = [];
@@ -24607,6 +25061,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   async function startFullCheck() {
+    if (state.demoMode) {
+      loadVNext2DemoMode({ screen: "home" });
+      renderAll();
+      return;
+    }
+
     if (!state.workbook?.sheets?.length) {
       setError("先にxlsxファイルを選んでください。");
       setStatus("全日分チェックは、xlsxを選んでから実行できます。");
@@ -24668,6 +25128,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
           </div>
         </div>
         <div class="vnext2-topbar__actions">
+          ${state.demoMode ? `<span class="vnext2-demo-badge" data-testid="vnext2-demo-badge">デモ</span>` : ""}
           ${renderVNext2StatusPill()}
           <span class="vnext2-build" id="vnext2-build-version">${escapeHtml(buildInfo.versionLabel ?? "確認版 -")}</span>
           ${
@@ -25428,6 +25889,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       body.classList.toggle("vnext2-file-empty", uiVNext2State.fileState === "empty");
       body.dataset.vnext2Screen = uiVNext2State.screen;
       body.dataset.vnext2FileState = uiVNext2State.fileState;
+      body.dataset.vnext2Demo = state.demoMode ? "true" : "false";
       const displaySettings = sanitizeVNext2DisplaySettings(uiVNext2State.displaySettings);
       body.dataset.vnext2FontSize = displaySettings.fontSize;
       body.dataset.vnext2Density = displaySettings.density;
@@ -25552,11 +26014,15 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     state.sourceLabel = "未選択";
     state.buildInfo = APP_BUILD_INFO;
     state.debugMode = new URLSearchParams(location.search).get("debug") === "1";
+    state.demoMode = isVNext2DemoModeRequested();
     state.supportIncludeSensitive = false;
     state.fieldAdjustments = loadStoredFieldAdjustments();
     setConfigBase(state.defaultConfig, "既定設定");
     applyFieldAdjustmentStyles();
     applyUiDefaults();
+    if (state.demoMode) {
+      loadVNext2DemoMode({ screen: "home" });
+    }
     renderAll();
     bindEvents();
     bindVNext2Events();
@@ -25617,7 +26083,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     }
 
     setStatus(
-      state.debugMode
+      state.demoMode
+        ? "デモモードを表示しています。通常利用時はURLから ?demo=1 を外してください。"
+        : state.debugMode
         ? "開発者向け debug 表示です。通常運用は妻のiPadでホーム画面追加したPWAを使います。"
         : "準備完了です。通常は妻のiPadでホーム画面追加したPWAを使い、困ったときは診断・サポートを開いてください。",
     );
