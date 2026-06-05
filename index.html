@@ -13046,6 +13046,161 @@ body.vnext2-app .vnext2-demo-badge {
   }
 }
 
+/* vNext2 Phase 10 DayQueue defect card operation polish. */
+body.vnext2-app .vnext2-defect-card {
+  gap: 12px;
+  padding: 16px;
+}
+
+body.vnext2-app .vnext2-defect-card__top {
+  align-items: flex-start;
+  gap: 8px 12px;
+}
+
+body.vnext2-app .vnext2-defect-card__badge-row {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+body.vnext2-app .vnext2-defect-card__status {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 15px;
+  font-weight: 950;
+  letter-spacing: 0;
+  line-height: 1.15;
+  min-height: 30px;
+  padding: 6px 10px;
+  white-space: normal;
+}
+
+body.vnext2-app .vnext2-defect-card__route {
+  flex: 0 0 auto;
+  font-size: 13px;
+  opacity: 0.78;
+}
+
+body.vnext2-app .vnext2-defect-card__summary {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+body.vnext2-app .vnext2-defect-card__summary strong {
+  color: #17211e;
+  font-size: 20px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+body.vnext2-app .vnext2-defect-card__time {
+  color: #33443f;
+  font-size: 16px;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+body.vnext2-app .vnext2-defect-card__reason {
+  color: #273a35;
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 0;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+body.vnext2-app .vnext2-defect-card .vnext2-card-actions {
+  gap: 10px;
+  margin-top: 0;
+}
+
+body.vnext2-app .vnext2-defect-card .vnext2-card-actions .vnext2-button {
+  flex: 1 1 150px;
+  justify-content: center;
+  min-height: 46px;
+  min-width: 150px;
+}
+
+body.vnext2-app .vnext2-defect-card__meta {
+  align-items: center;
+  color: #5d6f69;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 13px;
+  font-weight: 800;
+  gap: 6px 12px;
+  line-height: 1.4;
+}
+
+body.vnext2-app .vnext2-defect-card__meta .vnext2-defect-card__count {
+  background: rgba(23, 33, 30, 0.06);
+  border-color: rgba(23, 33, 30, 0.12);
+  color: #4d5f59;
+}
+
+body.vnext2-app .vnext2-defect-card__meta-item {
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+body.vnext2-app .vnext2-day-missing--queue {
+  background: rgba(255, 249, 226, 0.92);
+  border: 1px solid rgba(179, 135, 0, 0.18);
+  border-radius: 8px;
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+}
+
+body.vnext2-app .vnext2-day-missing--queue > span {
+  color: #6f5700;
+  font-size: 15px;
+  font-weight: 950;
+}
+
+body.vnext2-app .vnext2-day-missing__list {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 1.35rem;
+}
+
+body.vnext2-app .vnext2-day-missing__list li {
+  color: #302b19;
+  font-size: 16px;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+body.vnext2-app .vnext2-day-missing--queue strong {
+  color: #4b3d12;
+  font-size: 15px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+@media (max-width: 560px) {
+  body.vnext2-app .vnext2-defect-card__top {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  body.vnext2-app .vnext2-defect-card__route {
+    align-self: flex-start;
+  }
+
+  body.vnext2-app .vnext2-defect-card .vnext2-card-actions .vnext2-button {
+    min-width: 100%;
+  }
+}
+
     </style>
   </head>
   <body class="vnext2-app vnext2-screen-home vnext2-file-empty" data-home-state="empty" data-vnext2-screen="home" data-vnext2-file-state="empty">
@@ -13066,7 +13221,7 @@ body.vnext2-app .vnext2-demo-badge {
           </div>
           <div class="vnext2-topbar__actions">
             <span class="vnext2-status vnext2-status--empty">未読込</span>
-            <span class="vnext2-build">確認版 2026-06-05-1922</span>
+            <span class="vnext2-build">確認版 2026-06-05-2159</span>
           </div>
         </header>
         <main class="vnext2-main">
@@ -13094,8 +13249,8 @@ body.vnext2-app .vnext2-demo-badge {
       <div id="error-box" hidden></div>
       <div id="config-status"></div>
       <div id="file-meta"></div>
-      <div id="build-version">確認版 2026-06-05-1922</div>
-      <div id="build-detail">build: 2026-06-05 19:22</div>
+      <div id="build-version">確認版 2026-06-05-2159</div>
+      <div id="build-detail">build: 2026-06-05 21:59</div>
       <div id="app-status-pill"></div>
       <div id="debug-banner" hidden></div>
       <div id="summary-cards"></div>
@@ -13208,7 +13363,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-06-05-1922","buildLabel":"2026-06-05 19:22","buildId":"2026-06-05-192256","builtAtIso":"2026-06-05T10:22:56.633Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-06-05-2159","buildLabel":"2026-06-05 21:59","buildId":"2026-06-05-215939","builtAtIso":"2026-06-05T12:59:39.689Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -25513,14 +25668,41 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     return renderVNext2EmptyHome();
   }
 
+  function getVNext2QueueStatusLabel(finding) {
+    if (isVNext2EnvironmentFinding(finding)) {
+      return "黄　入力漏れ";
+    }
+    if (finding?.severity === "red") {
+      return "赤　現場確認";
+    }
+    return "黄　確認が必要";
+  }
+
+  function renderVNext2QueueEnvironmentSummary(finding) {
+    const labels = getVNext2EnvironmentLabels(finding);
+    const chips = labels.length ? labels : ["温度", "湿度"];
+    return `
+      <div class="vnext2-day-missing vnext2-day-missing--queue" data-testid="vnext2-day-missing">
+        <span>未入力:</span>
+        <ul class="vnext2-day-missing__list">
+          ${chips.map((label) => `<li>${escapeHtml(label)}</li>`).join("")}
+        </ul>
+        <strong>シート上部の「温度」「湿度」欄を確認</strong>
+      </div>
+    `;
+  }
+
   function renderVNext2DefectCard(record) {
     const finding = record.finding;
-    const rows = getVNext2DefectSlotRows(finding);
     const selected = record.id === uiVNext2State.selectedDefectId;
     const isEnvironment = isVNext2EnvironmentFinding(finding);
     const countText = getVNext2DisplayCountText(finding);
     const canOpenTable = canOpenVNext2TableForFinding(finding);
     const routeLabel = isEnvironment ? "入力欄を確認" : canOpenTable ? "表で場所を確認" : "内容を確認";
+    const primaryLabel = isEnvironment ? "この日の入力漏れ" : (finding.childName ?? "対象なし");
+    const timeLabel = isEnvironment ? "" : (finding.time ?? "時刻不明");
+    const reasonText = isEnvironment ? "" : getVNextDefectMessage(finding);
+    const reviewerText = getVNextReviewerText(finding);
     const displayIndex = Number.isInteger(record.displayIndex) ? record.displayIndex : 0;
     const displayTotal = Number.isInteger(record.displayTotal) ? Math.max(record.displayTotal, 1) : 1;
     const positionText = `${displayIndex + 1} / ${displayTotal}`;
@@ -25533,29 +25715,31 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         tabindex="0"
       >
         <div class="vnext2-defect-card__top">
-          <div class="vnext2-defect-card__heading">
+          <div class="vnext2-defect-card__badge-row">
             <span class="vnext2-defect-card__order">${escapeHtml(positionText)}</span>
-            <span class="vnext2-severity vnext2-severity--${escapeHtml(finding.severity)}">${escapeHtml(getSeverityMeta(finding.severity).label)}</span>
-            <strong>${escapeHtml(isEnvironment ? "この日の入力漏れ" : getVNextDefectTitle(finding))}</strong>
+            <span class="vnext2-defect-card__status vnext2-severity vnext2-severity--${escapeHtml(finding.severity)}">${escapeHtml(getVNext2QueueStatusLabel(finding))}</span>
           </div>
-          <span class="vnext2-defect-card__count">${escapeHtml(countText)}</span>
           <span class="vnext2-defect-card__route">${escapeHtml(routeLabel)}</span>
         </div>
-        <div class="vnext2-defect-card__main">
-          <strong>${escapeHtml(isEnvironment ? "温度・湿度欄" : (finding.childName ?? "対象なし"))}</strong>
-          <span>${escapeHtml(isEnvironment ? "この日全体" : (finding.time ?? "時刻不明"))}</span>
+        <div class="vnext2-defect-card__summary">
+          <strong>${escapeHtml(primaryLabel)}</strong>
+          ${timeLabel ? `<span class="vnext2-defect-card__time">${escapeHtml(timeLabel)}</span>` : ""}
         </div>
-        <p>${escapeHtml(isEnvironment ? getVNext2EnvironmentMessage(finding) : getVNextDefectMessage(finding))}</p>
         ${
           isEnvironment
-            ? renderVNext2EnvironmentMissingPanel(finding)
-            : `<span class="vnext2-reviewer">記録者: ${escapeHtml(getVNextReviewerText(finding))}</span>
-              ${renderVNext2AffectedRows(rows)}`
+            ? renderVNext2QueueEnvironmentSummary(finding)
+            : `<p class="vnext2-defect-card__reason">${escapeHtml(reasonText)}</p>`
         }
         <div class="vnext2-card-actions">
           <button type="button" class="vnext2-button vnext2-button--subtle" data-action="open-defect" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-defect">内容を見る</button>
           ${canOpenTable ? `<button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-table">表で場所を見る</button>` : ""}
         </div>
+        ${isEnvironment ? "" : `
+          <div class="vnext2-defect-card__meta">
+            <span class="vnext2-defect-card__count">${escapeHtml(countText)}</span>
+            <span class="vnext2-defect-card__meta-item">記録者: ${escapeHtml(reviewerText)}</span>
+          </div>
+        `}
       </article>
     `;
   }
