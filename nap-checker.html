@@ -14080,6 +14080,197 @@ body.vnext2-app .vnext2-day-queue .vnext2-defect-card--environment .vnext2-affec
   }
 }
 
+/* vNext2 user operation polish for daily screens. */
+body.vnext2-app {
+  --v2-user-action-height: 52px;
+  --v2-user-action-radius: 14px;
+  --v2-user-action-shadow: 0 10px 20px rgba(0, 79, 75, 0.16);
+  --v2-user-subtle-border: rgba(0, 95, 88, 0.28);
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-summary-card__hint {
+  display: none;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-summary-card,
+body.vnext2-app .vnext2-home--ready .vnext2-filter-button {
+  border-width: 2px;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-summary-card.is-active,
+body.vnext2-app .vnext2-home--ready .vnext2-filter-button.is-active {
+  box-shadow: inset 0 0 0 2px rgba(0, 95, 88, 0.18), var(--v2-user-action-shadow);
+  outline: 3px solid rgba(0, 95, 88, 0.18);
+  outline-offset: 2px;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-filter-button {
+  min-height: 44px;
+  padding-inline: 14px;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-date-card {
+  border-width: 2px;
+  box-shadow: 0 12px 24px rgba(44, 35, 25, 0.08);
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-date-card__action {
+  background: var(--v2-foundation-primary, #00766f);
+  border: 1px solid transparent;
+  border-radius: var(--v2-user-action-radius);
+  box-shadow: var(--v2-user-action-shadow);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 950;
+  justify-content: center;
+  min-height: var(--v2-user-action-height);
+  padding-inline: 16px;
+  text-align: center;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-date-card:active .vnext2-date-card__action {
+  box-shadow: 0 6px 14px rgba(0, 79, 75, 0.14);
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card {
+  border-width: 2px;
+  box-shadow: 0 12px 26px rgba(44, 35, 25, 0.08);
+  padding-left: 18px;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__route {
+  display: none;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__order {
+  border-radius: 999px;
+  font-size: 14px;
+  min-height: 30px;
+  min-width: 58px;
+  opacity: 0.82;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__status {
+  font-size: 16px;
+  min-height: 34px;
+  padding: 7px 12px;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__summary strong {
+  font-size: clamp(21px, 2.2vw, 25px);
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__time {
+  font-size: 17px;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__reason {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(49, 41, 32, 0.08);
+  border-radius: 12px;
+  font-size: 17px;
+  line-height: 1.55;
+  padding: 10px 12px;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-card-actions {
+  gap: 12px;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-card-actions .vnext2-button {
+  border-radius: var(--v2-user-action-radius);
+  min-height: var(--v2-user-action-height);
+}
+
+body.vnext2-app .vnext2-day-queue [data-testid="vnext2-open-defect"] {
+  background: var(--v2-foundation-primary, #00766f);
+  border-color: transparent;
+  box-shadow: var(--v2-user-action-shadow);
+  color: #ffffff;
+  font-weight: 950;
+}
+
+body.vnext2-app .vnext2-day-queue [data-testid="vnext2-open-table"] {
+  background: #ffffff;
+  border: 2px solid var(--v2-user-subtle-border);
+  box-shadow: none;
+  color: var(--v2-rich-primary-strong, #005f58);
+  font-weight: 950;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__meta {
+  opacity: 0.82;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-day-missing--queue {
+  border-radius: 12px;
+  gap: 10px;
+}
+
+body.vnext2-app .vnext2-table-focus__title p,
+body.vnext2-app .vnext2-table-target__hint,
+body.vnext2-app .vnext2-cell-detail__hint {
+  display: none;
+}
+
+body.vnext2-app .vnext2-table-focus .vnext2-actionbar {
+  gap: 12px;
+}
+
+body.vnext2-app .vnext2-table-focus [data-testid="vnext2-back-day"] {
+  background: var(--v2-foundation-primary, #00766f);
+  border-color: transparent;
+  box-shadow: var(--v2-user-action-shadow);
+  color: #ffffff;
+  font-weight: 950;
+  min-height: var(--v2-user-action-height);
+  order: -1;
+}
+
+body.vnext2-app .vnext2-table-focus [data-testid="vnext2-open-home"] {
+  background: #ffffff;
+  border: 2px solid var(--v2-user-subtle-border);
+  color: var(--v2-rich-primary-strong, #005f58);
+  font-weight: 900;
+  min-height: var(--v2-user-action-height);
+}
+
+body.vnext2-app .vnext2-table-target {
+  border-left: 6px solid var(--v2-foundation-primary, #00766f);
+  box-shadow: 0 12px 24px rgba(44, 35, 25, 0.08);
+}
+
+body.vnext2-app .vnext2-table-target--red {
+  border-left-color: var(--v2-foundation-red, #cf342d);
+}
+
+body.vnext2-app .vnext2-table-target--yellow {
+  border-left-color: var(--v2-foundation-yellow, #bc7a05);
+}
+
+body.vnext2-app .vnext2-cell-detail {
+  border: 2px solid rgba(0, 95, 88, 0.16);
+  box-shadow: 0 12px 24px rgba(44, 35, 25, 0.08);
+}
+
+body.vnext2-app .vnext2-table-cell.is-selected {
+  background: #c8f0e8;
+  outline-color: var(--v2-rich-primary-strong, #005f58);
+}
+
+body.vnext2-app .vnext2-table-cell.is-selected::after {
+  border-width: 3px;
+  inset: 3px;
+}
+
+@media (max-width: 560px) {
+  body.vnext2-app .vnext2-home--ready .vnext2-date-card__action,
+  body.vnext2-app .vnext2-day-queue .vnext2-card-actions .vnext2-button,
+  body.vnext2-app .vnext2-table-focus .vnext2-actionbar .vnext2-button {
+    min-height: 54px;
+  }
+}
+
     </style>
   </head>
   <body class="vnext2-app vnext2-screen-home vnext2-file-empty" data-home-state="empty" data-vnext2-screen="home" data-vnext2-file-state="empty">
@@ -14100,7 +14291,7 @@ body.vnext2-app .vnext2-day-queue .vnext2-defect-card--environment .vnext2-affec
           </div>
           <div class="vnext2-topbar__actions">
             <span class="vnext2-status vnext2-status--empty">未読込</span>
-            <span class="vnext2-build">確認版 2026-06-10-1603</span>
+            <span class="vnext2-build">確認版 2026-06-10-1632</span>
           </div>
         </header>
         <main class="vnext2-main">
@@ -14128,8 +14319,8 @@ body.vnext2-app .vnext2-day-queue .vnext2-defect-card--environment .vnext2-affec
       <div id="error-box" hidden></div>
       <div id="config-status"></div>
       <div id="file-meta"></div>
-      <div id="build-version">確認版 2026-06-10-1603</div>
-      <div id="build-detail">build: 2026-06-10 16:03</div>
+      <div id="build-version">確認版 2026-06-10-1632</div>
+      <div id="build-detail">build: 2026-06-10 16:32</div>
       <div id="app-status-pill"></div>
       <div id="debug-banner" hidden></div>
       <div id="summary-cards"></div>
@@ -14242,7 +14433,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-06-10-1603","buildLabel":"2026-06-10 16:03","buildId":"2026-06-10-160358","builtAtIso":"2026-06-10T07:03:58.935Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-06-10-1632","buildLabel":"2026-06-10 16:32","buildId":"2026-06-10-163250","builtAtIso":"2026-06-10T07:32:50.121Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
