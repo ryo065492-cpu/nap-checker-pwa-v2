@@ -12784,6 +12784,193 @@ body[data-vnext2-contrast="strong"].vnext2-app .vnext2-support-card {
   }
 }
 
+/* vNext2 Phase D-2 common foundation: shared tokens, cards, controls, and chips only. */
+body.vnext2-app {
+  --v2-foundation-bg: #f4f0e8;
+  --v2-foundation-bg-accent: #ebe8de;
+  --v2-foundation-surface: var(--v2-saas-surface, var(--v2-surface, #fffdfa));
+  --v2-foundation-surface-strong: var(--v2-surface-strong, #ffffff);
+  --v2-foundation-text: var(--v2-saas-text, var(--v2-ink, #241f19));
+  --v2-foundation-muted: var(--v2-saas-muted, var(--v2-muted, #6d6257));
+  --v2-foundation-border: var(--v2-saas-border, var(--v2-line, rgba(49, 41, 32, 0.12)));
+  --v2-foundation-primary: var(--v2-brand, #007f73);
+  --v2-foundation-primary-strong: var(--v2-brand-strong, #005f57);
+  --v2-foundation-primary-soft: var(--v2-brand-soft, #e2f3ef);
+  --v2-foundation-red: var(--v2-rich-danger, var(--v2-red, #cf342d));
+  --v2-foundation-red-soft: var(--v2-red-soft, #fff1ee);
+  --v2-foundation-yellow: var(--v2-rich-warning, var(--v2-yellow, #bc7a05));
+  --v2-foundation-yellow-soft: var(--v2-yellow-soft, #fff6df);
+  --v2-foundation-ok: var(--v2-rich-success, var(--v2-ok, #1e8e4f));
+  --v2-foundation-ok-soft: var(--v2-ok-soft, #e8f6ed);
+  --v2-foundation-radius-card: var(--v2-card-radius, 24px);
+  --v2-foundation-radius-control: var(--v2-control-radius, 999px);
+  --v2-foundation-space-xs: 6px;
+  --v2-foundation-space-sm: 10px;
+  --v2-foundation-space-md: var(--v2-display-gap, 14px);
+  --v2-foundation-card-padding: var(--v2-display-card-padding, 18px);
+  --v2-foundation-button-height: var(--v2-display-button-height, 48px);
+  --v2-foundation-button-pad-x: var(--v2-display-button-pad-x, 18px);
+  --v2-foundation-chip-height: 32px;
+  --v2-foundation-card-shadow: var(--v2-saas-shadow, var(--v2-shadow-card, 0 14px 34px rgba(44, 35, 25, 0.09)));
+  --v2-foundation-lift-shadow: var(--v2-shadow-lift, var(--v2-rich-shadow-card, 0 18px 38px rgba(48, 38, 28, 0.1)));
+  --v2-foundation-press-shadow: var(--v2-saas-press-shadow, var(--v2-press-shadow, 0 8px 18px rgba(0, 127, 115, 0.16)));
+  --v2-foundation-focus-ring: var(--v2-focus-ring, rgba(0, 127, 115, 0.25));
+  background:
+    radial-gradient(circle at 12% 8%, rgba(0, 127, 115, 0.08), transparent 32%),
+    linear-gradient(135deg, var(--v2-foundation-bg) 0%, var(--v2-foundation-bg-accent) 100%);
+  color: var(--v2-foundation-text);
+}
+
+body.vnext2-app .vnext2-upload-card,
+body.vnext2-app .vnext2-progress-card,
+body.vnext2-app .vnext2-empty-panel,
+body.vnext2-app .vnext2-filebar,
+body.vnext2-app .vnext2-summary-card,
+body.vnext2-app .vnext2-date-card,
+body.vnext2-app .vnext2-defect-card,
+body.vnext2-app .vnext2-detail-card,
+body.vnext2-app .vnext2-support-card {
+  background-color: var(--v2-foundation-surface-strong);
+  background-clip: padding-box;
+  border-color: var(--v2-foundation-border);
+  border-style: solid;
+  border-radius: var(--v2-foundation-radius-card);
+  box-shadow: var(--v2-foundation-card-shadow);
+  box-sizing: border-box;
+  color: var(--v2-foundation-text);
+  min-width: 0;
+}
+
+body.vnext2-app .vnext2-upload-card,
+body.vnext2-app .vnext2-progress-card,
+body.vnext2-app .vnext2-empty-panel,
+body.vnext2-app .vnext2-detail-card,
+body.vnext2-app .vnext2-support-card {
+  padding: var(--v2-foundation-card-padding);
+}
+
+body.vnext2-app .vnext2-button,
+body.vnext2-app .vnext2-ghost,
+body.vnext2-app .vnext2-link-button,
+body.vnext2-app .vnext2-filter-button,
+body.vnext2-app .vnext2-update-alert {
+  -webkit-tap-highlight-color: transparent;
+  border-radius: var(--v2-foundation-radius-control);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.25;
+  min-height: var(--v2-foundation-button-height);
+  padding-inline: var(--v2-foundation-button-pad-x);
+  touch-action: manipulation;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    color 140ms ease,
+    opacity 140ms ease,
+    transform 120ms ease;
+}
+
+body.vnext2-app .vnext2-button--primary {
+  background: var(--v2-foundation-primary);
+  color: #ffffff;
+  box-shadow: var(--v2-foundation-press-shadow);
+}
+
+body.vnext2-app .vnext2-button--subtle,
+body.vnext2-app .vnext2-ghost,
+body.vnext2-app .vnext2-link-button,
+body.vnext2-app .vnext2-filter-button {
+  background: var(--v2-foundation-primary-soft);
+  color: var(--v2-foundation-primary-strong);
+}
+
+body.vnext2-app .vnext2-button:active:not(:disabled),
+body.vnext2-app .vnext2-ghost:active:not(:disabled),
+body.vnext2-app .vnext2-link-button:active:not(:disabled),
+body.vnext2-app .vnext2-filter-button:active:not(:disabled),
+body.vnext2-app .vnext2-update-alert:active:not(:disabled),
+body.vnext2-app .vnext2-summary-card:active,
+body.vnext2-app .vnext2-date-card:active,
+body.vnext2-app .vnext2-defect-card:active {
+  box-shadow: var(--v2-foundation-press-shadow);
+  transform: translateY(1px) scale(0.99);
+}
+
+body.vnext2-app .vnext2-button:focus-visible,
+body.vnext2-app .vnext2-ghost:focus-visible,
+body.vnext2-app .vnext2-link-button:focus-visible,
+body.vnext2-app .vnext2-filter-button:focus-visible,
+body.vnext2-app .vnext2-update-alert:focus-visible,
+body.vnext2-app .vnext2-summary-card:focus-visible,
+body.vnext2-app .vnext2-date-card:focus-visible,
+body.vnext2-app .vnext2-defect-card:focus-visible {
+  outline: 4px solid var(--v2-foundation-focus-ring);
+  outline-offset: 3px;
+}
+
+body.vnext2-app .vnext2-button:disabled,
+body.vnext2-app .vnext2-ghost:disabled,
+body.vnext2-app .vnext2-link-button:disabled,
+body.vnext2-app .vnext2-filter-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+body.vnext2-app .vnext2-status,
+body.vnext2-app .vnext2-build,
+body.vnext2-app .vnext2-count-pill,
+body.vnext2-app .vnext2-chip,
+body.vnext2-app .vnext2-severity,
+body.vnext2-app .vnext2-reviewer,
+body.vnext2-app .vnext2-date-card__status,
+body.vnext2-app .vnext2-date-card__counts span,
+body.vnext2-app .vnext2-defect-card__order,
+body.vnext2-app .vnext2-defect-card__count,
+body.vnext2-app .vnext2-defect-card__route {
+  border-radius: var(--v2-foundation-radius-control);
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.25;
+  max-width: 100%;
+  min-height: var(--v2-foundation-chip-height);
+  overflow-wrap: anywhere;
+  white-space: normal;
+  word-break: keep-all;
+}
+
+body.vnext2-app .vnext2-build,
+body.vnext2-app .vnext2-count-pill,
+body.vnext2-app .vnext2-chip {
+  background: var(--v2-foundation-primary-soft);
+  color: var(--v2-foundation-primary-strong);
+}
+
+body.vnext2-app .vnext2-chip--muted {
+  background: rgba(24, 49, 46, 0.08);
+  color: var(--v2-foundation-muted);
+}
+
+body.vnext2-app .vnext2-severity--red,
+body.vnext2-app .vnext2-date-card--red .vnext2-date-card__status {
+  background: var(--v2-foundation-red);
+  color: #ffffff;
+}
+
+body.vnext2-app .vnext2-severity--yellow,
+body.vnext2-app .vnext2-date-card--yellow .vnext2-date-card__status {
+  background: var(--v2-foundation-yellow);
+  color: #ffffff;
+}
+
+body.vnext2-app .vnext2-date-card--ok .vnext2-date-card__status,
+body.vnext2-app .vnext2-status--ready {
+  background: var(--v2-foundation-ok-soft);
+  color: var(--v2-foundation-ok);
+}
+
 /* vNext2 Phase 8 operation position retention and Home space rebalance. */
 body.vnext2-app {
   --v2-home-compact-gap: clamp(8px, 1.3vw, 12px);
@@ -13201,6 +13388,698 @@ body.vnext2-app .vnext2-day-missing--queue strong {
   }
 }
 
+/* vNext2 Phase D-3 HomeScreen final consolidation. */
+body.vnext2-app {
+  --v2-home-gap: clamp(8px, 1.3vw, 12px);
+  --v2-home-padding: clamp(10px, 1.6vw, 14px);
+  --v2-home-filter-gap: 8px;
+  --v2-home-card-gap: 12px;
+  --v2-home-date-card-min: 168px;
+  --v2-home-summary-min: 56px;
+}
+
+body.vnext2-app .vnext2-home {
+  min-height: 0;
+  min-width: 0;
+}
+
+body.vnext2-app .vnext2-home--ready {
+  display: grid;
+  gap: var(--v2-home-gap);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+}
+
+body.vnext2-app .vnext2-home--empty,
+body.vnext2-app .vnext2-home--checking {
+  align-content: center;
+  min-height: min(680px, calc(100dvh - 190px));
+  padding: clamp(18px, 4vw, 48px);
+}
+
+body.vnext2-app .vnext2-home--empty .vnext2-upload-card,
+body.vnext2-app .vnext2-home--checking .vnext2-progress-card {
+  max-width: 760px;
+}
+
+body.vnext2-app .vnext2-home--empty .vnext2-upload-card {
+  box-shadow: var(--v2-phase5-welcome-shadow);
+  padding: clamp(30px, 5vw, 58px);
+}
+
+body.vnext2-app .vnext2-home--checking .vnext2-progress-card {
+  max-width: 720px;
+  overflow: hidden;
+  position: relative;
+}
+
+body.vnext2-app .vnext2-upload-card__icon {
+  align-items: center;
+  border-radius: 28px;
+  display: inline-flex;
+  font-size: clamp(32px, 5vw, 48px);
+  height: 84px;
+  justify-content: center;
+  margin-bottom: 18px;
+  width: 84px;
+}
+
+body.vnext2-app .vnext2-home--empty .vnext2-upload-card h1,
+body.vnext2-app .vnext2-home--checking .vnext2-progress-card h1 {
+  letter-spacing: -0.03em;
+}
+
+body.vnext2-app .vnext2-home--empty .vnext2-upload-card h1 {
+  font-size: clamp(32px, 4.4vw, 48px);
+}
+
+body.vnext2-app .vnext2-home--checking .vnext2-progress-card h1 {
+  font-size: clamp(28px, 4vw, 42px);
+}
+
+body.vnext2-app .vnext2-home--empty .vnext2-upload-card p,
+body.vnext2-app .vnext2-home--checking .vnext2-progress-card p {
+  margin-inline: auto;
+  max-width: 36em;
+}
+
+body.vnext2-app .vnext2-home--empty .vnext2-upload-card p {
+  font-size: clamp(16px, 1.7vw, 19px);
+  line-height: 1.72;
+  max-width: 34em;
+}
+
+body.vnext2-app .vnext2-home--checking .vnext2-progress-card p {
+  font-size: clamp(16px, 1.8vw, 19px);
+}
+
+body.vnext2-app .vnext2-progress {
+  border-radius: var(--v2-foundation-radius-control);
+  height: 16px;
+  margin-block: 22px 10px;
+  overflow: hidden;
+}
+
+body.vnext2-app .vnext2-progress span {
+  border-radius: inherit;
+  min-width: 8px;
+  transition: width 220ms ease;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-filebar {
+  align-items: center;
+  border-radius: 18px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1.5fr) minmax(150px, 0.6fr) auto;
+  padding: 10px 12px;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-filebar > div {
+  min-width: 0;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-filebar span {
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-filebar strong {
+  display: block;
+  font-size: 15px;
+  line-height: 1.35;
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-filebar__actions {
+  justify-content: flex-end;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-summary-grid {
+  align-items: stretch;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-summary-card {
+  align-content: center;
+  border-left-width: 0;
+  border-radius: 16px;
+  gap: 2px 8px;
+  grid-template-columns: auto minmax(0, 1fr);
+  min-height: var(--v2-home-summary-min);
+  overflow: visible;
+  padding: 8px 12px 8px 16px;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-summary-card::before {
+  border-radius: 16px 0 0 16px;
+  width: 5px;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-summary-card span {
+  align-self: center;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-summary-card strong {
+  align-self: center;
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.15;
+  margin: 0;
+  white-space: normal;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-summary-card small {
+  display: none;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-summary-card__hint {
+  font-size: 12px;
+  grid-column: 1 / -1;
+  min-height: 22px;
+  padding: 2px 8px;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-date-section {
+  display: grid;
+  gap: 10px;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--v2-home-padding);
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-section-head {
+  align-items: center;
+  gap: 10px;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-section-head h2 {
+  font-size: clamp(20px, 2.4vw, 28px);
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-section-head p {
+  display: none;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-count-pill {
+  min-height: 34px;
+  padding: 6px 10px;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-filter-bar {
+  border-radius: 16px;
+  gap: var(--v2-home-filter-gap);
+  margin: 0;
+  padding: 8px;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-filter-buttons {
+  flex-wrap: wrap;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-filter-button {
+  min-height: 38px;
+  min-width: 88px;
+  padding: 8px 12px;
+  white-space: normal;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-filter-summary {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-date-list {
+  align-content: start;
+  display: grid;
+  gap: var(--v2-home-card-gap);
+  grid-template-columns: repeat(auto-fill, minmax(236px, 1fr));
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 4px 4px 18px;
+  scrollbar-gutter: stable;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-date-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: var(--v2-home-date-card-min);
+  overflow: visible;
+  padding: 13px;
+  word-break: keep-all;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-date-card__head,
+body.vnext2-app .vnext2-home--ready .vnext2-date-card__counts,
+body.vnext2-app .vnext2-home--ready .vnext2-date-card .vnext2-chip-row,
+body.vnext2-app .vnext2-home--ready .vnext2-card-actions {
+  flex-wrap: wrap;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-date-card__date-line,
+body.vnext2-app .vnext2-home--ready .vnext2-date-card__counts,
+body.vnext2-app .vnext2-home--ready .vnext2-date-card .vnext2-chip-row {
+  min-width: 0;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-date-card strong,
+body.vnext2-app .vnext2-home--ready .vnext2-date-card__date-line > span,
+body.vnext2-app .vnext2-home--ready .vnext2-date-card__counts span,
+body.vnext2-app .vnext2-home--ready .vnext2-date-card .vnext2-chip,
+body.vnext2-app .vnext2-home--ready .vnext2-date-card__action {
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-date-card__counts span {
+  min-height: 34px;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-date-card .vnext2-chip-row {
+  gap: 8px;
+  margin-top: auto;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-date-card__action {
+  justify-content: center;
+  min-height: 44px;
+}
+
+body.vnext2-app .vnext2-home--ready .vnext2-empty-panel {
+  align-content: center;
+  display: grid;
+  gap: 6px;
+  min-height: 140px;
+}
+
+@media (max-width: 900px) {
+  body.vnext2-app .vnext2-home--ready .vnext2-filebar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body.vnext2-app .vnext2-home--ready .vnext2-filebar__actions {
+    justify-content: flex-start;
+  }
+
+  body.vnext2-app .vnext2-home--ready .vnext2-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body.vnext2-app .vnext2-home--ready .vnext2-section-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 560px) {
+  body.vnext2-app .vnext2-home--ready .vnext2-summary-grid,
+  body.vnext2-app .vnext2-home--ready .vnext2-date-list {
+    grid-template-columns: 1fr;
+  }
+
+  body.vnext2-app .vnext2-home--ready .vnext2-date-card {
+    min-height: auto;
+  }
+}
+
+body.vnext2-app[data-vnext2-font-size="xlarge"] .vnext2-home--ready .vnext2-summary-card {
+  grid-template-columns: 1fr;
+}
+
+body.vnext2-app[data-vnext2-density="comfortable"] .vnext2-home--ready {
+  gap: 10px;
+}
+
+body.vnext2-app[data-vnext2-density="comfortable"] .vnext2-home--ready .vnext2-date-section {
+  padding: clamp(12px, 1.8vw, 18px);
+}
+
+/* vNext2 Phase D-4 DayQueueScreen final consolidation. */
+body.vnext2-app {
+  --v2-day-queue-gap: 12px;
+  --v2-day-list-gap: 14px;
+  --v2-day-card-gap: 12px;
+  --v2-day-card-padding: 16px;
+  --v2-day-card-radius: 24px;
+  --v2-day-card-action-min: 46px;
+  --v2-day-card-badge-min: 30px;
+}
+
+body.vnext2-app .vnext2-day-queue {
+  display: grid;
+  gap: var(--v2-day-queue-gap);
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-actionbar {
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-page-head {
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+  min-width: 0;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-page-head h1 {
+  font-size: clamp(21px, 2.2vw, 28px);
+  letter-spacing: -0.02em;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-page-head p {
+  display: none;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-count-pill {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 6px 10px;
+  white-space: normal;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-filter-bar,
+body.vnext2-app .vnext2-day-queue .vnext2-filter-context {
+  border-radius: 16px;
+  gap: 8px;
+  margin: 0;
+  padding: 8px;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-filter-context {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-filter-buttons {
+  flex-wrap: wrap;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-filter-button {
+  min-height: 38px;
+  min-width: 88px;
+  padding: 8px 12px;
+  white-space: normal;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-filter-summary {
+  font-size: 13px;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-list {
+  align-content: start;
+  display: grid;
+  gap: var(--v2-day-list-gap);
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 4px 6px 18px 4px;
+  scrollbar-gutter: stable;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card {
+  border: 1px solid var(--v2-phase4-card-border);
+  border-radius: var(--v2-day-card-radius);
+  display: grid;
+  gap: var(--v2-day-card-gap);
+  min-width: 0;
+  overflow: visible;
+  padding: var(--v2-day-card-padding);
+  position: relative;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card::before {
+  border-radius: 999px;
+  bottom: 18px;
+  content: "";
+  left: 8px;
+  position: absolute;
+  top: 18px;
+  width: 6px;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--red {
+  background: linear-gradient(180deg, #ffffff, #fff8f7);
+  border-left-color: var(--v2-foundation-red, #cf342d);
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--yellow {
+  background: linear-gradient(180deg, #ffffff, #fffaf0);
+  border-left-color: var(--v2-foundation-yellow, #bc7a05);
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--environment {
+  background: linear-gradient(180deg, #fffefa, #fff6df);
+  border-left-color: var(--v2-foundation-yellow, #bc7a05);
+  box-shadow:
+    inset 0 0 0 1px rgba(188, 122, 5, 0.08),
+    var(--v2-rich-shadow-soft);
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--red::before {
+  background: var(--v2-rich-danger, #cf342d);
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--yellow::before,
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--environment::before {
+  background: var(--v2-rich-warning, #bc7a05);
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card.is-selected {
+  outline: 4px solid var(--v2-phase4-ring);
+  outline-offset: 2px;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--red.is-selected {
+  outline-color: var(--v2-phase4-danger-ring);
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--yellow.is-selected,
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--environment.is-selected {
+  outline-color: var(--v2-phase4-warning-ring);
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__top {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__badge-row {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__order {
+  align-items: center;
+  background: rgba(255, 253, 250, 0.9);
+  border: 1px solid rgba(49, 41, 32, 0.08);
+  display: inline-flex;
+  font-size: 15px;
+  justify-content: center;
+  min-height: 34px;
+  min-width: 64px;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--red .vnext2-defect-card__order {
+  color: var(--v2-rich-danger, #cf342d);
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--yellow .vnext2-defect-card__order,
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--environment .vnext2-defect-card__order {
+  color: var(--v2-rich-warning, #bc7a05);
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__status {
+  border-radius: var(--v2-foundation-radius-control);
+  display: inline-flex;
+  font-size: 15px;
+  font-weight: 950;
+  letter-spacing: 0;
+  line-height: 1.15;
+  min-height: var(--v2-day-card-badge-min);
+  padding: 6px 10px;
+  white-space: normal;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__route {
+  border: 1px solid rgba(49, 41, 32, 0.08);
+  box-shadow: none;
+  flex: 0 0 auto;
+  font-size: 13px;
+  min-height: 34px;
+  opacity: 0.78;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--table .vnext2-defect-card__route {
+  background: #e5f5f1;
+  color: var(--v2-rich-primary-strong, #005f58);
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--no-table .vnext2-defect-card__route {
+  background: #fff3cf;
+  color: #765000;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__summary {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__summary strong {
+  color: #17211e;
+  font-size: 20px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__time {
+  color: #33443f;
+  font-size: 16px;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__reason {
+  color: #273a35;
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 0;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 0;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-card-actions .vnext2-button {
+  flex: 1 1 150px;
+  justify-content: center;
+  min-height: var(--v2-day-card-action-min);
+  min-width: 150px;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__meta {
+  align-items: center;
+  color: #5d6f69;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 13px;
+  font-weight: 800;
+  gap: 6px 12px;
+  line-height: 1.4;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__meta .vnext2-defect-card__count {
+  background: rgba(23, 33, 30, 0.06);
+  border-color: rgba(23, 33, 30, 0.12);
+  color: #4d5f59;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card__meta-item {
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-day-missing--queue {
+  background: rgba(255, 249, 226, 0.92);
+  border: 1px solid rgba(179, 135, 0, 0.18);
+  border-radius: 8px;
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-day-missing--queue > span {
+  color: #6f5700;
+  font-size: 15px;
+  font-weight: 950;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-day-missing__list {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 1.35rem;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-day-missing__list li {
+  color: #302b19;
+  font-size: 16px;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-day-missing--queue strong {
+  color: #4b3d12;
+  font-size: 15px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--environment .vnext2-reviewer,
+body.vnext2-app .vnext2-day-queue .vnext2-defect-card--environment .vnext2-affected {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  body.vnext2-app .vnext2-day-queue .vnext2-filter-bar,
+  body.vnext2-app .vnext2-day-queue .vnext2-filter-context {
+    align-items: stretch;
+  }
+
+  body.vnext2-app .vnext2-day-queue .vnext2-filter-label,
+  body.vnext2-app .vnext2-day-queue .vnext2-filter-summary {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 560px) {
+  body.vnext2-app .vnext2-day-queue .vnext2-defect-card__top {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  body.vnext2-app .vnext2-day-queue .vnext2-defect-card__route {
+    align-self: flex-start;
+  }
+
+  body.vnext2-app .vnext2-day-queue .vnext2-card-actions .vnext2-button {
+    min-width: 100%;
+  }
+}
+
     </style>
   </head>
   <body class="vnext2-app vnext2-screen-home vnext2-file-empty" data-home-state="empty" data-vnext2-screen="home" data-vnext2-file-state="empty">
@@ -13221,7 +14100,7 @@ body.vnext2-app .vnext2-day-missing--queue strong {
           </div>
           <div class="vnext2-topbar__actions">
             <span class="vnext2-status vnext2-status--empty">未読込</span>
-            <span class="vnext2-build">確認版 2026-06-05-2159</span>
+            <span class="vnext2-build">確認版 2026-06-10-1603</span>
           </div>
         </header>
         <main class="vnext2-main">
@@ -13249,8 +14128,8 @@ body.vnext2-app .vnext2-day-missing--queue strong {
       <div id="error-box" hidden></div>
       <div id="config-status"></div>
       <div id="file-meta"></div>
-      <div id="build-version">確認版 2026-06-05-2159</div>
-      <div id="build-detail">build: 2026-06-05 21:59</div>
+      <div id="build-version">確認版 2026-06-10-1603</div>
+      <div id="build-detail">build: 2026-06-10 16:03</div>
       <div id="app-status-pill"></div>
       <div id="debug-banner" hidden></div>
       <div id="summary-cards"></div>
@@ -13363,7 +14242,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     </script>
     <script>
 (() => {
-  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-06-05-2159","buildLabel":"2026-06-05 21:59","buildId":"2026-06-05-215939","builtAtIso":"2026-06-05T12:59:39.689Z"};
+  const APP_BUILD_INFO = {"versionLabel":"確認版 2026-06-10-1603","buildLabel":"2026-06-10 16:03","buildId":"2026-06-10-160358","builtAtIso":"2026-06-10T07:03:58.935Z"};
   const DEFAULT_CONFIG = {
   "appName": "午睡記録確認支援ツール",
   "intervalMinutes": 5,
@@ -24122,6 +25001,777 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   // vNext2 UI: the active, minimal app shell.
   // Keep the analysis and rule engine intact; only screen state, display data,
   // delegated actions, and scroll-safe rendering live in this layer.
+  // vNext2 view-model helpers.
+// This file is injected into standalone-app.js inside the app IIFE by build-single-html.mjs.
+function createVNext2ViewModels(deps) {
+  function getVNext2DayItems() {
+    return deps.getSheetOverview() ?? [];
+  }
+
+  function getVNext2DefectRecords(dayId = deps.getSelectedDayId()) {
+    if (!dayId || !deps.ensureDayLoaded(dayId)) {
+      return [];
+    }
+
+    const result = deps.getSheetAnalysis(dayId);
+    if (result?.status === "error") {
+      return [
+        {
+          id: `${dayId}::sheet-error`,
+          index: 0,
+          finding: {
+            severity: "red",
+            ruleKey: "sheetError",
+            ruleName: "シート解析エラー",
+            shortText: "シートを解析できませんでした",
+            childName: "この日付",
+            time: deps.getSheetDisplayDate(dayId),
+            reason: result.error?.message ?? "シート構造を確認してください。",
+            action: "診断・サポートの詳細ログを確認してください。",
+            reviewerText: "対象なし",
+            contextRows: [],
+            count: 1,
+          },
+        },
+      ];
+    }
+
+    return deps.getAllDisplayFindings().map((finding, index) => ({
+      id: `${dayId}::${index}::${deps.createDefectKey(finding)}`,
+      index,
+      finding,
+    }));
+  }
+
+  function getVNext2VisibleDefectRecords(dayId = deps.getSelectedDayId()) {
+    return getVNext2DefectRecords(dayId).filter((record) => deps.matchesSeverityFilter(record.finding?.severity));
+  }
+
+  function getVNext2CountModel(dayId = deps.getSelectedDayId()) {
+    const allRecords = getVNext2DefectRecords(dayId);
+    const visibleRecords = getVNext2VisibleDefectRecords(dayId);
+    const allFindings = allRecords.map((record) => record.finding);
+    const visibleFindings = visibleRecords.map((record) => record.finding);
+    const model = deps.buildQueueDefectCountModel(allFindings, visibleFindings);
+    return {
+      ...model,
+      visibleDefectCount: visibleRecords.length,
+      totalDefectCount: allRecords.length,
+      visibleCellCount: deps.sumFindingSlotCounts(visibleFindings),
+    };
+  }
+
+  function getVNext2DefectSlotRows(finding) {
+    return deps.getTargetRows(finding).map((row) => ({
+      ...row,
+      reviewer: row.reviewer || "未入力",
+      status: row.status || "(空欄)",
+    }));
+  }
+
+  function getVNext2DefectContextRows(finding) {
+    return deps.getContextRows(finding).map((row) => ({
+      ...row,
+      reviewer: row.reviewer || "未入力",
+      status: row.status || "(空欄)",
+    }));
+  }
+
+  function canOpenVNext2TableForFinding(finding) {
+    return !deps.isEnvironmentFinding(finding) && Boolean(deps.getReviewTargetForFinding(finding));
+  }
+
+  return {
+    getVNext2DayItems,
+    getVNext2DefectRecords,
+    getVNext2VisibleDefectRecords,
+    getVNext2CountModel,
+    getVNext2DefectSlotRows,
+    getVNext2DefectContextRows,
+    canOpenVNext2TableForFinding,
+  };
+}
+  // vNext2 HomeScreen renderer.
+// This file is injected into standalone-app.js inside the app IIFE by build-single-html.mjs.
+function createVNext2HomeScreenRenderer(deps) {
+  function renderVNext2EmptyHome() {
+    return `
+      <section class="vnext2-screen vnext2-home vnext2-home--empty" data-testid="vnext2-home-empty">
+        <article class="vnext2-upload-card">
+          <div class="vnext2-upload-card__icon">xlsx</div>
+          <h1>午睡記録ファイルを選ぶ</h1>
+          <p>xlsxを選ぶと、全日分を自動チェックして、直す必要がある日付だけを表示します。</p>
+          <button type="button" class="vnext2-button vnext2-button--primary" data-action="pick-file" data-testid="vnext2-pick-file">ファイルを選ぶ</button>
+          <button type="button" class="vnext2-link-button" data-action="open-support">困ったときはこちら</button>
+          <span class="vnext2-build-note">${deps.escapeHtml((deps.state.buildInfo ?? deps.appBuildInfo).versionLabel ?? "確認版 -")}</span>
+        </article>
+      </section>
+    `;
+  }
+
+  function renderVNext2CheckingHome() {
+    const progress = deps.state.allSheetProgress ?? { current: 0, total: 0, label: "" };
+    const total = Math.max(1, progress.total || deps.state.workbook?.sheets?.length || 1);
+    const current = Math.min(total, Math.max(0, progress.current || 0));
+    const percent = Math.round((current / total) * 100);
+    return `
+      <section class="vnext2-screen vnext2-home vnext2-home--checking" data-testid="vnext2-home-checking">
+        <article class="vnext2-progress-card">
+          <h1>全日分を確認しています</h1>
+          <p>${deps.escapeHtml(progress.label ? `処理中: ${progress.label}` : "xlsxを読み込み、各シートを確認しています。")}</p>
+          <div class="vnext2-progress" aria-label="チェック進捗">
+            <span style="width: ${percent}%"></span>
+          </div>
+          <strong>${deps.escapeHtml(String(current))} / ${deps.escapeHtml(String(total))} シート</strong>
+        </article>
+      </section>
+    `;
+  }
+
+  function renderVNext2SummaryCards(stats) {
+    const dayItems = deps.getDayItems();
+    const redDays = dayItems.filter((item) => item.status === "error" || (item.redIncidents ?? 0) > 0).length;
+    const yellowDays = dayItems.filter((item) => (item.yellowIncidents ?? 0) > 0 || Boolean(item.hasEnvironmentMissing)).length;
+    const cards = [
+      {
+        label: "すべて",
+        value: `${stats.issueDays}日`,
+        sub: "要確認の日付",
+        tone: stats.issueDays > 0 ? "red" : "ok",
+        filter: "all",
+        testId: "vnext2-summary-filter-all",
+      },
+      {
+        label: "赤",
+        value: `${redDays}日`,
+        sub: `${stats.redIncidents}件 / 該当${stats.redCells}コマ`,
+        tone: "red",
+        filter: "red",
+        testId: "vnext2-summary-filter-red",
+      },
+      {
+        label: "黄",
+        value: `${yellowDays}日`,
+        sub: `${stats.yellowIncidents}件`,
+        tone: "yellow",
+        filter: "yellow",
+        testId: "vnext2-summary-filter-yellow",
+      },
+      { label: "OK日", value: `${stats.okDays}日`, sub: "確認不要", tone: "ok", testId: "vnext2-summary-ok" },
+    ];
+    const renderCard = (card) => {
+      const isFilterCard = Boolean(card.filter);
+      const active = isFilterCard && deps.uiState.severityFilter === card.filter;
+      const hintText = active ? "選択中" : "タップして切り替え";
+      const body = `
+        <span>${deps.escapeHtml(card.label)}</span>
+        <strong>${deps.escapeHtml(card.value)}</strong>
+        ${card.sub ? `<small>${deps.escapeHtml(card.sub)}</small>` : ""}
+        ${isFilterCard ? `<em class="vnext2-summary-card__hint">${deps.escapeHtml(hintText)}</em>` : ""}
+      `;
+      if (!isFilterCard) {
+        return `<article class="vnext2-summary-card vnext2-summary-card--${card.tone}" data-testid="${card.testId}">${body}</article>`;
+      }
+      return `
+        <button
+          type="button"
+          class="vnext2-summary-card vnext2-summary-card--${card.tone} ${active ? "is-active" : ""}"
+          data-action="set-severity-filter"
+          data-filter="${card.filter}"
+          data-filter-source="home"
+          data-testid="${card.testId}"
+          aria-pressed="${active ? "true" : "false"}"
+        >${body}</button>
+      `;
+    };
+    return `
+      <div class="vnext2-summary-grid" data-testid="vnext2-summary-grid">
+        ${cards.map(renderCard).join("")}
+      </div>
+    `;
+  }
+
+  function renderVNext2DateCard(item) {
+    const meta = deps.getQueueStatusMeta(item);
+    const reasons = deps.getQueueReasonLabels(item, 2);
+    return `
+      <button
+        type="button"
+        class="vnext2-date-card vnext2-date-card--${meta.tone}"
+        data-action="open-day"
+        data-day-id="${deps.escapeHtml(item.sheetName)}"
+        data-testid="vnext2-date-card"
+      >
+        <div class="vnext2-date-card__head">
+          <div class="vnext2-date-card__date-line">
+            <strong>${deps.escapeHtml(item.dateLabel)}</strong>
+            <span>${deps.escapeHtml(deps.getWeekdayLabel(item.dateLabel))}</span>
+          </div>
+          <span class="vnext2-date-card__status">${deps.escapeHtml(meta.label)}</span>
+        </div>
+        <div class="vnext2-date-card__counts">
+          <span>赤 ${deps.escapeHtml(deps.formatIncidentSlotSummary(item.redIncidents ?? 0, item.redCells ?? 0))}</span>
+          <span>黄 ${deps.escapeHtml(deps.formatIncidentCount(item.yellowIncidents ?? 0))}</span>
+        </div>
+        <div class="vnext2-chip-row">
+          ${reasons.length ? reasons.map((label) => `<span class="vnext2-chip">${deps.escapeHtml(label)}</span>`).join("") : `<span class="vnext2-chip vnext2-chip--muted">理由なし</span>`}
+        </div>
+        <span class="vnext2-date-card__action">この日の不備を見る</span>
+      </button>
+    `;
+  }
+
+  function renderVNext2ReadyHome() {
+    const stats = deps.getDashboardStats();
+    const allDays = deps.getDayItems();
+    const days = deps.getFilteredDayItems();
+    const fileLabel = deps.state.sourceLabel || "未選択";
+    const lastChecked = deps.state.allSheetLastCheckedAt ? deps.formatSupportDateTime(deps.state.allSheetLastCheckedAt) : "未実行";
+    return `
+      <section class="vnext2-screen vnext2-home vnext2-home--ready" data-testid="vnext2-home-ready">
+        <div class="vnext2-filebar">
+          <div>
+            <span>ファイル</span>
+            <strong>${deps.escapeHtml(fileLabel)}</strong>
+          </div>
+          <div>
+            <span>最終チェック</span>
+            <strong>${deps.escapeHtml(lastChecked)}</strong>
+          </div>
+          <div class="vnext2-filebar__actions">
+            <button type="button" class="vnext2-button vnext2-button--primary" data-action="recheck" data-testid="vnext2-recheck">全日分を再チェック</button>
+            <button type="button" class="vnext2-button vnext2-button--subtle" data-action="pick-file" data-testid="vnext2-change-file">別ファイルを読み込む</button>
+          </div>
+        </div>
+        ${renderVNext2SummaryCards(stats)}
+        <section class="vnext2-date-section">
+          <div class="vnext2-section-head">
+            <div>
+              <h2>まず確認する日付を選んでください</h2>
+              <p>赤・黄で絞って、日付カードから確認へ進みます。</p>
+            </div>
+            <span class="vnext2-count-pill">表示中 ${deps.escapeHtml(String(days.length))}日 / 全${deps.escapeHtml(String(allDays.length))}日 / OK ${deps.escapeHtml(String(stats.okDays))}日</span>
+          </div>
+          ${deps.renderSeverityFilters("home", days.length, allDays.length)}
+          <div class="vnext2-date-list" data-testid="vnext2-day-list">
+            ${days.length ? days.map(renderVNext2DateCard).join("") : `
+              <article class="vnext2-empty-panel">
+                <strong>${deps.escapeHtml(deps.getSeverityFilterLabel())}に当てはまる日付はありません。</strong>
+                <span>表示条件を「すべて」に戻すか、別ファイルを読み込めます。</span>
+              </article>
+            `}
+          </div>
+        </section>
+      </section>
+    `;
+  }
+
+  function renderVNext2HomeScreen() {
+    if (deps.uiState.fileState === "reading" || deps.uiState.fileState === "checking") {
+      return renderVNext2CheckingHome();
+    }
+    if (deps.uiState.fileState === "ready" || deps.state.workbook?.sheets?.length) {
+      return renderVNext2ReadyHome();
+    }
+    return renderVNext2EmptyHome();
+  }
+
+  return {
+    renderVNext2HomeScreen,
+  };
+}
+  // vNext2 DayQueueScreen renderer.
+// This file is injected into standalone-app.js inside the app IIFE by build-single-html.mjs.
+function createVNext2DayQueueScreenRenderer(deps) {
+  function getVNext2QueueStatusLabel(finding) {
+    if (deps.isEnvironmentFinding(finding)) {
+      return "黄　入力漏れ";
+    }
+    if (finding?.severity === "red") {
+      return "赤　現場確認";
+    }
+    return "黄　確認が必要";
+  }
+
+  function renderVNext2QueueEnvironmentSummary(finding) {
+    const labels = deps.getEnvironmentLabels(finding);
+    const chips = labels.length ? labels : ["温度", "湿度"];
+    return `
+      <div class="vnext2-day-missing vnext2-day-missing--queue" data-testid="vnext2-day-missing">
+        <span>未入力:</span>
+        <ul class="vnext2-day-missing__list">
+          ${chips.map((label) => `<li>${deps.escapeHtml(label)}</li>`).join("")}
+        </ul>
+        <strong>シート上部の「温度」「湿度」欄を確認</strong>
+      </div>
+    `;
+  }
+
+  function renderVNext2DefectCard(record) {
+    const finding = record.finding;
+    const selected = record.id === deps.uiState.selectedDefectId;
+    const isEnvironment = deps.isEnvironmentFinding(finding);
+    const countText = deps.getDisplayCountText(finding);
+    const canOpenTable = deps.canOpenTableForFinding(finding);
+    const routeLabel = isEnvironment ? "入力欄を確認" : canOpenTable ? "表で場所を確認" : "内容を確認";
+    const primaryLabel = isEnvironment ? "この日の入力漏れ" : (finding.childName ?? "対象なし");
+    const timeLabel = isEnvironment ? "" : (finding.time ?? "時刻不明");
+    const reasonText = isEnvironment ? "" : deps.getDefectMessage(finding);
+    const reviewerText = deps.getReviewerText(finding);
+    const displayIndex = Number.isInteger(record.displayIndex) ? record.displayIndex : 0;
+    const displayTotal = Number.isInteger(record.displayTotal) ? Math.max(record.displayTotal, 1) : 1;
+    const positionText = `${displayIndex + 1} / ${displayTotal}`;
+    return `
+      <article
+        class="vnext2-defect-card vnext2-defect-card--${deps.escapeHtml(finding.severity)} ${selected ? "is-selected" : ""} ${isEnvironment ? "vnext2-defect-card--environment" : ""} ${canOpenTable ? "vnext2-defect-card--table" : "vnext2-defect-card--no-table"}"
+        data-action="open-defect"
+        data-defect-id="${deps.escapeHtml(record.id)}"
+        data-testid="vnext2-defect-card"
+        tabindex="0"
+      >
+        <div class="vnext2-defect-card__top">
+          <div class="vnext2-defect-card__badge-row">
+            <span class="vnext2-defect-card__order">${deps.escapeHtml(positionText)}</span>
+            <span class="vnext2-defect-card__status vnext2-severity vnext2-severity--${deps.escapeHtml(finding.severity)}">${deps.escapeHtml(getVNext2QueueStatusLabel(finding))}</span>
+          </div>
+          <span class="vnext2-defect-card__route">${deps.escapeHtml(routeLabel)}</span>
+        </div>
+        <div class="vnext2-defect-card__summary">
+          <strong>${deps.escapeHtml(primaryLabel)}</strong>
+          ${timeLabel ? `<span class="vnext2-defect-card__time">${deps.escapeHtml(timeLabel)}</span>` : ""}
+        </div>
+        ${
+          isEnvironment
+            ? renderVNext2QueueEnvironmentSummary(finding)
+            : `<p class="vnext2-defect-card__reason">${deps.escapeHtml(reasonText)}</p>`
+        }
+        <div class="vnext2-card-actions">
+          <button type="button" class="vnext2-button vnext2-button--subtle" data-action="open-defect" data-defect-id="${deps.escapeHtml(record.id)}" data-testid="vnext2-open-defect">内容を見る</button>
+          ${canOpenTable ? `<button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${deps.escapeHtml(record.id)}" data-testid="vnext2-open-table">表で場所を見る</button>` : ""}
+        </div>
+        ${isEnvironment ? "" : `
+          <div class="vnext2-defect-card__meta">
+            <span class="vnext2-defect-card__count">${deps.escapeHtml(countText)}</span>
+            <span class="vnext2-defect-card__meta-item">記録者: ${deps.escapeHtml(reviewerText)}</span>
+          </div>
+        `}
+      </article>
+    `;
+  }
+
+  function renderVNext2DayQueueScreen() {
+    const dayId = deps.uiState.selectedDayId;
+    const day = deps.getDayItem(dayId) ?? { dateLabel: deps.getSheetDisplayDate(dayId), sheetName: dayId };
+    const records = deps.getVisibleDefectRecords(dayId);
+    const model = deps.getCountModel(dayId);
+    return `
+      <section class="vnext2-screen vnext2-day-queue" data-testid="vnext2-day-queue">
+        ${deps.renderActionBar()}
+        <div class="vnext2-page-head">
+          <div>
+            <span>この日の不備だけを確認</span>
+            <h1>${deps.escapeHtml(day.dateLabel ?? dayId ?? "日付未選択")}</h1>
+            <p>問題ない子どもや問題ないコマは通常表示していません。カードを押して内容を確認し、表の位置が必要な不備だけ「表で場所を見る」を使います。</p>
+          </div>
+          <strong class="vnext2-count-pill" data-total-defects="${deps.escapeHtml(String(model.totalDefectCount))}" data-visible-defects="${deps.escapeHtml(String(model.visibleDefectCount))}">
+            表示中 ${deps.escapeHtml(String(model.visibleDefectCount))}件 / 全${deps.escapeHtml(String(model.totalDefectCount))}件
+          </strong>
+        </div>
+        ${deps.isDayQueueUsingHomeFilter()
+          ? deps.renderInheritedDayFilterNotice(model.visibleDefectCount, model.totalDefectCount)
+          : deps.renderSeverityFilters("day", model.visibleDefectCount, model.totalDefectCount)}
+        <div class="vnext2-scroll-list vnext2-defect-list" data-testid="vnext2-defect-list">
+          ${records.length ? records.map((record, index) => renderVNext2DefectCard({ ...record, displayIndex: index, displayTotal: records.length })).join("") : `
+            <article class="vnext2-empty-panel">
+              <strong>${deps.escapeHtml(deps.getSeverityFilterLabel())}の不備はありません。</strong>
+              <span>表示条件を「すべて」に戻すと、この日の全不備を確認できます。</span>
+            </article>
+          `}
+        </div>
+      </section>
+    `;
+  }
+
+  return {
+    getVNext2QueueStatusLabel,
+    renderVNext2QueueEnvironmentSummary,
+    renderVNext2DefectCard,
+    renderVNext2DayQueueScreen,
+  };
+}
+  // vNext2 DefectDetailScreen renderer.
+// This file is injected into standalone-app.js inside the app IIFE by build-single-html.mjs.
+function createVNext2DefectDetailScreenRenderer(deps) {
+  function renderVNext2AffectedRows(rows) {
+    return `
+      <div class="vnext2-affected" data-testid="vnext2-affected-slots">
+        <span>該当コマ</span>
+        ${rows.length ? rows.map((row) => `
+          <div class="vnext2-affected__row">
+            <strong>${deps.escapeHtml(row.time ?? "-")}</strong>
+            <span>${deps.escapeHtml(row.status ?? "(空欄)")}</span>
+            <span>記録者: ${deps.escapeHtml(row.reviewer ?? "未入力")}</span>
+          </div>
+        `).join("") : `<div class="vnext2-affected__row"><span>表で位置を確認してください</span></div>`}
+      </div>
+    `;
+  }
+
+  function renderVNext2DetailContext(finding) {
+    const rows = deps.getDefectContextRows(finding);
+    return `
+      <details class="vnext2-context" data-testid="vnext2-context-details">
+        <summary>詳しく見る</summary>
+        <div class="vnext2-context__body">
+          <strong>前後の参考情報</strong>
+          ${rows.length ? rows.map((row) => `
+            <div class="vnext2-context__row ${row.marker === "対象" ? "is-target" : ""}">
+              <span>${deps.escapeHtml(row.marker ?? "参考")}</span>
+              <strong>${deps.escapeHtml(row.time ?? "-")}</strong>
+              <span>${deps.escapeHtml(row.status ?? "(空欄)")}</span>
+              <span>記録者: ${deps.escapeHtml(row.reviewer ?? "未入力")}</span>
+            </div>
+          `).join("") : `<span>前後の参考情報は取得できませんでした。</span>`}
+        </div>
+      </details>
+    `;
+  }
+
+  function renderVNext2DefectDetailScreen() {
+    const record = deps.getDefectRecord();
+    if (!record) {
+      return `
+        <section class="vnext2-screen vnext2-detail" data-testid="vnext2-defect-detail">
+          ${deps.renderActionBar({ dayBack: true })}
+          <article class="vnext2-empty-panel">不備を選び直してください。</article>
+        </section>
+      `;
+    }
+    const finding = record.finding;
+    const rows = deps.getDefectSlotRows(finding);
+    const isEnvironment = deps.isEnvironmentFinding(finding);
+    const canOpenTable = deps.canOpenTableForFinding(finding);
+    return `
+      <section class="vnext2-screen vnext2-detail" data-testid="vnext2-defect-detail">
+        ${deps.renderActionBar({ dayBack: true })}
+        <article class="vnext2-detail-card vnext2-detail-card--${deps.escapeHtml(finding.severity)}">
+          <div class="vnext2-detail-card__top">
+            <span class="vnext2-severity vnext2-severity--${deps.escapeHtml(finding.severity)}">${deps.escapeHtml(deps.getSeverityMeta(finding.severity).label)}</span>
+            <span>${deps.escapeHtml(deps.getDisplayCountText(finding))}</span>
+          </div>
+          <h1>${deps.escapeHtml(isEnvironment ? "この日の入力漏れ" : (finding.childName ?? "対象なし"))}</h1>
+          <h2>${deps.escapeHtml(isEnvironment ? "温度・湿度を確認してください" : deps.getDefectTitle(finding))}</h2>
+          <p class="vnext2-time">${deps.escapeHtml(isEnvironment ? "この日の温度・湿度欄" : (finding.time ?? "時刻不明"))}</p>
+          <div class="vnext2-confirm-box">
+            <strong>確認したいこと</strong>
+            <span>${deps.escapeHtml(isEnvironment ? deps.getEnvironmentMessage(finding) : deps.getDefectMessage(finding))}</span>
+          </div>
+          ${
+            isEnvironment
+              ? deps.renderEnvironmentMissingPanel(finding)
+              : `<p class="vnext2-reviewer">記録者: ${deps.escapeHtml(deps.getReviewerText(finding))}</p>
+                ${renderVNext2AffectedRows(rows)}`
+          }
+          <div class="vnext2-card-actions">
+            ${canOpenTable ? `<button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${deps.escapeHtml(record.id)}" data-testid="vnext2-open-table">表で場所を見る</button>` : ""}
+          </div>
+          ${isEnvironment ? "" : renderVNext2DetailContext(finding)}
+        </article>
+      </section>
+    `;
+  }
+
+  return {
+    renderVNext2AffectedRows,
+    renderVNext2DetailContext,
+    renderVNext2DefectDetailScreen,
+  };
+}
+  // vNext2 TableFocusScreen renderer.
+// This file is injected into standalone-app.js inside the app IIFE by build-single-html.mjs.
+function createVNext2TableFocusScreenRenderer(deps) {
+  function renderVNext2TableCell({ record, intervalIndex, part, reviewMaps }) {
+    const interval = record.intervals[intervalIndex];
+    const slotKey = deps.createReviewSlotKey(record.blockIndex, record.stateRow, record.reviewerRow, intervalIndex);
+    const statusFindings = reviewMaps.slotFindingMap.get(slotKey) ?? [];
+    const reviewerFindings = reviewMaps.reviewerAlertMap.get(slotKey) ?? [];
+    const severity = part === "reviewer" ? deps.getHighestSeverity(reviewerFindings) : deps.getHighestSeverity(statusFindings);
+    const text = part === "reviewer" ? deps.abbreviateReviewerName(interval.reviewerText) : interval.statusText;
+    const selected = deps.state.selectedReviewCell;
+    const isSelected =
+      selected &&
+      selected.blockIndex === record.blockIndex &&
+      selected.stateRow === record.stateRow &&
+      selected.reviewerRow === record.reviewerRow &&
+      selected.intervalIndex === intervalIndex &&
+      selected.part === part;
+    return `
+      <button
+        type="button"
+        class="vnext2-table-cell vnext2-table-cell--${deps.escapeHtml(part)} ${severity ? `vnext2-table-cell--${deps.escapeHtml(severity)}` : ""} ${isSelected ? "is-selected" : ""}"
+        data-action="select-cell"
+        data-review-slot="${deps.escapeHtml(slotKey)}"
+        data-block-index="${record.blockIndex}"
+        data-state-row="${record.stateRow}"
+        data-reviewer-row="${record.reviewerRow}"
+        data-interval-index="${intervalIndex}"
+        data-part="${deps.escapeHtml(part)}"
+        data-testid="vnext2-review-cell"
+      >${deps.escapeHtml(text || "")}</button>
+    `;
+  }
+
+  function renderVNext2CellDetail() {
+    const selected = deps.state.selectedReviewCell;
+    if (!selected) {
+      return `<aside class="vnext2-cell-detail vnext2-cell-detail--empty" data-testid="vnext2-cell-detail">表の赤・黄セルを押すと、このコマの状態と記録者を確認できます。</aside>`;
+    }
+    const record = (deps.state.analysis?.records ?? []).find(
+      (item) =>
+        item.blockIndex === selected.blockIndex &&
+        item.stateRow === selected.stateRow &&
+        item.reviewerRow === selected.reviewerRow,
+    );
+    const interval = record?.intervals?.[selected.intervalIndex];
+    if (!record || !interval) {
+      return `<aside class="vnext2-cell-detail vnext2-cell-detail--empty" data-testid="vnext2-cell-detail">このセルの詳細を読み取れませんでした。</aside>`;
+    }
+    return `
+      <aside class="vnext2-cell-detail" data-testid="vnext2-cell-detail">
+        <span class="vnext2-cell-detail__label">選択中セル</span>
+        <strong>${deps.escapeHtml(record.childName)} / ${deps.escapeHtml(interval.timeLabel)}</strong>
+        <div><span>状態</span><b>${deps.escapeHtml(interval.statusText || "(空欄)")}</b></div>
+        <div><span>記録者</span><b>${deps.escapeHtml(deps.abbreviateReviewerName(interval.reviewerText) || "未入力")}</b></div>
+        <span class="vnext2-cell-detail__hint">このコマをはいチーズ側で確認します。</span>
+      </aside>
+    `;
+  }
+
+  function renderVNext2TableFocusTarget(finding) {
+    if (!finding) {
+      return `
+        <aside class="vnext2-table-target" data-testid="vnext2-table-target">
+          <div class="vnext2-table-target__main">
+            <span class="vnext2-severity vnext2-severity--yellow">確認</span>
+            <strong>色付きセルを確認してください</strong>
+          </div>
+          <p>赤・黄のセルを押すと、下に状態と記録者が表示されます。</p>
+        </aside>
+      `;
+    }
+    return `
+      <aside class="vnext2-table-target vnext2-table-target--${deps.escapeHtml(finding.severity)}" data-testid="vnext2-table-target">
+        <div class="vnext2-table-target__main">
+          <span class="vnext2-severity vnext2-severity--${deps.escapeHtml(finding.severity)}">${deps.escapeHtml(deps.getSeverityMeta(finding.severity).label)}</span>
+          <strong>${deps.escapeHtml(finding.childName ?? "対象なし")}</strong>
+          <span>${deps.escapeHtml(finding.time ?? "時刻不明")} / ${deps.escapeHtml(deps.getDefectTitle(finding))}</span>
+        </div>
+        <dl class="vnext2-table-target__meta">
+          <div><dt>確認理由</dt><dd>${deps.escapeHtml(deps.getDefectMessage(finding))}</dd></div>
+          <div><dt>件数</dt><dd>${deps.escapeHtml(deps.getDisplayCountText(finding))}</dd></div>
+          <div><dt>記録者</dt><dd>${deps.escapeHtml(deps.getReviewerText(finding))}</dd></div>
+        </dl>
+        <p class="vnext2-table-target__hint">表の色付きセルと記録者行を見て、元データ側で直す場所を確認します。</p>
+      </aside>
+    `;
+  }
+
+  function renderVNext2TableFocusScreen() {
+    const record = deps.getDefectRecord();
+    const selectedFinding = record?.finding ?? null;
+    const reviewMaps = deps.buildReviewMaps();
+    deps.ensureSelectedReviewCell(reviewMaps);
+    const records = deps.state.analysis?.records ?? [];
+    const recordsByBlock = new Map();
+    for (const item of records) {
+      if (!recordsByBlock.has(item.blockIndex)) {
+        recordsByBlock.set(item.blockIndex, []);
+      }
+      recordsByBlock.get(item.blockIndex).push(item);
+    }
+
+    const tableHtml = [...recordsByBlock.entries()].map(([blockIndex, blockRecords]) => {
+      const columns = blockRecords[0]?.intervals ?? [];
+      const timeHeaders = columns.map((interval) => `<th class="vnext2-table-time">${deps.escapeHtml(interval.timeLabel)}</th>`).join("");
+      const rows = blockRecords.map((recordItem) => {
+        const statusCells = recordItem.intervals.map((_, intervalIndex) => `<td>${renderVNext2TableCell({ record: recordItem, intervalIndex, part: "status", reviewMaps })}</td>`).join("");
+        const reviewerCells = recordItem.intervals.map((_, intervalIndex) => `<td>${renderVNext2TableCell({ record: recordItem, intervalIndex, part: "reviewer", reviewMaps })}</td>`).join("");
+        return `
+          <tbody>
+            <tr>
+              <th class="vnext2-table-child" rowspan="2">${deps.escapeHtml(recordItem.childName)}</th>
+              <th class="vnext2-table-row-label">状態</th>
+              ${statusCells}
+            </tr>
+            <tr>
+              <th class="vnext2-table-row-label">記録者</th>
+              ${reviewerCells}
+            </tr>
+          </tbody>
+        `;
+      }).join("");
+      return `
+        <section class="vnext2-table-block">
+          <div class="vnext2-table-block__head">
+            <strong>ブロック${deps.escapeHtml(String(blockIndex))}</strong>
+            <span>${deps.escapeHtml(String(blockRecords.length))}人</span>
+          </div>
+          <table class="vnext2-table">
+            <thead>
+              <tr><th class="vnext2-table-head-child">園児名</th><th class="vnext2-table-head-row">行</th>${timeHeaders}</tr>
+            </thead>
+            ${rows}
+          </table>
+        </section>
+      `;
+    }).join("");
+
+    return `
+      <section class="vnext2-screen vnext2-table-focus" data-testid="vnext2-table-focus">
+        <div class="vnext2-table-focus__head">
+          ${deps.renderActionBar({ dayBack: true })}
+          <div class="vnext2-table-focus__title">
+            <span>表で場所を見る</span>
+            <h1>${deps.escapeHtml(deps.getSheetDisplayDate(deps.uiState.selectedDayId ?? deps.state.selectedSheetName))}</h1>
+            <p>赤・黄のセルと記録者行を見て、元表上の位置を確認します。</p>
+          </div>
+          ${renderVNext2TableFocusTarget(selectedFinding)}
+        </div>
+        <div class="vnext2-table-workspace">
+          <div class="vnext2-table-scroll" data-testid="vnext2-table-scroll">
+            ${tableHtml || `<article class="vnext2-empty-panel">表の行を読み取れませんでした。</article>`}
+          </div>
+          ${renderVNext2CellDetail()}
+        </div>
+      </section>
+    `;
+  }
+
+  return {
+    renderVNext2TableCell,
+    renderVNext2CellDetail,
+    renderVNext2TableFocusTarget,
+    renderVNext2TableFocusScreen,
+  };
+}
+  // vNext2 SupportScreen renderer.
+// This file is injected into standalone-app.js inside the app IIFE by build-single-html.mjs.
+function createVNext2SupportScreenRenderer(deps) {
+  function renderVNext2DisplaySettingGroup(key, title, description) {
+    const settings = deps.uiState.displaySettings ?? deps.displaySettingsDefaults;
+    const options = deps.displaySettingsOptions[key] ?? [];
+    return `
+      <div class="vnext2-display-setting">
+        <div>
+          <strong>${deps.escapeHtml(title)}</strong>
+          <span>${deps.escapeHtml(description)}</span>
+        </div>
+        <div class="vnext2-display-setting__choices" role="group" aria-label="${deps.escapeHtml(title)}">
+          ${options.map((option) => `
+            <button
+              type="button"
+              class="vnext2-display-choice ${settings[key] === option.value ? "is-active" : ""}"
+              data-action="set-display-setting"
+              data-setting-key="${deps.escapeHtml(key)}"
+              data-setting-value="${deps.escapeHtml(option.value)}"
+              aria-pressed="${settings[key] === option.value ? "true" : "false"}"
+              data-testid="vnext2-display-setting-${deps.escapeHtml(key)}-${deps.escapeHtml(option.value)}"
+            >${deps.escapeHtml(option.label)}</button>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderVNext2DisplaySettingsPanel() {
+    const isOpen = Boolean(deps.uiState.displaySettingsOpen);
+    return `
+      <section class="vnext2-display-settings ${isOpen ? "is-open" : ""}" data-testid="vnext2-display-settings">
+        <div class="vnext2-display-settings__header">
+          <div class="vnext2-display-settings__title">
+            <span class="vnext2-display-settings__eyebrow">このiPadだけ</span>
+            <h2>画面表示設定</h2>
+            <p>文字サイズや余白だけを保存します。午睡記録や園児名は保存しません。</p>
+          </div>
+          <button
+            type="button"
+            class="vnext2-display-settings__toggle"
+            data-action="toggle-display-settings"
+            aria-expanded="${isOpen ? "true" : "false"}"
+            data-testid="vnext2-toggle-display-settings"
+          >${isOpen ? "閉じる" : "開く"}</button>
+        </div>
+        <div class="vnext2-display-settings__body" ${isOpen ? "" : "hidden"}>
+          ${renderVNext2DisplaySettingGroup("fontSize", "文字サイズ", "カード・詳細・ボタンの文字")}
+          ${renderVNext2DisplaySettingGroup("density", "表示密度", "カードやボタンの間隔")}
+          ${renderVNext2DisplaySettingGroup("buttonSize", "ボタンサイズ", "主要操作の押しやすさ")}
+          ${renderVNext2DisplaySettingGroup("contrast", "コントラスト", "赤・黄・選択中の見え方")}
+          ${renderVNext2DisplaySettingGroup("detailLayout", "詳細画面", "詳細と表の並び")}
+          ${renderVNext2DisplaySettingGroup("tableCellSize", "表セルサイズ", "表で場所を見る画面のセル")}
+          <div class="vnext2-display-settings__footer">
+            <button type="button" class="vnext2-button vnext2-button--subtle" data-action="reset-display-settings" data-testid="vnext2-reset-display-settings">表示設定を初期状態に戻す</button>
+            <button type="button" class="vnext2-button vnext2-button--primary" data-action="close-display-settings" data-testid="vnext2-close-display-settings">閉じる</button>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderVNext2SupportScreen() {
+    const diagnosticText = deps.state.lastCopiedDiagnosticsText || deps.buildDiagnosticCopyText(false);
+    const fieldSettings = deps.getFieldAdjustmentExportText();
+    const updateInfo = deps.state.updateInfo ?? {};
+    return `
+      <section class="vnext2-screen vnext2-support" data-testid="vnext2-support">
+        ${deps.renderActionBar()}
+        <article class="vnext2-support-card">
+          <h1>困ったとき / 診断・サポート</h1>
+          <div class="vnext2-support-actions">
+            <button type="button" class="vnext2-button vnext2-button--primary" data-action="copy-diagnostics" data-testid="vnext2-copy-diagnostics">診断情報をコピー</button>
+            <span>スクショと一緒に共有すると状況を確認しやすくなります。</span>
+          </div>
+          <div class="vnext2-update-box" data-testid="vnext2-update-box">
+            <div>
+              <strong>アプリ本体の更新</strong>
+              <span>${deps.escapeHtml(updateInfo.message ?? "まだ確認していません")}</span>
+              ${updateInfo.latestBuildId ? `<small>公開中: ${deps.escapeHtml(updateInfo.latestVersionLabel ?? updateInfo.latestBuildId)}</small>` : ""}
+            </div>
+            <div class="vnext2-card-actions">
+              <button type="button" class="vnext2-button vnext2-button--subtle" data-action="check-update" data-testid="vnext2-support-check-update">更新を確認</button>
+              ${updateInfo.waiting ? `<button type="button" class="vnext2-button vnext2-button--primary" data-action="apply-update" data-testid="vnext2-apply-update">更新して再読み込み</button>` : ""}
+            </div>
+          </div>
+          ${deps.uiState.supportMessage ? `<p class="vnext2-support-message">${deps.escapeHtml(deps.uiState.supportMessage)}</p>` : ""}
+          ${renderVNext2DisplaySettingsPanel()}
+          <details class="vnext2-support-details">
+            <summary>診断情報の内容を見る</summary>
+            <textarea class="vnext2-diagnostic-text" readonly>${deps.escapeHtml(diagnosticText)}</textarea>
+          </details>
+          <details class="vnext2-admin-details">
+            <summary>管理モード / 現場調整</summary>
+            <p>設定だけをiPad内に保存します。xlsxや個人情報は保存しません。</p>
+            <details class="vnext2-support-details">
+              <summary>設定テキストを開く</summary>
+              <textarea id="vnext2-field-settings-text" class="vnext2-diagnostic-text">${deps.escapeHtml(fieldSettings)}</textarea>
+            </details>
+            <div class="vnext2-card-actions">
+              <button type="button" class="vnext2-button vnext2-button--subtle" data-action="copy-field-settings">設定をコピー</button>
+              <button type="button" class="vnext2-button vnext2-button--subtle" data-action="import-field-settings">貼り付け設定を反映</button>
+              <button type="button" class="vnext2-button vnext2-button--subtle" data-action="reset-field-settings">標準設定に戻す</button>
+            </div>
+          </details>
+        </article>
+      </section>
+    `;
+  }
+
+  return {
+    renderVNext2DisplaySettingGroup,
+    renderVNext2DisplaySettingsPanel,
+    renderVNext2SupportScreen,
+  };
+}
+
   const VNEXT2_DISPLAY_SETTINGS_STORAGE_KEY = "napCheckerDisplaySettings";
   const VNEXT2_DISPLAY_SETTINGS_DEFAULTS = Object.freeze({
     fontSize: "standard",
@@ -24946,7 +26596,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function getVNext2DayItems() {
-    return state.sheetOverview ?? [];
+    return vNext2ViewModels.getVNext2DayItems();
   }
 
   function vNext2MatchesSeverityFilter(severity) {
@@ -24997,43 +26647,29 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     return true;
   }
 
+  const vNext2ViewModels = createVNext2ViewModels({
+    getSheetOverview: () => state.sheetOverview,
+    getSelectedDayId: () => uiVNext2State.selectedDayId,
+    getSheetAnalysis: (dayId) => state.sheetAnalyses.get(dayId),
+    ensureDayLoaded: ensureVNext2DayLoaded,
+    getAllDisplayFindings,
+    createDefectKey,
+    getSheetDisplayDate,
+    matchesSeverityFilter: vNext2MatchesSeverityFilter,
+    buildQueueDefectCountModel,
+    sumFindingSlotCounts,
+    getTargetRows: getVNextTargetRows,
+    getContextRows: getVNextContextRows,
+    isEnvironmentFinding: isVNext2EnvironmentFinding,
+    getReviewTargetForFinding,
+  });
+
   function getVNext2DefectRecords(dayId = uiVNext2State.selectedDayId) {
-    if (!dayId || !ensureVNext2DayLoaded(dayId)) {
-      return [];
-    }
-
-    const result = state.sheetAnalyses.get(dayId);
-    if (result?.status === "error") {
-      return [
-        {
-          id: `${dayId}::sheet-error`,
-          index: 0,
-          finding: {
-            severity: "red",
-            ruleKey: "sheetError",
-            ruleName: "シート解析エラー",
-            shortText: "シートを解析できませんでした",
-            childName: "この日付",
-            time: getSheetDisplayDate(dayId),
-            reason: result.error?.message ?? "シート構造を確認してください。",
-            action: "診断・サポートの詳細ログを確認してください。",
-            reviewerText: "対象なし",
-            contextRows: [],
-            count: 1,
-          },
-        },
-      ];
-    }
-
-    return getAllDisplayFindings().map((finding, index) => ({
-      id: `${dayId}::${index}::${createDefectKey(finding)}`,
-      index,
-      finding,
-    }));
+    return vNext2ViewModels.getVNext2DefectRecords(dayId);
   }
 
   function getVNext2VisibleDefectRecords(dayId = uiVNext2State.selectedDayId) {
-    return getVNext2DefectRecords(dayId).filter((record) => vNext2MatchesSeverityFilter(record.finding?.severity));
+    return vNext2ViewModels.getVNext2VisibleDefectRecords(dayId);
   }
 
   function getVNext2DefectRecord(defectId = uiVNext2State.selectedDefectId) {
@@ -25041,33 +26677,15 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function getVNext2CountModel(dayId = uiVNext2State.selectedDayId) {
-    const allRecords = getVNext2DefectRecords(dayId);
-    const visibleRecords = getVNext2VisibleDefectRecords(dayId);
-    const allFindings = allRecords.map((record) => record.finding);
-    const visibleFindings = visibleRecords.map((record) => record.finding);
-    const model = buildQueueDefectCountModel(allFindings, visibleFindings);
-    return {
-      ...model,
-      visibleDefectCount: visibleRecords.length,
-      totalDefectCount: allRecords.length,
-      visibleCellCount: sumFindingSlotCounts(visibleFindings),
-    };
+    return vNext2ViewModels.getVNext2CountModel(dayId);
   }
 
   function getVNext2DefectSlotRows(finding) {
-    return getVNextTargetRows(finding).map((row) => ({
-      ...row,
-      reviewer: row.reviewer || "未入力",
-      status: row.status || "(空欄)",
-    }));
+    return vNext2ViewModels.getVNext2DefectSlotRows(finding);
   }
 
   function getVNext2DefectContextRows(finding) {
-    return getVNextContextRows(finding).map((row) => ({
-      ...row,
-      reviewer: row.reviewer || "未入力",
-      status: row.status || "(空欄)",
-    }));
+    return vNext2ViewModels.getVNext2DefectContextRows(finding);
   }
 
   function isVNext2EnvironmentFinding(finding) {
@@ -25112,7 +26730,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   }
 
   function canOpenVNext2TableForFinding(finding) {
-    return !isVNext2EnvironmentFinding(finding) && Boolean(getReviewTargetForFinding(finding));
+    return vNext2ViewModels.canOpenVNext2TableForFinding(finding);
   }
 
   function getVNext2DisplayCountText(finding) {
@@ -25422,101 +27040,26 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     `;
   }
 
-  function renderVNext2EmptyHome() {
-    return `
-      <section class="vnext2-screen vnext2-home vnext2-home--empty" data-testid="vnext2-home-empty">
-        <article class="vnext2-upload-card">
-          <div class="vnext2-upload-card__icon">xlsx</div>
-          <h1>午睡記録ファイルを選ぶ</h1>
-          <p>xlsxを選ぶと、全日分を自動チェックして、直す必要がある日付だけを表示します。</p>
-          <button type="button" class="vnext2-button vnext2-button--primary" data-action="pick-file" data-testid="vnext2-pick-file">ファイルを選ぶ</button>
-          <button type="button" class="vnext2-link-button" data-action="open-support">困ったときはこちら</button>
-          <span class="vnext2-build-note">${escapeHtml((state.buildInfo ?? APP_BUILD_INFO).versionLabel ?? "確認版 -")}</span>
-        </article>
-      </section>
-    `;
-  }
+  const vNext2HomeScreenRenderer = createVNext2HomeScreenRenderer({
+    state,
+    uiState: uiVNext2State,
+    appBuildInfo: APP_BUILD_INFO,
+    escapeHtml,
+    getDayItems: getVNext2DayItems,
+    getFilteredDayItems: getVNext2FilteredDayItems,
+    getDashboardStats,
+    getQueueStatusMeta,
+    getQueueReasonLabels,
+    getWeekdayLabel,
+    formatIncidentSlotSummary,
+    formatIncidentCount,
+    formatSupportDateTime,
+    renderSeverityFilters: renderVNext2SeverityFilters,
+    getSeverityFilterLabel: getVNext2SeverityFilterLabel,
+  });
 
-  function renderVNext2CheckingHome() {
-    const progress = state.allSheetProgress ?? { current: 0, total: 0, label: "" };
-    const total = Math.max(1, progress.total || state.workbook?.sheets?.length || 1);
-    const current = Math.min(total, Math.max(0, progress.current || 0));
-    const percent = Math.round((current / total) * 100);
-    return `
-      <section class="vnext2-screen vnext2-home vnext2-home--checking" data-testid="vnext2-home-checking">
-        <article class="vnext2-progress-card">
-          <h1>全日分を確認しています</h1>
-          <p>${escapeHtml(progress.label ? `処理中: ${progress.label}` : "xlsxを読み込み、各シートを確認しています。")}</p>
-          <div class="vnext2-progress" aria-label="チェック進捗">
-            <span style="width: ${percent}%"></span>
-          </div>
-          <strong>${escapeHtml(String(current))} / ${escapeHtml(String(total))} シート</strong>
-        </article>
-      </section>
-    `;
-  }
-
-  function renderVNext2SummaryCards(stats) {
-    const dayItems = getVNext2DayItems();
-    const redDays = dayItems.filter((item) => item.status === "error" || (item.redIncidents ?? 0) > 0).length;
-    const yellowDays = dayItems.filter((item) => (item.yellowIncidents ?? 0) > 0 || Boolean(item.hasEnvironmentMissing)).length;
-    const cards = [
-      {
-        label: "すべて",
-        value: `${stats.issueDays}日`,
-        sub: "要確認の日付",
-        tone: stats.issueDays > 0 ? "red" : "ok",
-        filter: "all",
-        testId: "vnext2-summary-filter-all",
-      },
-      {
-        label: "赤",
-        value: `${redDays}日`,
-        sub: `${stats.redIncidents}件 / 該当${stats.redCells}コマ`,
-        tone: "red",
-        filter: "red",
-        testId: "vnext2-summary-filter-red",
-      },
-      {
-        label: "黄",
-        value: `${yellowDays}日`,
-        sub: `${stats.yellowIncidents}件`,
-        tone: "yellow",
-        filter: "yellow",
-        testId: "vnext2-summary-filter-yellow",
-      },
-      { label: "OK日", value: `${stats.okDays}日`, sub: "確認不要", tone: "ok", testId: "vnext2-summary-ok" },
-    ];
-    const renderCard = (card) => {
-      const isFilterCard = Boolean(card.filter);
-      const active = isFilterCard && uiVNext2State.severityFilter === card.filter;
-      const hintText = active ? "選択中" : "タップして切り替え";
-      const body = `
-        <span>${escapeHtml(card.label)}</span>
-        <strong>${escapeHtml(card.value)}</strong>
-        ${card.sub ? `<small>${escapeHtml(card.sub)}</small>` : ""}
-        ${isFilterCard ? `<em class="vnext2-summary-card__hint">${escapeHtml(hintText)}</em>` : ""}
-      `;
-      if (!isFilterCard) {
-        return `<article class="vnext2-summary-card vnext2-summary-card--${card.tone}" data-testid="${card.testId}">${body}</article>`;
-      }
-      return `
-        <button
-          type="button"
-          class="vnext2-summary-card vnext2-summary-card--${card.tone} ${active ? "is-active" : ""}"
-          data-action="set-severity-filter"
-          data-filter="${card.filter}"
-          data-filter-source="home"
-          data-testid="${card.testId}"
-          aria-pressed="${active ? "true" : "false"}"
-        >${body}</button>
-      `;
-    };
-    return `
-      <div class="vnext2-summary-grid" data-testid="vnext2-summary-grid">
-        ${cards.map(renderCard).join("")}
-      </div>
-    `;
+  function renderVNext2HomeScreen() {
+    return vNext2HomeScreenRenderer.renderVNext2HomeScreen();
   }
 
   function renderVNext2SeverityFilters(scope, visibleCount, totalCount) {
@@ -25583,338 +27126,88 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     `;
   }
 
-  function renderVNext2DateCard(item) {
-    const meta = getQueueStatusMeta(item);
-    const reasons = getQueueReasonLabels(item, 2);
-    return `
-      <button
-        type="button"
-        class="vnext2-date-card vnext2-date-card--${meta.tone}"
-        data-action="open-day"
-        data-day-id="${escapeHtml(item.sheetName)}"
-        data-testid="vnext2-date-card"
-      >
-        <div class="vnext2-date-card__head">
-          <div class="vnext2-date-card__date-line">
-            <strong>${escapeHtml(item.dateLabel)}</strong>
-            <span>${escapeHtml(getWeekdayLabel(item.dateLabel))}</span>
-          </div>
-          <span class="vnext2-date-card__status">${escapeHtml(meta.label)}</span>
-        </div>
-        <div class="vnext2-date-card__counts">
-          <span>赤 ${escapeHtml(formatIncidentSlotSummary(item.redIncidents ?? 0, item.redCells ?? 0))}</span>
-          <span>黄 ${escapeHtml(formatIncidentCount(item.yellowIncidents ?? 0))}</span>
-        </div>
-        <div class="vnext2-chip-row">
-          ${reasons.length ? reasons.map((label) => `<span class="vnext2-chip">${escapeHtml(label)}</span>`).join("") : `<span class="vnext2-chip vnext2-chip--muted">理由なし</span>`}
-        </div>
-        <span class="vnext2-date-card__action">この日の不備を見る</span>
-      </button>
-    `;
-  }
-
-  function renderVNext2ReadyHome() {
-    const stats = getDashboardStats();
-    const allDays = getVNext2DayItems();
-    const days = getVNext2FilteredDayItems();
-    const fileLabel = state.sourceLabel || "未選択";
-    const lastChecked = state.allSheetLastCheckedAt ? formatSupportDateTime(state.allSheetLastCheckedAt) : "未実行";
-    return `
-      <section class="vnext2-screen vnext2-home vnext2-home--ready" data-testid="vnext2-home-ready">
-        <div class="vnext2-filebar">
-          <div>
-            <span>ファイル</span>
-            <strong>${escapeHtml(fileLabel)}</strong>
-          </div>
-          <div>
-            <span>最終チェック</span>
-            <strong>${escapeHtml(lastChecked)}</strong>
-          </div>
-          <div class="vnext2-filebar__actions">
-            <button type="button" class="vnext2-button vnext2-button--primary" data-action="recheck" data-testid="vnext2-recheck">全日分を再チェック</button>
-            <button type="button" class="vnext2-button vnext2-button--subtle" data-action="pick-file" data-testid="vnext2-change-file">別ファイルを読み込む</button>
-          </div>
-        </div>
-        ${renderVNext2SummaryCards(stats)}
-        <section class="vnext2-date-section">
-          <div class="vnext2-section-head">
-            <div>
-              <h2>まず確認する日付を選んでください</h2>
-              <p>赤・黄で絞って、日付カードから確認へ進みます。</p>
-            </div>
-            <span class="vnext2-count-pill">表示中 ${escapeHtml(String(days.length))}日 / 全${escapeHtml(String(allDays.length))}日 / OK ${escapeHtml(String(stats.okDays))}日</span>
-          </div>
-          ${renderVNext2SeverityFilters("home", days.length, allDays.length)}
-          <div class="vnext2-date-list" data-testid="vnext2-day-list">
-            ${days.length ? days.map(renderVNext2DateCard).join("") : `
-              <article class="vnext2-empty-panel">
-                <strong>${escapeHtml(getVNext2SeverityFilterLabel())}に当てはまる日付はありません。</strong>
-                <span>表示条件を「すべて」に戻すか、別ファイルを読み込めます。</span>
-              </article>
-            `}
-          </div>
-        </section>
-      </section>
-    `;
-  }
-
-  function renderVNext2HomeScreen() {
-    if (uiVNext2State.fileState === "reading" || uiVNext2State.fileState === "checking") {
-      return renderVNext2CheckingHome();
-    }
-    if (uiVNext2State.fileState === "ready" || state.workbook?.sheets?.length) {
-      return renderVNext2ReadyHome();
-    }
-    return renderVNext2EmptyHome();
-  }
-
-  function getVNext2QueueStatusLabel(finding) {
-    if (isVNext2EnvironmentFinding(finding)) {
-      return "黄　入力漏れ";
-    }
-    if (finding?.severity === "red") {
-      return "赤　現場確認";
-    }
-    return "黄　確認が必要";
-  }
-
-  function renderVNext2QueueEnvironmentSummary(finding) {
-    const labels = getVNext2EnvironmentLabels(finding);
-    const chips = labels.length ? labels : ["温度", "湿度"];
-    return `
-      <div class="vnext2-day-missing vnext2-day-missing--queue" data-testid="vnext2-day-missing">
-        <span>未入力:</span>
-        <ul class="vnext2-day-missing__list">
-          ${chips.map((label) => `<li>${escapeHtml(label)}</li>`).join("")}
-        </ul>
-        <strong>シート上部の「温度」「湿度」欄を確認</strong>
-      </div>
-    `;
-  }
-
-  function renderVNext2DefectCard(record) {
-    const finding = record.finding;
-    const selected = record.id === uiVNext2State.selectedDefectId;
-    const isEnvironment = isVNext2EnvironmentFinding(finding);
-    const countText = getVNext2DisplayCountText(finding);
-    const canOpenTable = canOpenVNext2TableForFinding(finding);
-    const routeLabel = isEnvironment ? "入力欄を確認" : canOpenTable ? "表で場所を確認" : "内容を確認";
-    const primaryLabel = isEnvironment ? "この日の入力漏れ" : (finding.childName ?? "対象なし");
-    const timeLabel = isEnvironment ? "" : (finding.time ?? "時刻不明");
-    const reasonText = isEnvironment ? "" : getVNextDefectMessage(finding);
-    const reviewerText = getVNextReviewerText(finding);
-    const displayIndex = Number.isInteger(record.displayIndex) ? record.displayIndex : 0;
-    const displayTotal = Number.isInteger(record.displayTotal) ? Math.max(record.displayTotal, 1) : 1;
-    const positionText = `${displayIndex + 1} / ${displayTotal}`;
-    return `
-      <article
-        class="vnext2-defect-card vnext2-defect-card--${escapeHtml(finding.severity)} ${selected ? "is-selected" : ""} ${isEnvironment ? "vnext2-defect-card--environment" : ""} ${canOpenTable ? "vnext2-defect-card--table" : "vnext2-defect-card--no-table"}"
-        data-action="open-defect"
-        data-defect-id="${escapeHtml(record.id)}"
-        data-testid="vnext2-defect-card"
-        tabindex="0"
-      >
-        <div class="vnext2-defect-card__top">
-          <div class="vnext2-defect-card__badge-row">
-            <span class="vnext2-defect-card__order">${escapeHtml(positionText)}</span>
-            <span class="vnext2-defect-card__status vnext2-severity vnext2-severity--${escapeHtml(finding.severity)}">${escapeHtml(getVNext2QueueStatusLabel(finding))}</span>
-          </div>
-          <span class="vnext2-defect-card__route">${escapeHtml(routeLabel)}</span>
-        </div>
-        <div class="vnext2-defect-card__summary">
-          <strong>${escapeHtml(primaryLabel)}</strong>
-          ${timeLabel ? `<span class="vnext2-defect-card__time">${escapeHtml(timeLabel)}</span>` : ""}
-        </div>
-        ${
-          isEnvironment
-            ? renderVNext2QueueEnvironmentSummary(finding)
-            : `<p class="vnext2-defect-card__reason">${escapeHtml(reasonText)}</p>`
-        }
-        <div class="vnext2-card-actions">
-          <button type="button" class="vnext2-button vnext2-button--subtle" data-action="open-defect" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-defect">内容を見る</button>
-          ${canOpenTable ? `<button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-table">表で場所を見る</button>` : ""}
-        </div>
-        ${isEnvironment ? "" : `
-          <div class="vnext2-defect-card__meta">
-            <span class="vnext2-defect-card__count">${escapeHtml(countText)}</span>
-            <span class="vnext2-defect-card__meta-item">記録者: ${escapeHtml(reviewerText)}</span>
-          </div>
-        `}
-      </article>
-    `;
-  }
-
-  function renderVNext2AffectedRows(rows) {
-    return `
-      <div class="vnext2-affected" data-testid="vnext2-affected-slots">
-        <span>該当コマ</span>
-        ${rows.length ? rows.map((row) => `
-          <div class="vnext2-affected__row">
-            <strong>${escapeHtml(row.time ?? "-")}</strong>
-            <span>${escapeHtml(row.status ?? "(空欄)")}</span>
-            <span>記録者: ${escapeHtml(row.reviewer ?? "未入力")}</span>
-          </div>
-        `).join("") : `<div class="vnext2-affected__row"><span>表で位置を確認してください</span></div>`}
-      </div>
-    `;
-  }
+  const vNext2DayQueueScreenRenderer = createVNext2DayQueueScreenRenderer({
+    uiState: uiVNext2State,
+    escapeHtml,
+    isEnvironmentFinding: isVNext2EnvironmentFinding,
+    getEnvironmentLabels: getVNext2EnvironmentLabels,
+    canOpenTableForFinding: canOpenVNext2TableForFinding,
+    getDisplayCountText: getVNext2DisplayCountText,
+    getDefectMessage: getVNextDefectMessage,
+    getReviewerText: getVNextReviewerText,
+    getDayItem: getVNext2DayItem,
+    getSheetDisplayDate,
+    getVisibleDefectRecords: getVNext2VisibleDefectRecords,
+    getCountModel: getVNext2CountModel,
+    renderActionBar: renderVNext2ActionBar,
+    isDayQueueUsingHomeFilter: isVNext2DayQueueUsingHomeFilter,
+    renderInheritedDayFilterNotice: renderVNext2InheritedDayFilterNotice,
+    renderSeverityFilters: renderVNext2SeverityFilters,
+    getSeverityFilterLabel: getVNext2SeverityFilterLabel,
+  });
 
   function renderVNext2DayQueueScreen() {
-    const dayId = uiVNext2State.selectedDayId;
-    const day = getVNext2DayItem(dayId) ?? { dateLabel: getSheetDisplayDate(dayId), sheetName: dayId };
-    const records = getVNext2VisibleDefectRecords(dayId);
-    const model = getVNext2CountModel(dayId);
-    return `
-      <section class="vnext2-screen vnext2-day-queue" data-testid="vnext2-day-queue">
-        ${renderVNext2ActionBar()}
-        <div class="vnext2-page-head">
-          <div>
-            <span>この日の不備だけを確認</span>
-            <h1>${escapeHtml(day.dateLabel ?? dayId ?? "日付未選択")}</h1>
-            <p>問題ない子どもや問題ないコマは通常表示していません。カードを押して内容を確認し、表の位置が必要な不備だけ「表で場所を見る」を使います。</p>
-          </div>
-          <strong class="vnext2-count-pill" data-total-defects="${escapeHtml(String(model.totalDefectCount))}" data-visible-defects="${escapeHtml(String(model.visibleDefectCount))}">
-            表示中 ${escapeHtml(String(model.visibleDefectCount))}件 / 全${escapeHtml(String(model.totalDefectCount))}件
-          </strong>
-        </div>
-        ${isVNext2DayQueueUsingHomeFilter()
-          ? renderVNext2InheritedDayFilterNotice(model.visibleDefectCount, model.totalDefectCount)
-          : renderVNext2SeverityFilters("day", model.visibleDefectCount, model.totalDefectCount)}
-        <div class="vnext2-scroll-list vnext2-defect-list" data-testid="vnext2-defect-list">
-          ${records.length ? records.map((record, index) => renderVNext2DefectCard({ ...record, displayIndex: index, displayTotal: records.length })).join("") : `
-            <article class="vnext2-empty-panel">
-              <strong>${escapeHtml(getVNext2SeverityFilterLabel())}の不備はありません。</strong>
-              <span>表示条件を「すべて」に戻すと、この日の全不備を確認できます。</span>
-            </article>
-          `}
-        </div>
-      </section>
-    `;
+    return vNext2DayQueueScreenRenderer.renderVNext2DayQueueScreen();
   }
 
-  function renderVNext2DetailContext(finding) {
-    const rows = getVNext2DefectContextRows(finding);
-    return `
-      <details class="vnext2-context" data-testid="vnext2-context-details">
-        <summary>詳しく見る</summary>
-        <div class="vnext2-context__body">
-          <strong>前後の参考情報</strong>
-          ${rows.length ? rows.map((row) => `
-            <div class="vnext2-context__row ${row.marker === "対象" ? "is-target" : ""}">
-              <span>${escapeHtml(row.marker ?? "参考")}</span>
-              <strong>${escapeHtml(row.time ?? "-")}</strong>
-              <span>${escapeHtml(row.status ?? "(空欄)")}</span>
-              <span>記録者: ${escapeHtml(row.reviewer ?? "未入力")}</span>
-            </div>
-          `).join("") : `<span>前後の参考情報は取得できませんでした。</span>`}
-        </div>
-      </details>
-    `;
-  }
+  const vNext2DefectDetailScreenRenderer = createVNext2DefectDetailScreenRenderer({
+    escapeHtml,
+    getDefectRecord: getVNext2DefectRecord,
+    getDefectSlotRows: getVNext2DefectSlotRows,
+    getDefectContextRows: getVNext2DefectContextRows,
+    isEnvironmentFinding: isVNext2EnvironmentFinding,
+    canOpenTableForFinding: canOpenVNext2TableForFinding,
+    renderActionBar: renderVNext2ActionBar,
+    getSeverityMeta,
+    getDisplayCountText: getVNext2DisplayCountText,
+    getDefectTitle: getVNextDefectTitle,
+    getEnvironmentMessage: getVNext2EnvironmentMessage,
+    getDefectMessage: getVNextDefectMessage,
+    renderEnvironmentMissingPanel: renderVNext2EnvironmentMissingPanel,
+    getReviewerText: getVNextReviewerText,
+  });
 
   function renderVNext2DefectDetailScreen() {
-    const record = getVNext2DefectRecord();
-    if (!record) {
-      return `
-        <section class="vnext2-screen vnext2-detail" data-testid="vnext2-defect-detail">
-          ${renderVNext2ActionBar({ dayBack: true })}
-          <article class="vnext2-empty-panel">不備を選び直してください。</article>
-        </section>
-      `;
-    }
-    const finding = record.finding;
-    const rows = getVNext2DefectSlotRows(finding);
-    const isEnvironment = isVNext2EnvironmentFinding(finding);
-    const canOpenTable = canOpenVNext2TableForFinding(finding);
-    return `
-      <section class="vnext2-screen vnext2-detail" data-testid="vnext2-defect-detail">
-        ${renderVNext2ActionBar({ dayBack: true })}
-        <article class="vnext2-detail-card vnext2-detail-card--${escapeHtml(finding.severity)}">
-          <div class="vnext2-detail-card__top">
-            <span class="vnext2-severity vnext2-severity--${escapeHtml(finding.severity)}">${escapeHtml(getSeverityMeta(finding.severity).label)}</span>
-            <span>${escapeHtml(getVNext2DisplayCountText(finding))}</span>
-          </div>
-          <h1>${escapeHtml(isEnvironment ? "この日の入力漏れ" : (finding.childName ?? "対象なし"))}</h1>
-          <h2>${escapeHtml(isEnvironment ? "温度・湿度を確認してください" : getVNextDefectTitle(finding))}</h2>
-          <p class="vnext2-time">${escapeHtml(isEnvironment ? "この日の温度・湿度欄" : (finding.time ?? "時刻不明"))}</p>
-          <div class="vnext2-confirm-box">
-            <strong>確認したいこと</strong>
-            <span>${escapeHtml(isEnvironment ? getVNext2EnvironmentMessage(finding) : getVNextDefectMessage(finding))}</span>
-          </div>
-          ${
-            isEnvironment
-              ? renderVNext2EnvironmentMissingPanel(finding)
-              : `<p class="vnext2-reviewer">記録者: ${escapeHtml(getVNextReviewerText(finding))}</p>
-                ${renderVNext2AffectedRows(rows)}`
-          }
-          <div class="vnext2-card-actions">
-            ${canOpenTable ? `<button type="button" class="vnext2-button vnext2-button--primary" data-action="open-table" data-defect-id="${escapeHtml(record.id)}" data-testid="vnext2-open-table">表で場所を見る</button>` : ""}
-          </div>
-          ${isEnvironment ? "" : renderVNext2DetailContext(finding)}
-        </article>
-      </section>
-    `;
+    return vNext2DefectDetailScreenRenderer.renderVNext2DefectDetailScreen();
   }
 
   function getVNext2SlotCount(finding) {
     return Math.max(1, Number(getFindingSlotCount(finding)) || 1);
   }
 
-  function renderVNext2TableCell({ record, intervalIndex, part, reviewMaps }) {
-    const interval = record.intervals[intervalIndex];
-    const slotKey = createReviewSlotKey(record.blockIndex, record.stateRow, record.reviewerRow, intervalIndex);
-    const statusFindings = reviewMaps.slotFindingMap.get(slotKey) ?? [];
-    const reviewerFindings = reviewMaps.reviewerAlertMap.get(slotKey) ?? [];
-    const severity = part === "reviewer" ? getHighestSeverity(reviewerFindings) : getHighestSeverity(statusFindings);
-    const text = part === "reviewer" ? abbreviateReviewerName(interval.reviewerText) : interval.statusText;
-    const selected = state.selectedReviewCell;
-    const isSelected =
-      selected &&
-      selected.blockIndex === record.blockIndex &&
-      selected.stateRow === record.stateRow &&
-      selected.reviewerRow === record.reviewerRow &&
-      selected.intervalIndex === intervalIndex &&
-      selected.part === part;
-    return `
-      <button
-        type="button"
-        class="vnext2-table-cell vnext2-table-cell--${escapeHtml(part)} ${severity ? `vnext2-table-cell--${escapeHtml(severity)}` : ""} ${isSelected ? "is-selected" : ""}"
-        data-action="select-cell"
-        data-review-slot="${escapeHtml(slotKey)}"
-        data-block-index="${record.blockIndex}"
-        data-state-row="${record.stateRow}"
-        data-reviewer-row="${record.reviewerRow}"
-        data-interval-index="${intervalIndex}"
-        data-part="${escapeHtml(part)}"
-        data-testid="vnext2-review-cell"
-      >${escapeHtml(text || "")}</button>
-    `;
+  const vNext2TableFocusScreenRenderer = createVNext2TableFocusScreenRenderer({
+    escapeHtml,
+    state,
+    uiState: uiVNext2State,
+    createReviewSlotKey,
+    getHighestSeverity,
+    abbreviateReviewerName,
+    getDefectRecord: getVNext2DefectRecord,
+    buildReviewMaps,
+    ensureSelectedReviewCell,
+    getSheetDisplayDate,
+    renderActionBar: renderVNext2ActionBar,
+    getSeverityMeta,
+    getDefectTitle: getVNextDefectTitle,
+    getDefectMessage: getVNextDefectMessage,
+    getDisplayCountText: getVNext2DisplayCountText,
+    getReviewerText: getVNextReviewerText,
+  });
+
+  function renderVNext2TableCell(options) {
+    return vNext2TableFocusScreenRenderer.renderVNext2TableCell(options);
   }
 
   function renderVNext2CellDetail() {
-    const selected = state.selectedReviewCell;
-    if (!selected) {
-      return `<aside class="vnext2-cell-detail vnext2-cell-detail--empty" data-testid="vnext2-cell-detail">表の赤・黄セルを押すと、このコマの状態と記録者を確認できます。</aside>`;
-    }
-    const record = (state.analysis?.records ?? []).find(
-      (item) =>
-        item.blockIndex === selected.blockIndex &&
-        item.stateRow === selected.stateRow &&
-        item.reviewerRow === selected.reviewerRow,
-    );
-    const interval = record?.intervals?.[selected.intervalIndex];
-    if (!record || !interval) {
-      return `<aside class="vnext2-cell-detail vnext2-cell-detail--empty" data-testid="vnext2-cell-detail">このセルの詳細を読み取れませんでした。</aside>`;
-    }
-    return `
-      <aside class="vnext2-cell-detail" data-testid="vnext2-cell-detail">
-        <span class="vnext2-cell-detail__label">選択中セル</span>
-        <strong>${escapeHtml(record.childName)} / ${escapeHtml(interval.timeLabel)}</strong>
-        <div><span>状態</span><b>${escapeHtml(interval.statusText || "(空欄)")}</b></div>
-        <div><span>記録者</span><b>${escapeHtml(abbreviateReviewerName(interval.reviewerText) || "未入力")}</b></div>
-        <span class="vnext2-cell-detail__hint">このコマをはいチーズ側で確認します。</span>
-      </aside>
-    `;
+    return vNext2TableFocusScreenRenderer.renderVNext2CellDetail();
+  }
+
+  function renderVNext2TableFocusTarget(finding) {
+    return vNext2TableFocusScreenRenderer.renderVNext2TableFocusTarget(finding);
+  }
+
+  function renderVNext2TableFocusScreen() {
+    return vNext2TableFocusScreenRenderer.renderVNext2TableFocusScreen();
   }
 
   function updateVNext2TableSelectionDom() {
@@ -25943,212 +27236,27 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     renderDiagnostics();
   }
 
-  function renderVNext2TableFocusTarget(finding) {
-    if (!finding) {
-      return `
-        <aside class="vnext2-table-target" data-testid="vnext2-table-target">
-          <div class="vnext2-table-target__main">
-            <span class="vnext2-severity vnext2-severity--yellow">確認</span>
-            <strong>色付きセルを確認してください</strong>
-          </div>
-          <p>赤・黄のセルを押すと、下に状態と記録者が表示されます。</p>
-        </aside>
-      `;
-    }
-    return `
-      <aside class="vnext2-table-target vnext2-table-target--${escapeHtml(finding.severity)}" data-testid="vnext2-table-target">
-        <div class="vnext2-table-target__main">
-          <span class="vnext2-severity vnext2-severity--${escapeHtml(finding.severity)}">${escapeHtml(getSeverityMeta(finding.severity).label)}</span>
-          <strong>${escapeHtml(finding.childName ?? "対象なし")}</strong>
-          <span>${escapeHtml(finding.time ?? "時刻不明")} / ${escapeHtml(getVNextDefectTitle(finding))}</span>
-        </div>
-        <dl class="vnext2-table-target__meta">
-          <div><dt>確認理由</dt><dd>${escapeHtml(getVNextDefectMessage(finding))}</dd></div>
-          <div><dt>件数</dt><dd>${escapeHtml(getVNext2DisplayCountText(finding))}</dd></div>
-          <div><dt>記録者</dt><dd>${escapeHtml(getVNextReviewerText(finding))}</dd></div>
-        </dl>
-        <p class="vnext2-table-target__hint">表の色付きセルと記録者行を見て、元データ側で直す場所を確認します。</p>
-      </aside>
-    `;
-  }
-
-  function renderVNext2TableFocusScreen() {
-    const record = getVNext2DefectRecord();
-    const selectedFinding = record?.finding ?? null;
-    const reviewMaps = buildReviewMaps();
-    ensureSelectedReviewCell(reviewMaps);
-    const records = state.analysis?.records ?? [];
-    const recordsByBlock = new Map();
-    for (const item of records) {
-      if (!recordsByBlock.has(item.blockIndex)) {
-        recordsByBlock.set(item.blockIndex, []);
-      }
-      recordsByBlock.get(item.blockIndex).push(item);
-    }
-
-    const tableHtml = [...recordsByBlock.entries()].map(([blockIndex, blockRecords]) => {
-      const columns = blockRecords[0]?.intervals ?? [];
-      const timeHeaders = columns.map((interval) => `<th class="vnext2-table-time">${escapeHtml(interval.timeLabel)}</th>`).join("");
-      const rows = blockRecords.map((recordItem) => {
-        const statusCells = recordItem.intervals.map((_, intervalIndex) => `<td>${renderVNext2TableCell({ record: recordItem, intervalIndex, part: "status", reviewMaps })}</td>`).join("");
-        const reviewerCells = recordItem.intervals.map((_, intervalIndex) => `<td>${renderVNext2TableCell({ record: recordItem, intervalIndex, part: "reviewer", reviewMaps })}</td>`).join("");
-        return `
-          <tbody>
-            <tr>
-              <th class="vnext2-table-child" rowspan="2">${escapeHtml(recordItem.childName)}</th>
-              <th class="vnext2-table-row-label">状態</th>
-              ${statusCells}
-            </tr>
-            <tr>
-              <th class="vnext2-table-row-label">記録者</th>
-              ${reviewerCells}
-            </tr>
-          </tbody>
-        `;
-      }).join("");
-      return `
-        <section class="vnext2-table-block">
-          <div class="vnext2-table-block__head">
-            <strong>ブロック${escapeHtml(String(blockIndex))}</strong>
-            <span>${escapeHtml(String(blockRecords.length))}人</span>
-          </div>
-          <table class="vnext2-table">
-            <thead>
-              <tr><th class="vnext2-table-head-child">園児名</th><th class="vnext2-table-head-row">行</th>${timeHeaders}</tr>
-            </thead>
-            ${rows}
-          </table>
-        </section>
-      `;
-    }).join("");
-
-    return `
-      <section class="vnext2-screen vnext2-table-focus" data-testid="vnext2-table-focus">
-        <div class="vnext2-table-focus__head">
-          ${renderVNext2ActionBar({ dayBack: true })}
-          <div class="vnext2-table-focus__title">
-            <span>表で場所を見る</span>
-            <h1>${escapeHtml(getSheetDisplayDate(uiVNext2State.selectedDayId ?? state.selectedSheetName))}</h1>
-            <p>赤・黄のセルと記録者行を見て、元表上の位置を確認します。</p>
-          </div>
-          ${renderVNext2TableFocusTarget(selectedFinding)}
-        </div>
-        <div class="vnext2-table-workspace">
-          <div class="vnext2-table-scroll" data-testid="vnext2-table-scroll">
-            ${tableHtml || `<article class="vnext2-empty-panel">表の行を読み取れませんでした。</article>`}
-          </div>
-          ${renderVNext2CellDetail()}
-        </div>
-      </section>
-    `;
-  }
+  const vNext2SupportScreenRenderer = createVNext2SupportScreenRenderer({
+    escapeHtml,
+    state,
+    uiState: uiVNext2State,
+    displaySettingsDefaults: VNEXT2_DISPLAY_SETTINGS_DEFAULTS,
+    displaySettingsOptions: VNEXT2_DISPLAY_SETTINGS_OPTIONS,
+    renderActionBar: renderVNext2ActionBar,
+    buildDiagnosticCopyText,
+    getFieldAdjustmentExportText,
+  });
 
   function renderVNext2DisplaySettingGroup(key, title, description) {
-    const settings = uiVNext2State.displaySettings ?? VNEXT2_DISPLAY_SETTINGS_DEFAULTS;
-    const options = VNEXT2_DISPLAY_SETTINGS_OPTIONS[key] ?? [];
-    return `
-      <div class="vnext2-display-setting">
-        <div>
-          <strong>${escapeHtml(title)}</strong>
-          <span>${escapeHtml(description)}</span>
-        </div>
-        <div class="vnext2-display-setting__choices" role="group" aria-label="${escapeHtml(title)}">
-          ${options.map((option) => `
-            <button
-              type="button"
-              class="vnext2-display-choice ${settings[key] === option.value ? "is-active" : ""}"
-              data-action="set-display-setting"
-              data-setting-key="${escapeHtml(key)}"
-              data-setting-value="${escapeHtml(option.value)}"
-              aria-pressed="${settings[key] === option.value ? "true" : "false"}"
-              data-testid="vnext2-display-setting-${escapeHtml(key)}-${escapeHtml(option.value)}"
-            >${escapeHtml(option.label)}</button>
-          `).join("")}
-        </div>
-      </div>
-    `;
+    return vNext2SupportScreenRenderer.renderVNext2DisplaySettingGroup(key, title, description);
   }
 
   function renderVNext2DisplaySettingsPanel() {
-    const isOpen = Boolean(uiVNext2State.displaySettingsOpen);
-    return `
-      <section class="vnext2-display-settings ${isOpen ? "is-open" : ""}" data-testid="vnext2-display-settings">
-        <div class="vnext2-display-settings__header">
-          <div class="vnext2-display-settings__title">
-            <span class="vnext2-display-settings__eyebrow">このiPadだけ</span>
-            <h2>画面表示設定</h2>
-            <p>文字サイズや余白だけを保存します。午睡記録や園児名は保存しません。</p>
-          </div>
-          <button
-            type="button"
-            class="vnext2-display-settings__toggle"
-            data-action="toggle-display-settings"
-            aria-expanded="${isOpen ? "true" : "false"}"
-            data-testid="vnext2-toggle-display-settings"
-          >${isOpen ? "閉じる" : "開く"}</button>
-        </div>
-        <div class="vnext2-display-settings__body" ${isOpen ? "" : "hidden"}>
-          ${renderVNext2DisplaySettingGroup("fontSize", "文字サイズ", "カード・詳細・ボタンの文字")}
-          ${renderVNext2DisplaySettingGroup("density", "表示密度", "カードやボタンの間隔")}
-          ${renderVNext2DisplaySettingGroup("buttonSize", "ボタンサイズ", "主要操作の押しやすさ")}
-          ${renderVNext2DisplaySettingGroup("contrast", "コントラスト", "赤・黄・選択中の見え方")}
-          ${renderVNext2DisplaySettingGroup("detailLayout", "詳細画面", "詳細と表の並び")}
-          ${renderVNext2DisplaySettingGroup("tableCellSize", "表セルサイズ", "表で場所を見る画面のセル")}
-          <div class="vnext2-display-settings__footer">
-            <button type="button" class="vnext2-button vnext2-button--subtle" data-action="reset-display-settings" data-testid="vnext2-reset-display-settings">表示設定を初期状態に戻す</button>
-            <button type="button" class="vnext2-button vnext2-button--primary" data-action="close-display-settings" data-testid="vnext2-close-display-settings">閉じる</button>
-          </div>
-        </div>
-      </section>
-    `;
+    return vNext2SupportScreenRenderer.renderVNext2DisplaySettingsPanel();
   }
 
   function renderVNext2SupportScreen() {
-    const diagnosticText = state.lastCopiedDiagnosticsText || buildDiagnosticCopyText(false);
-    const fieldSettings = getFieldAdjustmentExportText();
-    const updateInfo = state.updateInfo ?? {};
-    return `
-      <section class="vnext2-screen vnext2-support" data-testid="vnext2-support">
-        ${renderVNext2ActionBar()}
-        <article class="vnext2-support-card">
-          <h1>困ったとき / 診断・サポート</h1>
-          <div class="vnext2-support-actions">
-            <button type="button" class="vnext2-button vnext2-button--primary" data-action="copy-diagnostics" data-testid="vnext2-copy-diagnostics">診断情報をコピー</button>
-            <span>スクショと一緒に共有すると状況を確認しやすくなります。</span>
-          </div>
-          <div class="vnext2-update-box" data-testid="vnext2-update-box">
-            <div>
-              <strong>アプリ本体の更新</strong>
-              <span>${escapeHtml(updateInfo.message ?? "まだ確認していません")}</span>
-              ${updateInfo.latestBuildId ? `<small>公開中: ${escapeHtml(updateInfo.latestVersionLabel ?? updateInfo.latestBuildId)}</small>` : ""}
-            </div>
-            <div class="vnext2-card-actions">
-              <button type="button" class="vnext2-button vnext2-button--subtle" data-action="check-update" data-testid="vnext2-support-check-update">更新を確認</button>
-              ${updateInfo.waiting ? `<button type="button" class="vnext2-button vnext2-button--primary" data-action="apply-update" data-testid="vnext2-apply-update">更新して再読み込み</button>` : ""}
-            </div>
-          </div>
-          ${uiVNext2State.supportMessage ? `<p class="vnext2-support-message">${escapeHtml(uiVNext2State.supportMessage)}</p>` : ""}
-          ${renderVNext2DisplaySettingsPanel()}
-          <details class="vnext2-support-details">
-            <summary>診断情報の内容を見る</summary>
-            <textarea class="vnext2-diagnostic-text" readonly>${escapeHtml(diagnosticText)}</textarea>
-          </details>
-          <details class="vnext2-admin-details">
-            <summary>管理モード / 現場調整</summary>
-            <p>設定だけをiPad内に保存します。xlsxや個人情報は保存しません。</p>
-            <details class="vnext2-support-details">
-              <summary>設定テキストを開く</summary>
-              <textarea id="vnext2-field-settings-text" class="vnext2-diagnostic-text">${escapeHtml(fieldSettings)}</textarea>
-            </details>
-            <div class="vnext2-card-actions">
-              <button type="button" class="vnext2-button vnext2-button--subtle" data-action="copy-field-settings">設定をコピー</button>
-              <button type="button" class="vnext2-button vnext2-button--subtle" data-action="import-field-settings">貼り付け設定を反映</button>
-              <button type="button" class="vnext2-button vnext2-button--subtle" data-action="reset-field-settings">標準設定に戻す</button>
-            </div>
-          </details>
-        </article>
-      </section>
-    `;
+    return vNext2SupportScreenRenderer.renderVNext2SupportScreen();
   }
 
   function renderVNext2Screen() {
